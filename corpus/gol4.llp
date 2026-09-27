@@ -1,0 +1,77 @@
+% GENERATED — Game of Life, the sync shape authored as text.
+catalog gol 2.
+provenance hand "text recode of the sync compilation" "2026-07-22".
+layers (dyn).
+stages (mark update sweep).
+type cell {g00 g01 g10 g11}.
+type idx {i0 .. i4}.
+namespace state produce (dyn).
+pred a(cell) : state.
+pred d(cell) : state.
+pred pa(cell) : state.
+pred pd(cell) : state.
+pred tok(cell) : state.
+pred na(cell) : state.
+pred nd(cell) : state.
+pred force(cell) : state.
+pred m(idx) : state.
+pred u(idx) : state.
+pred s(idx) : state.
+bwd cidx(cell,idx).
+bwd succ(idx,idx).
+bwd adj(cell,cell).
+cidx(g00,i0).
+cidx(g01,i1).
+cidx(g10,i2).
+cidx(g11,i3).
+succ(i0,i1).
+succ(i1,i2).
+succ(i2,i3).
+succ(i3,i4).
+adj(g00,g01).
+adj(g00,g10).
+adj(g00,g11).
+adj(g01,g00).
+adj(g01,g10).
+adj(g01,g11).
+adj(g10,g00).
+adj(g10,g01).
+adj(g10,g11).
+adj(g11,g00).
+adj(g11,g01).
+adj(g11,g10).
+input grid.
+output action.
+weight life(C) reads {force(C), pa(C), pa(D) if adj(C,D)}.
+stage mark {
+  %% snapshot an alive cell.
+  mr [dyn] : m(I) * a(C) * cidx(C,I) * succ(I,I2) -o pa(C) * tok(C) * m(I2).
+  %% snapshot a dead cell.
+  md [dyn] : m(I) * d(C) * cidx(C,I) * succ(I,I2) -o pd(C) * tok(C) * m(I2).
+}
+stage update {
+  %% was alive, stays alive.
+  up [dyn] : u(I) * tok(C) * $pa(C) * cidx(C,I) * succ(I,I2) -o na(C) * u(I2)  @w life(C).
+  %% was alive, dies.
+  dn [dyn] : u(I) * tok(C) * $pa(C) * cidx(C,I) * succ(I,I2) -o nd(C) * u(I2)  @w ~life(C).
+  %% was dead, is born.
+  rv [dyn] : u(I) * tok(C) * $pd(C) * cidx(C,I) * succ(I,I2) -o na(C) * u(I2)  @w life(C).
+  %% was dead, stays dead.
+  st [dyn] : u(I) * tok(C) * $pd(C) * cidx(C,I) * succ(I,I2) -o nd(C) * u(I2)  @w ~life(C).
+}
+stage sweep {
+  %% commit: was alive, next alive.
+  swaa [dyn] : s(I) * pa(C) * na(C) * cidx(C,I) * succ(I,I2) -o a(C) * s(I2).
+  %% commit: was alive, next dead.
+  swad [dyn] : s(I) * pa(C) * nd(C) * cidx(C,I) * succ(I,I2) -o d(C) * s(I2).
+  %% commit: was dead, next alive.
+  swda [dyn] : s(I) * pd(C) * na(C) * cidx(C,I) * succ(I,I2) -o a(C) * s(I2).
+  %% commit: was dead, next dead.
+  swdd [dyn] : s(I) * pd(C) * nd(C) * cidx(C,I) * succ(I,I2) -o d(C) * s(I2).
+}
+%% snapshot done -> update pass.
+qui mu [dyn] : mark * m(i4) -o update * u(i0).
+%% update done -> commit.
+qui us [dyn] : update * u(i4) -o sweep * s(i0).
+%% committed -> next tick.
+qui sm [dyn] : sweep * s(i4) -o mark * m(i0).

@@ -1,0 +1,153 @@
+% GENERATED — CrossingTraffic: the catalog IS the domain.
+catalog xtraffic 1.
+provenance hand "generated from IPPC 2011 CrossingTraffic" "2026-07-18".
+layers (dyn).
+stages (move mark update sweep).
+type cell {x1_y1 x1_y2 x1_y3 x2_y1 x2_y2 x2_y3 x3_y1 x3_y2 x3_y3}.
+type idx {i0 i1 i2 i3}.
+namespace state produce (dyn).
+pred rob(cell) : state.
+pred o(cell) : state.
+pred e(cell) : state.
+pred po(cell) : state.
+pred pe(cell) : state.
+pred tok(cell) : state.
+pred no2(cell) : state.
+pred ne2(cell) : state.
+pred dead : state.
+pred paid : state.
+pred mvt : state.
+pred cmdnorth : state.
+pred cmdsouth : state.
+pred cmdeast : state.
+pred cmdwest : state.
+pred m(idx) : state.
+pred u(idx) : state.
+pred s(idx) : state.
+bwd north(cell,cell).
+bwd noadj_north(cell).
+bwd south(cell,cell).
+bwd noadj_south(cell).
+bwd east(cell,cell).
+bwd noadj_east(cell).
+bwd west(cell,cell).
+bwd noadj_west(cell).
+bwd cidx(cell,idx).
+bwd succ(idx,idx).
+bwd ocell(cell).
+east(x1_y1,x2_y1).
+north(x1_y1,x1_y2).
+east(x1_y2,x2_y2).
+north(x1_y2,x1_y3).
+south(x1_y2,x1_y1).
+east(x1_y3,x2_y3).
+south(x1_y3,x1_y2).
+east(x2_y1,x3_y1).
+north(x2_y1,x2_y2).
+west(x2_y1,x1_y1).
+east(x2_y2,x3_y2).
+north(x2_y2,x2_y3).
+south(x2_y2,x2_y1).
+west(x2_y2,x1_y2).
+east(x2_y3,x3_y3).
+south(x2_y3,x2_y2).
+west(x2_y3,x1_y3).
+north(x3_y1,x3_y2).
+west(x3_y1,x2_y1).
+north(x3_y2,x3_y3).
+south(x3_y2,x3_y1).
+west(x3_y2,x2_y2).
+south(x3_y3,x3_y2).
+west(x3_y3,x2_y3).
+noadj_north(x1_y3).
+noadj_north(x2_y3).
+noadj_north(x3_y3).
+noadj_south(x1_y1).
+noadj_south(x2_y1).
+noadj_south(x3_y1).
+noadj_east(x3_y1).
+noadj_east(x3_y2).
+noadj_east(x3_y3).
+noadj_west(x1_y1).
+noadj_west(x1_y2).
+noadj_west(x1_y3).
+cidx(x1_y2,i0).
+cidx(x2_y2,i1).
+cidx(x3_y2,i2).
+succ(i0,i1).
+succ(i1,i2).
+succ(i2,i3).
+ocell(x1_y2).
+ocell(x2_y2).
+ocell(x3_y2).
+input scene.
+output move.
+weight obs(C1) reads {po(D) if east(C1,D)}.
+weight go(C1,C2) reads {cmdnorth, cmdsouth, cmdeast, cmdwest, o(C1), o(D) if ocell(D)}.
+weight stayw(C1) reads {cmdnorth, cmdsouth, cmdeast, cmdwest, o(C1), o(D) if ocell(D)}.
+weight fgo(C1,C2) reads {o(C1)}.
+weight fstayw(C1) reads {o(C1)}.
+stage move {
+  %% forced first move north (cmd token).
+  fmv_north [dyn] : mvt * rob(C) * cmdnorth * north(C,C2) -o rob(C2) * paid  @w fgo(C,C2).
+  %% forced first move north against the edge: stay.
+  fst_north [dyn] : mvt * rob(C) * cmdnorth * noadj_north(C) -o rob(C) * paid  @w fstayw(C).
+  %% base-policy move north.
+  mv_north [dyn] : mvt * rob(C) * north(C,C2) -o rob(C2) * paid  @w go(C,C2).
+  %% forced first move south (cmd token).
+  fmv_south [dyn] : mvt * rob(C) * cmdsouth * south(C,C2) -o rob(C2) * paid  @w fgo(C,C2).
+  %% forced first move south against the edge: stay.
+  fst_south [dyn] : mvt * rob(C) * cmdsouth * noadj_south(C) -o rob(C) * paid  @w fstayw(C).
+  %% base-policy move south.
+  mv_south [dyn] : mvt * rob(C) * south(C,C2) -o rob(C2) * paid  @w go(C,C2).
+  %% forced first move east (cmd token).
+  fmv_east [dyn] : mvt * rob(C) * cmdeast * east(C,C2) -o rob(C2) * paid  @w fgo(C,C2).
+  %% forced first move east against the edge: stay.
+  fst_east [dyn] : mvt * rob(C) * cmdeast * noadj_east(C) -o rob(C) * paid  @w fstayw(C).
+  %% base-policy move east.
+  mv_east [dyn] : mvt * rob(C) * east(C,C2) -o rob(C2) * paid  @w go(C,C2).
+  %% forced first move west (cmd token).
+  fmv_west [dyn] : mvt * rob(C) * cmdwest * west(C,C2) -o rob(C2) * paid  @w fgo(C,C2).
+  %% forced first move west against the edge: stay.
+  fst_west [dyn] : mvt * rob(C) * cmdwest * noadj_west(C) -o rob(C) * paid  @w fstayw(C).
+  %% base-policy move west.
+  mv_west [dyn] : mvt * rob(C) * west(C,C2) -o rob(C2) * paid  @w go(C,C2).
+  %% base-policy stay (edge mass).
+  str [dyn] : mvt * rob(C) -o rob(C) * paid  @w stayw(C).
+  %% an obstacle on the robot's cell kills it (pre-shift state, per the RDDL).
+  dier [dyn] : mvt * rob(C) * $o(C) -o dead * paid.
+  %% goal is absorbing and free.
+  atgoal [dyn] : mvt * rob(x3_y3) -o rob(x3_y3).
+  %% a vanished robot keeps paying every epoch.
+  deadtick [dyn] : mvt * dead -o dead * paid.
+}
+stage mark {
+  %% snapshot an obstacle cell.
+  mrO [dyn] : m(I) * o(C) * cidx(C,I) * succ(I,I2) -o po(C) * tok(C) * m(I2).
+  %% snapshot an empty obstacle cell.
+  mrE [dyn] : m(I) * e(C) * cidx(C,I) * succ(I,I2) -o pe(C) * tok(C) * m(I2).
+}
+stage update {
+  %% next-state obstacle: east neighbor's snapshot (edge: arrival Bernoulli).
+  upO [dyn] : u(I) * tok(C) * cidx(C,I) * succ(I,I2) -o no2(C) * u(I2)  @w obs(C).
+  %% next-state empty.
+  upE [dyn] : u(I) * tok(C) * cidx(C,I) * succ(I,I2) -o ne2(C) * u(I2)  @w ~obs(C).
+}
+stage sweep {
+  %% commit po/no2.
+  sw_po_no2 [dyn] : s(I) * po(C) * no2(C) * cidx(C,I) * succ(I,I2) -o o(C) * s(I2).
+  %% commit po/ne2.
+  sw_po_ne2 [dyn] : s(I) * po(C) * ne2(C) * cidx(C,I) * succ(I,I2) -o e(C) * s(I2).
+  %% commit pe/no2.
+  sw_pe_no2 [dyn] : s(I) * pe(C) * no2(C) * cidx(C,I) * succ(I,I2) -o o(C) * s(I2).
+  %% commit pe/ne2.
+  sw_pe_ne2 [dyn] : s(I) * pe(C) * ne2(C) * cidx(C,I) * succ(I,I2) -o e(C) * s(I2).
+}
+%% robot resolved -> shift obstacles.
+qui mm [dyn] : move -o mark * m(i0).
+%% snapshot done -> update pass.
+qui mu [dyn] : mark * m(i3) -o update * u(i0).
+%% update done -> commit.
+qui us [dyn] : update * u(i3) -o sweep * s(i0).
+%% committed -> next epoch.
+qui sm [dyn] : sweep * s(i3) -o move * mvt.

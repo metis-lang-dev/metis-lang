@@ -1,0 +1,20 @@
+
+catalog triway 1.
+provenance hand "beyond-sync gate: 3-way choice site" "2026-07-19".
+layers (dyn).
+stages (day).
+namespace st produce (dyn).
+pred s : st.
+pred r : st.
+pred f : st.
+pred tk : st.
+weight w1 reads {}.
+weight w2 reads {}.
+stage day {
+  %% sunny branch.
+  gs [dyn] : tk -o s  @w w1.
+  %% rainy branch.
+  gr [dyn] : tk -o r  @w w2.
+  %% fog: the unweighted remainder — CHOICE renormalizes the site.
+  gf [dyn] : tk -o f.
+}

@@ -1,0 +1,41 @@
+# sampler-wire corpus — the FULL class (docs/rewrite/06-sampler-wire.md):
+# out-of-class-F programs sample here (love triangle: multiplicities).
+case sys-uu
+llp sysadmin2.llp
+init m(i0) 1
+init run(a) 1
+init run(b) 1
+steps 9
+seeds 3
+end
+case cascade-s
+llp cascade.llp
+init ta 1
+steps 3
+seeds 3
+end
+case packmark-s
+llp packbase.llp
+pack packmark.llp
+init coin 1
+init mkt 1
+steps 4
+seeds 3
+end
+case lt-act
+llp love_triangle.llp
+init eros(helena,hermia) 1
+init eros(hermia,helena) 1
+init eros(helena,lysander) 1
+init eros(lysander,hermia) 1
+steps 6
+seeds 5
+end
+case lt-heartbreak
+llp love_triangle.llp
+init eros(helena,hermia) 1
+init anger(helena,hermia) 3
+init eros(hermia,helena) 1
+steps 2
+seeds 5
+end

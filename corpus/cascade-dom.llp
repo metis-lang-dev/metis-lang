@@ -1,0 +1,29 @@
+
+catalog cascadedom 1.
+provenance hand "beyond-sync gate: sequential cascade" "2026-07-19".
+layers (dyn).
+stages (ua ub).
+namespace st produce (dyn).
+pred a : st.
+pred za : st.
+pred b : st.
+pred zb : st.
+pred ta : st.
+pred tb : st.
+weight pa reads {}.
+weight pb reads {a}.
+stage ua {
+  %% a commits ON with prob pa.
+  aon [dyn] : ta -o a  @w pa.
+  %% complement branch.
+  aoff [dyn] : ta -o za  @w ~pa.
+}
+stage ub {
+  %% b reads a's COMMITTED value — the within-tick sequential read
+  %% the snapshot (sync) discipline cannot express.
+  bon [dyn] : tb -o b  @w pb.
+  %% complement branch.
+  boff [dyn] : tb -o zb  @w ~pb.
+}
+%% a committed -> b samples.
+qui ab [dyn] : ua -o ub * tb.

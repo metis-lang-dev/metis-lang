@@ -1,0 +1,39 @@
+{
+  "name": "metis-llp",
+  "displayName": "Metis LLP",
+  "description": "Rulescript v2 (.llp) language support — syntax highlighting + the metis toolchain as a language server (real compiler diagnostics, hover, completion, outline).",
+  "version": "0.1.0",
+  "publisher": "metis",
+  "license": "MIT",
+  "engines": { "vscode": "^1.75.0" },
+  "categories": ["Programming Languages"],
+  "main": "./extension.js",
+  "activationEvents": ["onLanguage:llp"],
+  "contributes": {
+    "languages": [{
+      "id": "llp",
+      "aliases": ["LLP", "rulescript"],
+      "extensions": [".llp"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "llp",
+      "scopeName": "source.llp",
+      "path": "./syntaxes/llp.tmLanguage.json"
+    }],
+    "configuration": {
+      "title": "Metis LLP",
+      "properties": {
+        "llp.server.command": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": [],
+          "description": "Command to launch the LLP language server. Empty = auto-detect: metis/lang/lsp.py found up from the workspace, run with the theia venv python ($THEIA_ROOT, else the metis checkout's ../theia sibling, else python3)."
+        }
+      }
+    }
+  },
+  "dependencies": {
+    "vscode-languageclient": "^9.0.1"
+  }
+}

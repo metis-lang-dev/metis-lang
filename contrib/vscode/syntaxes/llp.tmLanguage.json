@@ -1,0 +1,86 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "LLP",
+  "scopeName": "source.llp",
+  "patterns": [
+    { "include": "#doc" },
+    { "include": "#comment" },
+    { "include": "#string" },
+    { "include": "#header" },
+    { "include": "#decl" },
+    { "include": "#rulehead" },
+    { "include": "#weight" },
+    { "include": "#operators" },
+    { "include": "#persist" },
+    { "include": "#variable" },
+    { "include": "#number" }
+  ],
+  "repository": {
+    "doc": {
+      "name": "comment.block.documentation.llp",
+      "match": "%%.*$"
+    },
+    "comment": {
+      "name": "comment.line.percentage.llp",
+      "match": "%(?!%).*$"
+    },
+    "string": {
+      "name": "string.quoted.double.llp",
+      "match": "\"[^\"]*\""
+    },
+    "header": {
+      "match": "^\\s*(catalog|provenance|extends|include|layers|stages)\\b\\s*([A-Za-z][A-Za-z0-9_-]*)?",
+      "captures": {
+        "1": { "name": "keyword.control.llp" },
+        "2": { "name": "entity.name.namespace.llp" }
+      }
+    },
+    "decl": {
+      "match": "^\\s*(type|namespace|pred|bwd|weight|guard|input|output|stage|qui)\\b\\s*([A-Za-z][A-Za-z0-9_-]*)?",
+      "captures": {
+        "1": { "name": "storage.type.llp" },
+        "2": { "name": "entity.name.function.llp" }
+      }
+    },
+    "rulehead": {
+      "match": "^\\s*([a-z][A-Za-z0-9_-]*)\\s*(\\[)([A-Za-z][A-Za-z0-9_-]*)(\\])\\s*(:)",
+      "captures": {
+        "1": { "name": "entity.name.function.llp" },
+        "3": { "name": "entity.name.tag.llp" },
+        "5": { "name": "punctuation.separator.llp" }
+      }
+    },
+    "weight": {
+      "match": "(@w)\\s*(~)?\\s*([A-Za-z][A-Za-z0-9_-]*|[0-9.]+)",
+      "captures": {
+        "1": { "name": "keyword.operator.llp" },
+        "2": { "name": "keyword.operator.llp" },
+        "3": { "name": "support.function.llp" }
+      }
+    },
+    "operators": {
+      "patterns": [
+        { "name": "keyword.operator.lolli.llp", "match": "-o" },
+        { "name": "keyword.operator.horn.llp", "match": ":-" },
+        { "name": "keyword.operator.distinct.llp", "match": "<>" },
+        { "name": "keyword.operator.tensor.llp", "match": "\\*" },
+        { "name": "keyword.other.reads.llp", "match": "\\b(reads|if|produce|consume|one)\\b" }
+      ]
+    },
+    "persist": {
+      "match": "(\\$)([A-Za-z][A-Za-z0-9_-]*)",
+      "captures": {
+        "1": { "name": "keyword.operator.persist.llp" },
+        "2": { "name": "support.class.llp" }
+      }
+    },
+    "variable": {
+      "name": "variable.other.llp",
+      "match": "\\b[A-Z][A-Za-z0-9_-]*\\b"
+    },
+    "number": {
+      "name": "constant.numeric.llp",
+      "match": "\\b[0-9]+(\\.[0-9]+)?\\b|\\.[0-9]+"
+    }
+  }
+}

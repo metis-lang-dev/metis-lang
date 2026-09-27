@@ -1,0 +1,148 @@
+# OCaml parity corpus — mirrors gen_ir_goldens.py
+case sysadmin-uu-1t
+llp sysadmin2.llp
+registry sysadmin
+init m(i0) 1
+init run(a) 1
+init run(b) 1
+steps 9
+query run(a)
+query run(b)
+query down(a)
+query down(b)
+lik run(a)=1 run(b)=1
+lik run(a)=0
+end
+case sysadmin-uu-mid
+llp sysadmin2.llp
+registry sysadmin
+init m(i0) 1
+init run(a) 1
+init run(b) 1
+steps 5
+query nrun(a)
+query ndown(a)
+end
+case sysadmin-ud-reboot-2t
+llp sysadmin2.llp
+registry sysadmin
+init m(i0) 1
+init run(a) 1
+init down(b) 1
+init rb(b) 1
+steps 18
+query run(a)
+query run(b)
+end
+case cascade
+llp cascade.llp
+registry cascade
+init ta 1
+steps 3
+query a
+query b
+query zb
+lik b=1
+lik b=1 zb=1
+end
+case triway
+llp triway.llp
+registry triway
+init tk 1
+steps 1
+query s
+query r
+query f
+end
+case ring6-2t
+llp ring6.llp
+registry ring6
+init m(i0) 1
+init run(c0) 1
+init down(c1) 1
+init run(c2) 1
+init down(c3) 1
+init run(c4) 1
+init down(c5) 1
+steps 42
+query run(c0)
+query run(c1)
+query run(c2)
+query run(c3)
+query run(c4)
+query run(c5)
+end
+case cascade-inc
+llp cascade-inc.llp
+registry cascade
+init ta 1
+steps 3
+query a
+query b
+query zb
+end
+case packmark
+llp packbase.llp
+pack packmark.llp
+registry packcoin
+init coin 1
+init mkt 1
+steps 4
+query heads
+query seen
+query unseen
+end
+case nav4-1step
+llp nav4.llp
+registry nav4
+init at(c00) 1
+steps 1
+query at(c01)
+query at(c10)
+query dead
+end
+case road-close
+llp road-close.llp
+registry roadclose
+init emvt 1
+init cmd(keep) 1
+init gclose 1
+init on(ego,l2) 1
+init on(alfa,l2) 1
+steps 6
+query crash
+query gclose
+query gsafe
+end
+case xtraffic1-1t
+llp xtraffic1.llp
+registry xtraffic1
+init mvt 1
+init rob(x3_y1) 1
+init o(x1_y2) 1
+init e(x2_y2) 1
+init o(x3_y2) 1
+init cmdnorth 1
+steps 14
+query rob(x3_y2)
+query o(x2_y2)
+query o(x3_y2)
+query o(x1_y2)
+lik o(x3_y2)=1
+end
+case gol4-1t
+llp gol4.llp
+registry gol4
+init m(i0) 1
+init a(g00) 1
+init a(g01) 1
+init d(g10) 1
+init d(g11) 1
+init force(g10) 1
+steps 15
+query a(g00)
+query a(g01)
+query a(g10)
+query a(g11)
+lik a(g10)=1 a(g00)=0
+end

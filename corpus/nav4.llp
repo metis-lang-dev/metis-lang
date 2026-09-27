@@ -1,0 +1,8 @@
+catalog nav4 1.
+provenance hand "corpus: 2x2 navigation instance, one exact step" "2026-07-21".
+include "nav_domain.llp".
+type cell {c00 c01 c10 c11}.
+north(c00,c01). north(c10,c11).
+south(c01,c00). south(c11,c10).
+east(c00,c10). east(c01,c11).
+west(c10,c00). west(c11,c01).

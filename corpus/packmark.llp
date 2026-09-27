@@ -1,0 +1,13 @@
+catalog packmark 1.
+extends packbase.
+provenance hand "triangle pack fixture: packs may only ADD" "2026-07-21".
+namespace mk produce (pack).
+pred mkt : mk.
+pred seen : mk.
+pred unseen : mk.
+stage note {
+  %% pack observes heads: reads base state, writes only its own.
+  obs [pack] : mkt * $heads -o seen.
+  %% pack observes tails: the complement observation.
+  obt [pack] : mkt * $tails -o unseen.
+}

@@ -1,0 +1,73 @@
+
+catalog ring 1.
+provenance hand "generated ring instance" "2026-07-19".
+layers (dyn).
+stages (mark update sweep).
+type computer {c0 c1 c2 c3 c4 c5}.
+type idx {i0 i1 i2 i3 i4 i5 i6}.
+namespace state produce (dyn).
+namespace chain produce (dyn).
+pred run(computer) : state.
+pred down(computer) : state.
+pred prev(computer) : state.
+pred pdown(computer) : state.
+pred tok(computer) : state.
+pred nrun(computer) : state.
+pred ndown(computer) : state.
+pred rb(computer) : state.
+pred m(idx) : chain.
+pred u(idx) : chain.
+pred s(idx) : chain.
+bwd cidx(computer,idx).
+bwd succ(idx,idx).
+bwd adj(computer,computer).
+cidx(c0,i0). cidx(c1,i1). cidx(c2,i2). cidx(c3,i3). cidx(c4,i4). cidx(c5,i5).
+succ(i0,i1). succ(i1,i2). succ(i2,i3). succ(i3,i4). succ(i4,i5). succ(i5,i6).
+adj(c0,c5). adj(c0,c1). adj(c1,c0). adj(c1,c2). adj(c2,c1). adj(c2,c3). adj(c3,c2). adj(c3,c4). adj(c4,c3). adj(c4,c5). adj(c5,c4). adj(c5,c0).
+weight cpt(C) reads {rb(C), prev(D) if adj(C,D)}.
+weight rp(C) reads {rb(C)}.
+stage mark {
+  %% Snapshot a running computer: prev + its update token.
+  mr [dyn] : m(I) * run(C) * cidx(C,I) * succ(I,I2)
+    -o prev(C) * tok(C) * m(I2).
+  %% Snapshot a down computer: pdown + its update token.
+  md [dyn] : m(I) * down(C) * cidx(C,I) * succ(I,I2)
+    -o pdown(C) * tok(C) * m(I2).
+}
+
+stage update {
+  %% Was running, stays up: Bernoulli(cpt) from the snapshot.
+  up [dyn] : u(I) * tok(C) * $prev(C) * cidx(C,I) * succ(I,I2)
+    -o nrun(C) * u(I2)  @w cpt(C).
+  %% Was running, goes down: the complement branch.
+  dn [dyn] : u(I) * tok(C) * $prev(C) * cidx(C,I) * succ(I,I2)
+    -o ndown(C) * u(I2)  @w ~cpt(C).
+  %% Was down, self-revives: Bernoulli(rp).
+  rv [dyn] : u(I) * tok(C) * $pdown(C) * cidx(C,I) * succ(I,I2)
+    -o nrun(C) * u(I2)  @w rp(C).
+  %% Was down, stays down.
+  st2 [dyn] : u(I) * tok(C) * $pdown(C) * cidx(C,I) * succ(I,I2)
+    -o ndown(C) * u(I2)  @w ~rp(C).
+}
+
+stage sweep {
+  %% Commit: was-running computer whose outcome is up.
+  swa [dyn] : s(I) * prev(C) * nrun(C) * cidx(C,I) * succ(I,I2)
+    -o run(C) * s(I2).
+  %% Commit: was-running computer whose outcome is down.
+  swb [dyn] : s(I) * prev(C) * ndown(C) * cidx(C,I) * succ(I,I2)
+    -o down(C) * s(I2).
+  %% Commit: was-down computer that revived.
+  swc [dyn] : s(I) * pdown(C) * nrun(C) * cidx(C,I) * succ(I,I2)
+    -o run(C) * s(I2).
+  %% Commit: was-down computer still down.
+  swd [dyn] : s(I) * pdown(C) * ndown(C) * cidx(C,I) * succ(I,I2)
+    -o down(C) * s(I2).
+}
+
+%% Snapshot complete -> update pass.
+qui mu [dyn] : mark * m(i6) -o update * u(i0).
+%% Update pass complete -> commit.
+qui us [dyn] : update * u(i6) -o sweep * s(i0).
+%% Commit complete -> next tick's snapshot.
+qui sm [dyn] : sweep * s(i6) -o mark * m(i0).

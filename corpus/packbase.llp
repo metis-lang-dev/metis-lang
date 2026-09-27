@@ -1,0 +1,17 @@
+catalog packbase 1.
+provenance hand "triangle pack fixture: the base" "2026-07-21".
+layers (dyn pack).
+stages (roll note).
+namespace st produce (dyn).
+pred coin : st.
+pred heads : st.
+pred tails : st.
+weight ph reads {}.
+stage roll {
+  %% heads branch.
+  h [dyn] : coin -o heads  @w ph.
+  %% tails branch.
+  t [dyn] : coin -o tails  @w ~ph.
+}
+%% roll committed -> note stage.
+qui rn [dyn] : roll -o note.

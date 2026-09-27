@@ -1,0 +1,3 @@
+catalog cascadeinc 1.
+provenance hand "include gate: instance adopts domain layers/stages" "2026-07-21".
+include "cascade-dom.llp".
