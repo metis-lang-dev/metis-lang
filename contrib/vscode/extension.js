@@ -11,9 +11,12 @@
 //                    file from another package gets its own fresh
 //                    instance. '#'-directive lines apply to the live
 //                    session; after editing rules, save and send `reload`.
-//   ctrl+alt+enter   "Send to Interpreter" — run the whole buffer's
-//                    embedded '#'-directive case (unsaved edits included)
-//                    through the language server, into an output channel.
+//   ctrl+alt+enter   "Run Embedded Case in REPL" — save the file, open
+//                    its REPL, send `trace`: replays the whole embedded
+//                    '#'-directive case (= metisc --run) fresh from
+//                    #init, leaving the interactive session untouched.
+//                    (The output-channel variant via the language server
+//                    stays in the palette as "Send to Interpreter".)
 const fs = require("fs");
 const path = require("path");
 const { commands, window, workspace } = require("vscode");
@@ -114,6 +117,14 @@ function sendToRepl() {
     commands.executeCommand("cursorDown");
 }
 
+async function runCaseInRepl() {
+  const ed = activeLlpEditor();
+  if (!ed) return;
+  if (ed.document.isDirty) await ed.document.save();
+  const t = openRepl();
+  if (t) t.sendText("trace", true);
+}
+
 // -- run the whole embedded case through the language server ------------
 
 async function sendToInterpreter() {
@@ -149,6 +160,7 @@ function activate(context) {
   context.subscriptions.push(
     commands.registerCommand("llp.sendToRepl", sendToRepl),
     commands.registerCommand("llp.openRepl", openRepl),
+    commands.registerCommand("llp.runCaseInRepl", runCaseInRepl),
     commands.registerCommand("llp.sendToInterpreter", sendToInterpreter),
     window.onDidCloseTerminal(term => {
       for (const [k, v] of repls) if (v === term) repls.delete(k);
