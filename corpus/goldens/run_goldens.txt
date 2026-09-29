@@ -1,0 +1,13 @@
+case love_triangle steps=6 seeds=3
+I eros(helena,hermia) 1
+I eros(hermia,helena) 1
+I eros(helena,lysander) 1
+I eros(lysander,hermia) 1
+T 1 jealousy[A=helena,B=hermia,C=hermia] jealousy[A=helena,B=lysander,C=hermia] jealousy[A=hermia,B=helena,C=lysander] jealousy[A=helena,B=hermia,C=hermia] jealousy[A=hermia,B=helena,C=lysander] move_on[A=hermia,B=helena]
+F 1 go anger(hermia,hermia):2 anger(hermia,lysander):1 anger(lysander,helena):2 anger(lysander,hermia):2 eros(helena,hermia):1 eros(helena,lysander):1 eros(lysander,hermia):1
+T 2 jealousy[A=helena,B=hermia,C=hermia] jealousy[A=helena,B=lysander,C=hermia] jealousy[A=helena,B=hermia,C=hermia] move_on[A=hermia,B=helena] jealousy[A=lysander,B=hermia,C=helena] jealousy[A=lysander,B=hermia,C=helena]
+F 2 go anger(helena,hermia):2 anger(helena,lysander):2 anger(hermia,hermia):2 anger(hermia,lysander):1 eros(helena,hermia):1 eros(helena,lysander):1 eros(lysander,hermia):1
+T 3 jealousy[A=hermia,B=helena,C=helena] jealousy[A=helena,B=lysander,C=hermia] jealousy[A=helena,B=lysander,C=hermia] jealousy[A=hermia,B=helena,C=helena] jealousy[A=lysander,B=hermia,C=helena] move_on[A=helena,B=hermia]
+F 3 go anger(helena,helena):2 anger(helena,lysander):1 anger(hermia,helena):2 anger(hermia,lysander):2 eros(helena,lysander):1 eros(hermia,helena):1 eros(lysander,hermia):1
+Q anger(hermia,helena) 1/3
+Q eros(helena,hermia) 2/3

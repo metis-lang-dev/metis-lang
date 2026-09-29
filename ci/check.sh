@@ -71,4 +71,15 @@ awk '/SAMPLE PARITY/ { split($3, s, "/");
     || { cat "$WORK/sample.out"; exit 1; }
 grep "SAMPLE PARITY" "$WORK/sample.out"
 
+echo "== 8. embedded directives: '#' lines are compiler-invisible; --run replays them"
+# the corpus love triangle carries the origin's trace as '#'-directives;
+# it must still roundtrip (gate here, not 3: it is not a manifest case)
+# and --run must reproduce the committed seeded traces byte-for-byte.
+printf 'case love-triangle-rt\nllp love_triangle.llp\nsteps 1\nend\n' \
+    > "$WORK/rt_directives.txt"
+cp "$ROOT/corpus/love_triangle.llp" "$WORK/"
+"$ROOT/src/metisc" --roundtrip "$WORK/rt_directives.txt"
+"$ROOT/src/metisc" --run "$ROOT/corpus/love_triangle.llp" > "$WORK/run.txt"
+diff -u "$ROOT/corpus/goldens/run_goldens.txt" "$WORK/run.txt"
+
 echo "ALL GATES GREEN"

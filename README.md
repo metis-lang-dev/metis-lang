@@ -44,6 +44,8 @@ src/metisc corpus/manifest.txt          # emit the IR corpus
 src/metisc --keys corpus/manifest.txt   # canonical program keys
 src/metisc --roundtrip corpus/manifest.txt
 src/metisc --sample corpus/sample_manifest.txt
+src/metisc --run corpus/love_triangle.llp   # replay a file's embedded
+                                            # '#'-directive case (spec §8)
 ```
 
 ## Status

@@ -1,8 +1,8 @@
 {
   "name": "metis-llp",
   "displayName": "Metis LLP",
-  "description": "Rulescript v2 (.llp) language support — syntax highlighting + the metis toolchain as a language server (real compiler diagnostics, hover, completion, outline).",
-  "version": "0.1.0",
+  "description": "Rulescript v2 (.llp) language support — syntax highlighting, the metis toolchain as a language server (real compiler diagnostics, hover, completion, outline), and the metis REPL (shift+enter sends to it, python-extension style).",
+  "version": "0.1.2",
   "publisher": "metis",
   "license": "MIT",
   "engines": { "vscode": "^1.75.0" },
@@ -21,6 +21,44 @@
       "scopeName": "source.llp",
       "path": "./syntaxes/llp.tmLanguage.json"
     }],
+    "commands": [{
+      "command": "llp.sendToRepl",
+      "title": "LLP: Send Line/Selection to REPL",
+      "enablement": "editorLangId == llp"
+    }, {
+      "command": "llp.openRepl",
+      "title": "LLP: Open REPL for This File",
+      "enablement": "editorLangId == llp"
+    }, {
+      "command": "llp.sendToInterpreter",
+      "title": "LLP: Run Embedded Case (Send to Interpreter)",
+      "enablement": "editorLangId == llp"
+    }],
+    "keybindings": [{
+      "command": "llp.sendToRepl",
+      "key": "shift+enter",
+      "when": "editorTextFocus && editorLangId == llp && !findInputFocussed && !replaceInputFocussed"
+    }, {
+      "command": "llp.sendToInterpreter",
+      "key": "ctrl+alt+enter",
+      "mac": "cmd+alt+enter",
+      "when": "editorTextFocus && editorLangId == llp"
+    }],
+    "menus": {
+      "editor/context": [{
+        "command": "llp.sendToRepl",
+        "when": "editorLangId == llp",
+        "group": "navigation@1"
+      }, {
+        "command": "llp.openRepl",
+        "when": "editorLangId == llp",
+        "group": "navigation@2"
+      }, {
+        "command": "llp.sendToInterpreter",
+        "when": "editorLangId == llp",
+        "group": "navigation@3"
+      }]
+    },
     "configuration": {
       "title": "Metis LLP",
       "properties": {

@@ -14,6 +14,11 @@ Tokens, longest-match, in priority order:
     doc      %%<to end of line>          (kept; leading/trailing ws
                                           stripped after '%%')
     comment  %<not %><to end of line>    (dropped; also bare '%$')
+    directive #<to end of line>          (dropped, like comment; a
+                                          LINE whose first non-blank
+                                          char is '#' is additionally
+                                          an interpreter case line,
+                                          §8 — never compiler input)
     string   "..."                       (no escapes, no newline)
     arrow    -o                          (must NOT be followed by
                                           [A-Za-z0-9_-])
@@ -171,3 +176,27 @@ guards only on bwd preds; guard vars declared on the schema.
 - The `stages(...)` header is the PROGRAM stage order (semantic:
   initial stage is its first element unless overridden at ground
   time; the IR schedule follows it).
+
+## 8. Interpreter directives (compiler-invisible)
+
+A `.llp` may embed its own case as `#`-directive lines — the Ceptre
+lineage's in-file `#trace`, restored as a comment class. This is NOT
+new syntax under the freeze: the compiler lexes `#...` exactly like a
+`%` comment, so the AST, the compiled catalog and the canonical
+program_key are byte-identical with or without them.
+
+A directive is a line whose first non-blank character is `#`; its
+body is ONE case-manifest line, same vocabulary, same driver code
+(`init <atom> <count>`, `steps <n>`, `seeds <n>`, `unknown <atom>`,
+`query <atom>`, `lik <atom>=<v> ...`). At most one `init` line per
+atom. A trailing `#...` after code on the same line is lexed away
+but is NOT a directive.
+
+`metisc --run <file.llp>` builds the embedded case (`case` name =
+the file's basename; `llp` = the file itself) and replays it on the
+reference sampler: `I` init lines, then per seed a `T` line of fired
+canonical event names (`-` if none) and the `F` final line
+(06-sampler-wire), then `Q <atom> <hit>/<seeds>` presence counts.
+Directives are a dev/discovery channel: certified expectations stay
+in manifests, and pretty() does not reproduce directives (a
+parse→pretty rewrite drops them).

@@ -5,6 +5,7 @@
   "patterns": [
     { "include": "#doc" },
     { "include": "#comment" },
+    { "include": "#directive" },
     { "include": "#string" },
     { "include": "#header" },
     { "include": "#decl" },
@@ -23,6 +24,14 @@
     "comment": {
       "name": "comment.line.percentage.llp",
       "match": "%(?!%).*$"
+    },
+    "directive": {
+      "match": "^\\s*(#)\\s*(init|steps|seeds|unknown|query|lik)?(.*)$",
+      "captures": {
+        "1": { "name": "punctuation.definition.directive.llp" },
+        "2": { "name": "keyword.other.directive.llp" },
+        "3": { "name": "meta.preprocessor.llp" }
+      }
     },
     "string": {
       "name": "string.quoted.double.llp",

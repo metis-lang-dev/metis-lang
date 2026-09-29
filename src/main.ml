@@ -118,6 +118,20 @@ let selftest () =
      "0.27860113025513866"];
   print_endline "selftest ok"
 
+(* the case vocabulary shared by manifests and '#'-directives
+   embedded in a .llp (00-language-spec §7): ONE line syntax, so the
+   interpreter can never drift from the manifest driver *)
+let case_line c = function
+  | ["init"; a; n] ->
+    c.c_init <- c.c_init @ [(a, int_of_string n)]; true
+  | ["steps"; n] -> c.c_steps <- int_of_string n; true
+  | ["seeds"; n] -> c.c_seeds <- int_of_string n; true
+  | ["unknown"; a] -> c.c_unknowns <- c.c_unknowns @ [a]; true
+  | ["query"; a] -> c.c_queries <- a :: c.c_queries; true
+  | "lik" :: clamps ->
+    c.c_liks <- List.map parse_clamp clamps :: c.c_liks; true
+  | _ -> false
+
 let drive manifest per_case =
   let dir = Filename.dirname manifest in
   let ic = open_in manifest in
@@ -126,25 +140,71 @@ let drive manifest per_case =
      while true do
        let l = String.trim (input_line ic) in
        if l = "" || l.[0] = '#' then ()
+       else if case_line !cur (split_ws l) then ()
        else match split_ws l with
          | ["case"; n] -> !cur.c_name <- n
          | ["llp"; p] -> !cur.c_llp <- p
          | ["pack"; p] -> !cur.c_pack <- Some p
          | ["registry"; _] -> ()   (* bindings are native: referee-
                                       side only, never symbolic *)
-         | ["init"; a; n] ->
-           !cur.c_init <- !cur.c_init @ [(a, int_of_string n)]
-         | ["steps"; n] -> !cur.c_steps <- int_of_string n
-         | ["seeds"; n] -> !cur.c_seeds <- int_of_string n
-         | ["unknown"; a] ->
-           !cur.c_unknowns <- !cur.c_unknowns @ [a]
-         | ["query"; a] -> !cur.c_queries <- a :: !cur.c_queries
-         | "lik" :: clamps ->
-           !cur.c_liks <- List.map parse_clamp clamps :: !cur.c_liks
          | ["end"] -> per_case dir !cur; cur := fresh ()
          | _ -> failwith ("bad manifest line: " ^ l)
      done
    with End_of_file -> close_in ic)
+
+(* --run: a .llp carrying its own case as '#'-directives (lines whose
+   first non-blank char is '#'; the lexer drops them, so the compiled
+   catalog and its key are identical with or without them). *)
+let embedded_case path =
+  let ic = open_in path in
+  let c = fresh () in
+  c.c_name <- Filename.remove_extension (Filename.basename path);
+  c.c_llp <- Filename.basename path;
+  (try
+     while true do
+       let l = String.trim (input_line ic) in
+       if String.length l > 0 && l.[0] = '#' then begin
+         let body = String.trim
+             (String.sub l 1 (String.length l - 1)) in
+         match split_ws body with
+         | [] -> ()
+         | parts ->
+           if not (case_line c parts) then
+             failwith ("bad directive: " ^ l)
+       end
+     done
+   with End_of_file -> close_in ic);
+  c
+
+let run_file path =
+  let c = embedded_case path in
+  if c.c_steps = 0 then failwith "no #steps directive";
+  let seeds = if c.c_seeds = 0 then 1 else c.c_seeds in
+  let (_, _, prog) = build (Filename.dirname path) c in
+  Printf.printf "case %s steps=%d seeds=%d\n"
+    c.c_name c.c_steps seeds;
+  List.iter (fun (a, n) -> Printf.printf "I %s %d\n" a n) c.c_init;
+  let events = Refsample.canonical_events prog in
+  let queries = List.rev c.c_queries in
+  let hits = List.map (fun q -> (q, ref 0)) queries in
+  for seed = 1 to seeds do
+    let (trace, final) = Refsample.run_trace prog c.c_steps seed in
+    Printf.printf "T %d %s\n" seed
+      (match trace with
+       | [] -> "-"
+       | _ -> String.concat " "
+                (List.map (fun i ->
+                     events.(i).Refsample.ev.Ground.ev_name) trace));
+    print_endline (Refsample.final_line seed final);
+    let (_, kappa) = final in
+    List.iter (fun (q, r) ->
+        if List.exists (fun (a, n) -> a = q && n > 0) kappa then
+          incr r)
+      hits
+  done;
+  List.iter (fun (q, r) ->
+      Printf.printf "Q %s %d/%d\n" q !r seeds)
+    hits
 
 let () =
   match Array.to_list Sys.argv with
@@ -152,9 +212,11 @@ let () =
   | [_; "--keys"; manifest] -> drive manifest key_case
   | [_; "--roundtrip"; manifest] -> drive manifest roundtrip_case
   | [_; "--sample"; manifest] -> drive manifest sample_case
+  | [_; "--run"; llp] -> run_file llp
   | [_; manifest] -> drive manifest run_case
   | _ ->
     prerr_endline
       "usage: metisc <manifest> | --keys <manifest> | \
-       --roundtrip <manifest> | --sample <manifest> | --selftest";
+       --roundtrip <manifest> | --sample <manifest> | \
+       --run <file.llp> | --selftest";
     exit 2

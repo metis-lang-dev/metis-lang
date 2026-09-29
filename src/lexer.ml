@@ -39,6 +39,12 @@ let tokens text =
         emit (Doc (trim (String.sub line 2 (String.length line - 2))));
       i := j
     end
+    else if c = '#' then begin
+      (* #directive: the interpreter channel (embedded case lines);
+         compiler-invisible, runs to end of line *)
+      let (_, j) = take_while (fun ch -> ch <> '\n') !i in
+      i := j
+    end
     else if c = '"' then begin
       let (s, j) = take_while (fun ch -> ch <> '"' && ch <> '\n')
           (!i + 1) in
