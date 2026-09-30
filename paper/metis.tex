@@ -20,6 +20,7 @@
 \newcommand{\lolli}{\multimap}
 \newcommand{\tensor}{\otimes}
 \newcommand{\bang}{\mathord{!}}
+\newcommand{\parr}{\bindnasrepma}    % ⅋ (reversed ampersand), from stmaryrd
 \newcommand{\sem}[1]{\llbracket #1 \rrbracket}
 \newcommand{\ff}[2]{#1^{\underline{#2}}}          % falling factorial
 \newcommand{\R}{\mathbb{R}}
@@ -77,10 +78,13 @@ is \stmech{} (instances-equals-$\varphi$ and the pushforward identity);
 Theorem~\ref{thm:filter} is \stmech{}; the descent skeleton of
 Theorem~\ref{thm:trace} (invariance of site-factored weights under
 adjacent transposition of independent events, hence under Mazurkiewicz
-equivalence) is \stmech{} in abstract form. The repository split is
-reflected throughout: the language product (compiler, runtime, corpus,
-specs, mechanization) is public at \repourl; the Python referee toolkit
-(\texttt{metispy}) and catalogs are sibling repositories.
+equivalence) is \stmech{} in abstract form. A new \S\ref{sec:intro} passage
+(\emph{What the lollipop buys}) separates the Boolean half of the
+logic--probability correspondence from the directional half this paper
+compiles. The repository split is reflected throughout: the language
+product (compiler, runtime, corpus, specs, mechanization) is public at
+\repourl; the Python referee toolkit (\texttt{metispy}) and catalogs
+are sibling repositories.
 \endgroup
 
 \begin{abstract}
@@ -138,6 +142,44 @@ the ensemble: \emph{sum} over derivations is filtering and prediction;
 \emph{argmax} is most-probable explanation and planning;
 \emph{reweighting by evidence} is diagnosis and behavior identification.
 Probability selects among proofs; proof theory generates them.
+
+\paragraph{What the lollipop buys.} For the experienced reader it
+pays to separate, at the door, the two halves of the logic--probability
+correspondence, because they are statements of different kinds. The
+\emph{Boolean} half --- events form an algebra, probability is a
+measure on it, $\wedge/\vee/\neg$ are $\cap/\cup/\complement$ --- is
+classical \cite{Kol33}, geometrically exact, and structurally inert:
+it says which events exist and yields a flat joint measure, but
+nothing about how the joint \emph{factors}. Everything substantive in
+this paper lives in the other half: the linear implication
+$A \lolli B$ read as the conditional $P(B \mid A)$. This is not
+another Venn-style equivalence; it is a statement about
+\emph{direction and factorization}, which the event algebra cannot
+express at all. A BN node with its parents is one lollipop --- EFD's
+box axiom: negative premises, one positive conclusion, a CPT, with
+$A \lolli B = A^\perp \parr B$ \cite{Gir87} the reason implication
+and box share a shape; the chain rule
+$P(x_1 \ldots x_n) = \prod_i P(x_i \mid \mathrm{pa}_i)$ is a
+composition of lollipops (in Markov-categorical terms: conditionals
+are directed morphisms and composition is the chain rule
+\cite{CJ19,Fri20}); a DBN's transition kernel is one lollipop per
+slice. The reading is load-bearing three times over in what follows.
+The emission compiles every clause $c_r \lolli o_r$ into a CPT row
+whose parents are exactly the clause's premises, and the box-rule
+shape is machine-checked on every artifact
+(Proposition~\ref{prop:bpn}). The run measure factorizes per site
+into conditionals given exactly those premises
+(Theorem~\ref{thm:trace}) --- and that factorization, not the flat
+measure, is what the cost certificates, junction trees and exports
+operate on. And the implication is \emph{consuming}: co-enabled
+clauses compete for the same tokens, so conditioning on an outcome
+anticorrelates the alternatives --- explaining-away \emph{is}
+resource competition, priced by the falling factorials of
+Theorem~\ref{thm:preservation} --- a phenomenon the Boolean half is
+structurally blind to, since classical contraction lets a premise be
+used twice. The direction of $\lolli$ is likewise why conditioning
+remains a semantic operation on the measure rather than a syntactic
+one on proofs (\S\ref{sec:obstructions}, O3).
 
 The two directions meet at the occurrence net: each of our runs,
 quotiented by interleaving, is an EFD-style net; our $k$-step measure is
@@ -1163,11 +1205,17 @@ statistics. Adv. Math. 2020.
 \bibitem[Gil77]{Gil77} D. Gillespie. Exact stochastic simulation of
 coupled chemical reactions. J. Phys. Chem. 1977.
 
+\bibitem[Gir87]{Gir87} J.-Y. Girard. Linear logic. Theoretical
+Computer Science 50(1), 1987.
+
 \bibitem[Gir04]{Gir04} J.-Y. Girard. Between logic and quantic: a
 tract. 2004.
 
 \bibitem[GSPN]{GSPN} M. Ajmone Marsan et al. Modelling with
 Generalized Stochastic Petri Nets. Wiley 1995.
+
+\bibitem[Kol33]{Kol33} A. N. Kolmogorov. Grundbegriffe der
+Wahrscheinlichkeitsrechnung. Springer 1933.
 
 \bibitem[Lev18]{Lev18} S. Levine. Reinforcement learning and control
 as probabilistic inference. arXiv:1805.00909.
