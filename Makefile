@@ -9,7 +9,13 @@ metisc:
 check: metisc
 	sh ci/check.sh
 
+formal:
+	cd formal && lake build
+
+paper:
+	cd paper && tectonic metis.tex
+
 clean:
 	$(MAKE) -C src clean
 
-.PHONY: all metisc check clean
+.PHONY: all metisc check formal paper clean

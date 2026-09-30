@@ -22,6 +22,8 @@ This repository is the language product, self-contained:
 | `corpus/` | the parity corpus: `.llp` fixtures, manifests, and **committed goldens**. The goldens' M/Z expectation floats are produced by an independent exact-inference referee (the `metispy` toolkit); everything symbolic is reproduced here byte-for-byte, and the interpreter must reproduce every expectation by table ops alone. |
 | `spec/` | the language spec, IR wire spec, canonical-key spec, sampler wire spec, compiler contracts. |
 | `contrib/` | editor tooling: VS Code extension (grammar + LSP client) and Emacs `llp-mode`. |
+| `paper/` | the paper (draft 0.3, LaTeX): *Behavior Programs as Measures over Proofs*. `make paper` (needs [tectonic](https://tectonic-typesetting.github.io)). |
+| `formal/` | the Lean 4 mechanization of the paper's metatheory (Theorem 3 in full; the cores of Theorems 1, 2, 4). `make formal` (needs [elan](https://github.com/leanprover/elan); mathlib is fetched by `lake exe cache get`). Optional — the language build stays OCaml + C++ only. |
 
 ## Build & check
 

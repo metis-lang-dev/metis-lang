@@ -6,3 +6,6 @@ src/metisc
 contrib/vscode/node_modules/
 contrib/vscode/*.vsix
 contrib/vscode/package-lock.json
+paper/*.log
+paper/*.xdv
+paper/*.aux

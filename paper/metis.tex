@@ -1,0 +1,1202 @@
+% Behavior Programs as Measures over Proofs — draft 0.3
+% Build: tectonic metis.tex   (or pdflatex + bibtex-free; references are inline)
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1.1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{stmaryrd}
+\usepackage{microtype}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\definecolor{linkblue}{rgb}{0.1,0.15,0.45}
+\usepackage[colorlinks=true,linkcolor=linkblue,citecolor=linkblue,urlcolor=linkblue]{hyperref}
+\usepackage{cmap}
+
+% ---- notation -------------------------------------------------------------
+\newcommand{\llp}{\textsc{llp}}
+\newcommand{\metisc}{\texttt{metisc}}
+\newcommand{\lolli}{\multimap}
+\newcommand{\tensor}{\otimes}
+\newcommand{\bang}{\mathord{!}}
+\newcommand{\sem}[1]{\llbracket #1 \rrbracket}
+\newcommand{\ff}[2]{#1^{\underline{#2}}}          % falling factorial
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Rpos}{\R_{+}}
+\newcommand{\mllb}{\mathrm{MLL}^{\mathrm B}}
+\newcommand{\cclass}{\mathcal{F}}                  % the factorizable class
+\newcommand{\repourl}{\url{https://github.com/metis-lang-dev/metis-lang}}
+
+% status markers
+\newcommand{\stproved}{[\textsf{proved}]}
+\newcommand{\stmech}{[\textsf{mechanized}]}
+\newcommand{\stpinned}{[\textsf{pinned}]}
+\newcommand{\stsketch}{[\textsf{sketch}]}
+\newcommand{\stopen}{[\textsf{open}]}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{lemma}{Lemma}
+\theoremstyle{definition}
+\newtheorem*{definition}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\title{\textbf{Behavior Programs as Measures over Proofs}\\[1ex]
+\large Staged stochastic multiset rewriting with a linear-logic front end,
+an $\mllb$ proof-net intermediate representation, and an executable,
+certified, machine-checked compilation pipeline}
+\author{The metis project\thanks{Sources, corpus, goldens, and the Lean
+mechanization: \repourl. Correspondence: \texttt{info@robofortis.com}.}}
+\date{Draft 0.3 --- 2026-09-30}
+
+\begin{document}
+\maketitle
+
+\begingroup\small\noindent
+\textbf{Status markers.} \stproved{} = proof in this paper;
+\stmech{} = machine-checked in Lean~4 in the public repository
+(directory \texttt{formal/}, \repourl); \stpinned{} = mechanically
+test-pinned in the repository; \stsketch{} = proof sketch, mechanization
+open; \stopen{} = open problem.
+
+\medskip\noindent
+\textbf{Changes from 0.2.} The mission is made explicit
+(\S\ref{sec:intro}): a \emph{formally provable} pipeline from linear
+logic to probability graphs, with the proofs of this paper progressively
+machine-checked. New in this draft: the source converted to \LaTeX; a
+Lean~4 mechanization shipped in the language repository and reported in
+\S\ref{sec:mech} --- Theorem~\ref{thm:image} (equivalence onto the image)
+is now \stmech{}, closing the first half of open problem~1 of draft~0.2;
+the token-individuation counting kernel of Theorem~\ref{thm:preservation}
+is \stmech{} (instances-equals-$\varphi$ and the pushforward identity);
+Theorem~\ref{thm:filter} is \stmech{}; the descent skeleton of
+Theorem~\ref{thm:trace} (invariance of site-factored weights under
+adjacent transposition of independent events, hence under Mazurkiewicz
+equivalence) is \stmech{} in abstract form. The repository split is
+reflected throughout: the language product (compiler, runtime, corpus,
+specs, mechanization) is public at \repourl; the Python referee toolkit
+(\texttt{metispy}) and catalogs are sibling repositories.
+\endgroup
+
+\begin{abstract}
+We present a behavior-planning framework in which a \emph{program} --- a
+catalog of typed, staged, weighted multiset-rewriting rules in the Ceptre
+lineage of intuitionistic linear logic --- denotes a \emph{probability
+measure over its own derivations}. Three readouts of one object coexist:
+proof theory (which derivations exist), operational semantics (how they
+interleave), and measure (how likely each is). We prove that the
+interpreter's run distribution and the denoted $k$-step dynamic Bayesian
+network agree exactly (run-level preservation), characterize the image of
+the denotation as stage-gated mass-action stochastic Petri nets
+(equivalence onto the image, now machine-checked in Lean~4), and show
+that for a statically-recognizable \emph{factorizable class} the measure
+descends to the Mazurkiewicz trace quotient --- runs weigh their
+occurrence nets, not their interleavings --- connecting our compiled
+representation to the Bayesian proof-nets of Ehrhard, Faggian and
+Di~Guardia read in the opposite direction: they evaluate one net where we
+select among many. The correspondence is not only semantic but
+\emph{compiled}: programs lower through a typed ground normal form to a
+proof-net-shaped intermediate representation (\textsc{choice} sites as
+CPT boxes, SSA atom occurrences as wires) on which typing --- including
+machine-checked well-formedness as EFD-style Bayesian proof-nets --- cost
+certificates and canonical hashing are IR-level analyses, and from which
+exact filtering, junction-tree elimination, fixed-budget sampling, tree
+search, a dependency-free C++ interpreter, and standard factor-graph
+export are generated back-ends. Admission-time cost certificates make the
+pipeline deployable in real-time physical systems: programs are rejected
+or downgraded before evaluation, never killed mid-flight. We report exact
+parity chains (interpreter $\doteq$ filter $\doteq$ factored $\doteq$
+exported artifact $\doteq$ C++ interpreter, at $10^{-9}$ across 200+
+gates), provable optimality on IPPC benchmark instances, a growing Lean~4
+mechanization of the metatheory, and honest limits (the $2^n$ support
+cliff and what the factored evaluator does and does not buy back).
+\end{abstract}
+
+\section{Introduction}\label{sec:intro}
+
+Two research programs meet in the middle of this paper.
+
+Ehrhard, Faggian and Di~Guardia (EFD) read a correspondence between
+Bayesian networks and multiplicative linear logic \textbf{right to left}:
+a BN's joint distribution \emph{is} an $\mllb$ proof-net (MLL plus
+probabilistic box axioms carrying CPTs), and exact inference \emph{is}
+the inductive evaluation of that net in probabilistic coherence spaces,
+cost-matched to factor elimination \cite{EFD24,EFD26}. One net, given by
+the model; the computational question is evaluation.
+
+We read the same correspondence \textbf{left to right}. A linear-logic
+program does not denote one proof; it \emph{generates a space of
+derivations} --- plans, explanations, futures. Equipping the
+\textsc{choice} points of the operational semantics with weights makes
+that space a probability space, and the interesting computations are over
+the ensemble: \emph{sum} over derivations is filtering and prediction;
+\emph{argmax} is most-probable explanation and planning;
+\emph{reweighting by evidence} is diagnosis and behavior identification.
+Probability selects among proofs; proof theory generates them.
+
+The two directions meet at the occurrence net: each of our runs,
+quotiented by interleaving, is an EFD-style net; our $k$-step measure is
+a weighted superposition of such nets; conditioning and MAP pick nets out
+of the superposition --- a question that cannot arise on the EFD side,
+where a query has exactly one net.
+
+\paragraph{The mission, stated plainly.} The project's goal is a
+\emph{formally provable} program --- in both senses --- from linear logic
+to probability graphs: a language whose denotation into factored
+probabilistic models is established by theorems, whose theorems are
+progressively machine-checked in a proof assistant, and whose compiled
+artifacts are certified by admission-time checkers so that what the
+deployed interpreter evaluates is exactly what the theorems govern.
+Draft~0.2 carried the theorems on paper and the artifact checks in CI;
+this draft begins discharging the metatheory itself in Lean~4
+(\S\ref{sec:mech}). The three levels of assurance --- paper proof,
+mechanized proof, mechanically pinned artifact --- are marked
+per-statement throughout.
+
+This paper contributes, on the theory side:
+\begin{enumerate}[leftmargin=2em]
+\item \textbf{Run-level preservation} (Theorem~\ref{thm:preservation},
+  \stproved{}, counting kernel \stmech{}): the interpreter's run
+  distribution and the denoted $k$-step DBN are related by a
+  measure-preserving bijection; the falling-factorial \textsc{choice}
+  weights are exactly the token-individuation counts of the
+  ordered-resource interpreter.
+\item \textbf{Exactness of reachable-support filtering}
+  (Theorem~\ref{thm:filter}, \stproved{}, \stmech{}): forward filtering
+  over the reachable support is exact inference on the denoted DBN, not
+  an approximation.
+\item \textbf{Equivalence onto the image} (Theorem~\ref{thm:image},
+  \stproved{}, \stmech{}): the denotation is an equivalence between
+  ground staged programs modulo structural congruence and finite
+  stage-gated mass-action stochastic Petri nets --- the honest
+  ``isomorphism theorem''; logic $\leftrightarrow$ all-of-PGM is
+  obstructed and we say exactly why (\S\ref{sec:obstructions}).
+\item \textbf{Trace invariance on the factorizable class}
+  (Theorem~\ref{thm:trace}, \stproved{}, descent skeleton \stmech{}):
+  for programs admitted by our factored emission, the run weight
+  factorizes per \textsc{choice} site and is invariant under
+  Mazurkiewicz trace equivalence --- the measure is a measure on
+  occurrence nets. Outside the class, per-slice normalizers are
+  interleaving-dependent and the quotient fails in general; the class
+  boundary is \emph{statically recognizable and enforced}.
+\item \textbf{Quiescence is compiled away}
+  (Proposition~\ref{prop:quiescence}, \stproved{}): the stage/quiescence
+  discipline --- the one construct of our source language outside MLL
+  --- is eliminated by the finite-horizon normal form for admitted
+  programs: the IR is quiescence-free. The non-MLL residue is a
+  \emph{source-language} convenience, not a semantic commitment.
+  Moreover the emitted IR is a well-typed \textbf{Bayesian proof-net} in
+  the EFD sense, machine-checked at every serialization
+  (Proposition~\ref{prop:bpn}, \stproved{}, \stpinned{}) --- the static
+  well-formedness half of the Di~Guardia typing question, whose
+  compositional half remains Conjecture~\ref{conj:typing}.
+\end{enumerate}
+
+And on the systems side:
+\begin{enumerate}[leftmargin=2em]\setcounter{enumi}{5}
+\item A \textbf{compilation pipeline} (\S\ref{sec:pipeline}) with the
+  shape of knowledge compilation: \texttt{.llp} source $\to$ typed
+  ground/unrolled normal form $\to$ $\mllb$-shaped IR (sites + SSA
+  occurrences) $\to$ generated back-ends. Slogan: \emph{$\mllb$ is to
+  linear-logic multiset rewriting what SDD circuits are to probabilistic
+  logic programming.}
+\item \textbf{Admission-time cost certificates} (\S\ref{sec:certs}):
+  induced width and total factor-ops computed symbolically from IR
+  scopes before any table exists --- the real-time defense doctrine
+  (reject or downgrade the evaluator ladder at admission; never kill
+  mid-flight).
+\item A \textbf{verification-translator architecture}
+  (\S\ref{sec:cpp}): the compiler (\metisc, OCaml) and the Python
+  referee toolkit are certifier and cross-check; the deployed C++
+  runtime is a $\sim$300-line dependency-free interpreter of the
+  compiled artifact, pinned by golden parity and by external referees.
+\item A \textbf{mechanization} (\S\ref{sec:mech}): a Lean~4 development,
+  shipped in the public language repository, machine-checking
+  Theorem~\ref{thm:image} in full and the cores of
+  Theorems~\ref{thm:preservation}, \ref{thm:filter}
+  and~\ref{thm:trace}. The paper contains no Lean code; statements
+  cited as \stmech{} name their Lean identifiers in \S\ref{sec:mech}.
+\end{enumerate}
+
+What is \emph{not} claimed: novelty of the static
+BN$\leftrightarrow$proof-net correspondence (that is EFD's, published
+first --- see \S\ref{sec:related} for the audit trail); an isomorphism
+between the logic and all of PGM (obstructed,
+\S\ref{sec:obstructions}); completeness of the learning loop (doctrine
+and seams exist; two helpers remain unbuilt, \S\ref{sec:learning}).
+
+\section{The source language and its operational semantics}
+\label{sec:language}
+
+\subsection{Programs}
+
+A \textbf{catalog} declares finite types, namespaces with layer rights,
+predicate signatures, backward (Horn) predicates, ports, and entries.
+Entries are clause \emph{schemas} and link \emph{schemas} over typed
+variables, each carrying a mandatory human-approvable comment and a
+provenance record (\texttt{hand} $\mid$ \texttt{surprise} $\mid$
+\texttt{template}). \textbf{Grounding} $\Pi$-instantiates schemas over
+the signature, prunes by Horn-derivable guards and distinctness
+constraints, and yields a \textbf{ground program}
+\[
+  P = (S,\ (C_s)_{s\in S},\ L,\ s_0,\ m_0)
+\]
+with stages $S$ (ordered), ground clauses $C_s$ per stage, ground links
+$L$, initial stage $s_0$ and initial multiset $m_0$. A ground clause
+\[
+  r:\quad c_r \lolli o_r \quad [\text{persist } p_r] \quad
+  \text{weight } w_r
+\]
+consumes multiset $c_r$, reads (bang-style, never decremented) $p_r$,
+produces $o_r$, and carries a prior weight $w_r \in \Rpos$, optionally
+bound through a \textbf{weight port}: a named factor whose implementation
+lives in a registry, with a \emph{declared read-scope}
+\texttt{reads \{\dots\}} (\S\ref{sec:emission}). A link is a clause that
+additionally switches the active stage and is gated on quiescence.
+
+\subsection{States and the three-tier CHOICE}\label{sec:choice}
+
+A state is $\sigma = (s, m)$: active stage and multiset. One step:
+\begin{itemize}[leftmargin=2em]
+\item \textbf{Tier 0 (clauses).} Enabled clauses of $s$ draw
+  \[
+    W_r(m) = w_r \cdot \varphi(m, r), \qquad
+    \varphi(m, r) = \prod_a \ff{m(a)}{c_r(a)} \cdot \prod_a m(a)^{p_r(a)}
+  \]
+  the falling-factorial transition count (consume) times the power count
+  (reads). One enabled clause is chosen with probability
+  $W_r / \sum_{r'} W_{r'}$. A \textbf{policy hook} may reweight or prune
+  this tier (safety shields, behavior rows); the measure renormalizes.
+\item \textbf{Tier 1 (links).} If no clause of $s$ is enabled
+  (\emph{quiescence}), enabled links of $s$ compete the same way and
+  switch the stage.
+\item \textbf{Tier 2 (done).} Otherwise the state is absorbing.
+\end{itemize}
+\textsc{update} is deterministic given the chosen event. A \textbf{run}
+of horizon $K$ is the sequence of $K$ chosen events (with \texttt{done}
+self-loops); the \textbf{run measure} $\mu_K$ is the product of its
+steps' \textsc{choice} probabilities.
+
+This is the Ceptre operational core \cite{Mar15} --- itself the
+first-order Horn fragment of intuitionistic linear logic as multiset
+rewriting \cite{CS09} --- extended with (i) the weight priors as
+first-class syntax, (ii) weight ports with declared scopes, and (iii) the
+stage/quiescence discipline as tiered \textsc{choice}.
+
+\subsection{Three readouts, one object}
+
+The same $P$ supports: \textbf{proof theory} --- runs are derivations;
+each run's dependency structure is an occurrence net
+(\S\ref{sec:trace}); \textbf{operations} --- the interpreter samples
+runs; \textbf{measure} --- $\mu_K$, with filtering, smoothing, MAP,
+hypothesis posteriors and surprise as queries. Nothing is layered on top
+of anything: all three are readouts of $P$.
+
+\section{Run-level preservation}\label{sec:preservation}
+
+The denoted \textbf{$k$-step DBN} has variables $X@t$ (the event chosen
+at step $t$, including \texttt{quiesce}/\texttt{done}) and $K@t$ (the
+multiset state), with conditionals \emph{defined} by
+\S\ref{sec:choice}'s \textsc{choice} and deterministic \textsc{update}.
+The substantive theorem relates this to the \emph{finer-grained}
+semantics an ordered-resource interpreter (Ceptre's) actually executes,
+where a step chooses not a ground clause but an \textbf{instance}: a
+clause together with an injective assignment of concrete resource tokens
+to its consume slots and a choice of token per read occurrence.
+
+\begin{theorem}[preservation; \stproved{}, counting kernel \stmech{}]
+\label{thm:preservation}
+Fix a horizon $K$. The map that sends an interpreter trajectory
+(sequence of instances) to its event sequence (sequence of ground
+clauses) pushes the interpreter's trajectory distribution forward to
+$\mu_K$, and the induced map on state trajectories is a
+measure-preserving bijection between the interpreter process and the DBN
+process.
+\end{theorem}
+
+\begin{proof}
+Both processes share state space and deterministic \textsc{update}, so
+it suffices to show per-step agreement of the choice distributions; the
+trajectory statement follows by induction on $K$ with the product
+decomposition of both measures.
+
+Fix $\sigma = (s, m)$ at tier 0 (tiers 1--2 are identical on both sides,
+as links carry the same count structure and \texttt{done} is
+deterministic). On the interpreter side, tokens are individuated: the
+multiset $m$ is a set of tokens with $m(a)$ tokens of species $a$. An
+instance of clause $r$ chooses, for each species $a$, an \emph{injective}
+assignment of $c_r(a)$ consume slots to distinct tokens of $a$ --- there
+are $m(a)\,(m(a)-1)\cdots(m(a)-c_r(a)+1) = \ff{m(a)}{c_r(a)}$ such
+assignments --- and, independently, one token per read occurrence ---
+$m(a)^{p_r(a)}$ choices. (Equivalently: an \emph{unordered} choice of
+$c_r(a)$ distinct tokens followed by an ordering onto the slots,
+$\binom{m(a)}{c_r(a)} \cdot c_r(a)! = \ff{m(a)}{c_r(a)}$ --- the count
+is the same whether one individuates slots or only tokens, which is why
+the falling factorial is forced and not a convention.) The instance
+count of $r$ at $m$ is therefore exactly $\varphi(m, r)$. The
+interpreter draws instances with probability proportional to the clause
+prior $w_r$ per instance; hence the total probability of \emph{some}
+instance of $r$ is proportional to $w_r \cdot \varphi(m, r) = W_r(m)$,
+which is the DBN's \textsc{choice} weight. All instances of a fixed $r$
+produce the same successor multiset (removing $c_r$, adding $o_r$ is
+species-level), so the pushforward along instance $\to$ clause is exact,
+and distinct clauses map to their own $W_r$ mass. Normalizing over the
+enabled set gives equality of the one-step kernels.
+\end{proof}
+
+Two corollaries worth naming. First, \emph{substitution collapse
+pricing}: when grounding identifies two variables ($X{=}Y$), the ground
+clause's consume multiset gains multiplicity 2 and $\varphi$ prices it
+as a falling factorial --- the theorem shows this is forced by token
+individuation, not a modeling choice. Second, \emph{explaining away =
+resource competition}: the collider at $X@t$ (parents = the consumed
+species) anti-correlates alternative consumers of the same tokens under
+conditioning, priced exactly by the same counts. \stpinned{}: oracle
+parity $\le 10^{-12}$ on the analytic fixtures, $\le 10^{-9}$ on the
+road corpus, across all horizons. The counting kernel --- instances of
+$r$ at $m$ are equinumerous with $\varphi(m,r)$, and the
+instance-to-clause pushforward carries weight $w_r\,\varphi(m,r)$ ---
+is \stmech{} (\S\ref{sec:mech}).
+
+\begin{theorem}[exact filtering; \stproved{}, \stmech{}]
+\label{thm:filter}
+Let $D_t$ be the forward filter's distribution over states after $t$
+steps, computed over the reachable support only. Then $D_t$ equals the
+DBN's exact marginal at slice $t$.
+\end{theorem}
+
+\begin{proof}
+Induction on $t$. $D_0$ is the point mass at $(s_0, m_0)$. The DBN's
+slice-$(t{+}1)$ marginal is $\sum_\sigma P(\sigma' \mid \sigma)\,
+D_t(\sigma)$ by the law of total probability; because \textsc{update} is
+deterministic, $P(\sigma' \mid \sigma)$ is supported on finitely many
+$\sigma'$ per $\sigma$, and every $\sigma$ with $D_t(\sigma) > 0$ is by
+construction in the filter's support. The filter computes exactly this
+sum. No mass ever leaves the reachable set, so restriction loses
+nothing.
+\end{proof}
+
+The point of stating the triviality: the filter is \emph{not} an
+approximation of PGM inference --- it is variable elimination in the one
+elimination order (time-forward) whose intermediate factors are
+supported on reachable states. Its failure mode is honest: support grows
+like $2^n$ on synchronous-parallel domains (the IPPC cliff,
+\S\ref{sec:cliff}), which is what the factored back-end addresses.
+
+\section{Canonical identity: programs and runs}\label{sec:canonical}
+
+Two identities, two quotients \stpinned{}:
+
+\paragraph{Programs mod presentation.} \texttt{canonical()}
+content-sorts clauses, links and names; \texttt{program\_key()} hashes
+the result (stage order and initial multiset retained --- they are
+semantics). Invariant under presentation shuffles; discriminates weight,
+multiplicity, stage wiring, init and dropped-clause mutations. This key
+is the cache key for every compiled artifact (\S\ref{sec:certs}) ---
+canonical identity is not bookkeeping, it is what makes AOT compilation
+sound.
+
+\paragraph{Runs mod interleaving.} Independence of events is footprint
+disjointness --- writes (consume $\cup$ produce) conflict with
+everything, reads conflict only with writes --- with the stage
+discipline encoded as an implicit resource (clauses read
+\texttt{stage@s}; links write both endpoint stage tokens), so
+cross-stage ordering falls out of the same rule. \texttt{run\_key()}
+hashes the \textbf{Foata normal form} of the trace: the canonical
+layering of the run's occurrence net. Two interleavings of the same
+concurrent run share one key; symmetric ground instances collapse --- a
+quotient we want.
+
+The delicate question --- \emph{does the measure respect this
+quotient?} --- is \S\ref{sec:trace}, and the answer is one of the
+paper's main theorems.
+
+\section{Equivalence onto the image}\label{sec:image}
+
+No isomorphism between the logic and all of PGM exists at the
+implementable level; \S\ref{sec:obstructions} gives the three
+obstructions. The honest strong statement characterizes the image.
+
+\begin{definition}[the image class]
+A \textbf{stage-gated mass-action SPN} is a tuple
+$N = (A, \bar S, T, G, s_0, m_0)$ where $A$ is a finite set of places
+(ground atoms); $\bar S$ is a finite \emph{ordered list} of stage labels
+(stages with no transitions are retained --- they are declared
+structure, not derived); $T$ is a finite \textbf{multiset} of
+\emph{stage transitions}, each a quadruple $(s, c, p, o, w)$ of a stage
+label, consume/read/produce arc multiplicity vectors over $A$, and a
+rate constant $w \in \Rpos$ (a multiset, because nothing forbids two
+indistinguishable transitions, and the firing rule counts them
+separately); $G$ is a finite multiset of \emph{gate transitions}
+$(s, s', c, p, o, w)$ additionally carrying a target stage;
+$s_0 \in \bar S$ and $m_0$ is a marking. The propensity of a transition
+at marking $m$ is $w$ times the mass-action count (falling factorials on
+consumed places, powers on read places), and the firing rule is
+\S\ref{sec:choice} verbatim: stage transitions of the active stage
+compete first, gates fire at stage quiescence and set the register,
+normalization per step.
+\end{definition}
+
+\begin{definition}[structural congruence]
+$P \equiv P'$ iff $P'$ is obtained from $P$ by bijectively renaming
+clause and link \emph{names} and reordering the clause and link lists.
+Atoms, stage labels, stage order, weights, and the initial data are
+fixed pointwise --- they are semantics, not presentation (renaming an
+atom or a stage changes which SPN is denoted; renaming a clause does
+not).
+\end{definition}
+
+\begin{theorem}[equivalence onto the image; \stproved{}, \stmech{}]
+\label{thm:image}
+The denotation $\sem{\cdot}$ from ground staged programs to stage-gated
+mass-action SPNs is (i) total and functional, and constant on
+congruence classes; (ii) surjective; (iii) injective up to structural
+congruence. Hence it descends to a bijection between
+programs-mod-congruence and the class.
+\end{theorem}
+
+\begin{proof}
+(i) \emph{Totality and invariance.} $\sem{P}$ is the
+\S\ref{sec:language} construction: places = the (finitely many) ground
+atoms of the signature, $\bar S$ = the declared stage list in declared
+order, each ground clause $r$ of stage $s$ contributes the stage
+transition $(s, c_r, p_r, o_r, w_r)$, each link the corresponding gate,
+$s_0$ and $m_0$ carried over. Every component of the tuple is assembled
+from the \emph{content} of clauses and links --- names appear nowhere,
+and $T$, $G$ are multisets, so list order appears nowhere either. Hence
+$\sem{\cdot}$ is total, functional, and constant on congruence classes.
+
+(ii) \emph{Surjectivity.} Given $N$ in the class, define a reading-back
+$U(N)$: fix any enumeration $t_1, \dots, t_k$ of the multiset $T$
+(duplicates enumerated with multiplicity) and any enumeration
+$g_1, \dots, g_l$ of $G$; let $U(N)$ have stages $\bar S$ in order,
+clause $r_i$ named freshly (say $c_i$) with stage, multisets and weight
+copied from $t_i$, link $l_j$ named freshly with endpoints and data
+copied from $g_j$, and initial data $(s_0, m_0)$. Then
+$\sem{U(N)} = N$ \emph{on the nose}: each tuple component round-trips
+by construction, and the operational behaviors agree because the
+class's firing rule was \emph{defined} to be \S\ref{sec:choice}. (The
+choice of enumeration changes $U(N)$ only up to $\equiv$, which (i)
+already quotients away.)
+
+(iii) \emph{Injectivity up to congruence.} Suppose
+$\sem{P} = \sem{P'} = N$. From $N$ we recover: the stage list with its
+order (so $P$ and $P'$ declare the same stages, including empty ones),
+$s_0$ and $m_0$, and --- per stage label $s$ --- the multiset of
+content quadruples $(c, p, o, w)$ of the clauses of $s$, and the
+multiset of gate contents $(s, s', c, p, o, w)$ of the links. For each
+stage $s$, the clause lists of $P$ and $P'$ over $s$ induce equal
+content multisets, so there is a bijection between them matching equal
+content; where several clauses share identical content, any matching of
+the duplicates will do, because identical-content clauses are fully
+interchangeable --- swapping them is itself a congruence. The same
+argument gives a per-endpoint-pair matching of links: a link's
+endpoints $(s, s')$ are part of its \emph{content}, so the matching
+automatically respects the stage graph --- this is the point where
+renaming might have interacted with the stage-linking structure, and it
+cannot: clause and link names occur nowhere else in a program (clauses
+do not reference each other or links by name; links reference
+\emph{stages}, and stages are not renamed), so the per-stage and
+per-link matchings assemble into one global renaming-plus-reordering
+with no cross-boundary constraint left to check. That renaming exhibits
+$P \equiv P'$.
+\end{proof}
+
+Two boundary remarks the proof depends on. \emph{Empty stages}: $\bar S$
+retains them; had the SPN carried stages only as the partition induced
+by $T$, a declared-but-unpopulated stage would be forgotten and (iii)
+would fail (two programs differing by an unreachable empty stage would
+collide) --- the class definition is chosen so that the denotation
+forgets \emph{exactly} presentation. \emph{Duplicate transitions}: $T$
+is a multiset for the same reason --- two identical-content clauses
+double the propensity of that content, which a set-valued $T$ would
+silently halve. The theorem is now \stmech{}: the Lean development
+(\S\ref{sec:mech}) formalizes programs as name-carrying lists, the class
+as multiset-valued tuples, congruence as
+renaming-injective-on-names plus permutation, and proves totality,
+invariance, surjectivity (via an explicit fresh-naming section of
+$\sem{\cdot}$) and injectivity-up-to-congruence --- discharging the
+first half of draft~0.2's open problem~1. The \stpinned{} evidence
+remains in force as a fuzz test of the same statement on the real
+implementation: \texttt{program\_key}'s discrimination suite ---
+invariance under 1000 presentation shuffles, discrimination of weight,
+multiplicity, stage-wiring, init and dropped-clause mutations.
+
+Classical context: the $\tensor$-fragment $\leftrightarrow$ Petri
+reachability correspondence is Gunter--Gehlot \cite{GG89} and
+Engberg--Winskel \cite{EW93}; MSR as the Horn fragment of ILL is
+Cervesato--Scedrov \cite{CS09}; the mass-action propensity shape is
+Gillespie's \cite{Gil77}. The assembly --- \emph{staged}, \emph{gated},
+\emph{discrete-time normalized}, with an executable preservation test
+and a mechanized equivalence --- is ours.
+
+\section{The measure on occurrence nets: trace invariance}
+\label{sec:trace}
+
+Here is the problem the seed analysis left open. The engine weights
+$W_r(m)$ are local, but each step's \emph{normalizer} $\sum W_{r'}$
+ranges over everything enabled at that step --- and what is co-enabled
+depends on the interleaving. In general, two interleavings of the same
+occurrence net can carry different products of normalized
+probabilities: the measure lives on sequences, not nets.
+(Abbes--Benveniste's branching cells \cite{AB06} are the general
+repair; importing them wholesale is \stopen{}.)
+
+The factored-emission work yields a large, statically-recognizable
+class where the repair is free.
+
+\begin{definition}[factorizable class $\cclass$]
+A ground program (with its horizon and declared port scopes) is in
+$\cclass$ iff the factored emission (\S\ref{sec:emission}) admits it:
+(a) all multiset counts are 0/1; (b) the stage/tier schedule is
+branch-independent (which micro-step runs which competition is the same
+on every run); (c) at each micro-step, the candidate set forms a
+\textbf{site}: every possibly-enabled event consumes the same anchor
+token, and each candidate's enabledness and weight depend only on a
+\emph{scope} --- its consumed/read atoms plus its port's declared
+\texttt{reads} scope; (d) no event produces an atom that may already be
+present (checked statically or by the runtime mass check).
+\end{definition}
+
+\begin{theorem}[trace invariance on $\cclass$; \stproved{}, descent
+skeleton \stmech{}]\label{thm:trace}
+For $P \in \cclass$, the weight of a run factorizes as
+\[
+  \mu(\mathit{run}) \;=\; \prod_{\text{sites } \sigma \text{ visited}}
+    P(\mathit{chosen}_\sigma \mid \text{scope-valuation}_\sigma)
+\]
+and is invariant under Mazurkiewicz trace equivalence. Consequently
+$\mu_K$ descends to a measure on occurrence nets: \texttt{run\_key}
+classes are measurable atoms, and the $k$-step measure is a weighted sum
+over EFD-style nets.
+\end{theorem}
+
+\begin{proof}
+By (b), every run visits the same sequence of sites, so the product
+ranges over a common index set; it remains to show each factor is
+well-defined on the trace class. Fix a site $\sigma$ and consider two
+runs in one trace class. Their prefixes before $\sigma$ differ by a
+sequence of adjacent transpositions of independent events
+(Mazurkiewicz).
+
+\emph{Lemma (footprint stability).} If events $e, e'$ are independent
+(disjoint footprints in the \S\ref{sec:canonical} sense, including
+stage tokens), then executing $e'$ does not change (i) the truth of any
+atom in $e$'s site scope, nor (ii) $e$'s enabledness. --- Immediate:
+$e$'s scope atoms are among its consumed/read/declared atoms;
+independence says $e'$ writes none of them.
+
+By the lemma and induction on transpositions, the scope valuation at
+site $\sigma$ is equal in both runs. The site's normalizer is
+$\sum_{\text{candidates}} (\text{enabledness} \times w \times
+\text{port-factor})$, and by (c) every term is a function of that scope
+valuation alone --- \emph{this is exactly what the declared
+\texttt{reads} contract buys}: an opaque binding reading undeclared
+global state would break the lemma, which is why the emission rejects
+undeclared ports. Hence each factor agrees; the products agree. With
+(a), $\varphi \equiv 1$, so no falling-factorial term reintroduces
+marking dependence.
+\end{proof}
+
+Three remarks. First, the theorem \emph{identifies our sites with
+branching cells} on $\cclass$: local competition arenas whose choices
+are independent of scheduling --- ``concurrency = probabilistic
+independence'' made constructive by a compiler check. Second, the class
+boundary is \emph{enforced, not assumed}: static admission plus the
+runtime total-mass check ($Z = 1$) convert any reachable violation into
+an error rather than a silent approximation (\stpinned{}: rejection
+gates). Third, outside $\cclass$ the engine semantics remains
+well-defined (Theorems~\ref{thm:preservation}--\ref{thm:filter}); what
+fails is only the descent to nets --- normalizers become
+schedule-dependent, which is precisely the interleaving junk the
+general theory must quotient by force. The descent skeleton --- run
+weights that factor through schedule-stable local factors are invariant
+under adjacent transposition of independent events, hence constant on
+Mazurkiewicz classes --- is \stmech{} in abstract form
+(\S\ref{sec:mech}); the site/scope instantiation for the concrete
+emission remains on paper.
+
+\section{Why no logic \texorpdfstring{$\leftrightarrow$}{<->} PGM
+isomorphism, and what quiescence really is}\label{sec:obstructions}
+
+\textbf{O1 --- interleaving junk.} Sequence-level artifacts can only be
+homomorphic-with-preservation; the isomorphism-grade statement lives at
+the proof-net quotient --- exactly where EFD obtain theirs, and where
+Theorem~\ref{thm:trace} puts us for $\cclass$.
+
+\textbf{O2 --- copy/discard asymmetry.} The PGM world is a Markov
+category \cite{Fri20,CJ19}: copying and marginalization are free.
+Linear logic licenses contraction/weakening only under $\bang$ --- our
+persistent read is the licensed copy; dropped products are weakening. A
+functor from a resource-sensitive syntax into a semicartesian target
+cannot be inverted on the whole target; the honest repair is
+Theorem~\ref{thm:image}'s image characterization.
+
+\textbf{O3 --- inference direction.} $\lolli$ fixes the generative
+direction; a BN's defining extra power is conditioning (Bayesian
+inversion). Our system computes posteriors \emph{about} derivations
+(smoothing, MAP, hypothesis posteriors, all exact over the reachable
+support \stpinned{}) but the lollipop has no proof-theoretic inverse
+here --- inversion is a semantic operation on the measure, not a
+syntactic one on proofs.
+
+\paragraph{Quiescence beyond MLL --- and
+Proposition~\ref{prop:quiescence}.} The stage-token encoding
+(\S\ref{sec:canonical}) shows stages alone are MLL-typeable sugar:
+clauses read \texttt{stage@s}, links consume/produce stage tokens. The
+residue is the quiescence gate --- ``fire only if \emph{nothing} in
+this stage can'' --- a negative side-condition (inhibitor arc;
+negation-as-failure) invisible to any multiset of premises, hence
+outside MLL and outside the EFD setting. This was our honest deviation.
+The compiled view dissolves it:
+
+\begin{proposition}[quiescence is compiled away on $\cclass$;
+\stproved{}]\label{prop:quiescence}
+For $P \in \cclass$ at horizon $K$, tier decisions are
+branch-independent, so the normal form resolves every quiescence test
+statically; the emitted IR (sites + SSA occurrences + CPT boxes)
+contains no quiescence construct, and is $\mllb$-shaped: boxes = sites
+(negative premises = scope occurrences, positive conclusion = outcome),
+contraction = SSA fan-out of an occurrence read by several later
+scopes, weakening = occurrences never read again.
+\end{proposition}
+
+\begin{proof}
+By $\cclass$(b) the schedule --- including which micro-steps are
+link-tier --- is a function of the step index alone, computed once by
+the admission analysis; the emission then never consults enabledness at
+evaluation time. \stpinned{} by the emission gates: mixed-tier programs
+are rejected, admitted programs carry no tier logic in the artifact.
+\end{proof}
+
+So ``quiescence beyond MLL'' resolves into: a \emph{source-level}
+convenience (genuinely non-MLL, kept because staged authoring is how
+humans write behavior) that the compiler eliminates for the class it
+certifies. The general-class proof theory of quiescence (fixpoints?
+subexponentials? inhibitor semantics?) remains \stopen{}.
+
+\begin{proposition}[the emitted nets are Bayesian proof-nets;
+\stproved{}, \stpinned{}]\label{prop:bpn}
+For every admitted program and horizon, the emitted IR, read as an
+$\mllb$ typed graph --- \textsc{choice} sites and SSA writes as
+probabilistic boxes (negative premises = the parent occurrences of the
+declared scope, positive main conclusion = the outcome/occurrence
+variable), \texttt{unknowns} lifts as parentless prior boxes,
+double-production guards as observed constraint boxes, atom fan-out as
+contraction on negative atoms, unread occurrences as the net's
+conclusions $\Delta$ --- is a \textbf{Bayesian proof-net} in the sense
+of \cite[Defs.~3.1--3.2]{EFD26}: (a) every box satisfies the box rule
+(all conclusions atomic, exactly one positive, $X \notin \{Y_i\}$); (b)
+box conclusions are pairwise distinct; (c) every premise edge is the
+conclusion of some box (no pending premises); (d) the net is correct
+--- by \cite[Lemma~3.1]{EFD26} it suffices that the polarized
+orientation is a DAG; (e) all conclusions in $\Delta$ are positive.
+Site CPT rows are normalized or zero (stall rows, convertible to errors
+only by the runtime $Z = 1$ check, \S\ref{sec:emission}); write boxes
+are deterministic one-hot; guards are 0/1 indicators.
+\end{proposition}
+
+\begin{proof}
+Each condition holds by construction of the emission
+(\S\ref{sec:emission}): (b) is SSA single-writer --- every occurrence
+variable is minted exactly once, every site variable is fresh per
+micro-step; (c) holds because a variable enters a scope only through
+the environment map, whose non-constant entries are exactly the minted
+variables; (a) holds because a site never reads its own outcome and a
+write never reads the occurrence it mints; (d) holds because every
+premise of a box minted at micro-step $t$ was minted strictly earlier,
+so emission order is a topological order of the polarized orientation;
+(e) holds because pending edges are unread box main conclusions, which
+are positive by the box rule.
+\end{proof}
+
+The point of \emph{also} pinning it: the construction argument is about
+the emission as designed; the checker verifies conditions (a)--(e)
+mechanically on the emitted artifact itself --- admission-time,
+symbolic, zero binding calls, same doctrine as the cost certificate ---
+and runs both over the IR golden corpus (plus the unknowns and guard
+constructions) and \emph{at every IR serialization}: the emitter
+refuses to write an ill-typed artifact, so the deployed C++ interpreter
+--- which by design never re-types (\S\ref{sec:cpp}) --- only ever
+receives certified nets. Adversarial mutations (a self-parent box, a
+double writer, a dangling premise, a polarized cycle, a sub-normalized
+CPT row) are each rejected, so the gate is not vacuous. Any future
+emission bug that breaks well-typedness fails CI and the wire, not a
+reviewer.
+
+\begin{conjecture}[Di~Guardia compositional typing]\label{conj:typing}
+Proposition~\ref{prop:bpn} discharges the \emph{static} half of the
+typing question: our emitted nets are well-formed Bayesian proof-nets,
+machine-checked. What remains is the \emph{compositional} half ---
+checking the emitted nets against the well-behaved-composition typing
+derivations of \cite{DEF26} (their type system governs how nets compose
+via cut; our sites are their boxes, SSA fan-out their contraction, and
+Proposition~\ref{prop:quiescence} removes the structural moves the
+dynamic quiescence gate would have needed, so we conjecture every
+emitted net types). Mechanizing their typing rules over our artifact is
+the concrete next theory task. \stopen{}
+\end{conjecture}
+
+\section{The compiled pipeline (systems)}\label{sec:pipeline}
+
+\begin{center}\small
+\begin{tabular}{l}
+\texttt{.llp} source (rulescript: Ceptre-core rules, typed header,
+ports,\\
+\quad includes with RDDL-style domain/instance lifting)\\
+\quad $\downarrow$ parse $\to$ lossless AST
+($\texttt{parse}(\texttt{pretty}(a)) = a$)\\
+\quad $\downarrow$ compile $\to$ catalog + ports; typecheck; admission\\
+\qquad (packs: containment by construction --- a pack may only
+\emph{add},\\
+\qquad\ never touch base namespaces)\\
+typed ground/unrolled \textbf{normal form} \quad $\leftarrow$
+stages/quiescence lowered away (Prop.~\ref{prop:quiescence})\\
+\quad $\downarrow$\\
+$\mllb$-shaped IR: occurrence net = \textsc{choice} sites (categorical
+CPT boxes\\
+\quad over declared scopes) + SSA atom occurrences (binary wires)\\
+\quad $\downarrow$ IR-level analyses: contextual typing; Bayesian
+proof-net check (Prop.~\ref{prop:bpn});\\
+\qquad canonical hash (\texttt{program\_key}); \textsc{cost
+certificate} (induced width + factor-ops,\\
+\qquad symbolic --- \S\ref{sec:certs}); junction tree (AOT)\\
+\quad $\downarrow$ generated back-ends:\\
+\qquad exact reachable-support filter (+ policy hook) \hfill
+[Thm~\ref{thm:filter}]\\
+\qquad factored elimination / junction tree (mid-scale exact)\\
+\qquad fixed-$N$ sampler (deterministic cost, same measure)\\
+\qquad THTS planner (same measure, budgeted)\\
+\qquad C++ IR interpreter (deployment; \S\ref{sec:cpp})\\
+\qquad BN/factor-graph export (UAI + DOT; \S\ref{sec:export})\\
+\end{tabular}
+\end{center}
+
+\subsection{The knowledge-compilation frame}
+
+The nearest cousin is ProbLog $\to$ d-DNNF/SDD: compile once into a
+form whose evaluation is polynomial in the form's size, amortized over
+queries. \textbf{$\mllb$ is to LL-MSR what SDD circuits are to PLP} ---
+with the difference that our target form is also a \emph{published
+semantics} (EFD's nets), not only a data structure. To our knowledge no
+prior system compiles a staged stochastic multiset-rewriting language
+into proof-net-shaped factor graphs; EFD's own pipeline starts from
+BNs.
+
+\subsection{The factored emission and the \texttt{reads} contract}
+\label{sec:emission}
+
+The emission (per micro-step): constants propagate --- control atoms
+(chain and stage tokens) fold away, \emph{branch-independence itself}
+being the criterion, with no control/state annotation anywhere. Steps
+whose candidates or scopes touch branch-dependent atoms become
+\textbf{sites}: categorical outcome variables whose CPT rows are the
+normalized \textsc{choice} weights, with registry bindings evaluated on
+synthesized snapshots restricted to their \textbf{declared scope} ---
+the language-level contract
+\texttt{weight f(C) reads \{rb(C), prev(D) if adj(C,D)\}}, guards
+enumerated against the Horn world. The snapshot object \emph{raises} on
+any out-of-scope read: the contract has teeth, and
+Theorem~\ref{thm:trace} is why it must (an undeclared read breaks
+footprint stability). Writes become SSA versions via deterministic
+factors. Conservative static checks (multiplicities, schedule, double
+production) reject at admission; constructs static analysis cannot
+decide (stalled tiers, produce-onto-maybe-present) are emitted as
+zero-mass rows and indicator guards, and the evaluation-time total-mass
+check $Z = 1$ converts any \emph{reachable} violation into an error.
+Conservative statics, exact runtime detection, never a silent
+approximation.
+
+\subsection{Certificates and the real-time doctrine}\label{sec:certs}
+
+\texttt{certificate(query)} computes induced width and total factor-ops
+from IR scopes alone --- no tables built, no binding called
+(\stpinned{}: a counting registry observes zero calls at admission).
+Budgets are platform-independent factor-ops, converted by one measured
+constant ($\sim 1.5 \times 10^8$ ops/s on our dev machine); over-budget
+queries fall down the evaluator ladder (exact-support $\to$ factored
+$\to$ fixed-$N$ sampling, whose cost is deterministic by construction).
+Measured tracking on Game of Life instances: certified ops $10^4$ /
+$5 \times 10^6$ / $7 \times 10^7$ against measured 0.00 / 0.04 / 0.40
+s. The junction tree makes the elimination structure itself AOT: built
+once per \texttt{program\_key}, two-pass calibration per evidence;
+\texttt{unknowns} lift initial atoms to variables so \emph{one}
+compiled structure serves every tick of a receding-horizon loop (the
+bounded-slot-template deployment story), with per-tick evidence as
+point factors.
+
+\subsection{Honesty: what the cliff is and is not}\label{sec:cliff}
+
+The exact filter dies where reachable support explodes --- synchronous
+IPPC domains reach $2^n$ at $n \approx 14$--$18$. The factored back-end
+restores exactness where induced width stays local (ring topologies,
+bounded neighborhoods: $n = 24$ two-tick GoL in seconds), and
+\emph{certifiably refuses} where it does not (the certificate is the
+refusal). The sampler and THTS carry the rest with fixed budgets.
+
+Measured, one machine, pure Python, all \stpinned{} except the first
+block (measured once for the capability model):
+
+\begin{center}\small
+\begin{tabular}{llll}
+\toprule
+evaluator & topology / instance & cost & note \\
+\midrule
+exact support filter & sync ring, 1-tick proj., $n=6$ & $<0.01$ s &
+support $2^6$ \\
+ & $n=12$ & 0.65 s & $2^{12}$; clean $\sim 4\times$ per $+2$ units \\
+ & $n=14$ & 3.64 s & $2^{14}$ --- per-step planning tolerable \\
+ & $n=16$ & 18.3 s & $2^{16}$ --- per-step planning dead \\
+\addlinespace
+factored / junction tree & sync ring, $n=16$, two ticks (96
+micro-steps) & $<60$ s & exact past the filter's cliff;
+sampler-refereed \\
+ & GoL ring, $n=24$, two ticks & $<30$ s & exact; support filter would
+need $2^{24}$ \\
+ & GoL instance 5 ($n=16$), live play & 65 ms/decision &
+certificate-priced, real-time compatible \\
+\addlinespace
+fixed-$N$ sampler & sync ring, $n=14$ & 1.1 s (abs err 0.008) & vs 3.8
+s exact --- the crossover \\
+ & sync ring, $n=20$ & 2.1 s & exact infeasible at $2^{20}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The pattern the table quantifies: the exact filter's exponent is the
+physics of support enumeration (topology-independent --- a ring at
+$n = 16$ costs the same $2^{16}$ as a clique); the factored evaluator's
+cost tracks \emph{induced width}, so it is topology-dependent --- local
+neighborhoods (rings, grids) stay exact for horizons and sizes the
+filter cannot touch, while densely-coupled domains blow the width and
+are \emph{refused at admission} by the same certificate that admits the
+local ones (certified ops vs measured seconds calibrate at one
+constant, \S\ref{sec:certs}). The sampler's cost is deterministic by
+construction and carries what both exact evaluators refuse. On IPPC
+instances where exactness is in reach, the planner is provably optimal
+(exact expectimax over the true measure: Navigation, all tested
+instances; CrossingTraffic instance 1); Overcooked layouts reach expert
+parity (185/185); nothing is claimed against PROST-class planners on
+the large instances --- that comparison is \stopen{} and would be
+sampling-based.
+
+\subsection{C++ as IR interpreter; the compiler as verification
+toolchain}\label{sec:cpp}
+
+The deployment decision inverts the usual port: C++ never gains a
+grounder, typechecker or min-fill. The compiled artifact (structure +
+AOT schedules, serialized on the golden wire) is interpreted by a
+$\sim$300-line dependency-free table-ops loop; CPT rows are filled at
+run time by the registry bindings (they read the live world; that is
+the one thing that must be native). Admission happened on the authoring
+machine; the vehicle runs pre-certified artifacts with deterministic
+cost. Since draft 0.2 the authoritative compiler is \metisc{} (OCaml,
+stdlib only, one static binary --- lex/parse, typecheck, packs +
+containment admission, grounding, symbolic factorization, proof-net
+certification, elimination ordering, IR emission, canonical key,
+reference sampler), shipped in this repository; the Python toolkit
+(\texttt{metispy}, sibling repository) is the independent exact
+referee. Verification is a chain of custody: interpreter $\doteq$
+filter (Thm~\ref{thm:preservation}--\ref{thm:filter} gates) $\doteq$
+factored/junction tree ($10^{-9}$ parity, whole-tick and mid-cycle)
+$\doteq$ exported artifact (independent brute-force reader) $\doteq$
+C++ interpreter (golden parity: \textsc{ir parity} 46/46,
+\textsc{sample parity} 43/43 in this repository's \texttt{make check};
+95/95 ground + 20/20 IR against the Python referee) --- with pgmpy
+belief propagation as an external referee on the exported net.
+
+\subsection{Export: the EFD direction as a back-end}\label{sec:export}
+
+\texttt{to\_uai} dumps the emitted net as a standard factor graph (UAI
+MARKOV; pgmpy/libDAI/merlin all read it), evidence baked in. This is
+the EFD direction --- program $\to$ net $\to$ BN --- obtained \emph{for
+free} because the IR already is the net; it doubles as external
+validation and as the data interface for parameter estimation
+(\S\ref{sec:learning}).
+
+\section{Learning: packs for structure, ports for parameters}
+\label{sec:learning}
+
+One invariant: learning never edits a rule in place. The catalog stays
+the single reviewable, provenance-carrying artifact; every learned
+artifact passes the same admission gates as a hand-authored one.
+
+\paragraph{Structure (surprise $\to$ synthesis).} Zero predictive mass
+is the structural signal \emph{by construction}: \textsc{choice}
+weights multiply, so no parameter update can create missing support ---
+a missing behavior is a missing rule, never a wrong number. Unmodeled
+observations produce a small deterministic record
+(\{\texttt{program\_key}, artifact versions, init multiset,
+observation, $Z$\}); because evaluation is deterministic given these,
+the offline side re-derives full context (support, event posteriors,
+MAP explanation) --- the vehicle logs pointers, not traces. Candidates
+(template enumeration over the typed vocabulary; the type system is the
+hypothesis-space bound) enter as \texttt{provenance=surprise} packs
+through containment admission.
+
+\paragraph{Parameters (notching).} By Theorem~\ref{thm:trace}'s
+factorization, each site is a multinomial over its declared scope ---
+the emission literally exhibits the sufficient-statistic tables.
+Observed traces give per-site counts (conjugate Dirichlet updates; the
+hand prior and its strength are the pseudo-counts); partially observed
+traces give expected counts via exact smoothing (event posteriors under
+soft evidence) --- EM whose E-step is free. Hypothesis-level selection
+over whole behavior rows is exact model filtering (posterior fed back
+as next prior; planted-row identifiability $\ge 0.9$ recovery
+\stpinned{}). Learned values ship as overlay packs with a
+human-reviewable row sheet (\texttt{prior $\to$ posterior ($n$,
+$\alpha_0$)} per scope assignment); the vehicle never learns in flight.
+The batch interface to external estimators is (UAI net, traces) ---
+data, not an RL arena; the simulators (SUMO, Overcooked, IPPC
+environments) are trace generators for it.
+
+\section{Mechanization}\label{sec:mech}
+
+Draft 0.2 closed with ``mechanize Theorem 3 and the routine parts of
+Theorem 1 in a proof assistant'' as open problem 1. This draft ships a
+Lean~4 development (over mathlib) in the public language repository,
+directory \texttt{formal/} (\texttt{lake build}; a \texttt{make
+formal} convenience target); this paper contains no proof-assistant
+code --- the development itself is the reference, and every statement
+below names its Lean identifier. The development is
+\texttt{sorry}-free, and the main theorems depend only on Lean's three
+standard axioms (\texttt{propext}, \texttt{Classical.choice},
+\texttt{Quot.sound}), checked with \texttt{\#print axioms}.
+The design principle mirrors the compiler's: formalize the
+\emph{content} of a theorem at the level of abstraction where its
+mathematical difficulty lives, and leave the bookkeeping the
+implementation already pins (parsers, hashing, wire formats) to the
+golden gates.
+
+\paragraph{Theorem~\ref{thm:image}, in full
+(\texttt{Formal/Spn.lean}).} Ground programs are formalized as
+name-carrying lists of clauses and links over ambient types of atoms,
+stages and names; the SPN class as tuples whose transition components
+are multisets of content records; the denotation forgets names and list
+order; structural congruence is the existence of a renaming injective
+on the program's names together with list permutations. The
+development proves: \texttt{denote\_congr} (invariance: congruent
+programs denote equal SPNs), \texttt{denote\_readBack} (surjectivity:
+an explicit fresh-naming section, $\sem{U(N)} = N$ on the nose), and
+\texttt{congr\_of\_denote\_eq} (injectivity up to congruence, for
+well-formed programs --- distinct clause and link names); together
+\texttt{denote\_eq\_iff\_congr}, the bijection of
+Theorem~\ref{thm:image}. The delicate steps of the paper proof
+reappear precisely where expected: the duplicate-content matching is a
+permutation argument on lists with equal content multisets, and the
+empty-stage and multiset-not-set remarks are forced by the statement
+failing (as it should) under the alternative definitions.
+
+\paragraph{Theorem~\ref{thm:preservation}, counting kernel
+(\texttt{Formal/Counting.lean}).} An instance of clause $r$ at marking
+$m$ is formalized per species: an injection of consume slots into
+tokens and a function from read occurrences to tokens.
+\texttt{card\_instance} proves the instance count equals
+$\varphi(m,r)$ --- the falling factorial on consumed species (via
+$\#(\alpha \hookrightarrow \beta) = \ff{|\beta|}{|\alpha|}$) times the
+power on read species --- and \texttt{pushforward\_weight} proves the
+per-clause pushforward identity $\sum_{\iota \in \mathrm{Inst}(r,m)}
+w_r = w_r \cdot \varphi(m,r) = W_r(m)$, i.e.\ the interpreter's
+instance-uniform draw and the DBN's \textsc{choice} weights induce the
+same one-step clause distribution. This is the substantive combinatorial
+content of Theorem~\ref{thm:preservation}; the surrounding product
+induction is routine and remains on paper.
+
+\paragraph{Theorem~\ref{thm:filter}
+(\texttt{Formal/Filter.lean}).} Finitely-supported nonnegative
+state distributions with a finite-branching stochastic kernel;
+\texttt{filter\_eq\_marginal} proves by induction that the forward
+filter computed over the (finite) support at each step equals the
+$t$-step pushforward marginal --- restriction to the reachable support
+loses no mass.
+
+\paragraph{Theorem~\ref{thm:trace}, descent skeleton
+(\texttt{Formal/Trace.lean}).} Events with an independence relation,
+a deterministic update, and a local weight function; the two
+hypotheses of the footprint-stability lemma --- independent events
+commute as state transformers, and each event's weight factor is
+unchanged by executing an independent event first --- are taken as the
+definition of independence-compatibility. \texttt{weight\_exec\_swap}
+proves the run weight (product of local factors along the run) and
+final state are invariant under adjacent transposition of independent
+events, and \texttt{traceEquiv\_weight\_eq} /
+\texttt{traceEquiv\_exec\_eq} extend this to the Mazurkiewicz
+equivalence closure: the measure descends to trace classes. The concrete instantiation --- that the factored emission's
+sites and declared scopes satisfy the two hypotheses (the paper's
+footprint-stability lemma) --- is exactly the \texttt{reads}-contract
+argument of Theorem~\ref{thm:trace} and remains on paper, pinned
+operationally by the emission's rejection gates.
+
+\paragraph{What is deliberately not mechanized.} Propositions
+\ref{prop:quiescence} and \ref{prop:bpn} are statements about the
+emission as implemented; their assurance story is the admission-time
+checker that runs at every serialization (\stpinned{}), which checks
+the actual artifact rather than a model of it. Mechanizing the checker
+itself (verify the verifier) and Conjecture~\ref{conj:typing}'s
+compositional typing are the natural next targets
+(\S\ref{sec:open}).
+
+\section{Related work and provenance}\label{sec:related}
+
+\paragraph{The direct anchor.} EFD \cite{EFD24,EFD26}: BNs
+$\leftrightarrow$ $\mllb$ proof-nets, inference = net evaluation in
+probabilistic coherence spaces, cost-matched; \cite{DEF26} adds
+compositional typing (quantum and classical). Acclavio--Maieli
+\cite{AM26}: proof \emph{search} in probabilistic LL computing BN
+inference --- the operational face. Our audit trail is explicit: the
+$\lolli$-as-V-joint observation predates our contact with this
+literature but was never published by us; priority on the static
+correspondence is theirs. What is ours is the dynamic, staged,
+executable direction (\S\ref{sec:intro} items 1--9) and its
+compilation.
+
+\paragraph{Foundations used.} LL$\leftrightarrow$Petri:
+\cite{GG89,EW93}; MSR/Ceptre lineage: \cite{CS09,Mar15,CLF};
+probabilistic coherence spaces and weighted relational models:
+\cite{Gir04,DE11,EPT18,LMMP13}; Markov categories: \cite{Fri20,CJ19};
+true-concurrency probability: \cite{AB06,Win13,CCPW18,Paq21};
+GSPN/mass action: \cite{Gil77,GSPN}; knowledge compilation: ProbLog
+$\to$ d-DNNF/SDD \cite{FdB15,Dar11}; classical-logic contrast: Markov
+Logic Networks \cite{RD06} ground FOL into Markov nets --- the linear
+analogue sat unoccupied until the EFD line; planning-as-inference:
+\cite{TS06,Lev18}; mechanization: Lean 4 \cite{MU21} and mathlib
+\cite{mathlib20}. Behavior-tree engineering contrast: BT.cpp gives
+industry the component model but no measure; our framework keeps the
+component seams (registry, blackboard, ports) and adds semantics.
+
+\section{Open problems}\label{sec:open}
+
+\begin{enumerate}[leftmargin=2em]
+\item \emph{(was: mechanize Theorem~\ref{thm:image} and the routine
+  parts of Theorem~\ref{thm:preservation})} --- Theorem~\ref{thm:image}
+  and the counting kernel of Theorem~\ref{thm:preservation} are now
+  \stmech{} (\S\ref{sec:mech}). Remaining: the full trajectory-level
+  statement of Theorem~\ref{thm:preservation} (product induction with
+  normalization over enabled sets) and the concrete site/scope
+  instantiation of Theorem~\ref{thm:trace} over a formalized emission.
+\item Branching-cell measure beyond $\cclass$: import \cite{AB06} to
+  define trace-invariant weights for programs the emission rejects;
+  does the general staged language admit a canonical net measure?
+\item Conjecture~\ref{conj:typing}: mechanize the \cite{DEF26}
+  well-behaved-composition typing derivations over the emitted
+  artifact --- the compositional half left open by
+  Proposition~\ref{prop:bpn}'s machine-checked Bayesian proof-net
+  well-formedness. Verify the verifier: re-prove the artifact checker
+  of Proposition~\ref{prop:bpn} in Lean against the formalized IR.
+\item Proof theory of quiescence in the general class
+  (subexponentials, fixpoints, or inhibitor-net semantics).
+\item Faithfulness/completeness directions (program reconstruction
+  from measure behavior; which DBN queries determine the program in
+  $\cclass$?).
+\item PROST-class comparison on large IPPC instances (sampling-based;
+  engineering-honest).
+\item Complementary-pair merging in the emission (width
+  $\approx$ halves on two-valued families); lifted emission
+  (schema-level sites before grounding).
+\end{enumerate}
+
+\begin{thebibliography}{99}\small
+
+\bibitem[AB06]{AB06} S. Abbes, A. Benveniste. True-concurrency
+probabilistic models: branching cells and distributed probabilities.
+2006/08.
+
+\bibitem[AM26]{AM26} M. Acclavio, R. Maieli. Probabilistic Linear
+Logic Programming with an Application to Bayesian Network
+Computations. arXiv:2601.13270.
+
+\bibitem[CCPW18]{CCPW18} S. Castellan, P. Clairambault, H. Paquet, G.
+Winskel. The concurrent game semantics of probabilistic PCF. LICS
+2018.
+
+\bibitem[CJ19]{CJ19} K. Cho, B. Jacobs. Disintegration and Bayesian
+inversion via string diagrams. MSCS 2019.
+
+\bibitem[CLF]{CLF} K. Watkins, I. Cervesato, F. Pfenning, D. Walker. A
+concurrent logical framework. CMU-CS-02-101.
+
+\bibitem[CS09]{CS09} I. Cervesato, A. Scedrov. Relating state-based
+and process-based concurrency through linear logic. Inf. \& Comp.
+2009.
+
+\bibitem[Dar11]{Dar11} A. Darwiche. SDD: a new canonical
+representation of propositional knowledge bases. IJCAI 2011.
+
+\bibitem[DE11]{DE11} V. Danos, T. Ehrhard. Probabilistic coherence
+spaces as a model of higher-order probabilistic computation. Inf. \&
+Comp. 209(6), 2011.
+
+\bibitem[DEF26]{DEF26} R. Di Guardia, T. Ehrhard, C. Faggian. Quantum
+Bayesian Networks: Compositionality and Typing via Linear Logic.
+arXiv:2604.26059.
+
+\bibitem[EFD24]{EFD24} T. Ehrhard, C. Faggian, R. Di Guardia. Bayesian
+Networks and Proof-Nets: a Proof-Theoretical Account of Bayesian
+Inference. arXiv:2412.20540.
+
+\bibitem[EFD26]{EFD26} R. Di Guardia, T. Ehrhard, A. Evrard, C.
+Faggian. Bayesian Networks and Proof-Nets: the Proof-Theory of
+Bayesian Inference. arXiv:2602.04045.
+
+\bibitem[EPT18]{EPT18} T. Ehrhard, M. Pagani, C. Tasson. Full
+abstraction for probabilistic PCF. J. ACM 2018.
+
+\bibitem[EW93]{EW93} U. Engberg, G. Winskel. Linear logic on Petri
+nets. 1990/93.
+
+\bibitem[FdB+15]{FdB15} D. Fierens, G. Van den Broeck, et al.
+Inference and learning in probabilistic logic programs using weighted
+boolean formulas. TPLP 2015.
+
+\bibitem[Fri20]{Fri20} T. Fritz. A synthetic approach to Markov
+kernels, conditional independence and theorems on sufficient
+statistics. Adv. Math. 2020.
+
+\bibitem[GG89]{GG89} C. Gunter, V. Gehlot. Nets as tensor theories.
+1989.
+
+\bibitem[Gil77]{Gil77} D. Gillespie. Exact stochastic simulation of
+coupled chemical reactions. J. Phys. Chem. 1977.
+
+\bibitem[Gir04]{Gir04} J.-Y. Girard. Between logic and quantic: a
+tract. 2004.
+
+\bibitem[GSPN]{GSPN} M. Ajmone Marsan et al. Modelling with
+Generalized Stochastic Petri Nets. Wiley 1995.
+
+\bibitem[Lev18]{Lev18} S. Levine. Reinforcement learning and control
+as probabilistic inference. arXiv:1805.00909.
+
+\bibitem[LMMP13]{LMMP13} J. Laird, G. Manzonetto, G. McCusker, M.
+Pagani. Weighted relational models of typed lambda-calculi. LICS 2013.
+
+\bibitem[Mar15]{Mar15} C. Martens. Ceptre: a language for modeling
+generative interactive systems. AIIDE 2015.
+
+\bibitem[mathlib20]{mathlib20} The mathlib Community. The Lean
+mathematical library. CPP 2020.
+
+\bibitem[MU21]{MU21} L. de Moura, S. Ullrich. The Lean 4 theorem
+prover and programming language. CADE 2021.
+
+\bibitem[Paq21]{Paq21} H. Paquet. Bayesian strategies: probabilistic
+programs as generalised graphical models. ESOP 2021.
+
+\bibitem[RD06]{RD06} M. Richardson, P. Domingos. Markov logic
+networks. MLJ 2006.
+
+\bibitem[TS06]{TS06} M. Toussaint, A. Storkey. Probabilistic inference
+for solving discrete and continuous state Markov decision processes.
+ICML 2006.
+
+\bibitem[Win13]{Win13} G. Winskel. Distributed probabilistic and
+quantum strategies. MFPS 2013.
+
+\end{thebibliography}
+
+\end{document}
