@@ -201,31 +201,9 @@ let run_file path =
     if not (List.mem stage c.c_interactive) then None
     else begin
       Printf.eprintf "-- %s: choose an event --\n" stage;
-      (* grouped by rule (the text before '['), bindings aligned per
-         group; numbering is the global candidate order, so the typed
-         selection is unchanged *)
-      let name i = events.(i).Refsample.ev.Ground.ev_name in
-      let split n = match String.index_opt n '[' with
-        | Some j -> (String.sub n 0 j,
-                     String.sub n j (String.length n - j))
-        | None -> (n, "") in
-      let rows = List.mapi (fun k (i, w) -> (k + 1, i, w)) ws in
-      let bases = List.rev (List.fold_left (fun acc (_, i, _) ->
-          let b = fst (split (name i)) in
-          if List.mem b acc then acc else b :: acc) [] rows) in
-      let nw = String.length (string_of_int (List.length ws)) in
-      List.iter (fun b ->
-          let g = List.filter
-              (fun (_, i, _) -> fst (split (name i)) = b) rows in
-          let gtot = List.fold_left
-              (fun a (_, _, w) -> a +. w) 0.0 g in
-          Printf.eprintf "  %s  (p=%.3f)\n" b (gtot /. total);
-          let bw = List.fold_left (fun a (_, i, _) ->
-              max a (String.length (snd (split (name i))))) 0 g in
-          List.iter (fun (k, i, w) ->
-              Printf.eprintf "    %*d) %-*s  p=%.3f\n" nw k bw
-                (snd (split (name i))) (w /. total)) g)
-        bases;
+      List.iteri (fun k (i, w) ->
+          Printf.eprintf "  %d) %s  (p=%.3f)\n" (k + 1)
+            events.(i).Refsample.ev.Ground.ev_name (w /. total)) ws;
       Printf.eprintf "> %!";
       match input_line stdin with
       | exception End_of_file ->
