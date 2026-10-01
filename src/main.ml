@@ -235,7 +235,7 @@ let run_file path =
     hits
 
 let () =
-  match Array.to_list Sys.argv with
+  (try match Array.to_list Sys.argv with
   | [_; "--selftest"] -> selftest ()
   | [_; "--keys"; manifest] -> drive manifest key_case
   | [_; "--roundtrip"; manifest] -> drive manifest roundtrip_case
@@ -248,3 +248,8 @@ let () =
        --roundtrip <manifest> | --sample <manifest> | \
        --run <file.llp> | --selftest";
     exit 2
+   with
+   | Compile.Lang_error msgs ->
+     List.iter (fun m -> prerr_endline ("error: " ^ m)) msgs; exit 1
+   | Parser.Parse_error m ->
+     prerr_endline ("parse error: " ^ m); exit 1)
