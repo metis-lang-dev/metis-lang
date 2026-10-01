@@ -5,10 +5,20 @@ exception Parse_error of string
 
 let fail fmt = Printf.ksprintf (fun s -> raise (Parse_error s)) fmt
 
-type st = { toks : token array; mutable i : int;
-            mutable docs : string list }
+type st = { toks : token array; poss : (int * int) array;
+            mutable i : int; mutable docs : string list }
 
-let mk toks = { toks = Array.of_list toks; i = 0; docs = [] }
+let mk (toks, poss) =
+  { toks = Array.of_list toks; poss; i = 0; docs = [] }
+
+(* line:col of token index k (default: the token just consumed) *)
+let where ?k p =
+  let j = match k with Some k -> k | None -> p.i - 1 in
+  if Array.length p.poss = 0 then "1:1"
+  else
+    let j = max 0 (min j (Array.length p.poss - 1)) in
+    let (l, c) = p.poss.(j) in
+    Printf.sprintf "%d:%d" l c
 
 let peek ?(k = 0) p =
   if p.i + k < Array.length p.toks then Some p.toks.(p.i + k) else None
@@ -18,17 +28,17 @@ let next p =
   match t with Some t -> t | None -> fail "unexpected end of input"
 
 let expect_ident p = match next p with
-  | Ident v -> v | _ -> fail "expected identifier (token %d)" (p.i - 1)
+  | Ident v -> v | _ -> fail "%s: expected identifier" (where p)
 
 let expect_num p = match next p with
-  | Num v -> v | _ -> fail "expected number (token %d)" (p.i - 1)
+  | Num v -> v | _ -> fail "%s: expected number" (where p)
 
 let expect_str p = match next p with
-  | Str v -> v | _ -> fail "expected string (token %d)" (p.i - 1)
+  | Str v -> v | _ -> fail "%s: expected string" (where p)
 
 let punct p ch = match next p with
   | Punct c when c = ch -> ()
-  | _ -> fail "expected '%c' (token %d)" ch (p.i - 1)
+  | _ -> fail "%s: expected '%c'" (where p) ch
 
 let expect_kw p kw =
   let v = expect_ident p in
@@ -64,7 +74,7 @@ let is_upper s = s <> "" && s.[0] >= 'A' && s.[0] <= 'Z'
 let term p = match next p with
   | Num v -> TConst v
   | Ident v -> if is_upper v then TVar v else TConst v
-  | _ -> fail "expected term (token %d)" (p.i - 1)
+  | _ -> fail "%s: expected term" (where p)
 
 let atom p =
   let persist = (peek p = Some (Punct '$')) in
@@ -79,7 +89,7 @@ let atom p =
         match next p with
         | Punct ')' -> List.rev (t :: acc)
         | Punct ',' -> go (t :: acc)
-        | _ -> fail "expected , or ) (token %d)" (p.i - 1) in
+        | _ -> fail "%s: expected , or )" (where p) in
       go []
     end in
   { pred = name; terms; persist }
@@ -116,7 +126,7 @@ let sig_args p =
       match next p with
       | Punct ')' -> List.rev (v :: acc)
       | Punct ',' -> go (v :: acc)
-      | _ -> fail "expected , or ) (token %d)" (p.i - 1) in
+      | _ -> fail "%s: expected , or )" (where p) in
     go []
   end
 
@@ -180,7 +190,7 @@ let rule p =
   punct p '['; let rlayer = expect_ident p in punct p ']';
   punct p ':';
   let rbody = star_list p body_elem in
-  (match next p with Arrow -> () | _ -> fail "expected -o");
+  (match next p with Arrow -> () | _ -> fail "%s: expected -o" (where p));
   if peek p = Some (Punct '(')
      && peek ~k:1 p <> Some (Punct ')') then begin
     ignore (next p);
@@ -196,8 +206,8 @@ let rule p =
       match next p with
       | Punct '|' -> go (b :: acc)
       | Punct ')' -> List.rev (b :: acc)
-      | _ -> fail "expected '|' or ')' in alternative head \
-                   (rule %s, token %d)" rname (p.i - 1) in
+      | _ -> fail "%s: expected '|' or ')' in alternative head \
+                   (rule %s)" (where p) rname in
     let branches = go [] in
     if List.length branches < 2 then
       fail "alternative head needs >= 2 branches (rule %s)" rname;
@@ -244,7 +254,8 @@ let link_def p =
     if peek p = Some (Punct '*') then begin
       ignore (next p); star_list p atom
     end else [] in
-  (match next p with Arrow -> () | _ -> fail "expected -o");
+  (match next p with Arrow -> () | _ ->
+     fail "%s: expected -o" (where p));
   let lpost = expect_ident p in
   let lpost_atoms =
     if peek p = Some (Punct '*') then begin
@@ -257,7 +268,7 @@ let type_consts p =
   punct p '{';
   let const_tok () = match next p with
     | Ident v | Num v -> v
-    | _ -> fail "bad type constant (token %d)" (p.i - 1) in
+    | _ -> fail "%s: bad type constant" (where p) in
   let rec go acc = match peek p with
     | Some (Punct '}') -> ignore (next p); List.rev acc
     | _ ->
@@ -270,7 +281,7 @@ let type_consts p =
   go []
 
 let parse text =
-  let p = mk (Lexer.tokens text) in
+  let p = mk (Lexer.tokens_pos text) in
   drain_docs p;
   expect_kw p "catalog";
   let cname = expect_ident p in
@@ -351,7 +362,7 @@ let parse text =
            punct p '.'; add (DHorn (head, body))
          end else begin punct p '.'; add (DFact head) end);
       loop ()
-    | Some _ -> fail "expected declaration (token %d)" p.i in
+    | Some _ -> fail "%s: expected declaration" (where ~k:p.i p) in
   loop ();
   { cname; cversion; cprov = !cprov; clayers = !clayers;
     cstages = !cstages; cextends = !cextends;

@@ -17,3 +17,9 @@ type token =
 exception Lex_error of string
 
 val tokens : string -> token list
+
+val tokens_pos : string -> token list * (int * int) array
+(* tokens plus each token's 1-based (line, col), for diagnostics *)
+
+val line_col : string -> int -> int * int
+(* 1-based (line, col) of a character offset *)

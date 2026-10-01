@@ -252,4 +252,7 @@ let () =
    | Compile.Lang_error msgs ->
      List.iter (fun m -> prerr_endline ("error: " ^ m)) msgs; exit 1
    | Parser.Parse_error m ->
-     prerr_endline ("parse error: " ^ m); exit 1)
+     prerr_endline ("parse error: " ^ m); exit 1
+   | Lexer.Lex_error m ->
+     prerr_endline ("lex error: " ^ m); exit 1
+   | Failure m -> prerr_endline ("error: " ^ m); exit 1)

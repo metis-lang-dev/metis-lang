@@ -19,11 +19,24 @@ let is_punct c = String.contains "{}().,*:[]~$|" c
 
 let trim = String.trim
 
-let tokens text =
+(* 1-based line:col of a character offset, for diagnostics *)
+let line_col text offset =
+  let line = ref 1 and bol = ref 0 in
+  for k = 0 to min offset (String.length text) - 1 do
+    if text.[k] = '\n' then begin incr line; bol := k + 1 end
+  done;
+  (!line, offset - !bol + 1)
+
+let lex_fail text offset fmt =
+  let (l, c) = line_col text offset in
+  Printf.ksprintf (fun s ->
+      raise (Lex_error (Printf.sprintf "%d:%d: %s" l c s))) fmt
+
+let tokens_pos text =
   let n = String.length text in
-  let out = ref [] in
-  let emit t = out := t :: !out in
+  let out = ref [] and pos = ref [] in
   let i = ref 0 in
+  let emit t = out := t :: !out; pos := !i :: !pos in
   let peek k = if !i + k < n then Some text.[!i + k] else None in
   let take_while p start =
     let j = ref start in
@@ -49,8 +62,7 @@ let tokens text =
       let (s, j) = take_while (fun ch -> ch <> '"' && ch <> '\n')
           (!i + 1) in
       if j >= n || text.[j] <> '"' then
-        raise (Lex_error (Printf.sprintf
-                            "unterminated string at offset %d" !i));
+        lex_fail text !i "unterminated string";
       emit (Str s); i := j + 1
     end
     else if c = '-' then begin
@@ -60,8 +72,7 @@ let tokens text =
       | Some 'o' when (match peek 2 with
           | Some c2 -> not (is_ident_char c2)
           | None -> true) -> emit Arrow; i := !i + 2
-      | _ -> raise (Lex_error (Printf.sprintf
-                                 "bad character '-' at offset %d" !i))
+      | _ -> lex_fail text !i "bad character '-'"
     end
     else if c = ':' && peek 1 = Some '-' then begin
       emit HornSep; i := !i + 2 end
@@ -69,8 +80,7 @@ let tokens text =
       emit Ne; i := !i + 2 end
     else if c = '@' then begin
       if peek 1 = Some 'w' then begin emit AtW; i := !i + 2 end
-      else raise (Lex_error (Printf.sprintf
-                               "bad character '@' at offset %d" !i))
+      else lex_fail text !i "bad character '@'"
     end
     else if c = '.' then begin
       match peek 1 with
@@ -92,7 +102,9 @@ let tokens text =
       emit (Ident id); i := j
     end
     else if is_punct c then begin emit (Punct c); incr i end
-    else raise (Lex_error (Printf.sprintf "bad character %C at offset %d"
-                             c !i))
+    else lex_fail text !i "bad character %C" c
   done;
-  List.rev !out
+  let offs = Array.of_list (List.rev !pos) in
+  (List.rev !out, Array.map (line_col text) offs)
+
+let tokens text = fst (tokens_pos text)
