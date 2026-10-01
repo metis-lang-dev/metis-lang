@@ -12,11 +12,13 @@ type case = {
   mutable c_seeds : int;
   mutable c_unknowns : string list;
   mutable c_queries : string list;
-  mutable c_liks : (string * int) list list }
+  mutable c_liks : (string * int) list list;
+  mutable c_interactive : string list }
 
 let fresh () = { c_name = ""; c_llp = ""; c_pack = None;
                  c_init = []; c_steps = 0; c_seeds = 0;
-                 c_unknowns = []; c_queries = []; c_liks = [] }
+                 c_unknowns = []; c_queries = []; c_liks = [];
+                 c_interactive = [] }
 
 let split_ws s =
   List.filter (fun x -> x <> "") (String.split_on_char ' ' s)
@@ -130,6 +132,11 @@ let case_line c = function
   | ["query"; a] -> c.c_queries <- a :: c.c_queries; true
   | "lik" :: clamps ->
     c.c_liks <- List.map parse_clamp clamps :: c.c_liks; true
+  | ["interactive"; s] ->
+    (* the additive &: the named stage's CHOICE is resolved by the
+       environment, not the sampler ('--run' only; the symbolic
+       drivers ignore it) *)
+    c.c_interactive <- c.c_interactive @ [s]; true
   | _ -> false
 
 let drive manifest per_case =
@@ -187,8 +194,29 @@ let run_file path =
   let events = Refsample.canonical_events prog in
   let queries = List.rev c.c_queries in
   let hits = List.map (fun q -> (q, ref 0)) queries in
+  (* '#interactive <stage>': menu on stderr, selection from stdin;
+     EOF or junk falls back to the sampler draw, so piped runs
+     complete. The T/F/Q wire on stdout is unchanged. *)
+  let pick stage ws total =
+    if not (List.mem stage c.c_interactive) then None
+    else begin
+      Printf.eprintf "-- %s: choose an event --\n" stage;
+      List.iteri (fun k (i, w) ->
+          Printf.eprintf "  %d) %s  (p=%.3f)\n" (k + 1)
+            events.(i).Refsample.ev.Ground.ev_name (w /. total)) ws;
+      Printf.eprintf "> %!";
+      match input_line stdin with
+      | exception End_of_file ->
+        prerr_endline "(eof: sampler)"; None
+      | l ->
+        (match int_of_string_opt (String.trim l) with
+         | Some k when k >= 1 && k <= List.length ws ->
+           Some (fst (List.nth ws (k - 1)))
+         | _ -> prerr_endline "(unrecognized: sampler)"; None)
+    end in
   for seed = 1 to seeds do
-    let (trace, final) = Refsample.run_trace prog c.c_steps seed in
+    let (trace, final) =
+      Refsample.run_trace_pick prog c.c_steps seed ~pick in
     Printf.printf "T %d %s\n" seed
       (match trace with
        | [] -> "-"

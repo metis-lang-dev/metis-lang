@@ -15,7 +15,7 @@ exception Lex_error of string
 let is_letter c = (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')
 let is_digit c = c >= '0' && c <= '9'
 let is_ident_char c = is_letter c || is_digit c || c = '_' || c = '-'
-let is_punct c = String.contains "{}().,*:[]~$" c
+let is_punct c = String.contains "{}().,*:[]~$|" c
 
 let trim = String.trim
 

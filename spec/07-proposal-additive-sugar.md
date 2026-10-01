@@ -1,7 +1,12 @@
 # PROPOSAL — additive-connective sugar (⊕ / & / ⅋ audit)
 
-**Status: PROPOSAL, not implemented. Under review; nothing here is
-part of the v2 surface or the freeze until accepted.**
+**Status: ACCEPTED 2026-10-01 (P1--P4); implemented in metisc the
+same day. Decisions recorded in the checklist; the normative grammar
+and directive vocabulary now live in 00-language-spec §2/§8 — this
+file stays as the rationale record. One deviation from the draft: the
+unit head's canonical pretty() spelling is `()` (user decision: `()`
+is the unit and clearer than the numeral-like `one`); the parser
+accepts both spellings onto the same AST atom `one`.**
 
 Origin: connective audit against the LL operator table (par ⅋, plus
 ⊕, with &) and a syntax-surface comparison with the Ceptre lineage —
@@ -133,9 +138,17 @@ core kept deliberately identical (Thm 1).
 
 ## Review checklist (fill in at review)
 
-- [ ] P1 accepted? (grammar delta + `#k` naming of expanded clauses)
-- [ ] P2 accepted? (directive vocabulary addition: `interactive`)
-- [ ] P3 non-goal confirmed; parallel-schedule wire record deferred
-- [ ] P4 `()` alias accepted; `!`-head stays out
-- [ ] Acceptance test: port `tragedy.cep` to `metis-catalog/domains/fiction/`
-      using P1/P2, diff the ergonomics against the Ceptre original
+- [x] P1 accepted — expanded in the parser; names `<name>-<k>`
+      (ident-safe; `#` is the directive lexer class), per-stage
+      duplicate check added
+- [x] P2 accepted — `interactive <stage>` in the shared case-line
+      vocabulary; menu on stderr, choice on stdin, EOF falls back to
+      the sampler; `run_trace_pick` added beside the pinned
+      `run_trace` (constant-None pick = byte-identical wire; gates
+      stayed green: IR 46/46, SAMPLE 43/43)
+- [x] P3 non-goal confirmed; parallel-schedule wire record deferred
+- [x] P4 `()` accepted AND made the canonical pretty() spelling of a
+      sole-unit head; `!`-head stays out
+- [x] Acceptance test: `tragedy.cep` ported to
+      `metis-catalog/domains/fiction/tragedy.llp` using P1/P4
+      (see the one-to-one porting track in metis-catalog)

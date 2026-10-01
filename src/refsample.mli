@@ -15,4 +15,13 @@ val run_trace : Ground.program -> int -> int
 (* prog steps seed -> (canonical event indices,
    (final stage or "(done)", final multiset)) *)
 
+val run_trace_pick : Ground.program -> int -> int
+  -> pick:(string -> (int * float) list -> float -> int option)
+  -> int list * (string * (string * int) list)
+(* run_trace with an external-choice hook ('#interactive' stages,
+   the additive &): pick stage candidates total = Some i resolves
+   the CHOICE externally (no randomness consumed); None falls
+   through to the reference sampler draw. run_trace is
+   run_trace_pick with the constant-None pick. *)
+
 val final_line : int -> string * (string * int) list -> string

@@ -144,10 +144,15 @@ let pretty (c : catalog) =
         List.iter (fun r ->
             let w = match r.rweight with
               | None -> "" | Some w -> "  " ^ weight_str w in
+            (* the LL unit head prints as '()' (P4 sugar; the parser
+               reads both spellings onto the same AST) *)
+            let head = match r.rhead with
+              | [{ pred = "one"; terms = []; persist = false }] -> "()"
+              | hs -> atoms_str hs in
             Buffer.add_string buf (doc_lines r.rdoc);
             line (Printf.sprintf "  %s [%s] : %s -o %s%s."
                     r.rname r.rlayer (body_str r.rbody)
-                    (atoms_str r.rhead) w))
+                    head w))
           s.srules;
         line "}")
     c.cdecls;

@@ -57,7 +57,13 @@ let transition_count (ev : Ground.event) counts =
    with Exit -> ());
   !w
 
-let run_trace (prog : Ground.program) steps seed =
+(* The one run loop. `pick stage candidates total` may resolve a
+   CHOICE externally (the additive &, '#interactive' stages): Some i
+   takes event i and consumes NO randomness; None falls through to
+   the reference sampler draw. run_trace passes the constant-None
+   pick, so the pinned sampler wire is byte-identical. *)
+let run_trace_pick (prog : Ground.program) steps seed
+    ~(pick : string -> (int * float) list -> float -> int option) =
   let events = canonical_events prog in
   let state = ref (Int64.of_int seed) in
   let counts : (string, int) Hashtbl.t = Hashtbl.create 64 in
@@ -88,18 +94,23 @@ let run_trace (prog : Ground.program) steps seed =
         | _ ->
           let total = List.fold_left (fun acc (_, w) -> acc +. w)
               0.0 ws in
-          let threshold = sm_unit state *. total in
           let chosen =
-            ref (fst (List.nth ws (List.length ws - 1))) in
-          let acc = ref 0.0 in
-          (try
-             List.iter (fun (i, w) ->
-                 acc := !acc +. w;
-                 if threshold < !acc then begin
-                   chosen := i; raise Exit
-                 end)
-               ws
-           with Exit -> ());
+            match pick !stage ws total with
+            | Some i -> ref i
+            | None ->
+              let threshold = sm_unit state *. total in
+              let chosen =
+                ref (fst (List.nth ws (List.length ws - 1))) in
+              let acc = ref 0.0 in
+              (try
+                 List.iter (fun (i, w) ->
+                     acc := !acc +. w;
+                     if threshold < !acc then begin
+                       chosen := i; raise Exit
+                     end)
+                   ws
+               with Exit -> ());
+              chosen in
           trace := !chosen :: !trace;
           let r = events.(!chosen) in
           List.iter (fun (a, n) ->
@@ -121,6 +132,9 @@ let run_trace (prog : Ground.program) steps seed =
   let final = Hashtbl.fold (fun a n acc ->
       if n > 0 then (a, n) :: acc else acc) counts [] in
   (List.rev !trace, (!stage, final))
+
+let run_trace prog steps seed =
+  run_trace_pick prog steps seed ~pick:(fun _ _ _ -> None)
 
 let final_line seed (stage, kappa) =
   let items = List.sort compare

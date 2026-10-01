@@ -158,6 +158,22 @@ let reads_block p =
       go (r :: acc) in
   go []
 
+let unit_atom = { pred = "one"; terms = []; persist = false }
+
+(* a head position: '()' is the LL unit (alias of 'one'), else a
+   '*'-list of atoms *)
+let head_atoms p =
+  if peek p = Some (Punct '(') && peek ~k:1 p = Some (Punct ')') then
+    begin ignore (next p); ignore (next p); [unit_atom] end
+  else star_list p atom
+
+(* a rule parses to ONE OR MORE clauses: the alternative-head sugar
+   '-o ( head @w w | head @w w ... )' expands here, in the parser,
+   exactly as type-range sugar does — the AST, the compiled catalog
+   and the canonical key see only the expanded clauses, named
+   <name>-1 .. <name>-k. Sharing the body, the branches share the
+   anchor token and form one CHOICE site: the weighted internal
+   choice (the additive ⊕), with no kernel change. *)
 let rule p =
   let rdoc = take_docs p in
   let rname = expect_ident p in
@@ -165,13 +181,40 @@ let rule p =
   punct p ':';
   let rbody = star_list p body_elem in
   (match next p with Arrow -> () | _ -> fail "expected -o");
-  let rhead = star_list p atom in
-  let rweight =
-    if peek p = Some AtW then begin
-      ignore (next p); Some (weight_expr p)
-    end else None in
-  punct p '.';
-  { rname; rlayer; rdoc; rbody; rhead; rweight }
+  if peek p = Some (Punct '(')
+     && peek ~k:1 p <> Some (Punct ')') then begin
+    ignore (next p);
+    let branch () =
+      let h = head_atoms p in
+      (match peek p with
+       | Some AtW -> ignore (next p)
+       | _ -> fail "alternative head: every branch needs '@w' \
+                    (rule %s)" rname);
+      (h, weight_expr p) in
+    let rec go acc =
+      let b = branch () in
+      match next p with
+      | Punct '|' -> go (b :: acc)
+      | Punct ')' -> List.rev (b :: acc)
+      | _ -> fail "expected '|' or ')' in alternative head \
+                   (rule %s, token %d)" rname (p.i - 1) in
+    let branches = go [] in
+    if List.length branches < 2 then
+      fail "alternative head needs >= 2 branches (rule %s)" rname;
+    punct p '.';
+    List.mapi (fun k (rhead, w) ->
+        { rname = Printf.sprintf "%s-%d" rname (k + 1);
+          rlayer; rdoc; rbody; rhead; rweight = Some w })
+      branches
+  end else begin
+    let rhead = head_atoms p in
+    let rweight =
+      if peek p = Some AtW then begin
+        ignore (next p); Some (weight_expr p)
+      end else None in
+    punct p '.';
+    [{ rname; rlayer; rdoc; rbody; rhead; rweight }]
+  end
 
 let stage_def p =
   let sname = expect_ident p in
@@ -179,9 +222,17 @@ let stage_def p =
   let rec go acc =
     drain_docs p;
     if peek p = Some (Punct '}') then begin
-      ignore (next p); List.rev acc
+      ignore (next p); List.concat (List.rev acc)
     end else go (rule p :: acc) in
-  { sname; srules = go [] }
+  let srules = go [] in
+  let seen = Hashtbl.create 16 in
+  List.iter (fun r ->
+      if Hashtbl.mem seen r.rname then
+        fail "duplicate rule name %s in stage %s \
+              (note: alternative heads reserve <name>-<k>)"
+          r.rname sname;
+      Hashtbl.add seen r.rname ()) srules;
+  { sname; srules }
 
 let link_def p =
   let ldoc = take_docs p in

@@ -68,13 +68,22 @@ Doc lines attach to the NEXT rule or link; they are part of the AST
     readsblock  ::= "reads" "{" [readpat ([","] readpat)*] "}"
     readpat     ::= atom ["if" atom ("*" atom)*]
     stagedef    ::= "stage" ident "{" rule* "}"
-    rule        ::= [docs] ident "[" ident "]" ":" body "-o" head
-                     ["@w" weightexpr] "."
+    rule        ::= [docs] ident "[" ident "]" ":" body "-o"
+                     (althead | head ["@w" weightexpr]) "."
+    althead     ::= "(" head "@w" weightexpr
+                     ("|" head "@w" weightexpr)+ ")"
+                     (the additive-plus sugar: EXPANDED IN THE PARSER
+                     to one clause per branch, named <name>-1 ..
+                     <name>-k, sharing the body — one CHOICE site;
+                     weights mandatory per branch; <name>-<k> names
+                     are reserved, duplicates rejected per stage)
     body        ::= bodyelem ("*" bodyelem)*
     bodyelem    ::= distinct | atom
     distinct    ::= VARIDENT "<>" ident      (lookahead: ident with
                      uppercase first + next token <>)
-    head        ::= atom ("*" atom)*
+    head        ::= "(" ")" | atom ("*" atom)*
+                     ("()" is the LL unit, an alias of the atom
+                     "one"; pretty() prints a sole-unit head as "()")
     atom        ::= ["$"] ident ["(" term ("," term)* ")"]
     term        ::= ident | num
     weightexpr  ::= num                       (static prior)
@@ -188,8 +197,14 @@ program_key are byte-identical with or without them.
 A directive is a line whose first non-blank character is `#`; its
 body is ONE case-manifest line, same vocabulary, same driver code
 (`init <atom> <count>`, `steps <n>`, `seeds <n>`, `unknown <atom>`,
-`query <atom>`, `lik <atom>=<v> ...`). At most one `init` line per
-atom. A trailing `#...` after code on the same line is lexed away
+`query <atom>`, `lik <atom>=<v> ...`, `interactive <stage>`). At most
+one `init` line per atom. `interactive <stage>` (the additive &,
+Ceptre's `#interactive`) makes `--run` resolve that stage's CHOICE
+externally: enabled events and their normalized weights are listed on
+stderr, the selection is read from stdin, and EOF or unparseable
+input falls back to the reference sampler draw (piped runs always
+complete); the stdout wire (`T`/`F`/`Q`) is unchanged, and the
+symbolic drivers ignore the directive. A trailing `#...` after code on the same line is lexed away
 but is NOT a directive.
 
 `metisc --run <file.llp>` builds the embedded case (`case` name =
