@@ -36,9 +36,13 @@ function findUp(start, rel) {
 
 // locate the toolchain: {lsp, py, pkgRoot} or null. lsp.py found up
 // from the workspace folders (also inside a metispy/ or metis/
-// checkout sitting in the workspace); python from the theia venv
-// ($THEIA_ROOT, else the checkout's ../theia sibling), else python3 —
-// the server, kernel and REPL are stdlib-only.
+// checkout sitting in the workspace); python from the nearest venv —
+// the checkout's own or its parent's .venv (the dedicated repo env,
+// where metispy is pip-installed), else the theia venv ($THEIA_ROOT,
+// else the checkout's ../theia sibling), else python3 — the server,
+// kernel and REPL are stdlib-only. The REPL terminal's "shell" IS
+// the metis process, so the interpreter must be right at launch:
+// there is no bash in that terminal to `source` an activate into.
 function findServer() {
   const roots = (workspace.workspaceFolders || []).map(f => f.uri.fsPath);
   const rel = path.join("metis", "lang", "lsp.py");
@@ -54,7 +58,9 @@ function findServer() {
   if (!lsp) return null;
   const pkgRoot = path.dirname(path.dirname(path.dirname(lsp)));
   let py = "python3";
-  for (const base of [process.env.THEIA_ROOT,
+  for (const base of [pkgRoot,
+                      path.join(pkgRoot, ".."),
+                      process.env.THEIA_ROOT,
                       path.join(pkgRoot, "..", "theia")]) {
     if (!base) continue;
     const p = path.join(base, ".venv", "bin", "python");
@@ -103,6 +109,13 @@ function openRepl() {
   return t;
 }
 
+// sendText straight after createTerminal races the shell spawn (the
+// line echoes before the banner); processId is a thenable that
+// resolves once the metis process is up — send async behind it.
+function sendWhenUp(t, text) {
+  Promise.resolve(t.processId).then(() => t.sendText(text, true));
+}
+
 function sendToRepl() {
   const ed = activeLlpEditor();
   if (!ed) return;
@@ -112,7 +125,7 @@ function sendToRepl() {
   const text = sel.isEmpty
     ? ed.document.lineAt(sel.active.line).text
     : ed.document.getText(sel);
-  if (text.trim()) t.sendText(text, true);
+  if (text.trim()) sendWhenUp(t, text);
   if (sel.isEmpty)                    // advance, like a notebook cell
     commands.executeCommand("cursorDown");
 }
@@ -122,7 +135,7 @@ async function runCaseInRepl() {
   if (!ed) return;
   if (ed.document.isDirty) await ed.document.save();
   const t = openRepl();
-  if (t) t.sendText("trace", true);
+  if (t) sendWhenUp(t, "trace");
 }
 
 // -- run the whole embedded case through the language server ------------

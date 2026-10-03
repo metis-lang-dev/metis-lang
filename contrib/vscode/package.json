@@ -2,7 +2,7 @@
   "name": "metis-llp",
   "displayName": "Metis LLP",
   "description": "Rulescript v2 (.llp) language support — syntax highlighting, the metis toolchain as a language server (real compiler diagnostics, hover, completion, outline), and the metis REPL (shift+enter sends to it, python-extension style).",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "publisher": "metis",
   "license": "MIT",
   "engines": { "vscode": "^1.75.0" },
