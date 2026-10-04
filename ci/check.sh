@@ -125,12 +125,18 @@ diag_runs --diagnostics-json \
 diff -u "$ROOT/corpus/goldens/diag_goldens.jsonl" "$WORK/diag.jsonl"
 "$ROOT/src/metisc" --diag-registry > "$WORK/diag_registry.txt"
 diff -u "$ROOT/corpus/goldens/diag_registry.txt" "$WORK/diag_registry.txt"
+# a pack's BASE that fails to compile is an ERROR (exit != 0), never
+# listed as the pack's diagnostics (metispy diagnose() raises alike)
+if ( cd "$ROOT/corpus/diag" && "$ROOT/src/metisc" --diagnostics \
+       diag_pack.llp --base diag_compile.llp ) > /dev/null 2>&1; then
+  echo "--diagnostics with a failing base exited 0"; exit 1
+fi
 # every compile/kernel/admission code has a D2 fixture row (loop and
 # runtime codes get theirs with the REPL surface; internal codes are
 # unreachable from source)
 for code in $(awk '$3 == "compile" || $3 == "kernel" || $3 == "admission" \
                    {print $1}' "$WORK/diag_registry.txt"); do
-  grep -qE "^(error|warning|note) $code @" "$WORK/diag.txt" \
+  grep -qE "^(error|warning|note) $code " "$WORK/diag.txt" \
     || { echo "code $code has no D2 fixture row"; exit 1; }
 done
 

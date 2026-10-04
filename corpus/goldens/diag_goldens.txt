@@ -204,12 +204,12 @@ error pack-claims-base-namespace @ diag_pack.llp:10:6 (pred/note)
   pred note : st.
   | namespace st produce (dyn).
   -> a pack owns only its own namespaces: put note in a namespace the pack declares
-error pack-adds-stage @ <input>:0:0 (stages)
+error pack-adds-stage (stages)
   stages (go extra).
   -> a pack may not add stage extra: the stage set is the base's
 error include-cycle @ diag_cycle_a.llp:3:9 (include/diag_cycle_b.llp)
   include "diag_cycle_b.llp".
   -> break the include cycle at diag_cycle_b.llp
-error extends-no-base @ <input>:0:0 (catalog/diag-extends)
+error extends-no-base (catalog/diag-extends)
   extends nowhere-base.
   -> compile this pack against its base catalog nowhere-base

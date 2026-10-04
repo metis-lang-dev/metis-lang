@@ -1,6 +1,6 @@
 # PROPOSAL — structured diagnostics (findings as certified slices)
 
-**Status: steps 1-2 IMPLEMENTED 2026-10-04 (user go-ahead); steps 3-4
+**Status: steps 1-3 IMPLEMENTED 2026-10-04 (user go-ahead); step 4
 open.** Amendments agreed in review are recorded in §A at the end.
 
 Origin: the REPL readability track (line:column diagnostics, metisc
@@ -272,3 +272,51 @@ metisc.
 
 B7. `metisc --diagnostics*` LIST and exit 0 even when errors are
 listed (stated in the usage text): a listing, not a compile.
+
+## C — step 3 (2026-10-04)
+
+C1. **Loop and runtime codes are emitted where they speak**, through
+the same constructor; their slice is named by the INSTRUMENT
+(`note(code, text, decl, subject, data)`: decl = query | map |
+marginals | trace | scenario | llm | horn | factorize | provenance),
+subject = the invocation. Loop: provenance-shape (subject = the
+provenance line), rule-name-collision (the NEWCOMER entry's slice —
+the last rule with that short name). Runtime: state-budget (data:
+step/steps/retained/budget/retry — the Σ-retained budget), exact-
+unreachable (trace; reason: event cap | state budget | out of memory),
+horn-nonground (`HornNonground(ValueError).diagnostic`),
+reads-undeclared (`ScopeViolation(FactorizeError).diagnostic`; severity
+corrected warning -> ERROR: it raises), llm-endpoint (unreachable /
+model not pulled). Exceptions keep their old types (callers' contract).
+These surfaces are metispy-only (metisc has no loop, no exact
+instruments); their fixtures are tests/lang/test_diagnostics_runtime.py,
+one per code, with a coverage test tied to the registry.
+
+C2. **REPL surface (D4).** `findings` lists the serving world's current
+diagnostics — the served catalog's own (warnings), the last gate/revise
+report's, then the session's runtime notes — one header line each;
+`findings N` renders one in full. The wire op `findings [N]` returns
+the JSON objects. `gate`/`revise` print their report, then its
+diagnostics through the same text renderer (the wire keeps JSON). The
+candidate's slices name their source `<candidate>`; the served file's
+name its path (the REPL now parses with file=).
+
+C3. **Header for unpositioned diagnostics**: `<severity> <code>
+(<decl>)` — no `@ file:line:col` when line = 0 (runtime notes,
+pack-adds-stage, extends-no-base). Both renderers; goldens regenerated.
+
+C4. **Review fixes.** A pack's BASE that fails to compile is an error
+in both toolchains (metisc exit 1, metispy raises), never listed as
+the pack's diagnostics (gate 11 + a metispy test pin it). metispy's
+include resolution extends `seen` along the recursion path only, like
+metisc: a diamond include is no longer a false cycle (tested both
+sides). The OCaml registry/hints generator is committed:
+metispy/tools/gen_metisc_registry.py rewrites diag.ml's GENERATED block.
+
+C5. **Open — needs a decision (a new judgment, not plumbing):**
+duplicate declarations of one name are accepted silently, and the
+toolchains DISAGREE on which wins: a duplicate weight port is
+last-wins in metispy (dict) but first-wins in metisc (`List.assoc` over
+the declaration list), so the two read different scopes. Proposal: a
+compile finding `decl-duplicate` (pred/bwd/type/namespace/port) in
+both toolchains, after a sweep of the committed catalogs.

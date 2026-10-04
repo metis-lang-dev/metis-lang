@@ -34,7 +34,7 @@ pack-claims-base-namespace error admission
 pack-adds-stage error admission
 rule-name-collision warning loop
 provenance-shape warning loop
-reads-undeclared warning runtime
+reads-undeclared error runtime
 state-budget note runtime
 horn-nonground error runtime
 exact-unreachable note runtime

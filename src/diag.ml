@@ -13,8 +13,8 @@ exception Defect of string
 
 let context_cap = 12
 
-(* GENERATED from metispy metis/kernel/diagnostics.py REGISTRY/HINTS —
-   regenerate, never hand-edit; gate 11 + test_diagnostics diff both *)
+(* BEGIN GENERATED from metispy metis/kernel/diagnostics.py by
+   metispy/tools/gen_metisc_registry.py — never hand-edit *)
 let registry = [
   ("doc-missing", ("error", "compile"));
   ("fact-var-conflict", ("error", "compile"));
@@ -52,7 +52,7 @@ let registry = [
   ("pack-adds-stage", ("error", "admission"));
   ("rule-name-collision", ("warning", "loop"));
   ("provenance-shape", ("warning", "loop"));
-  ("reads-undeclared", ("warning", "runtime"));
+  ("reads-undeclared", ("error", "runtime"));
   ("state-budget", ("note", "runtime"));
   ("horn-nonground", ("error", "runtime"));
   ("exact-unreachable", ("note", "runtime"));
@@ -136,7 +136,22 @@ let hint code data =
     String.concat "" [ "a pack owns only its own namespaces: put "; g "pred"; " in a namespace the pack declares" ]
   | "pack-adds-stage" ->
     String.concat "" [ "a pack may not add stage "; g "stage"; ": the stage set is the base's" ]
+  | "rule-name-collision" ->
+    String.concat "" [ "rename one of the "; g "count"; " rules named "; g "rule"; ": trace events and the debug sidecar read SHORT names" ]
+  | "provenance-shape" ->
+    String.concat "" [ "declare `provenance text \"<ref>\" \"<date>\".`: the formalization contract records its source" ]
+  | "reads-undeclared" ->
+    String.concat "" [ "add "; g "atom"; " to the port's reads scope, or stop reading it in the binding: the declared scope is the contract" ]
+  | "state-budget" ->
+    String.concat "" [ "lower the horizon (try: "; g "retry"; "), or this is clique-tree / factored territory" ]
+  | "horn-nonground" ->
+    String.concat "" [ "guard the unbound variable with a predicate that enumerates it" ]
+  | "exact-unreachable" ->
+    String.concat "" [ "the sampled counts stand; for exact numbers lower #steps or shrink the scene ("; g "reason"; ")" ]
+  | "llm-endpoint" ->
+    String.concat "" [ g "problem"; ": start the server or `ollama pull "; g "model"; "`, or pick another endpoint with `llm`" ]
   | _ -> ""
+(* END GENERATED *)
 
 let no_src = { s_loc = { file = ""; line = 0; col = 0; decl = "" };
                s_subject = []; s_context = []; s_layers = "" }
@@ -167,12 +182,16 @@ let emit d = sink := d :: !sink
 let collected () = List.rev !sink
 
 let render_text d =
-  let f = if d.loc.file = "" then "<input>"
-    else Filename.basename d.loc.file in
   let b = Buffer.create 256 in
-  Buffer.add_string b
-    (Printf.sprintf "%s %s @ %s:%d:%d (%s)\n" d.severity d.code f
-       d.loc.line d.loc.col d.loc.decl);
+  if d.loc.line > 0 then begin
+    let f = if d.loc.file = "" then "<input>"
+      else Filename.basename d.loc.file in
+    Buffer.add_string b
+      (Printf.sprintf "%s %s @ %s:%d:%d (%s)\n" d.severity d.code f
+         d.loc.line d.loc.col d.loc.decl)
+  end else      (* no source position (runtime notes, header-level) *)
+    Buffer.add_string b
+      (Printf.sprintf "%s %s (%s)\n" d.severity d.code d.loc.decl);
   List.iter (fun s -> Buffer.add_string b ("  " ^ s ^ "\n")) d.subject;
   List.iter (fun c -> Buffer.add_string b ("  | " ^ c ^ "\n")) d.context;
   if d.hint <> "" then Buffer.add_string b ("  -> " ^ d.hint ^ "\n");

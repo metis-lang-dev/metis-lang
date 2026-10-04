@@ -200,16 +200,19 @@ let embedded_case path =
 let diagnostics_file ?base ~json path =
   let load p = Compile.resolve_includes (Parser.parse_file p)
       (Filename.dirname p) in
+  (* a pack's BASE must compile: its failure is NOT the pack's
+     diagnostics — it propagates (main prints it, exit 1), exactly as
+     metispy diagnose() raises *)
+  let based = match base with
+    | None -> None
+    | Some b -> let bast = load b in Some (fst (Compile.compile bast), bast) in
   Diag.reset ();
   (try
-     match base with
+     match based with
      | None -> ignore (Compile.compile (load path))
-     | Some b ->
-       (* a pack: compile its base, compile it against the base, then
-          admit — admission diagnostics join (Compile.compile resets
-          the sink, so the base's own diagnostics do not) *)
-       let bast = load b in
-       let (bcat, _) = Compile.compile bast in
+     | Some (bcat, bast) ->
+       (* compile the pack against the base, then admit — admission
+          diagnostics join *)
        let (pcat, _) = Compile.compile ~base:(bcat, bast) (load path) in
        ignore (Catalog.admit bcat pcat)
    with Compile.Lang_error _ | Catalog.Catalog_error _ -> ());
