@@ -3,8 +3,19 @@ type pattern = string * string list
 type clause = { head : pattern; body : pattern list;
                 vars : string list }
 
+(* VARIANT TABLING (mirrors metispy kernel/horn.py): the distinct
+   answers of each call pattern — constants kept, variables abstracted
+   by first occurrence (?#0, ?#1, ...) — are computed once, in SLD
+   order, and replayed. derivable is existence and solutions dedups
+   first-wins, so per-call first-found dedup preserves the observable
+   answers and their order; recomputation of shared subgoals (plus/
+   mult over unary nats: ~n^6) disappears. A call re-entering a
+   variant still being tabled falls back to plain SLD; a tabled call
+   gets its own depth budget (per call, not per whole derivation). *)
 type db = { by_pred : (string, clause list) Hashtbl.t;
-            mutable fresh : int }
+            mutable fresh : int;
+            table : (pattern, string list list) Hashtbl.t;
+            active : (pattern, unit) Hashtbl.t }
 
 let depth_bound = 256
 
@@ -15,7 +26,8 @@ let make clauses =
       let cur = try Hashtbl.find by_pred k with Not_found -> [] in
       Hashtbl.replace by_pred k (cur @ [c]))
     clauses;
-  { by_pred; fresh = 0 }
+  { by_pred; fresh = 0; table = Hashtbl.create 64;
+    active = Hashtbl.create 16 }
 
 let is_qvar t = String.length t > 0 && t.[0] = '?'
 
@@ -53,6 +65,17 @@ let unify (pa, aa) (pb, ab) subst =
       | _ -> None in
     go subst (aa, ab)
 
+let variant args =
+  let m = ref [] in
+  List.map (fun a ->
+      if is_qvar a then
+        match List.assoc_opt a !m with
+        | Some c -> c
+        | None ->
+          let c = Printf.sprintf "?#%d" (List.length !m) in
+          m := (a, c) :: !m; c
+      else a) args
+
 (* depth-first SLD; calls k on every solution substitution, in
    enumeration order; k returns true to STOP (early exit) *)
 let rec solve db goals subst depth k =
@@ -62,15 +85,53 @@ let rec solve db goals subst depth k =
     if depth <= 0 then false
     else begin
       let g = (fst g0, List.map (fun a -> walk a subst) (snd g0)) in
-      let cls =
-        try Hashtbl.find db.by_pred (fst g) with Not_found -> [] in
-      List.exists (fun cl ->
-          let r = rename db cl in
-          match unify r.head g subst with
-          | None -> false
-          | Some s2 -> solve db (r.body @ rest) s2 (depth - 1) k)
-        cls
+      let key = (fst g, variant (snd g)) in
+      match Hashtbl.find_opt db.table key with
+      | None when Hashtbl.mem db.active key ->
+        resolve db g rest subst depth k      (* re-entrant: plain SLD *)
+      | found ->
+        let answers = match found with
+          | Some a -> a | None -> complete db g key in
+        List.exists (fun ans ->
+            db.fresh <- db.fresh + 1;
+            let inst = List.map (fun a ->
+                if is_qvar a then Printf.sprintf "%s@%d" a db.fresh
+                else a) ans in
+            match unify (fst g, inst) g subst with
+            | None -> false
+            | Some s2 -> solve db rest s2 (depth - 1) k)
+          answers
     end
+
+(* plain SLD step on goal g: one branch per matching clause *)
+and resolve db g rest subst depth k =
+  let cls = try Hashtbl.find db.by_pred (fst g) with Not_found -> [] in
+  List.exists (fun cl ->
+      let r = rename db cl in
+      match unify r.head g subst with
+      | None -> false
+      | Some s2 -> solve db (r.body @ rest) s2 (depth - 1) k)
+    cls
+
+(* all distinct answers (g's args instantiated, variables
+   canonicalized) in SLD order — the first only, for a ground g *)
+and complete db g key =
+  Hashtbl.replace db.active key ();
+  let ground = List.for_all (fun a -> not (is_qvar a)) (snd key) in
+  let answers = ref [] and seen = Hashtbl.create 8 in
+  (try
+     ignore (resolve db g [] [] depth_bound (fun s3 ->
+         let ans = variant (List.map (fun a -> walk a s3) (snd g)) in
+         if not (Hashtbl.mem seen ans) then begin
+           Hashtbl.add seen ans ();
+           answers := ans :: !answers
+         end;
+         ground && !answers <> []))
+   with e -> Hashtbl.remove db.active key; raise e);
+  Hashtbl.remove db.active key;
+  let a = List.rev !answers in
+  Hashtbl.replace db.table key a;
+  a
 
 let derivable db goal =
   solve db [goal] [] depth_bound (fun _ -> true)
