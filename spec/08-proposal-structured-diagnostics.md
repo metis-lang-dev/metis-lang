@@ -1,6 +1,6 @@
 # PROPOSAL — structured diagnostics (findings as certified slices)
 
-**Status: step 1 IMPLEMENTED 2026-10-04 (user go-ahead); steps 2-4
+**Status: steps 1-2 IMPLEMENTED 2026-10-04 (user go-ahead); steps 3-4
 open.** Amendments agreed in review are recorded in §A at the end.
 
 Origin: the REPL readability track (line:column diagnostics, metisc
@@ -218,3 +218,57 @@ A9. **Codes migrated in step 1:** doc-missing (rules and links),
 containment-produce, containment-consume (split: one code per
 direction), fact-var-conflict (facts; rule var conflicts stay
 strings until step 2).
+
+## B — step 2 (2026-10-04)
+
+B1. **The registry is code -> (severity, phase)**; the step-1
+`migrated` flag is gone. phase says WHERE a code fires: compile |
+kernel | admission (a D2 fixture row is REQUIRED — gate 11) | loop |
+runtime (fixtures land with the REPL surface, step 3) | internal
+(defensive kernel invariants unreachable from source: guard-not-bwd,
+guard-var-undeclared, comment-missing, var-untyped, kind-unknown —
+metispy unit tests on hand-built catalogs; their metisc parity is BY
+CONSTRUCTION ONLY. Named item: metispy's kernel `untyped var` check
+(var-untyped) has no metisc counterpart at all; harmless while
+unreachable). The OCaml registry and hints are GENERATED from
+metispy's (diag.ml says so); gate 11 and test_diagnostics diff both.
+
+B2. **All compile, kernel and admission findings are diagnostics**
+(registry rows), each emitted beside its legacy string at the same
+point. fact-var-conflict / var-type-conflict are SIBLINGS (facts vs
+rules/links), kept apart on purpose (codes are API). arity-mismatch
+covers atom, reads and weight-call arity (the site is in data).
+
+B3. **Decl slices beyond rules**: the kernel Catalog carries a
+decl-source table (metispy `Catalog.srcs`, compare=False; metisc
+`k_srcs`) keyed pred/x, bwd/x, namespace/y, type/t, filled by the
+compiler, for catalog-level and admission findings. A decl-level
+slice's context cites only what the decl references (a pred's
+namespace, its arg types). pack-adds-stage's subject is the pack's
+`stages (...)` line (decl `stages`, no source position);
+extends-no-base's is `extends X.` (decl `catalog/<name>`).
+
+B4. **D2 = five runs**, one per phase: diag_compile.llp,
+diag_kernel.llp (+ included diag_dom.llp), diag_pack.llp against
+diag_pack_base.llp (`metisc --diagnostics FILE --base BASE`;
+metispy `diagnose(path, base=)` compiles AND admits), and the fatal
+rows diag_cycle_a.llp/diag_cycle_b.llp (include-cycle) and
+diag_extends.llp (extends-no-base). Every gated code fires EXACTLY
+once (metispy asserts uniqueness).
+
+B5. **Gate report**: the loop gate (formalize.admit_text_pack ->
+`gate`/`revise`) carries `diagnostics:` (the JSON objects) beside
+`findings:`.
+
+B6. **Parity fixes found on the way** (both now byte-identical):
+metisc named Horn entries `horn/<pred>`, metispy `horn/<head atom>` —
+metisc now uses the head atom (clauses of one predicate stay
+distinguishable); a namespace's layers were iterated in frozenset
+order (metispy, nondeterministic) vs declaration order (metisc) —
+both now SORTED. Open, not fixed: metispy's include resolution
+accumulates `seen` across SIBLING includes, so a diamond (one file
+included twice by siblings) is falsely a cycle in metispy, not in
+metisc.
+
+B7. `metisc --diagnostics*` LIST and exit 0 even when errors are
+listed (stated in the usage text): a listing, not a compile.

@@ -39,7 +39,10 @@ type t = {
   k_namespaces : (string * (string list * string list)) list;
   k_preds : (string * string) list;          (* pred -> namespace *)
   k_bwd : string list;
-  k_entries : entry list }
+  k_entries : entry list;
+  k_srcs : (string * Diag.src) list }
+  (* decl slices for catalog-level / admission diagnostics (spec 08),
+     keyed "pred/x", "bwd/x", "namespace/y", "type/t" *)
 
 val typecheck : t -> string list             (* findings; [] = OK *)
 

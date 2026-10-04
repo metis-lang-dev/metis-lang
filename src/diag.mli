@@ -22,8 +22,10 @@ exception Defect of string
 (* unknown code / context over the cap: an emitter bug, never silent *)
 
 val context_cap : int
-val registry : (string * (string * bool)) list
-(* code -> (severity, migrated); `migrated` is step-1 scaffolding *)
+val registry : (string * (string * string)) list
+(* code -> (severity, phase); phase: compile | kernel | admission (D2
+   fixture required) | loop | runtime | internal *)
+val gated_phases : string list
 
 val no_src : src
 val make : string -> string -> src -> (string * string) list -> t

@@ -104,24 +104,34 @@ fi
 diff -u "$ROOT/corpus/goldens/const_check_goldens.txt" "$WORK/cc_err.txt"
 
 echo "== 11. structured diagnostics (spec 08 D2): text + JSON goldens, registry"
-# corpus/diag: diag_compile.llp (compiler phase) and diag_kernel.llp
-# (kernel phase; its containment-produce SUBJECT lives in the included
-# diag_dom.llp, pinning include-path location splicing). JSON is
-# compared with loc.file normalized to the basename.
-( cd "$ROOT/corpus/diag" && for f in diag_compile.llp diag_kernel.llp; do
-    "$ROOT/src/metisc" --diagnostics "$f"; done ) > "$WORK/diag.txt"
+# corpus/diag, one run per phase: diag_compile.llp (compile),
+# diag_kernel.llp (kernel; its containment-produce SUBJECT lives in the
+# included diag_dom.llp — pins include-path location splicing),
+# diag_pack.llp against diag_pack_base.llp (admission), and the fatal
+# compile rows diag_cycle_a.llp (include-cycle), diag_extends.llp
+# (extends-no-base). JSON is compared with loc.file -> basename.
+diag_runs() {
+  ( cd "$ROOT/corpus/diag"
+    "$ROOT/src/metisc" "$1" diag_compile.llp
+    "$ROOT/src/metisc" "$1" diag_kernel.llp
+    "$ROOT/src/metisc" "$1" diag_pack.llp --base diag_pack_base.llp
+    "$ROOT/src/metisc" "$1" diag_cycle_a.llp
+    "$ROOT/src/metisc" "$1" diag_extends.llp )
+}
+diag_runs --diagnostics > "$WORK/diag.txt"
 diff -u "$ROOT/corpus/goldens/diag_goldens.txt" "$WORK/diag.txt"
-( cd "$ROOT/corpus/diag" && for f in diag_compile.llp diag_kernel.llp; do
-    "$ROOT/src/metisc" --diagnostics-json "$f"; done ) \
+diag_runs --diagnostics-json \
   | sed -E 's#"file":"([^"]*/)?([^"/]*)"#"file":"\2"#' > "$WORK/diag.jsonl"
 diff -u "$ROOT/corpus/goldens/diag_goldens.jsonl" "$WORK/diag.jsonl"
 "$ROOT/src/metisc" --diag-registry > "$WORK/diag_registry.txt"
 diff -u "$ROOT/corpus/goldens/diag_registry.txt" "$WORK/diag_registry.txt"
-# every MIGRATED code has a fixture row (step-1 scaffolding: the
-# migrated/pending flag goes away when step 2 lands)
-for code in $(awk '$3 == "migrated" {print $1}' "$WORK/diag_registry.txt"); do
-  grep -q "^error $code @\|^warning $code @\|^note $code @" "$WORK/diag.txt" \
-    || { echo "migrated code $code has no D2 fixture row"; exit 1; }
+# every compile/kernel/admission code has a D2 fixture row (loop and
+# runtime codes get theirs with the REPL surface; internal codes are
+# unreachable from source)
+for code in $(awk '$3 == "compile" || $3 == "kernel" || $3 == "admission" \
+                   {print $1}' "$WORK/diag_registry.txt"); do
+  grep -qE "^(error|warning|note) $code @" "$WORK/diag.txt" \
+    || { echo "code $code has no D2 fixture row"; exit 1; }
 done
 
 echo "ALL GATES GREEN"

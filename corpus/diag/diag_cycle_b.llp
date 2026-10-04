@@ -1,0 +1,3 @@
+% D2 fixture: the other half of the include cycle (see diag_cycle_a.llp).
+catalog diag-cycle-b 1.
+include "diag_cycle_a.llp".

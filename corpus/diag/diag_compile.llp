@@ -1,6 +1,6 @@
-% D2 fixture (spec 08), COMPILER phase: every migrated compiler-phase
-% code fires exactly once per row. Compile is expected to FAIL; the
-% gate diffs the diagnostics (text + JSON) against the goldens.
+% D2 fixture (spec 08), COMPILE phase: every compile-phase code fires
+% exactly once (rows marked). Compile is expected to FAIL; gate 11 diffs
+% the diagnostics (text + JSON) against the goldens.
 catalog diag-compile 1.
 layers (story).
 stages (go).
@@ -9,10 +9,36 @@ type color {red blue}.
 namespace ns produce (story).
 pred tok(nat) : ns.
 pred hit(nat) : ns.
+pred mark : ns.
 bwd paint(nat,color).
+bwd big(nat).
+weight w(N) reads {tok(N) if big(N)}.
+% row reads-formal-not-var: the formal n0 is a constant.
+weight bad(n0) reads {}.
+% rows reads-persist-marker ($tok), reads-var-unbound (M),
+% reads-not-resource (ghost), reads-guard-not-bwd (mark).
+weight scope(N) reads {$tok(N), hit(M), ghost(N), tok(N) if mark}.
 % row fact-var-conflict: X at a nat AND a color position.
 paint(X,X).
+% row fact-not-bwd: tok is a resource predicate.
+tok(n1).
+% row const-not-in-type: red is no nat.
+big(red).
+% row fact-var-singleton (warning): N occurs once.
+big(N).
 stage go {
   r [story] : tok(N) -o hit(N).
+  %% row var-type-conflict: X typed nat (tok) and color (paint).
+  c [story] : tok(X) * paint(n0,X) -o mark.
+  %% row var-untypable: ghost is undeclared, so Q is typed nowhere.
+  v [story] : tok(N) * ghost(Q) -o hit(N).
+  %% row arity-mismatch: tok takes one argument.
+  a [story] : tok(n0,n1) -o mark.
+  %% row weight-port-undeclared.
+  p [story] : tok(N) -o hit(N) @w nope(N).
+  %% row weight-arg-not-var: K is not a variable of this rule.
+  q [story] : tok(N) -o hit(N) @w w(K).
 }
 % (row doc-missing: the rule r above carries no %% doc line.)
+%% row link-post-bwd: a link may not produce the Horn atom big.
+qui back [story] : go -o go * big(n0).

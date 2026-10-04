@@ -1,0 +1,3 @@
+% D2 fixture (spec 08), FATAL row include-cycle: a includes b includes a.
+catalog diag-cycle-a 1.
+include "diag_cycle_b.llp".

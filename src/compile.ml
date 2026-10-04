@@ -23,17 +23,23 @@ let set_assoc k v l =
   else l @ [(k, v)]
 
 (* ordered insertion: first occurrence wins; conflict -> finding *)
-let infer_vars ?conflicts name atoms sigs findings =
+let infer_vars ?emit ?(conflict_code = "var-type-conflict") name atoms
+    sigs findings =
   let vars = ref [] in
   List.iter (fun (a : atom) ->
       match List.assoc_opt a.pred sigs with
       | None -> ()        (* kernel typecheck reports undeclared *)
       | Some sig_ ->
-        if List.length sig_ <> List.length a.terms then
-          findings := Printf.sprintf "%s: %s arity %d != declared %d"
-              name a.pred (List.length a.terms) (List.length sig_)
-                      :: !findings
-        else
+        if List.length sig_ <> List.length a.terms then begin
+          let text = Printf.sprintf "%s: %s arity %d != declared %d"
+              name a.pred (List.length a.terms) (List.length sig_) in
+          match emit with
+          | Some e -> e "arity-mismatch" text
+                        [ ("pred", a.pred);
+                          ("expected", string_of_int (List.length sig_));
+                          ("got", string_of_int (List.length a.terms)) ]
+          | None -> findings := text :: !findings
+        end else
           List.iter2 (fun t ty -> match t with
               | TConst _ -> ()
               | TVar v ->
@@ -42,10 +48,11 @@ let infer_vars ?conflicts name atoms sigs findings =
                  | Some ty0 when ty0 <> ty ->
                    let text = Printf.sprintf
                        "%s: var %s typed both %s and %s" name v ty0 ty in
-                   findings := text :: !findings;
-                   (match conflicts with
-                    | Some c -> c := !c @ [ (text, v, ty0, ty) ]
-                    | None -> ())
+                   (match emit with
+                    | Some e -> e conflict_code text
+                                  [ ("var", v); ("type1", ty0);
+                                    ("type2", ty) ]
+                    | None -> findings := text :: !findings)
                  | Some _ -> ()))
             a.terms sig_)
     atoms;
@@ -58,9 +65,17 @@ let rec resolve_in (c : Ast.catalog) base_dir seen =
   let pairs = List.concat_map (fun (d, l) -> match d with
       | DInclude p ->
         let path = Filename.concat base_dir p in
-        if List.mem path seen then
-          raise (Lang_error
-                   [Printf.sprintf "include cycle at %s" p]);
+        if List.mem path seen then begin
+          let text = Printf.sprintf "include cycle at %s" p in
+          Diag.emit (Diag.make "include-cycle" text
+                       { Diag.s_loc = { Diag.file = l.file; line = l.line;
+                                        col = l.col;
+                                        decl = "include/" ^ p };
+                         s_subject = [ decl_line d ]; s_context = [];
+                         s_layers = "" }
+                       [ ("path", p) ]);
+          raise (Lang_error [ text ])
+        end;
         let inc = Parser.parse_file path in
         let inc = resolve_in inc (Filename.dirname path)
             (path :: seen) in
@@ -120,6 +135,37 @@ let source_of decls layers (l : Ast.loc) decl doc line (atoms : atom list) =
     s_layers = if layers = [] then ""
       else Printf.sprintf "layers (%s)." (String.concat " " layers) }
 
+(* the slice of a vocabulary declaration (catalog-level / admission
+   diagnostics; mirrors metispy _Vocab.decl_source): subject = the
+   decl itself; context = what it references (a pred's namespace, its
+   arg types as name + cardinality) *)
+let decl_source decls layers (l : Ast.loc) decl d =
+  let ctx = ref [] in
+  (match d with
+   | DPred (_, _, sp) ->
+     (match List.find_opt (function
+          | DNamespace (n, _, _) -> n = sp | _ -> false) decls with
+      | Some nd -> ctx := [ decl_line nd ]
+      | None -> ())
+   | _ -> ());
+  (match d with
+   | DPred (_, args, _) | DBwd (_, args) ->
+     let seen = ref [] in
+     List.iter (fun ty ->
+         if not (List.mem ty !seen) then
+           match List.find_opt (function
+               | DType (n, _) -> n = ty | _ -> false) decls with
+           | Some (DType (_, cs)) ->
+             seen := !seen @ [ ty ];
+             ctx := !ctx @ [ Printf.sprintf "type %s: %d constants" ty
+                               (List.length cs) ]
+           | _ -> ()) args
+   | _ -> ());
+  { Diag.s_loc = { Diag.file = l.file; line = l.line; col = l.col; decl };
+    s_subject = [ decl_line d ]; s_context = !ctx;
+    s_layers = if layers = [] then ""
+      else Printf.sprintf "layers (%s)." (String.concat " " layers) }
+
 (* the diagnostics of the last compile — and of a pack admission run
    right after it (Catalog.admit emits into the same sink) *)
 let diagnostics () = Diag.collected ()
@@ -128,16 +174,21 @@ let diagnostics () = Diag.collected ()
    that position declares (`eq(red,n7)` with eq(nat,nat): finding);
    positions whose type is not declared here are skipped — the kernel
    typecheck reports undeclared types (metispy: _check_consts) *)
-let check_consts where (atoms : atom list) sigs types findings =
+let check_consts ?emit where (atoms : atom list) sigs types findings =
   List.iter (fun (a : atom) ->
       match List.assoc_opt a.pred sigs with
       | Some sig_ when List.length sig_ = List.length a.terms ->
         List.iteri (fun i (t, ty) ->
             match t, List.assoc_opt ty types with
             | TConst c, Some cs when not (List.mem c cs) ->
-              findings := Printf.sprintf
+              let text = Printf.sprintf
                   "%s: constant '%s' is not a %s (%s argument %d)"
-                  where c ty a.pred (i + 1) :: !findings
+                  where c ty a.pred (i + 1) in
+              (match emit with
+               | Some e -> e "const-not-in-type" text
+                             [ ("const", c); ("type", ty); ("pred", a.pred);
+                               ("arg", string_of_int (i + 1)) ]
+               | None -> findings := text :: !findings)
             | _ -> ())
           (List.combine a.terms sig_)
       | _ -> ())
@@ -165,10 +216,10 @@ let singleton_fact_vars (a : atom) sigs =
                     && not (starts_any v) ->
         let ty = match List.nth_opt sig_ i with
           | Some ty -> ty | None -> "value" in
-        [Printf.sprintf
-           "fact %s: var %s occurs once, so the fact holds for every \
-            %s \xe2\x80\x94 if intended, name it Any%s (a leading Any \
-            marks a don't-care)" (atom_str a) v ty v]
+        [ (Printf.sprintf
+             "fact %s: var %s occurs once, so the fact holds for every \
+              %s \xe2\x80\x94 if intended, name it Any%s (a leading Any \
+              marks a don't-care)" (atom_str a) v ty v, v, ty) ]
       | _ -> []) a.terms)
 
 let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
@@ -181,9 +232,15 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
     fail_now ["unresolved include — call resolve_includes first"];
   (match cat.cextends, base with
    | Some e, None ->
-     fail_now [Printf.sprintf
-                 "catalog extends '%s' but no base catalog was \
-                  provided" e]
+     let text = Printf.sprintf
+         "catalog extends '%s' but no base catalog was provided" e in
+     Diag.emit (Diag.make "extends-no-base" text
+                  { Diag.s_loc = { Diag.file = ""; line = 0; col = 0;
+                                   decl = "catalog/" ^ cat.cname };
+                    s_subject = [ Printf.sprintf "extends %s." e ];
+                    s_context = []; s_layers = "" }
+                  [ ("base", e) ]);
+     fail_now [ text ]
    | _ -> ());
   let (base_sigs, inherited_bwd, base_layers, base_stages,
        base_preds, base_types) =
@@ -225,38 +282,62 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
   let known_pred p =
     List.mem_assoc p !preds || List.mem_assoc p base_preds in
 
+  let vocab = cat.cdecls @ (match base with
+      | Some (_, bsrc) -> bsrc.cdecls | None -> []) in
+  let src_of = source_of vocab
+      (if cat.clayers <> [] then cat.clayers else base_layers) in
+  (* emit src code text data: the legacy finding (or warning) + the
+     structured diagnostic, at the same point (metispy `emitter`) *)
+  let emitter src code text data =
+    let d = Diag.make code text src data in
+    Diag.emit d;
+    if d.Diag.severity = "error" then findings := text :: !findings
+    else last_warnings := !last_warnings @ [ text ] in
+  let decl_locs = List.combine cat.cdecls cat.cdecl_locs in
+
   (* read-scope validation (00-language-spec §5.2) *)
   List.iter (fun (factor, pats) ->
+      let (pd, pl) = List.find (fun (d, _) -> match d with
+          | DPort { pname; _ } -> pname = factor | _ -> false) decl_locs in
+      let emit = emitter (src_of pl ("weight/" ^ factor) "" (decl_line pd)
+                            (List.concat_map (fun (p : read_pattern) ->
+                                 p.ratom :: p.rguards) pats)) in
       let formals = List.assoc factor !p_weights in
       let bad = List.filter (fun a -> not (is_upper a)) formals in
       if bad <> [] then
-        findings := Printf.sprintf
-            "weight %s: reads needs var formals, got %s" factor
-            (String.concat "," bad) :: !findings;
+        emit "reads-formal-not-var"
+          (Printf.sprintf "weight %s: reads needs var formals, got %s"
+             factor (String.concat "," bad))
+          [ ("port", factor); ("formals", String.concat "," bad) ];
       List.iter (fun (pat : read_pattern) ->
           List.iter (fun (a : atom) ->
               if a.persist then
-                findings := Printf.sprintf
-                    "weight %s: $ marker in reads %s" factor
-                    (atom_str a) :: !findings;
+                emit "reads-persist-marker"
+                  (Printf.sprintf "weight %s: $ marker in reads %s" factor
+                     (atom_str a))
+                  [ ("port", factor); ("atom", atom_str a) ];
               (match List.assoc_opt a.pred !sigs with
                | Some s when List.length s <> List.length a.terms ->
-                 findings := Printf.sprintf
-                     "weight %s: %s arity %d != declared %d" factor
-                     a.pred (List.length a.terms) (List.length s)
-                             :: !findings
+                 emit "arity-mismatch"
+                   (Printf.sprintf "weight %s: %s arity %d != declared %d"
+                      factor a.pred (List.length a.terms) (List.length s))
+                   [ ("pred", a.pred);
+                     ("expected", string_of_int (List.length s));
+                     ("got", string_of_int (List.length a.terms)) ]
                | _ -> ()))
             (pat.ratom :: pat.rguards);
           if not (known_pred pat.ratom.pred) then
-            findings := Printf.sprintf
-                "weight %s: reads atom '%s' is not a declared \
-                 resource predicate" factor pat.ratom.pred
-                        :: !findings;
+            emit "reads-not-resource"
+              (Printf.sprintf "weight %s: reads atom '%s' is not a \
+                               declared resource predicate" factor
+                 pat.ratom.pred)
+              [ ("port", factor); ("pred", pat.ratom.pred) ];
           List.iter (fun (g : atom) ->
               if not (is_bwd g.pred) then
-                findings := Printf.sprintf
-                    "weight %s: reads guard '%s' is not declared bwd"
-                    factor g.pred :: !findings)
+                emit "reads-guard-not-bwd"
+                  (Printf.sprintf "weight %s: reads guard '%s' is not \
+                                   declared bwd" factor g.pred)
+                  [ ("port", factor); ("pred", g.pred) ])
             pat.rguards;
           let bound =
             formals
@@ -266,68 +347,71 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
               pat.rguards in
           List.iter (function
               | TVar v when not (List.mem v bound) ->
-                findings := Printf.sprintf
-                    "weight %s: reads var %s unbound (not a formal, \
-                     not guard-enumerated)" factor v :: !findings
+                emit "reads-var-unbound"
+                  (Printf.sprintf "weight %s: reads var %s unbound (not \
+                                   a formal, not guard-enumerated)"
+                     factor v)
+                  [ ("port", factor); ("var", v) ]
               | _ -> ())
             pat.ratom.terms)
         pats)
     !p_reads;
 
-  let vocab = cat.cdecls @ (match base with
-      | Some (_, bsrc) -> bsrc.cdecls | None -> []) in
-  let src_of = source_of vocab
-      (if cat.clayers <> [] then cat.clayers else base_layers) in
   (* sweep 2: entries (decl order); horn entries appended last *)
   let entries = ref [] and horn_entries = ref [] in
   let p_weight_refs = ref [] in
   let horn_layer =
     match cat.clayers with l :: _ -> l | [] -> "horn" in
-  let add_horn payload =
+  let add_horn ?(src = Diag.no_src) payload =
     horn_entries := !horn_entries @
-      [{ Catalog.e_name = "horn/" ^ fst payload.Catalog.h_head;
+      [{ Catalog.e_name =
+           (* "horn/<head atom>" as metispy names it (str(atom)):
+              clauses of one predicate stay distinguishable *)
+           (let (hp, ha) = payload.Catalog.h_head in
+            "horn/" ^ (if ha = [] then hp
+                       else hp ^ "(" ^ String.concat "," ha ^ ")"));
          e_layer = horn_layer; e_comment = "Horn clause.";
-         e_payload = Catalog.PHorn payload; e_src = Diag.no_src }] in
+         e_payload = Catalog.PHorn payload; e_src = src }] in
   List.iter2 (fun d dloc -> match d with
       | DFact a ->
+        let fsrc = src_of dloc ("fact/" ^ a.pred) "" (decl_line d) [a] in
+        let emit = emitter fsrc in
         if not (List.mem a.pred !bwd) then
-          findings := Printf.sprintf
-              "fact %s: predicate not declared bwd" (atom_str a)
-                      :: !findings
+          emit "fact-not-bwd"
+            (Printf.sprintf "fact %s: predicate not declared bwd"
+               (atom_str a))
+            [ ("pred", a.pred) ]
         else begin
           (* a var in a fact is universally quantified over the type
              its position declares (`plus(n0,N,N).` = Pi N:nat) — the
              Ceptre/Twelf reading of a bodiless clause; typed like a
              rule var (conflicting positions are a finding) *)
-          let conflicts = ref [] in
-          ignore (infer_vars ~conflicts ("fact " ^ atom_str a) [a] !sigs
-                    findings);
-          if !conflicts <> [] then begin
-            let src = src_of dloc ("fact/" ^ a.pred) "" (decl_line d)
-                [a] in
-            List.iter (fun (text, v, t1, t2) ->
-                Diag.emit (Diag.make "fact-var-conflict" text src
-                             [ ("var", v); ("type1", t1);
-                               ("type2", t2) ])) !conflicts
-          end;
-          check_consts ("fact " ^ atom_str a) [a] !sigs
+          ignore (infer_vars ~emit ~conflict_code:"fact-var-conflict"
+                    ("fact " ^ atom_str a) [a] !sigs findings);
+          check_consts ~emit ("fact " ^ atom_str a) [a] !sigs
             (!types @ base_types) findings;
-          last_warnings := !last_warnings @ singleton_fact_vars a !sigs;
+          List.iter (fun (text, v, ty) ->
+              emit "fact-var-singleton" text [ ("var", v); ("type", ty) ])
+            (singleton_fact_vars a !sigs);
           let vs = List.sort_uniq compare
               (List.filter_map (function
                    | TVar v -> Some v | TConst _ -> None) a.terms) in
-          add_horn { h_head = pattern a; h_body = []; h_vars = vs }
+          add_horn ~src:fsrc
+            { h_head = pattern a; h_body = []; h_vars = vs }
         end
       | DHorn (h, body) ->
-        check_consts ("horn " ^ atom_str h) (h :: body) !sigs
-          (!types @ base_types) findings;
+        let hsrc = src_of dloc ("horn/" ^ h.pred) "" (decl_line d)
+            (h :: body) in
+        check_consts ~emit:(emitter hsrc) ("horn " ^ atom_str h)
+          (h :: body) !sigs (!types @ base_types) findings;
         let vs = List.sort_uniq compare
             (List.concat_map (fun (a : atom) ->
                  List.filter_map (function
                      | TVar v -> Some v | TConst _ -> None) a.terms)
                (h :: body)) in
-        add_horn { h_head = pattern h;
-                   h_body = List.map pattern body; h_vars = vs }
+        add_horn ~src:hsrc
+          { h_head = pattern h; h_body = List.map pattern body;
+            h_vars = vs }
       | DStage s ->
         List.iter (fun (r : rule) ->
             let body_atoms = List.filter_map (function
@@ -336,22 +420,20 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
             let rsrc = src_of r.rloc (s.sname ^ "/" ^ r.rname) r.rdoc
                 (rule_line r)
                 (List.filter (fun (a : atom) -> a.pred <> "one") atoms) in
-            if String.trim r.rdoc = "" then begin
-              let text = Printf.sprintf
-                  "%s: missing %%%% doc (mandatory)" r.rname in
-              findings := text :: !findings;
-              Diag.emit (Diag.make "doc-missing" text rsrc
-                           [ ("rule", r.rname) ])
-            end;
-            let vars = infer_vars r.rname atoms !sigs findings in
-            check_consts r.rname atoms !sigs (!types @ base_types)
+            let emit = emitter rsrc in
+            if String.trim r.rdoc = "" then
+              emit "doc-missing"
+                (Printf.sprintf "%s: missing %%%% doc (mandatory)" r.rname)
+                [ ("rule", r.rname) ];
+            let vars = infer_vars ~emit r.rname atoms !sigs findings in
+            check_consts ~emit r.rname atoms !sigs (!types @ base_types)
               findings;
             List.iter (fun (a : atom) ->
                 List.iter (function
                     | TVar v when List.assoc_opt v vars = None ->
-                      findings := Printf.sprintf
-                          "%s: var %s untypable" r.rname v
-                                  :: !findings
+                      emit "var-untypable"
+                        (Printf.sprintf "%s: var %s untypable" r.rname v)
+                        [ ("var", v) ]
                     | _ -> ())
                   a.terms)
               atoms;
@@ -372,24 +454,29 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
              | Some (WVal v) -> weight := v
              | Some (WRef { factor; wargs; complement }) ->
                if List.assoc_opt factor !p_weights = None then
-                 findings := Printf.sprintf
-                     "%s: weight port '%s' not declared" r.rname
-                     factor :: !findings;
+                 emit "weight-port-undeclared"
+                   (Printf.sprintf "%s: weight port '%s' not declared"
+                      r.rname factor)
+                   [ ("port", factor) ];
                List.iter (function
                    | TVar v when List.assoc_opt v vars = None ->
-                     findings := Printf.sprintf
-                         "%s: weight arg %s is not a rule var"
-                         r.rname v :: !findings
+                     emit "weight-arg-not-var"
+                       (Printf.sprintf "%s: weight arg %s is not a rule var"
+                          r.rname v)
+                       [ ("port", factor); ("arg", v) ]
                    | _ -> ())
                  wargs;
                (match List.assoc_opt factor !p_reads,
                       List.assoc_opt factor !p_weights with
                 | Some _, Some formals
                   when List.length wargs <> List.length formals ->
-                  findings := Printf.sprintf
-                      "%s: weight %s takes %d args, got %d" r.rname
-                      factor (List.length formals)
-                      (List.length wargs) :: !findings
+                  emit "arity-mismatch"
+                    (Printf.sprintf "%s: weight %s takes %d args, got %d"
+                       r.rname factor (List.length formals)
+                       (List.length wargs))
+                    [ ("pred", factor);
+                      ("expected", string_of_int (List.length formals));
+                      ("got", string_of_int (List.length wargs)) ]
                 | _ -> ());
                p_weight_refs := !p_weight_refs @
                  [(r.rname,
@@ -418,15 +505,14 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
         let atoms = l.lpre_atoms @ l.lpost_atoms in
         let lsrc = src_of dloc ("qui/" ^ l.lname) l.ldoc (decl_line d)
             atoms in
-        if String.trim l.ldoc = "" then begin
-          let text = Printf.sprintf
-              "%s: missing %%%% doc (mandatory)" l.lname in
-          findings := text :: !findings;
-          Diag.emit (Diag.make "doc-missing" text lsrc
-                       [ ("rule", l.lname) ])
-        end;
-        let vars = infer_vars l.lname atoms !sigs findings in
-        check_consts l.lname atoms !sigs (!types @ base_types) findings;
+        let emit = emitter lsrc in
+        if String.trim l.ldoc = "" then
+          emit "doc-missing"
+            (Printf.sprintf "%s: missing %%%% doc (mandatory)" l.lname)
+            [ ("rule", l.lname) ];
+        let vars = infer_vars ~emit l.lname atoms !sigs findings in
+        check_consts ~emit l.lname atoms !sigs (!types @ base_types)
+          findings;
         let consume = ref [] and persist = ref []
         and guards = ref [] in
         List.iter (fun (a : atom) ->
@@ -437,8 +523,9 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
           l.lpre_atoms;
         List.iter (fun (a : atom) ->
             if is_bwd a.pred then
-              findings := Printf.sprintf "%s: bwd '%s' in link post"
-                  l.lname a.pred :: !findings)
+              emit "link-post-bwd"
+                (Printf.sprintf "%s: bwd '%s' in link post" l.lname a.pred)
+                [ ("pred", a.pred) ])
           l.lpost_atoms;
         entries := !entries @
           [{ Catalog.e_name = l.llayer ^ "/" ^ l.lname;
@@ -464,7 +551,19 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
                k_layers = layers; k_stages = stages;
                k_types = !types; k_namespaces = !namespaces;
                k_preds = !preds; k_bwd = !bwd;
-               k_entries = !entries @ !horn_entries } in
+               k_entries = !entries @ !horn_entries;
+               k_srcs = List.filter_map (fun (d, l) ->
+                   let key = match d with
+                     | DPred (n, _, _) -> Some ("pred/" ^ n)
+                     | DBwd (n, _) -> Some ("bwd/" ^ n)
+                     | DNamespace (n, _, _) -> Some ("namespace/" ^ n)
+                     | DType (n, _) -> Some ("type/" ^ n)
+                     | _ -> None in
+                   Option.map (fun k ->
+                       (k, decl_source vocab
+                          (if cat.clayers <> [] then cat.clayers
+                           else base_layers) l k d)) key)
+                   decl_locs } in
   if cat.cextends = None then
     (match Catalog.typecheck kcat with
      | [] -> ()

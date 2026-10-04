@@ -1,13 +1,42 @@
-% D2 fixture (spec 08), KERNEL phase: containment fires at the kernel
-% typecheck, far from the AST; the diagnostic carries the slice the
-% compiler threaded through Entry. Rows: containment-produce (in the
-% INCLUDED file) and containment-consume (here).
+% D2 fixture (spec 08), KERNEL phase: compiles cleanly, then every
+% kernel code fires once at the typecheck, far from the AST; each
+% diagnostic carries the slice the compiler threaded through Entry or
+% the decl-source table. containment-produce's SUBJECT lives in the
+% INCLUDED diag_dom.llp (pins include-path location splicing).
 catalog diag-kernel 1.
 include "diag_dom.llp".
 type nat {n0 n1}.
 namespace q produce (dyn).
+% row namespace-layer-unknown.
+namespace odd produce (phantom).
 pred lock(nat) : q.
+pred tint(shade) : q.
+% row pred-namespace-unknown.
+pred stray : nowhere.
+% row pred-resource-and-bwd.
+pred dual : q.
+bwd dual.
+bwd big(nat).
+big(n0).
+% row horn-head-not-bwd: seen is a resource predicate.
+seen :- big(n0).
+% row horn-body-not-bwd: lock is a resource predicate.
+big(N) :- lock(N).
 stage note {
-  %% the pack spends a lock it may not consume.
+  %% row containment-consume: the pack spends a lock it may not consume.
   grab [pack] : lock(N) * mkt -o seen.
+  %% row pred-undeclared: zap is declared nowhere.
+  zz [pack] : mkt * zap -o seen.
+  %% row bwd-as-resource: big is Horn knowledge, not state.
+  bb [dyn] : heads -o big(n1).
+  %% row layer-unknown: ghost is not a layer.
+  gl [ghost] : mkt -o seen.
+  %% row var-type-unknown: shade is not a declared type.
+  vt [dyn] : tint(S) -o heads.
 }
+stage limbo {
+  %% row stage-unknown: limbo is not among the stages.
+  lb [dyn] : heads -o heads.
+}
+%% row link-stage-unknown: nowhere is not a stage.
+qui jump [dyn] : note -o nowhere.

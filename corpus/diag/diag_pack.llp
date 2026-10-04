@@ -1,0 +1,17 @@
+% D2 fixture (spec 08), ADMISSION phase: compiled against
+% diag_pack_base.llp (metisc --diagnostics FILE --base BASE), then
+% admitted; every admission code fires once.
+catalog diag-pack 1.
+extends diag-pack-base.
+% row pack-redeclares: nat is the base's type.
+type nat {n0 n1}.
+namespace mk produce (pack).
+% row pack-claims-base-namespace: st is the base's namespace.
+pred note : st.
+pred seen : mk.
+% row pack-adds-stage: the stage set is the base's.
+stages (go extra).
+stage go {
+  %% the pack observes a token.
+  obs [pack] : $tok(n0) -o seen.
+}

@@ -1,0 +1,4 @@
+% D2 fixture (spec 08), FATAL row extends-no-base: a pack compiled
+% without its base catalog.
+catalog diag-extends 1.
+extends nowhere-base.

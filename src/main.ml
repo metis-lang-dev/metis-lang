@@ -197,11 +197,21 @@ let embedded_case path =
    resolved) and list every structured diagnostic (spec 08) — the
    listing is the command's job, so exit 0 whether the compile failed
    or not; the D2 parity gate diffs this against the goldens *)
-let diagnostics_file ~json path =
+let diagnostics_file ?base ~json path =
+  let load p = Compile.resolve_includes (Parser.parse_file p)
+      (Filename.dirname p) in
+  Diag.reset ();
   (try
-     ignore (Compile.compile
-               (Compile.resolve_includes (Parser.parse_file path)
-                  (Filename.dirname path)))
+     match base with
+     | None -> ignore (Compile.compile (load path))
+     | Some b ->
+       (* a pack: compile its base, compile it against the base, then
+          admit — admission diagnostics join (Compile.compile resets
+          the sink, so the base's own diagnostics do not) *)
+       let bast = load b in
+       let (bcat, _) = Compile.compile bast in
+       let (pcat, _) = Compile.compile ~base:(bcat, bast) (load path) in
+       ignore (Catalog.admit bcat pcat)
    with Compile.Lang_error _ | Catalog.Catalog_error _ -> ());
   List.iter (fun d ->
       if json then print_endline (Diag.to_json d)
@@ -269,18 +279,24 @@ let () =
   | [_; "--diag-registry"] ->
     (* code severity migrated|pending — diffed by metispy so the two
        registries cannot drift *)
-    List.iter (fun (c, (sev, m)) ->
-        Printf.printf "%s %s %s\n" c sev
-          (if m then "migrated" else "pending")) Diag.registry
+    List.iter (fun (c, (sev, phase)) ->
+        Printf.printf "%s %s %s\n" c sev phase) Diag.registry
   | [_; "--diagnostics"; llp] -> diagnostics_file ~json:false llp
+  | [_; "--diagnostics"; llp; "--base"; b] ->
+    diagnostics_file ~base:b ~json:false llp
+  | [_; "--diagnostics-json"; llp; "--base"; b] ->
+    diagnostics_file ~base:b ~json:true llp
   | [_; "--diagnostics-json"; llp] -> diagnostics_file ~json:true llp
   | [_; manifest] -> drive manifest run_case
   | _ ->
     prerr_endline
       "usage: metisc <manifest> | --keys <manifest> | \
        --roundtrip <manifest> | --sample <manifest> | \
-       --run <file.llp> | --diagnostics[-json] <file.llp> | \
-       --selftest";
+       --run <file.llp> | --diagnostics[-json] <file.llp> [--base \
+       <base.llp>] | --diag-registry | --selftest\n\
+       (--diagnostics* LIST diagnostics and exit 0 even when errors are \
+       listed — a listing, not a compile; use --run or a manifest for \
+       pass/fail)";
     exit 2
    with
    | Compile.Lang_error msgs ->

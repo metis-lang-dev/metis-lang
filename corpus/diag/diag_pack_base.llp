@@ -1,0 +1,11 @@
+% D2 fixture base for diag_pack.llp (admission phase).
+catalog diag-pack-base 1.
+layers (dyn pack).
+stages (go).
+type nat {n0 n1}.
+namespace st produce (dyn).
+pred tok(nat) : st.
+stage go {
+  %% a base rule.
+  t [dyn] : tok(N) -o tok(N).
+}
