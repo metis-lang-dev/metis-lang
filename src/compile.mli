@@ -26,3 +26,7 @@ val resolve_includes : Ast.catalog -> string -> Ast.catalog
 
 val compile : ?base:(Catalog.t * Ast.catalog) -> Ast.catalog
   -> Catalog.t * ports
+
+(* advisory warnings of the LAST compile (never gating; e.g. a
+   singleton var in a Horn fact) *)
+val warnings : unit -> string list

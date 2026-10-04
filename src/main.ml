@@ -35,21 +35,29 @@ let parse_llp dir p =
   Compile.resolve_includes (Parser.parse_file path)
     (Filename.dirname path)
 
+(* advisory compile warnings (never gating) go to stderr *)
+let compile_warn ?base ast =
+  let r = match base with
+    | None -> Compile.compile ast
+    | Some b -> Compile.compile ~base:b ast in
+  List.iter (fun w -> prerr_endline ("warning: " ^ w)) (Compile.warnings ());
+  r
+
 let build dir c =
   let base_ast = parse_llp dir c.c_llp in
   match c.c_pack with
   | None ->
-    let (cat, ports) = Compile.compile base_ast in
+    let (cat, ports) = compile_warn base_ast in
     (cat, ports, Ground.ground cat c.c_init)
   | Some pp ->
     (* the pack path: compile base, compile pack against it, admit
        (containment), ground the merged catalog. Hooks come from the
        BASE ports (a pack that adds weight ports would merge them —
        out of corpus scope), horn from the merged catalog. *)
-    let (bcat, bports) = Compile.compile base_ast in
+    let (bcat, bports) = compile_warn base_ast in
     let pack_ast = parse_llp dir pp in
     let (pcat, _) =
-      Compile.compile ~base:(bcat, base_ast) pack_ast in
+      compile_warn ~base:(bcat, base_ast) pack_ast in
     let merged = Catalog.admit bcat pcat in
     (merged, bports, Ground.ground merged c.c_init)
 
@@ -72,7 +80,9 @@ let roundtrip_case dir c =
   List.iter (fun p ->
       let path = Filename.concat dir p in
       let a = Parser.parse_file path in
-      if Parser.parse (Ast.pretty a) <> a then begin
+      (* locations are diagnostics-only: compare with them stripped *)
+      if Ast.strip_locs (Parser.parse (Ast.pretty a))
+         <> Ast.strip_locs a then begin
         Printf.eprintf "roundtrip FAILED: %s\n" p; exit 1
       end;
       Printf.printf "R %s ok\n" p)

@@ -1,0 +1,28 @@
+% Horn facts with variables (spec §5): a fact var is universally
+% quantified over its position's type. Gate 9 pins (a) the quantified
+% reading — eq(X,X) admits r for the token's value — and (b) the
+% singleton-var WARNING, byte-identical in metisc and metispy:
+%   plus(n0,N,M)   N and M occur once  -> two warnings (the typo trap)
+%   eq(X,X)        X occurs twice      -> silent
+%   top(AnyN)      Any-prefixed        -> silent (a declared don't-care)
+catalog fact-vars 1.
+layers (story).
+stages (go).
+type nat {n0 n1 n2}.
+namespace ns produce (story).
+pred tok(nat) : ns.
+pred hit(nat) : ns.
+bwd plus(nat,nat,nat).
+bwd eq(nat,nat).
+bwd top(nat).
+plus(n0,N,M).
+eq(X,X).
+top(AnyN).
+stage go {
+  %% a token whose value equals itself (always) is hit.
+  r [story] : tok(N) * eq(N,N) * top(N) -o hit(N).
+}
+#init tok(n1) 1
+#steps 2
+#seeds 1
+#query hit(n1)

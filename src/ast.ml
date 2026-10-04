@@ -1,3 +1,9 @@
+(* source position of a declaration — the DECLARED NAME's token
+   (rule/link/type/pred/bwd name; a fact's or Horn rule's head
+   predicate). Diagnostics only: never compiled, never keyed; the
+   round-trip contract compares with locations stripped. *)
+type loc = { file : string; line : int; col : int }
+
 type term = TVar of string | TConst of string
 
 type atom = { pred : string; terms : term list; persist : bool }
@@ -13,7 +19,8 @@ type read_pattern = { ratom : atom; rguards : atom list }
 type rule = {
   rname : string; rlayer : string; rdoc : string;
   rbody : body_elem list; rhead : atom list;
-  rweight : weight option }
+  rweight : weight option;
+  rloc : loc }
 
 type stage_d = { sname : string; srules : rule list }
 
@@ -43,7 +50,18 @@ type catalog = {
   cprov : (string * string * string) option;
   clayers : string list; cstages : string list;
   cextends : string option;
-  cdecls : decl list }
+  cdecls : decl list;
+  cdecl_locs : loc list }   (* aligned 1:1 with cdecls *)
+
+let no_loc = { file = ""; line = 0; col = 0 }
+
+let strip_locs (c : catalog) =
+  let strip_rule r = { r with rloc = no_loc } in
+  { c with
+    cdecl_locs = List.map (fun _ -> no_loc) c.cdecl_locs;
+    cdecls = List.map (function
+        | DStage s -> DStage { s with srules = List.map strip_rule s.srules }
+        | d -> d) c.cdecls }
 
 let term_str = function TVar v -> v | TConst v -> v
 

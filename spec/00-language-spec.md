@@ -140,6 +140,20 @@ Order of processing is significant and specified.
      (Horn `solutions`, e.g. a reads-scope guard) is an error, not a
      silent non-ground answer: guard it with a predicate that
      enumerates it.
+     A fact var occurring exactly ONCE draws an advisory WARNING
+     (never a finding): `plus(n0,N,M).` almost always meant N twice.
+     A deliberate don't-care is spelled `Any` or `Any<Name>` (the
+     Ceptre corpus's own idiom, `solves_problem Any thirst water`) and
+     stays silent. The warning text is byte-identical across
+     toolchains (metis-lang gate 9).
+   - CONSTANT MEMBERSHIP (facts, Horn rules, stage rules, links): a
+     constant in an argument position must be a member of the type
+     that position declares — `eq(red,n7)` with eq(nat,nat) is a
+     finding per bad constant: "<where>: constant 'c' is not a <type>
+     (<pred> argument <k>)". Positions whose type is not declared in
+     the compiled unit are skipped (the kernel typecheck reports
+     undeclared types); a pack checks against base + own types.
+     metis-lang gate 10 pins the text.
    - HornRule: vars = SORTED set of var names in head+body.
    - Stage: per rule, in order:
      * doc mandatory;

@@ -1,0 +1,2 @@
+warning: fact plus(n0,N,M): var N occurs once, so the fact holds for every nat — if intended, name it AnyN (a leading Any marks a don't-care)
+warning: fact plus(n0,N,M): var M occurs once, so the fact holds for every nat — if intended, name it AnyM (a leading Any marks a don't-care)

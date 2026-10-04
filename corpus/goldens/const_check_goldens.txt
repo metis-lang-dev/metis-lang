@@ -1,0 +1,5 @@
+error: fact eq(red,n1): constant 'red' is not a nat (eq argument 1)
+error: fact hue(n2): constant 'n2' is not a color (hue argument 1)
+error: horn hue(X): constant 'n9' is not a nat (eq argument 2)
+error: r: constant 'green' is not a color (paint argument 2)
+error: back: constant 'n5' is not a nat (tok argument 1)

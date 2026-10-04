@@ -1,6 +1,12 @@
 (* Lossless AST + canonical printer (contract: parse (pretty a) = a).
    Mirrors metis/lang/ast.py; ranges expand, comments drop, docs stay. *)
 
+(* source position of a declaration — the DECLARED NAME's token
+   (rule/link/type/pred/bwd name; a fact's or Horn rule's head
+   predicate). Diagnostics only: never compiled, never keyed; the
+   round-trip contract compares with locations stripped. *)
+type loc = { file : string; line : int; col : int }
+
 type term = TVar of string | TConst of string
 
 type atom = { pred : string; terms : term list; persist : bool }
@@ -16,7 +22,8 @@ type read_pattern = { ratom : atom; rguards : atom list }
 type rule = {
   rname : string; rlayer : string; rdoc : string;
   rbody : body_elem list; rhead : atom list;
-  rweight : weight option }
+  rweight : weight option;
+  rloc : loc }
 
 type stage_d = { sname : string; srules : rule list }
 
@@ -46,7 +53,13 @@ type catalog = {
   cprov : (string * string * string) option;
   clayers : string list; cstages : string list;
   cextends : string option;
-  cdecls : decl list }
+  cdecls : decl list;
+  cdecl_locs : loc list }   (* aligned 1:1 with cdecls *)
+
+val no_loc : loc
+val strip_locs : catalog -> catalog
+(* zero every location: the round-trip equality and any structural
+   AST comparison go through this *)
 
 val term_str : term -> string
 val atom_str : atom -> string

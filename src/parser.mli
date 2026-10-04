@@ -3,5 +3,6 @@
 
 exception Parse_error of string
 
-val parse : string -> Ast.catalog
+val parse : ?file:string -> string -> Ast.catalog
+(* ?file names the source in every decl location (default "") *)
 val parse_file : string -> Ast.catalog

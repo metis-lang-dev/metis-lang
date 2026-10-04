@@ -6,10 +6,17 @@ exception Parse_error of string
 let fail fmt = Printf.ksprintf (fun s -> raise (Parse_error s)) fmt
 
 type st = { toks : token array; poss : (int * int) array;
-            mutable i : int; mutable docs : string list }
+            mutable i : int; mutable docs : string list;
+            file : string }
 
-let mk (toks, poss) =
-  { toks = Array.of_list toks; poss; i = 0; docs = [] }
+let mk ?(file = "") (toks, poss) =
+  { toks = Array.of_list toks; poss; i = 0; docs = []; file }
+
+(* the location of the CURRENT token (a declared name, by convention) *)
+let here p =
+  if p.i < Array.length p.poss then
+    let (line, col) = p.poss.(p.i) in { file = p.file; line; col }
+  else { file = p.file; line = 0; col = 0 }
 
 (* line:col of token index k (default: the token just consumed) *)
 let where ?k p =
@@ -186,6 +193,7 @@ let head_atoms p =
    choice (the additive ⊕), with no kernel change. *)
 let rule p =
   let rdoc = take_docs p in
+  let rloc = here p in
   let rname = expect_ident p in
   punct p '['; let rlayer = expect_ident p in punct p ']';
   punct p ':';
@@ -214,7 +222,7 @@ let rule p =
     punct p '.';
     List.mapi (fun k (rhead, w) ->
         { rname = Printf.sprintf "%s-%d" rname (k + 1);
-          rlayer; rdoc; rbody; rhead; rweight = Some w })
+          rlayer; rdoc; rbody; rhead; rweight = Some w; rloc })
       branches
   end else begin
     let rhead = head_atoms p in
@@ -223,7 +231,7 @@ let rule p =
         ignore (next p); Some (weight_expr p)
       end else None in
     punct p '.';
-    [{ rname; rlayer; rdoc; rbody; rhead; rweight }]
+    [{ rname; rlayer; rdoc; rbody; rhead; rweight; rloc }]
   end
 
 let stage_def p =
@@ -280,8 +288,8 @@ let type_consts p =
       end else go (v :: acc) in
   go []
 
-let parse text =
-  let p = mk (Lexer.tokens_pos text) in
+let parse ?(file = "") text =
+  let p = mk ~file (Lexer.tokens_pos text) in
   drain_docs p;
   expect_kw p "catalog";
   let cname = expect_ident p in
@@ -290,14 +298,20 @@ let parse text =
   let cprov = ref None and cextends = ref None in
   let clayers = ref [] and cstages = ref [] in
   let decls = ref [] in
-  let add d = decls := d :: !decls in
+  (* each decl is added with the loc of its declared name: keyword
+     decls take it after the keyword (at := here p below), a bare
+     atom at its head predicate *)
+  let at = ref no_loc in
+  let add d = decls := (d, !at) :: !decls in
   let rec loop () =
     drain_docs p;
     match peek p with
     | None -> ()
     | Some (Ident v) ->
+      at := here p;
+      let named () = ignore (next p); at := here p in
       (match v with
-       | "include" -> ignore (next p);
+       | "include" -> named ();
          let path = expect_str p in punct p '.'; add (DInclude path)
        | "extends" -> ignore (next p);
          cextends := Some (expect_ident p); punct p '.'
@@ -309,11 +323,11 @@ let parse text =
          clayers := name_list_paren p; punct p '.'
        | "stages" when peek ~k:1 p = Some (Punct '(') ->
          ignore (next p); cstages := name_list_paren p; punct p '.'
-       | "type" -> ignore (next p);
+       | "type" -> named ();
          let tname = expect_ident p in
          let consts = type_consts p in
          punct p '.'; add (DType (tname, consts))
-       | "namespace" -> ignore (next p);
+       | "namespace" -> named ();
          let nname = expect_ident p in
          expect_kw p "produce";
          let produce = name_list_paren p in
@@ -322,17 +336,17 @@ let parse text =
              ignore (next p); Some (name_list_paren p)
            end else None in
          punct p '.'; add (DNamespace (nname, produce, consume))
-       | "pred" -> ignore (next p);
+       | "pred" -> named ();
          let pname = expect_ident p in
          let args = sig_args p in
          punct p ':';
          let space = expect_ident p in
          punct p '.'; add (DPred (pname, args, space))
-       | "bwd" -> ignore (next p);
+       | "bwd" -> named ();
          let bname = expect_ident p in
          let args = sig_args p in
          punct p '.'; add (DBwd (bname, args))
-       | "weight" | "guard" | "input" | "output" -> ignore (next p);
+       | "weight" | "guard" | "input" | "output" -> named ();
          let pkind = match v with
            | "weight" -> Weight | "guard" -> Guard
            | "input" -> Input | _ -> Output in
@@ -346,8 +360,8 @@ let parse text =
              ignore (next p); Some (reads_block p)
            end else None in
          punct p '.'; add (DPort { pkind; pname; pargs; preads })
-       | "stage" -> ignore (next p); add (DStage (stage_def p))
-       | "qui" -> ignore (next p); add (DLink (link_def p))
+       | "stage" -> named (); add (DStage (stage_def p))
+       | "qui" -> named (); add (DLink (link_def p))
        | _ ->
          (* bare atom: Horn fact or rule *)
          let head = atom p in
@@ -366,10 +380,11 @@ let parse text =
   loop ();
   { cname; cversion; cprov = !cprov; clayers = !clayers;
     cstages = !cstages; cextends = !cextends;
-    cdecls = List.rev !decls }
+    cdecls = List.rev_map fst !decls;
+    cdecl_locs = List.rev_map snd !decls }
 
 let parse_file path =
   let ic = open_in_bin path in
   let n = in_channel_length ic in
   let s = really_input_string ic n in
-  close_in ic; parse s
+  close_in ic; parse ~file:path s

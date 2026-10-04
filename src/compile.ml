@@ -52,7 +52,7 @@ let infer_vars name atoms sigs findings =
 
 let rec resolve_in (c : Ast.catalog) base_dir seen =
   let layers = ref c.clayers and stages = ref c.cstages in
-  let decls = List.concat_map (fun d -> match d with
+  let pairs = List.concat_map (fun (d, l) -> match d with
       | DInclude p ->
         let path = Filename.concat base_dir p in
         if List.mem path seen then
@@ -63,16 +63,65 @@ let rec resolve_in (c : Ast.catalog) base_dir seen =
             (path :: seen) in
         if !layers = [] then layers := inc.clayers;
         if !stages = [] then stages := inc.cstages;
-        inc.cdecls
-      | d -> [d])
-      c.cdecls in
-  { c with clayers = !layers; cstages = !stages; cdecls = decls }
+        List.combine inc.cdecls inc.cdecl_locs
+      | d -> [(d, l)])
+      (List.combine c.cdecls c.cdecl_locs) in
+  { c with clayers = !layers; cstages = !stages;
+           cdecls = List.map fst pairs; cdecl_locs = List.map snd pairs }
 
 let resolve_includes c base_dir = resolve_in c base_dir []
 
 (* -- compilation ------------------------------------------------------ *)
 
+(* a CONSTANT in an argument position must be a member of the type
+   that position declares (`eq(red,n7)` with eq(nat,nat): finding);
+   positions whose type is not declared here are skipped — the kernel
+   typecheck reports undeclared types (metispy: _check_consts) *)
+let check_consts where (atoms : atom list) sigs types findings =
+  List.iter (fun (a : atom) ->
+      match List.assoc_opt a.pred sigs with
+      | Some sig_ when List.length sig_ = List.length a.terms ->
+        List.iteri (fun i (t, ty) ->
+            match t, List.assoc_opt ty types with
+            | TConst c, Some cs when not (List.mem c cs) ->
+              findings := Printf.sprintf
+                  "%s: constant '%s' is not a %s (%s argument %d)"
+                  where c ty a.pred (i + 1) :: !findings
+            | _ -> ())
+          (List.combine a.terms sig_)
+      | _ -> ())
+    atoms
+
+(* advisory, never gating; reset by every compile (metispy:
+   CatalogDoc.warnings) *)
+let last_warnings : string list ref = ref []
+let warnings () = !last_warnings
+
+(* a var occurring ONCE in a fact is almost always a typo
+   (`plus(n0,N,M).` meant N twice): it silently means 'every value'.
+   A deliberate don't-care is named Any or Any<Name> (the Ceptre
+   corpus's own spelling) and stays silent. *)
+let singleton_fact_vars (a : atom) sigs =
+  let sig_ = match List.assoc_opt a.pred sigs with
+    | Some s -> s | None -> [] in
+  let names = List.filter_map (function
+      | TVar v -> Some v | TConst _ -> None) a.terms in
+  let starts_any v =
+    String.length v >= 3 && String.sub v 0 3 = "Any" in
+  List.concat (List.mapi (fun i t ->
+      match t with
+      | TVar v when List.length (List.filter (( = ) v) names) = 1
+                    && not (starts_any v) ->
+        let ty = match List.nth_opt sig_ i with
+          | Some ty -> ty | None -> "value" in
+        [Printf.sprintf
+           "fact %s: var %s occurs once, so the fact holds for every \
+            %s \xe2\x80\x94 if intended, name it Any%s (a leading Any \
+            marks a don't-care)" (atom_str a) v ty v]
+      | _ -> []) a.terms)
+
 let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
+  last_warnings := [];
   let findings = ref [] in
   let fail_now msgs = raise (Lang_error msgs) in
   if List.exists (function DInclude _ -> true | _ -> false)
@@ -85,7 +134,7 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
                   provided" e]
    | _ -> ());
   let (base_sigs, inherited_bwd, base_layers, base_stages,
-       base_preds) =
+       base_preds, base_types) =
     match base with
     | Some ((bcat : Catalog.t), (bsrc : Ast.catalog)) ->
       (List.filter_map (function
@@ -93,8 +142,9 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
            | DBwd (n, args) -> Some (n, args)
            | _ -> None)
           bsrc.cdecls,
-       bcat.k_bwd, bcat.k_layers, bcat.k_stages, bcat.k_preds)
-    | None -> ([], [], [], [], []) in
+       bcat.k_bwd, bcat.k_layers, bcat.k_stages, bcat.k_preds,
+       bcat.k_types)
+    | None -> ([], [], [], [], [], []) in
 
   (* sweep 1: vocabulary, ports (decl order) *)
   let types = ref [] and namespaces = ref [] in
@@ -194,12 +244,17 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
              Ceptre/Twelf reading of a bodiless clause; typed like a
              rule var (conflicting positions are a finding) *)
           ignore (infer_vars ("fact " ^ atom_str a) [a] !sigs findings);
+          check_consts ("fact " ^ atom_str a) [a] !sigs
+            (!types @ base_types) findings;
+          last_warnings := !last_warnings @ singleton_fact_vars a !sigs;
           let vs = List.sort_uniq compare
               (List.filter_map (function
                    | TVar v -> Some v | TConst _ -> None) a.terms) in
           add_horn { h_head = pattern a; h_body = []; h_vars = vs }
         end
       | DHorn (h, body) ->
+        check_consts ("horn " ^ atom_str h) (h :: body) !sigs
+          (!types @ base_types) findings;
         let vs = List.sort_uniq compare
             (List.concat_map (fun (a : atom) ->
                  List.filter_map (function
@@ -217,6 +272,8 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
                 | BAtom a -> Some a | BDistinct _ -> None) r.rbody in
             let atoms = body_atoms @ r.rhead in
             let vars = infer_vars r.rname atoms !sigs findings in
+            check_consts r.rname atoms !sigs (!types @ base_types)
+              findings;
             List.iter (fun (a : atom) ->
                 List.iter (function
                     | TVar v when List.assoc_opt v vars = None ->
@@ -290,6 +347,7 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
               "%s: missing %%%% doc (mandatory)" l.lname :: !findings;
         let atoms = l.lpre_atoms @ l.lpost_atoms in
         let vars = infer_vars l.lname atoms !sigs findings in
+        check_consts l.lname atoms !sigs (!types @ base_types) findings;
         let consume = ref [] and persist = ref []
         and guards = ref [] in
         List.iter (fun (a : atom) ->

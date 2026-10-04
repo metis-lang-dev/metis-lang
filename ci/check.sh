@@ -82,4 +82,25 @@ cp "$ROOT/corpus/love_triangle.llp" "$WORK/"
 "$ROOT/src/metisc" --run "$ROOT/corpus/love_triangle.llp" > "$WORK/run.txt"
 diff -u "$ROOT/corpus/goldens/run_goldens.txt" "$WORK/run.txt"
 
+echo "== 9. Horn facts: vars quantified (spec 5); singleton vars warn (advisory)"
+# fact_vars.llp: eq(X,X) must admit the rule (quantified reading), and
+# plus(n0,N,M) must warn twice on stderr — byte-identical to metispy
+# (tests/lang/test_fact_vars.py reads the same golden).
+"$ROOT/src/metisc" --run "$ROOT/corpus/fact_vars.llp" </dev/null \
+    > "$WORK/fv_run.txt" 2> "$WORK/fv_err.txt"
+diff -u "$ROOT/corpus/goldens/fact_vars_run.txt" "$WORK/fv_run.txt"
+grep '^warning' "$WORK/fv_err.txt" > "$WORK/fv_warn.txt" || true
+diff -u "$ROOT/corpus/goldens/warn_goldens.txt" "$WORK/fv_warn.txt"
+
+echo "== 10. constants: argument constants are members of the declared type"
+# const_check_bad.llp is a NEGATIVE fixture: compilation must fail with
+# exactly the committed findings (metispy test_fact_vars.py reads the
+# same golden, modulo its 'line N: ' prefix on rule/link findings).
+if "$ROOT/src/metisc" --run "$ROOT/corpus/const_check_bad.llp" \
+    </dev/null > /dev/null 2> "$WORK/cc_err.txt"; then
+  echo "const_check_bad.llp compiled — the membership check is missing"
+  exit 1
+fi
+diff -u "$ROOT/corpus/goldens/const_check_goldens.txt" "$WORK/cc_err.txt"
+
 echo "ALL GATES GREEN"

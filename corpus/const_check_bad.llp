@@ -1,0 +1,26 @@
+% NEGATIVE fixture for gate 10 (spec §5): every constant in an
+% argument position must be a member of the declared type. Each line
+% marked BAD below must draw exactly one finding, byte-identical in
+% metisc and metispy; the file is expected to FAIL compilation.
+catalog const-check-bad 1.
+layers (story).
+stages (go).
+type nat {n0 n1 n2}.
+type color {red blue}.
+namespace ns produce (story).
+pred tok(nat) : ns.
+pred paint(nat,color) : ns.
+bwd eq(nat,nat).
+bwd hue(color).
+eq(n0,n0).
+eq(red,n1).
+hue(n2).
+hue(X) :- eq(X,n9).
+stage go {
+  %% paint a token blue (fine), or green (BAD: green is no color).
+  r [story] : tok(N) -o paint(N,blue) * paint(N,green).
+}
+%% go settles -> go (BAD: n5 is no nat).
+qui back [story] : go * tok(n5) -o go.
+#init tok(n1) 1
+#steps 1
