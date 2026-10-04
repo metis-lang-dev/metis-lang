@@ -83,6 +83,12 @@ let solutions db goals =
   let out = ref [] in
   ignore (solve db goals [] depth_bound (fun s ->
       let key = List.map (fun v -> walk v s) vs in
+      if List.exists is_qvar key then
+        (* a quantified fact var answered the query without being
+           pinned: enumerable only through its type, which the Horn
+           world does not carry *)
+        failwith "non-ground Horn solution: a fact variable is left \
+                  unbound — guard it with a predicate that enumerates it";
       if not (Hashtbl.mem seen key) then begin
         Hashtbl.add seen key ();
         out := List.map2 (fun v c ->

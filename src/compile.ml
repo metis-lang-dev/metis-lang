@@ -188,7 +188,17 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
           findings := Printf.sprintf
               "fact %s: predicate not declared bwd" (atom_str a)
                       :: !findings
-        else add_horn { h_head = pattern a; h_body = []; h_vars = [] }
+        else begin
+          (* a var in a fact is universally quantified over the type
+             its position declares (`plus(n0,N,N).` = Pi N:nat) — the
+             Ceptre/Twelf reading of a bodiless clause; typed like a
+             rule var (conflicting positions are a finding) *)
+          ignore (infer_vars ("fact " ^ atom_str a) [a] !sigs findings);
+          let vs = List.sort_uniq compare
+              (List.filter_map (function
+                   | TVar v -> Some v | TConst _ -> None) a.terms) in
+          add_horn { h_head = pattern a; h_body = []; h_vars = vs }
+        end
       | DHorn (h, body) ->
         let vs = List.sort_uniq compare
             (List.concat_map (fun (a : atom) ->

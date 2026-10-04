@@ -131,7 +131,15 @@ Order of processing is significant and specified.
    every scope-atom var must be bound by a formal or enumerated by a
    guard var.
 3. Decl sweep 2 (in decl order):
-   - Fact: pred must be bwd; becomes a Horn entry.
+   - Fact: pred must be bwd; becomes a Horn entry. Its vars (the
+     SORTED set of var names in the atom) are UNIVERSALLY
+     QUANTIFIED over the type each position declares — `plus(n0,N,N).`
+     is Π N:nat, the Ceptre/Twelf reading of a bodiless clause — and
+     typed like rule vars (one var at two differently-typed
+     positions = finding). A query that leaves such a var unbound
+     (Horn `solutions`, e.g. a reads-scope guard) is an error, not a
+     silent non-ground answer: guard it with a predicate that
+     enumerates it.
    - HornRule: vars = SORTED set of var names in head+body.
    - Stage: per rule, in order:
      * doc mandatory;
