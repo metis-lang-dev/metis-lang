@@ -100,6 +100,62 @@ let body_str body =
          | BAtom a -> atom_str a
          | BDistinct (a, b) -> a ^ " <> " ^ b) body)
 
+(* one clause, canonical, no doc and no indent (a stage line of
+   pretty; the diagnostic SUBJECT of a rule) *)
+let rule_line r =
+  let w = match r.rweight with
+    | None -> "" | Some w -> "  " ^ weight_str w in
+  (* the LL unit head prints as '()' (P4 sugar; the parser reads both
+     spellings onto the same AST) *)
+  let head = match r.rhead with
+    | [{ pred = "one"; terms = []; persist = false }] -> "()"
+    | hs -> atoms_str hs in
+  Printf.sprintf "%s [%s] : %s -o %s%s." r.rname r.rlayer
+    (body_str r.rbody) head w
+
+(* one top-level declaration on one canonical line, no doc (stages are
+   multi-line: use rule_line per clause) *)
+let decl_line = function
+  | DInclude p -> Printf.sprintf "include \"%s\"." p
+  | DType (n, cs) -> Printf.sprintf "type %s {%s}." n (String.concat " " cs)
+  | DNamespace (n, prod, cons) ->
+    let c' = match cons with
+      | None -> ""
+      | Some cs -> Printf.sprintf " consume (%s)" (String.concat " " cs) in
+    Printf.sprintf "namespace %s produce (%s)%s." n
+      (String.concat " " prod) c'
+  | DPred (n, args, sp) ->
+    let a = if args = [] then ""
+      else Printf.sprintf "(%s)" (String.concat "," args) in
+    Printf.sprintf "pred %s%s : %s." n a sp
+  | DBwd (n, args) ->
+    let a = if args = [] then ""
+      else Printf.sprintf "(%s)" (String.concat "," args) in
+    Printf.sprintf "bwd %s%s." n a
+  | DPort { pkind; pname; pargs; preads } ->
+    let k = match pkind with
+      | Weight -> "weight" | Guard -> "guard"
+      | Input -> "input" | Output -> "output" in
+    let a = if pargs = [] then ""
+      else Printf.sprintf "(%s)" (String.concat "," pargs) in
+    let r = match preads with
+      | None -> ""
+      | Some ps ->
+        Printf.sprintf " reads {%s}"
+          (String.concat ", " (List.map read_pattern_str ps)) in
+    Printf.sprintf "%s %s%s%s." k pname a r
+  | DFact a -> atom_str a ^ "."
+  | DHorn (h, body) ->
+    Printf.sprintf "%s :- %s." (atom_str h)
+      (String.concat ", " (List.map atom_str body))
+  | DLink l ->
+    let pre = if l.lpre_atoms = [] then l.lpre
+      else l.lpre ^ " * " ^ atoms_str l.lpre_atoms in
+    let post = if l.lpost_atoms = [] then l.lpost
+      else l.lpost ^ " * " ^ atoms_str l.lpost_atoms in
+    Printf.sprintf "qui %s [%s] : %s -o %s." l.lname l.llayer pre post
+  | DStage s -> invalid_arg ("decl_line: stage " ^ s.sname)
+
 let pretty (c : catalog) =
   let buf = Buffer.create 1024 in
   let line s = Buffer.add_string buf s; Buffer.add_char buf '\n' in
@@ -115,63 +171,17 @@ let pretty (c : catalog) =
   if c.cstages <> [] then
     line (Printf.sprintf "stages (%s)." (String.concat " " c.cstages));
   List.iter (fun d -> match d with
-      | DInclude p -> line (Printf.sprintf "include \"%s\"." p)
-      | DType (n, cs) ->
-        line (Printf.sprintf "type %s {%s}." n (String.concat " " cs))
-      | DNamespace (n, prod, cons) ->
-        let c' = match cons with
-          | None -> ""
-          | Some cs ->
-            Printf.sprintf " consume (%s)" (String.concat " " cs) in
-        line (Printf.sprintf "namespace %s produce (%s)%s." n
-                (String.concat " " prod) c')
-      | DPred (n, args, sp) ->
-        let a = if args = [] then ""
-          else Printf.sprintf "(%s)" (String.concat "," args) in
-        line (Printf.sprintf "pred %s%s : %s." n a sp)
-      | DBwd (n, args) ->
-        let a = if args = [] then ""
-          else Printf.sprintf "(%s)" (String.concat "," args) in
-        line (Printf.sprintf "bwd %s%s." n a)
-      | DPort { pkind; pname; pargs; preads } ->
-        let k = match pkind with
-          | Weight -> "weight" | Guard -> "guard"
-          | Input -> "input" | Output -> "output" in
-        let a = if pargs = [] then ""
-          else Printf.sprintf "(%s)" (String.concat "," pargs) in
-        let r = match preads with
-          | None -> ""
-          | Some ps ->
-            Printf.sprintf " reads {%s}"
-              (String.concat ", " (List.map read_pattern_str ps)) in
-        line (Printf.sprintf "%s %s%s%s." k pname a r)
-      | DFact a -> line (atom_str a ^ ".")
-      | DHorn (h, body) ->
-        line (Printf.sprintf "%s :- %s." (atom_str h)
-                (String.concat ", " (List.map atom_str body)))
-      | DLink l ->
-        let pre = if l.lpre_atoms = [] then l.lpre
-          else l.lpre ^ " * " ^ atoms_str l.lpre_atoms in
-        let post = if l.lpost_atoms = [] then l.lpost
-          else l.lpost ^ " * " ^ atoms_str l.lpost_atoms in
-        Buffer.add_string buf (doc_lines l.ldoc);
-        line (Printf.sprintf "qui %s [%s] : %s -o %s."
-                l.lname l.llayer pre post)
       | DStage s ->
         line (Printf.sprintf "stage %s {" s.sname);
         List.iter (fun r ->
-            let w = match r.rweight with
-              | None -> "" | Some w -> "  " ^ weight_str w in
-            (* the LL unit head prints as '()' (P4 sugar; the parser
-               reads both spellings onto the same AST) *)
-            let head = match r.rhead with
-              | [{ pred = "one"; terms = []; persist = false }] -> "()"
-              | hs -> atoms_str hs in
             Buffer.add_string buf (doc_lines r.rdoc);
-            line (Printf.sprintf "  %s [%s] : %s -o %s%s."
-                    r.rname r.rlayer (body_str r.rbody)
-                    head w))
+            line ("  " ^ rule_line r))
           s.srules;
-        line "}")
+        line "}"
+      | DLink l ->
+        Buffer.add_string buf (doc_lines l.ldoc);
+        line (decl_line d)
+      | d -> line (decl_line d))
     c.cdecls;
   Buffer.contents buf
+

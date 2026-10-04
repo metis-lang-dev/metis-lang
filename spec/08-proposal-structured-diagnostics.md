@@ -1,6 +1,7 @@
 # PROPOSAL — structured diagnostics (findings as certified slices)
 
-**Status: DRAFT 2026-10-04, for user review. Nothing implemented.**
+**Status: step 1 IMPLEMENTED 2026-10-04 (user go-ahead); steps 2-4
+open.** Amendments agreed in review are recorded in §A at the end.
 
 Origin: the REPL readability track (line:column diagnostics, metisc
 d1fb730 / metispy 707c489) meets the loop's token problem: the
@@ -157,3 +158,63 @@ of context, the fix is a better slice for that code — never
 3. Runtime notes (budgets, horn-nonground) join; REPL `findings`
    verb + rendering.
 4. D5: switch the repair loop, measure, record.
+
+## A — amendments (step 1, agreed in review 2026-10-04)
+
+A1. **Positions.** loc points at the DECLARED NAME's token: rule/link/
+type/pred/bwd/namespace/port name; a fact's or Horn rule's head
+predicate. Docs excluded. Non-semantic: metispy `compare=False`
+fields (line, col, file); metisc `rloc` on rules plus `cdecl_locs`
+aligned 1:1 with `cdecls` (beside the decl variants, so match sites
+are untouched); `--roundtrip` compares through `Ast.strip_locs`.
+`resolve_includes` splices locations with their decls, so an
+included declaration keeps ITS file.
+
+A2. **Context order (normative, byte parity):** the subject's preds
+in source order (rule: body atoms then head, `one` dropped; link:
+pre then post atoms; fact: its atom), first occurrence only, each as
+its canonical `pred …`/`bwd …` line -> the namespaces of those preds
+(pred decls only), first occurrence -> the types their signatures
+name, first occurrence, as `type T: k constants` -> `layers (…)`
+only for codes that concern layers (containment-*). Cap 12; overflow
+raises a defect, never truncates. Own declarations win over a pack
+base's.
+
+A3. **Subject** = the doc lines (`%% …`) + ONE canonical line from the
+shared single-declaration printers (`rule_line`, `decl_line`), which
+`pretty` itself now calls, so subject and pretty cannot drift.
+
+A4. **`text`** is the LOCATION-FREE finding string (metispy's legacy
+`line N:` prefix stays on its findings list, not in the diagnostic).
+
+A5. **Text header:** `<severity> <code> @ <basename>:<line>:<col>
+(<decl>)` (matching d1fb730's lex/parse format); `<input>` when the
+source has no file. JSON carries the full path; goldens normalize it
+to the basename. JSON = compact, fixed key order, non-ASCII raw
+(python `json.dumps(ensure_ascii=False, separators=(",",":"))`,
+mirrored by hand in metisc).
+
+A6. **Kernel findings** (containment) are emitted where they fire:
+the compiler precomputes each rule's/link's slice and threads it
+through `Entry` (metispy `Entry.src`, `compare=False`; metisc
+`e_src`), so admission copies it verbatim — no name lookup.
+
+A7. **Surfaces.** metispy: `LangError` / `CatalogError` gain
+`.diagnostics`, `CatalogDoc.diagnostics`, `compiler.diagnose(path)`;
+metisc: `Compile.diagnostics ()` (exception payloads unchanged),
+`metisc --diagnostics[-json] FILE`, `metisc --diag-registry`.
+
+A8. **D2 is two fixtures**, because both compilers stop at
+compiler-phase errors before the kernel typecheck (checking more
+would change WHAT is reported — a non-goal): `corpus/diag/
+diag_compile.llp` (compiler phase) and `diag_kernel.llp` (kernel
+phase; its containment-produce subject lives in the included
+`diag_dom.llp`, pinning include splicing). Gate 11 diffs text, JSON
+and the registry; the registry's `migrated|pending` flag (every
+migrated code must have a fixture row) is step-1 scaffolding,
+removed when step 2 lands.
+
+A9. **Codes migrated in step 1:** doc-missing (rules and links),
+containment-produce, containment-consume (split: one code per
+direction), fact-var-conflict (facts; rule var conflicts stay
+strings until step 2).

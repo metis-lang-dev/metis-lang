@@ -1,0 +1,34 @@
+error fact-var-conflict @ diag_compile.llp:14:1 (fact/paint)
+  paint(X,X).
+  | bwd paint(nat,color).
+  | type nat: 3 constants
+  | type color: 2 constants
+  -> X sits at a nat and a color position: rename one occurrence, or fix the predicate signature
+error doc-missing @ diag_compile.llp:16:3 (go/r)
+  r [story] : tok(N) -o hit(N).
+  | pred tok(nat) : ns.
+  | pred hit(nat) : ns.
+  | namespace ns produce (story).
+  | type nat: 3 constants
+  -> add a %% doc line above r: the doc is the approved text unit, mandatory on every rule and link
+error containment-produce @ diag_dom.llp:14:3 (note/obs)
+  %% pack observes heads: reads base state, writes only its own.
+  obs [pack] : mkt * $heads -o seen * heads.
+  | pred mkt : mk.
+  | pred heads : st.
+  | pred seen : mk.
+  | namespace mk produce (pack).
+  | namespace st produce (dyn).
+  | layers (dyn pack).
+  -> layer 'pack' may not produce heads (namespace 'st'): read it with $heads, or declare the atom in a namespace your layer owns
+error containment-consume @ diag_kernel.llp:12:3 (note/grab)
+  %% the pack spends a lock it may not consume.
+  grab [pack] : lock(N) * mkt -o seen.
+  | pred lock(nat) : q.
+  | pred mkt : mk.
+  | pred seen : mk.
+  | namespace q produce (dyn).
+  | namespace mk produce (pack).
+  | type nat: 2 constants
+  | layers (dyn pack).
+  -> layer 'pack' may not consume lock (namespace 'q'): read it with $lock instead of spending it

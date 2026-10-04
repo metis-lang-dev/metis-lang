@@ -1,0 +1,15 @@
+% D2 fixture domain (included by diag_kernel.llp): the containment
+% violation's SUBJECT lives here, so the gate pins include-path
+% location splicing (the diagnostic must name THIS file).
+catalog diag-dom 1.
+layers (dyn pack).
+stages (note).
+namespace st produce (dyn).
+namespace mk produce (pack).
+pred heads : st.
+pred mkt : mk.
+pred seen : mk.
+stage note {
+  %% pack observes heads: reads base state, writes only its own.
+  obs [pack] : mkt * $heads -o seen * heads.
+}

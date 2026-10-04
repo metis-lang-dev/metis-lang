@@ -63,4 +63,9 @@ val strip_locs : catalog -> catalog
 
 val term_str : term -> string
 val atom_str : atom -> string
+val rule_line : rule -> string
+(* one clause, canonical, no doc/indent *)
+val decl_line : decl -> string
+(* one top-level decl, canonical, no doc (not for stages) *)
+val doc_lines : string -> string
 val pretty : catalog -> string

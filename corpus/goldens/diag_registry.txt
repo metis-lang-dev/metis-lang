@@ -1,0 +1,15 @@
+doc-missing error migrated
+containment-produce error migrated
+containment-consume error migrated
+fact-var-conflict error migrated
+fact-not-bwd error pending
+var-untypable error pending
+fact-var-singleton warning pending
+const-not-in-type error pending
+rule-name-collision warning pending
+provenance-shape warning pending
+reads-undeclared warning pending
+state-budget note pending
+horn-nonground error pending
+exact-unreachable note pending
+llm-endpoint note pending

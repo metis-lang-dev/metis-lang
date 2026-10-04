@@ -30,3 +30,8 @@ val compile : ?base:(Catalog.t * Ast.catalog) -> Ast.catalog
 (* advisory warnings of the LAST compile (never gating; e.g. a
    singleton var in a Horn fact) *)
 val warnings : unit -> string list
+
+(* structured diagnostics (spec 08) of the LAST compile, plus those of
+   a Catalog.admit run right after it; a failing compile leaves its
+   error diagnostics here beside the Lang_error strings *)
+val diagnostics : unit -> Diag.t list

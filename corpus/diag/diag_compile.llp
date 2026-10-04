@@ -1,0 +1,18 @@
+% D2 fixture (spec 08), COMPILER phase: every migrated compiler-phase
+% code fires exactly once per row. Compile is expected to FAIL; the
+% gate diffs the diagnostics (text + JSON) against the goldens.
+catalog diag-compile 1.
+layers (story).
+stages (go).
+type nat {n0 n1 n2}.
+type color {red blue}.
+namespace ns produce (story).
+pred tok(nat) : ns.
+pred hit(nat) : ns.
+bwd paint(nat,color).
+% row fact-var-conflict: X at a nat AND a color position.
+paint(X,X).
+stage go {
+  r [story] : tok(N) -o hit(N).
+}
+% (row doc-missing: the rule r above carries no %% doc line.)

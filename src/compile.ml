@@ -23,7 +23,7 @@ let set_assoc k v l =
   else l @ [(k, v)]
 
 (* ordered insertion: first occurrence wins; conflict -> finding *)
-let infer_vars name atoms sigs findings =
+let infer_vars ?conflicts name atoms sigs findings =
   let vars = ref [] in
   List.iter (fun (a : atom) ->
       match List.assoc_opt a.pred sigs with
@@ -40,9 +40,12 @@ let infer_vars name atoms sigs findings =
                 (match List.assoc_opt v !vars with
                  | None -> vars := !vars @ [(v, ty)]
                  | Some ty0 when ty0 <> ty ->
-                   findings := Printf.sprintf
-                       "%s: var %s typed both %s and %s" name v ty0 ty
-                               :: !findings
+                   let text = Printf.sprintf
+                       "%s: var %s typed both %s and %s" name v ty0 ty in
+                   findings := text :: !findings;
+                   (match conflicts with
+                    | Some c -> c := !c @ [ (text, v, ty0, ty) ]
+                    | None -> ())
                  | Some _ -> ()))
             a.terms sig_)
     atoms;
@@ -72,6 +75,54 @@ let rec resolve_in (c : Ast.catalog) base_dir seen =
 let resolve_includes c base_dir = resolve_in c base_dir []
 
 (* -- compilation ------------------------------------------------------ *)
+
+(* a declaration's diagnostic slice (spec 08 D0; mirrors metispy
+   compiler._Vocab.source): subject = its %% doc lines + one canonical
+   line; context = the subject's preds in source order, first
+   occurrence -> their namespaces -> their types as name + cardinality;
+   the layers line rides separately *)
+let source_of decls layers (l : Ast.loc) decl doc line (atoms : atom list) =
+  let subject =
+    (if doc = "" then []
+     else List.map (fun x -> "%% " ^ x) (String.split_on_char '\n' doc))
+    @ [ line ] in
+  let find_pred n = List.find_opt (function
+      | DPred (m, _, _) | DBwd (m, _) -> m = n | _ -> false) decls in
+  let pdecls = List.fold_left (fun acc (a : atom) ->
+      match find_pred a.pred with
+      | Some d when not (List.memq d acc) -> acc @ [ d ]
+      | _ -> acc) [] atoms in
+  let ctx = ref (List.map decl_line pdecls) in
+  let seen_ns = ref [] in
+  List.iter (function
+      | DPred (_, _, sp) when not (List.mem sp !seen_ns) ->
+        (match List.find_opt (function
+             | DNamespace (n, _, _) -> n = sp | _ -> false) decls with
+         | Some nd -> seen_ns := !seen_ns @ [ sp ];
+           ctx := !ctx @ [ decl_line nd ]
+         | None -> ())
+      | _ -> ()) pdecls;
+  let seen_ty = ref [] in
+  List.iter (fun d ->
+      let args = match d with
+        | DPred (_, a, _) | DBwd (_, a) -> a | _ -> [] in
+      List.iter (fun ty ->
+          if not (List.mem ty !seen_ty) then
+            match List.find_opt (function
+                | DType (n, _) -> n = ty | _ -> false) decls with
+            | Some (DType (_, cs)) ->
+              seen_ty := !seen_ty @ [ ty ];
+              ctx := !ctx @ [ Printf.sprintf "type %s: %d constants" ty
+                                (List.length cs) ]
+            | _ -> ()) args) pdecls;
+  { Diag.s_loc = { Diag.file = l.file; line = l.line; col = l.col; decl };
+    s_subject = subject; s_context = !ctx;
+    s_layers = if layers = [] then ""
+      else Printf.sprintf "layers (%s)." (String.concat " " layers) }
+
+(* the diagnostics of the last compile — and of a pack admission run
+   right after it (Catalog.admit emits into the same sink) *)
+let diagnostics () = Diag.collected ()
 
 (* a CONSTANT in an argument position must be a member of the type
    that position declares (`eq(red,n7)` with eq(nat,nat): finding);
@@ -122,6 +173,7 @@ let singleton_fact_vars (a : atom) sigs =
 
 let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
   last_warnings := [];
+  Diag.reset ();
   let findings = ref [] in
   let fail_now msgs = raise (Lang_error msgs) in
   if List.exists (function DInclude _ -> true | _ -> false)
@@ -222,6 +274,10 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
         pats)
     !p_reads;
 
+  let vocab = cat.cdecls @ (match base with
+      | Some (_, bsrc) -> bsrc.cdecls | None -> []) in
+  let src_of = source_of vocab
+      (if cat.clayers <> [] then cat.clayers else base_layers) in
   (* sweep 2: entries (decl order); horn entries appended last *)
   let entries = ref [] and horn_entries = ref [] in
   let p_weight_refs = ref [] in
@@ -231,8 +287,8 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
     horn_entries := !horn_entries @
       [{ Catalog.e_name = "horn/" ^ fst payload.Catalog.h_head;
          e_layer = horn_layer; e_comment = "Horn clause.";
-         e_payload = Catalog.PHorn payload }] in
-  List.iter (fun d -> match d with
+         e_payload = Catalog.PHorn payload; e_src = Diag.no_src }] in
+  List.iter2 (fun d dloc -> match d with
       | DFact a ->
         if not (List.mem a.pred !bwd) then
           findings := Printf.sprintf
@@ -243,7 +299,17 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
              its position declares (`plus(n0,N,N).` = Pi N:nat) — the
              Ceptre/Twelf reading of a bodiless clause; typed like a
              rule var (conflicting positions are a finding) *)
-          ignore (infer_vars ("fact " ^ atom_str a) [a] !sigs findings);
+          let conflicts = ref [] in
+          ignore (infer_vars ~conflicts ("fact " ^ atom_str a) [a] !sigs
+                    findings);
+          if !conflicts <> [] then begin
+            let src = src_of dloc ("fact/" ^ a.pred) "" (decl_line d)
+                [a] in
+            List.iter (fun (text, v, t1, t2) ->
+                Diag.emit (Diag.make "fact-var-conflict" text src
+                             [ ("var", v); ("type1", t1);
+                               ("type2", t2) ])) !conflicts
+          end;
           check_consts ("fact " ^ atom_str a) [a] !sigs
             (!types @ base_types) findings;
           last_warnings := !last_warnings @ singleton_fact_vars a !sigs;
@@ -264,13 +330,19 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
                    h_body = List.map pattern body; h_vars = vs }
       | DStage s ->
         List.iter (fun (r : rule) ->
-            if String.trim r.rdoc = "" then
-              findings := Printf.sprintf
-                  "%s: missing %%%% doc (mandatory)" r.rname
-                          :: !findings;
             let body_atoms = List.filter_map (function
                 | BAtom a -> Some a | BDistinct _ -> None) r.rbody in
             let atoms = body_atoms @ r.rhead in
+            let rsrc = src_of r.rloc (s.sname ^ "/" ^ r.rname) r.rdoc
+                (rule_line r)
+                (List.filter (fun (a : atom) -> a.pred <> "one") atoms) in
+            if String.trim r.rdoc = "" then begin
+              let text = Printf.sprintf
+                  "%s: missing %%%% doc (mandatory)" r.rname in
+              findings := text :: !findings;
+              Diag.emit (Diag.make "doc-missing" text rsrc
+                           [ ("rule", r.rname) ])
+            end;
             let vars = infer_vars r.rname atoms !sigs findings in
             check_consts r.rname atoms !sigs (!types @ base_types)
               findings;
@@ -327,6 +399,7 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
             entries := !entries @
               [{ Catalog.e_name = r.rlayer ^ "/" ^ r.rname;
                  e_layer = r.rlayer; e_comment = r.rdoc;
+                 e_src = rsrc;
                  e_payload = Catalog.PSchema {
                      cs_name = r.rname; cs_stage = s.sname;
                      cs_vars = vars;
@@ -342,10 +415,16 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
                      cs_weight = !weight } }])
           s.srules
       | DLink l ->
-        if String.trim l.ldoc = "" then
-          findings := Printf.sprintf
-              "%s: missing %%%% doc (mandatory)" l.lname :: !findings;
         let atoms = l.lpre_atoms @ l.lpost_atoms in
+        let lsrc = src_of dloc ("qui/" ^ l.lname) l.ldoc (decl_line d)
+            atoms in
+        if String.trim l.ldoc = "" then begin
+          let text = Printf.sprintf
+              "%s: missing %%%% doc (mandatory)" l.lname in
+          findings := text :: !findings;
+          Diag.emit (Diag.make "doc-missing" text lsrc
+                       [ ("rule", l.lname) ])
+        end;
         let vars = infer_vars l.lname atoms !sigs findings in
         check_consts l.lname atoms !sigs (!types @ base_types) findings;
         let consume = ref [] and persist = ref []
@@ -364,6 +443,7 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
         entries := !entries @
           [{ Catalog.e_name = l.llayer ^ "/" ^ l.lname;
              e_layer = l.llayer; e_comment = l.ldoc;
+             e_src = lsrc;
              e_payload = Catalog.PLink {
                  ls_name = l.lname; ls_pre = l.lpre;
                  ls_post = l.lpost; ls_vars = vars;
@@ -372,7 +452,7 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
                  ls_persist = !persist; ls_guards = !guards;
                  ls_distinct = [] } }]
       | _ -> ())
-    cat.cdecls;
+    cat.cdecls cat.cdecl_locs;
 
   if !findings <> [] then fail_now (List.rev !findings);
 

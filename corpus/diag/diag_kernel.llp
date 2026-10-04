@@ -1,0 +1,13 @@
+% D2 fixture (spec 08), KERNEL phase: containment fires at the kernel
+% typecheck, far from the AST; the diagnostic carries the slice the
+% compiler threaded through Entry. Rows: containment-produce (in the
+% INCLUDED file) and containment-consume (here).
+catalog diag-kernel 1.
+include "diag_dom.llp".
+type nat {n0 n1}.
+namespace q produce (dyn).
+pred lock(nat) : q.
+stage note {
+  %% the pack spends a lock it may not consume.
+  grab [pack] : lock(N) * mkt -o seen.
+}

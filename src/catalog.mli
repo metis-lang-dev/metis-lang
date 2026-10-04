@@ -29,7 +29,8 @@ type payload =
 
 type entry = {
   e_name : string; e_layer : string; e_comment : string;
-  e_payload : payload }
+  e_payload : payload;
+  e_src : Diag.src }   (* the decl's diagnostic slice (spec 08) *)
 
 type t = {
   k_name : string; k_version : int;

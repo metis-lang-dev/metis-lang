@@ -2,7 +2,7 @@
 # noble; a certifier wants zero deps anyway). Module order = the
 # dependency order of 02-ocaml-contracts.md.
 
-SRC = ast lexer parser catalog horn compile ground ports factorize \
+SRC = ast lexer parser diag catalog horn compile ground ports factorize \
       sha256 nets refsample \
       bpn elim ir
 FILES = $(foreach m,$(SRC),$(m).mli $(m).ml) main.ml

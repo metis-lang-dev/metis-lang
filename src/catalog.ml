@@ -25,7 +25,8 @@ type payload =
 
 type entry = {
   e_name : string; e_layer : string; e_comment : string;
-  e_payload : payload }
+  e_payload : payload;
+  e_src : Diag.src }   (* the decl's diagnostic slice (spec 08) *)
 
 type t = {
   k_name : string; k_version : int;
@@ -52,14 +53,17 @@ let check_patterns e vars patterns mode preds namespaces bwd f =
           let (produce, consume) =
             match List.assoc_opt space namespaces with
             | Some ns -> ns | None -> ([], []) in
-          if mode = "produce" && not (List.mem e.e_layer produce) then
-            f := Printf.sprintf
-                "%s: layer '%s' may not produce '%s' (namespace '%s')"
-                e.e_name e.e_layer pred space :: !f;
-          if mode = "consume" && not (List.mem e.e_layer consume) then
-            f := Printf.sprintf
-                "%s: layer '%s' may not consume '%s' (namespace '%s')"
-                e.e_name e.e_layer pred space :: !f;
+          List.iter (fun (m, allowed) ->
+              if mode = m && not (List.mem e.e_layer allowed) then begin
+                let text = Printf.sprintf
+                    "%s: layer '%s' may not %s '%s' (namespace '%s')"
+                    e.e_name e.e_layer m pred space in
+                f := text :: !f;
+                Diag.emit (Diag.make ("containment-" ^ m) text e.e_src
+                             [ ("layer", e.e_layer); ("pred", pred);
+                               ("namespace", space) ])
+              end)
+            [ ("produce", produce); ("consume", consume) ];
           ignore args; ignore vars)
     patterns
 

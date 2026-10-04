@@ -103,4 +103,25 @@ if "$ROOT/src/metisc" --run "$ROOT/corpus/const_check_bad.llp" \
 fi
 diff -u "$ROOT/corpus/goldens/const_check_goldens.txt" "$WORK/cc_err.txt"
 
+echo "== 11. structured diagnostics (spec 08 D2): text + JSON goldens, registry"
+# corpus/diag: diag_compile.llp (compiler phase) and diag_kernel.llp
+# (kernel phase; its containment-produce SUBJECT lives in the included
+# diag_dom.llp, pinning include-path location splicing). JSON is
+# compared with loc.file normalized to the basename.
+( cd "$ROOT/corpus/diag" && for f in diag_compile.llp diag_kernel.llp; do
+    "$ROOT/src/metisc" --diagnostics "$f"; done ) > "$WORK/diag.txt"
+diff -u "$ROOT/corpus/goldens/diag_goldens.txt" "$WORK/diag.txt"
+( cd "$ROOT/corpus/diag" && for f in diag_compile.llp diag_kernel.llp; do
+    "$ROOT/src/metisc" --diagnostics-json "$f"; done ) \
+  | sed -E 's#"file":"([^"]*/)?([^"/]*)"#"file":"\2"#' > "$WORK/diag.jsonl"
+diff -u "$ROOT/corpus/goldens/diag_goldens.jsonl" "$WORK/diag.jsonl"
+"$ROOT/src/metisc" --diag-registry > "$WORK/diag_registry.txt"
+diff -u "$ROOT/corpus/goldens/diag_registry.txt" "$WORK/diag_registry.txt"
+# every MIGRATED code has a fixture row (step-1 scaffolding: the
+# migrated/pending flag goes away when step 2 lands)
+for code in $(awk '$3 == "migrated" {print $1}' "$WORK/diag_registry.txt"); do
+  grep -q "^error $code @\|^warning $code @\|^note $code @" "$WORK/diag.txt" \
+    || { echo "migrated code $code has no D2 fixture row"; exit 1; }
+done
+
 echo "ALL GATES GREEN"

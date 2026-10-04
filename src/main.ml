@@ -193,6 +193,21 @@ let embedded_case path =
    with End_of_file -> close_in ic);
   c
 
+(* --diagnostics / --diagnostics-json FILE.llp: compile (includes
+   resolved) and list every structured diagnostic (spec 08) — the
+   listing is the command's job, so exit 0 whether the compile failed
+   or not; the D2 parity gate diffs this against the goldens *)
+let diagnostics_file ~json path =
+  (try
+     ignore (Compile.compile
+               (Compile.resolve_includes (Parser.parse_file path)
+                  (Filename.dirname path)))
+   with Compile.Lang_error _ | Catalog.Catalog_error _ -> ());
+  List.iter (fun d ->
+      if json then print_endline (Diag.to_json d)
+      else print_string (Diag.render_text d))
+    (Compile.diagnostics ())
+
 let run_file path =
   let c = embedded_case path in
   if c.c_steps = 0 then failwith "no #steps directive";
@@ -251,12 +266,21 @@ let () =
   | [_; "--roundtrip"; manifest] -> drive manifest roundtrip_case
   | [_; "--sample"; manifest] -> drive manifest sample_case
   | [_; "--run"; llp] -> run_file llp
+  | [_; "--diag-registry"] ->
+    (* code severity migrated|pending — diffed by metispy so the two
+       registries cannot drift *)
+    List.iter (fun (c, (sev, m)) ->
+        Printf.printf "%s %s %s\n" c sev
+          (if m then "migrated" else "pending")) Diag.registry
+  | [_; "--diagnostics"; llp] -> diagnostics_file ~json:false llp
+  | [_; "--diagnostics-json"; llp] -> diagnostics_file ~json:true llp
   | [_; manifest] -> drive manifest run_case
   | _ ->
     prerr_endline
       "usage: metisc <manifest> | --keys <manifest> | \
        --roundtrip <manifest> | --sample <manifest> | \
-       --run <file.llp> | --selftest";
+       --run <file.llp> | --diagnostics[-json] <file.llp> | \
+       --selftest";
     exit 2
    with
    | Compile.Lang_error msgs ->
