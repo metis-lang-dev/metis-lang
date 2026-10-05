@@ -177,10 +177,12 @@ paper so a later OCaml emitter (if ever wanted) cannot drift, but no
   the occurrences whose writes conflict with that read, the cone is
   roots + ancestors. Presence only — atoms are indistinguishable, so
   this is dependence on the multiset, never token lineage.)
-  Follow-up noted: the cone is the candidate formalization of
-  `list`'s "relevant context" (which rules/state the position
-  depends on) — a later change may derive `list`'s relevance marking
-  from the cone instead of the enabled-now check alone.
+  Follow-up DONE (metispy 6725b36): `list` derives a second,
+  independent mark from the cone — `◂ #k` "the present rests on",
+  beside `*` enabled-now — plus `·` fired-but-pruned, `? atom ←
+  maker` (one-step lookahead, no exact search), `– spent`, and a
+  cross-stage `rests on` section (also printed once the run is
+  done).
 - **D4 edge classes — RESOLVED: flow-only first; CHECKED 2026-10-05:
   insufficient.** On tragedy (heavily `$`-guarded, attitude-token
   competition) most covering edges are read/order, so the flow-only
