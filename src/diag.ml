@@ -34,6 +34,7 @@ let registry = [
   ("reads-var-unbound", ("error", "compile"));
   ("include-cycle", ("error", "compile"));
   ("extends-no-base", ("error", "compile"));
+  ("decl-duplicate", ("error", "compile"));
   ("containment-produce", ("error", "kernel"));
   ("containment-consume", ("error", "kernel"));
   ("pred-undeclared", ("error", "kernel"));
@@ -108,6 +109,8 @@ let hint code data =
     String.concat "" [ "break the include cycle at "; g "path" ]
   | "extends-no-base" ->
     String.concat "" [ "compile this pack against its base catalog "; g "base" ]
+  | "decl-duplicate" ->
+    String.concat "" [ "a name is declared once per kind: remove this "; g "kind"; " declaration of "; g "name"; ", or rename it (first at "; g "first"; ")" ]
   | "pred-undeclared" ->
     String.concat "" [ "declare "; g "pred"; ": `pred "; g "pred"; "(...) : <namespace>.`" ]
   | "bwd-as-resource" ->

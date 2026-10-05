@@ -10,6 +10,8 @@ namespace ns produce (story).
 pred tok(nat) : ns.
 pred hit(nat) : ns.
 pred mark : ns.
+% row decl-duplicate: mark is declared a second time.
+pred mark : ns.
 bwd paint(nat,color).
 bwd big(nat).
 weight w(N) reads {tok(N) if big(N)}.

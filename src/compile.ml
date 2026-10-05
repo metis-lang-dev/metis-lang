@@ -255,6 +255,49 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
        bcat.k_types)
     | None -> ([], [], [], [], [], []) in
 
+  let vocab = cat.cdecls @ (match base with
+      | Some (_, bsrc) -> bsrc.cdecls | None -> []) in
+  let src_of = source_of vocab
+      (if cat.clayers <> [] then cat.clayers else base_layers) in
+  (* emit src code text data: the legacy finding (or warning) + the
+     structured diagnostic, at the same point (metispy `emitter`) *)
+  let emitter src code text data =
+    let d = Diag.make code text src data in
+    Diag.emit d;
+    if d.Diag.severity = "error" then findings := text :: !findings
+    else last_warnings := !last_warnings @ [ text ] in
+  let decl_locs = List.combine cat.cdecls cat.cdecl_locs in
+  (* decl-duplicate (a pre-pass, before sweep 1): one name, one
+     declaration per kind — a second pred/bwd/type/namespace/port of a
+     name is a finding at the SECOND occurrence (mirrors metispy) *)
+  let first_seen = ref [] in
+  List.iter (fun (d, (l : Ast.loc)) ->
+      let kn = match d with
+        | DPred (n, _, _) -> Some ("pred", n)
+        | DBwd (n, _) -> Some ("bwd", n)
+        | DType (n, _) -> Some ("type", n)
+        | DNamespace (n, _, _) -> Some ("namespace", n)
+        | DPort { pname; _ } -> Some ("port", pname)
+        | _ -> None in
+      match kn with
+      | None -> ()
+      | Some (kind, name) ->
+        (match List.assoc_opt (kind, name) !first_seen with
+         | None -> first_seen := !first_seen @ [ ((kind, name), l) ]
+         | Some (l0 : Ast.loc) ->
+           let where = Printf.sprintf "%s:%d"
+               (if l0.file = "" then "<input>"
+                else Filename.basename l0.file) l0.line in
+           emitter
+             (decl_source vocab
+                (if cat.clayers <> [] then cat.clayers else base_layers)
+                l (kind ^ "/" ^ name) d)
+             "decl-duplicate"
+             (Printf.sprintf "%s '%s' declared twice (first at %s)" kind
+                name where)
+             [ ("kind", kind); ("name", name); ("first", where) ]))
+    decl_locs;
+
   (* sweep 1: vocabulary, ports (decl order) *)
   let types = ref [] and namespaces = ref [] in
   let preds = ref [] and sigs = ref base_sigs and bwd = ref [] in
@@ -282,18 +325,6 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
   let known_pred p =
     List.mem_assoc p !preds || List.mem_assoc p base_preds in
 
-  let vocab = cat.cdecls @ (match base with
-      | Some (_, bsrc) -> bsrc.cdecls | None -> []) in
-  let src_of = source_of vocab
-      (if cat.clayers <> [] then cat.clayers else base_layers) in
-  (* emit src code text data: the legacy finding (or warning) + the
-     structured diagnostic, at the same point (metispy `emitter`) *)
-  let emitter src code text data =
-    let d = Diag.make code text src data in
-    Diag.emit d;
-    if d.Diag.severity = "error" then findings := text :: !findings
-    else last_warnings := !last_warnings @ [ text ] in
-  let decl_locs = List.combine cat.cdecls cat.cdecl_locs in
 
   (* read-scope validation (00-language-spec §5.2) *)
   List.iter (fun (factor, pats) ->
