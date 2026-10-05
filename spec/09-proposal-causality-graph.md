@@ -194,3 +194,15 @@ paper so a later OCaml emitter (if ever wanted) cannot drift, but no
   split name / bindings over lines, and the graph label gains a
   legend line naming the three edge classes. The beat-text and JSON
   mirrors already carry the classification; goldens regenerate.
+  Landed metispy 74dcc97^..: plus a beat column as the time axis,
+  order edges constraint=false, frontier penwidth 2.
+- **D5 quiescence frames (user, 2026-10-05) — step 4.** Group the
+  DOT by the run's stage EPISODES: a quiescence link's footprint
+  writes both `@stage` markers, so every beat lies within one
+  episode — one `subgraph cluster` per episode (label: stage name ·
+  episode ordinal, faint fill), link diamonds standing BETWEEN
+  clusters, beat ranks unchanged inside. A single-episode run
+  (tragedy) renders exactly as step 3 — no cluster wrapper. Needs a
+  multi-stage golden beside tragedy's. The JSON mirror gains the
+  episode index per node (additive); beat text is unchanged. Other
+  groupings (by actor/binding, via color) stay out until asked for.
