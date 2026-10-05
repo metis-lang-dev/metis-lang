@@ -206,3 +206,7 @@ paper so a later OCaml emitter (if ever wanted) cannot drift, but no
   multi-stage golden beside tragedy's. The JSON mirror gains the
   episode index per node (additive); beat text is unchanged. Other
   groupings (by actor/binding, via color) stay out until asked for.
+  Landed metispy e98bcb9 (plus `newrank=true` when clustered, so the
+  beat column stays globally aligned); tragedy DOT cmp-identical,
+  herstory (4 episodes) is the multi-stage golden. With this, spec
+  09's scope is fully implemented: P1-P3, D1-D5.
