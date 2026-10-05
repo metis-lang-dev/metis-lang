@@ -92,11 +92,16 @@ Mirrors, both deterministic:
     graph FILE.dot      write the DOT rendering
     graph FILE.json     write the JSON mirror
 
-Derived from `fired_rows` ON DEMAND — nothing persists, so
-`undo`/`reset`/`reload` stay correct for free. Wire op `graph`
-returns the JSON object (the web console draws it). The bare text
-form is the primary surface: the answer to "where are we" must not
-require leaving the terminal.
+Derived ON DEMAND from the fired rows SINCE THE LAST EDIT NO EVENT
+EXPLAINS (session start, `reset`, `assert`/`retract`, buffer `#init`,
+`reload`/`accept` when they reset counts) — the base occurrence 0 is
+the state at that edit, log numbering is kept, and the base rides the
+undo stack so `undo` restores it. (Step-1 amendment: the draft's
+"undo/reset stay correct for free" was wrong — those commands mutate
+state without a fired row, so a graph over the whole log would show
+tokens from nowhere.) Wire op `graph` returns the JSON object (the
+web console draws it). The bare text form is the primary surface: the
+answer to "where are we" must not require leaving the terminal.
 
 ## P3 — `why` and `causes` (relevance queries)
 

@@ -41,8 +41,9 @@ function findUp(start, rel) {
 // where metispy is pip-installed), else the theia venv ($THEIA_ROOT,
 // else the checkout's ../theia sibling), else python3 — the server,
 // kernel and REPL are stdlib-only. The REPL terminal's "shell" IS
-// the metis process, so the interpreter must be right at launch:
-// there is no bash in that terminal to `source` an activate into.
+// the metis process (the `metis` command when found, see findMetis),
+// so the environment must be right at launch: there is no bash in
+// that terminal to `source` an activate into.
 function findServer() {
   const roots = (workspace.workspaceFolders || []).map(f => f.uri.fsPath);
   const rel = path.join("metis", "lang", "lsp.py");
@@ -66,7 +67,21 @@ function findServer() {
     const p = path.join(base, ".venv", "bin", "python");
     if (fs.existsSync(p)) { py = p; break; }
   }
-  return { lsp, py, pkgRoot };
+  return { lsp, py, pkgRoot, metis: findMetis(py) };
+}
+
+// the `metis` shell command for the REPL terminal: from PATH first (an
+// environment activated before VS Code started), else the console
+// script beside the chosen python; null falls back to `python -m`.
+function findMetis(py) {
+  const dirs = (process.env.PATH || "").split(path.delimiter);
+  if (path.isAbsolute(py)) dirs.push(path.dirname(py));
+  for (const dir of dirs) {
+    if (!dir) continue;
+    const p = path.join(dir, "metis");
+    try { fs.accessSync(p, fs.constants.X_OK); return p; } catch {}
+  }
+  return null;
 }
 
 // -- the REPL terminal (one per catalog file) ---------------------------
@@ -76,11 +91,16 @@ function replFor(file) {
   if (live && live.exitStatus === undefined) return live;
   const srv = findServer();
   if (!srv) return null;
+  // A metis terminal, not a Python one: launched as the `metis`
+  // command, and hideFromUser — the flag both Python extensions honor
+  // to skip their `source .../activate` injection. show() still
+  // reveals it, so the terminal is visible as before.
   const t = window.createTerminal({
     name: `metis: ${path.basename(file)}`,
-    shellPath: srv.py,
-    shellArgs: ["-m", "metis.lang.repl", file],
+    shellPath: srv.metis || srv.py,
+    shellArgs: srv.metis ? [file] : ["-m", "metis.lang.repl", file],
     cwd: srv.pkgRoot,
+    hideFromUser: true,
   });
   repls.set(file, t);
   return t;
