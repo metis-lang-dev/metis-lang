@@ -168,13 +168,29 @@ paper so a later OCaml emitter (if ever wanted) cannot drift, but no
 - **D2 metisc parity emitter — RESOLVED: not needed.** metispy-only;
   P1 stays toolchain-neutral on paper so a later emitter cannot
   drift, but no `--graph` in metisc.
-- **D3 bare `why` — RESOLVED: frontier cone.** Follow-up noted: the
-  cone is the candidate formalization of `list`'s "relevant context"
-  (which rules/state the position depends on) — a later change may
-  derive `list`'s relevance marking from the cone instead of the
-  enabled-now check alone.
-- **D4 edge classes — RESOLVED: flow-only first.** v1 labels/styles
-  only flow edges (produce ∩ consume atoms); the remaining covering
-  edges render plain and unlabeled. The read/order classification in
-  P1 stays as the defined vocabulary, adopted only if flow-only
-  proves insufficient in practice.
+- **D3 bare `why` — RESOLVED: cone of the current state.** (Step-2
+  amendment: the resolution first said "frontier cone", which is
+  vacuous — every node lies below some maximal node, so that cone is
+  always the whole graph. The intent was always the Origin's "which
+  fired events the current state actually depends on": a virtual
+  `now` reads every present atom and the active stage; the roots are
+  the occurrences whose writes conflict with that read, the cone is
+  roots + ancestors. Presence only — atoms are indistinguishable, so
+  this is dependence on the multiset, never token lineage.)
+  Follow-up noted: the cone is the candidate formalization of
+  `list`'s "relevant context" (which rules/state the position
+  depends on) — a later change may derive `list`'s relevance marking
+  from the cone instead of the enabled-now check alone.
+- **D4 edge classes — RESOLVED: flow-only first; CHECKED 2026-10-05:
+  insufficient.** On tragedy (heavily `$`-guarded, attitude-token
+  competition) most covering edges are read/order, so the flow-only
+  DOT reads as a web of unlabeled gray arrows — the user's dotty
+  check of the step-1 golden found "label missing and semantic not
+  clear". Step 3 adopts the full P1 vocabulary in the DOT, aiming at
+  CelfToGraph's causal diagrams (Martens, *Programming Interactive
+  Worlds with Linear Logic*, §3.4.1: nodes are actions, edges are
+  causal relationships): read edges dashed with `$atom` labels,
+  order edges dotted/gray (tooltip carries the atoms), node labels
+  split name / bindings over lines, and the graph label gains a
+  legend line naming the three edge classes. The beat-text and JSON
+  mirrors already carry the classification; goldens regenerate.
