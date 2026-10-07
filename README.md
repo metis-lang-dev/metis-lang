@@ -1,5 +1,7 @@
 # metis-lang
 
+[![ci](https://github.com/metis-lang-dev/metis-lang/actions/workflows/ci.yml/badge.svg)](https://github.com/metis-lang-dev/metis-lang/actions/workflows/ci.yml) [![formal (Lean)](https://github.com/metis-lang-dev/metis-lang/actions/workflows/formal.yml/badge.svg)](https://github.com/metis-lang-dev/metis-lang/actions/workflows/formal.yml)
+
 **LLP** is a small language for behavior catalogs: typed, weighted
 linear-logic clauses over finite domains. One catalog, ground per
 situation, is read three ways —

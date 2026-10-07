@@ -1,0 +1,41 @@
+name: ci
+
+on:
+  push:
+    branches: ['**']
+    paths-ignore: ['formal/**', 'paper/**', 'contrib/vscode/**']
+  pull_request:
+    paths-ignore: ['formal/**', 'paper/**', 'contrib/vscode/**']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install OCaml (stdlib-only ocamlopt) + g++
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ocaml-nox g++
+      - name: make check (ci/check.sh — all gates)
+        run: make check
+      - name: C++ runtime smoke tools
+        # check.sh gate 6 builds metis_run only; the smokes are compiled
+        # here (all four) and the self-contained two are run. The
+        # evaluator/ir_eval smokes need metispy-generated artifacts.
+        run: |
+          set -e
+          mkdir -p /tmp/smoke
+          for f in runtime/tools/*_smoke.cpp; do
+            n=$(basename "$f" .cpp)
+            g++ -std=c++17 -O2 -Iruntime/include "$f" -o "/tmp/smoke/$n"
+            echo "built $n"
+          done
+          /tmp/smoke/budget_smoke
+          /tmp/smoke/fw_smoke
