@@ -162,6 +162,22 @@ let no_src = { s_loc = { file = ""; line = 0; col = 0; decl = "" };
 let layer_codes = [ "containment-produce"; "containment-consume";
                     "layer-unknown"; "namespace-layer-unknown" ]
 
+(* The var-type-unknown slice (spec 08 A2): only the pred/bwd lines
+   whose signature names the unknown type -- where the type was named;
+   the rest of the rule's closure overflowed the cap on wide rules.
+   Order kept; byte parity with metispy (diagnostics._naming_type). *)
+let naming_type context ty =
+  let names_it ln =
+    let starts p = String.length ln >= String.length p
+                   && String.sub ln 0 (String.length p) = p in
+    (starts "pred " || starts "bwd ")
+    && (match String.index_opt ln '(', String.index_opt ln ')' with
+        | Some i, Some j when j > i ->
+          String.split_on_char ',' (String.sub ln (i + 1) (j - i - 1))
+          |> List.exists (fun a -> String.trim a = ty)
+        | _ -> false) in
+  List.filter names_it context
+
 let make code text src data =
   let severity = match List.assoc_opt code registry with
     | Some (s, _) -> s
@@ -171,6 +187,11 @@ let make code text src data =
     if List.mem code layer_codes && src.s_layers <> "" then
       src.s_context @ [ src.s_layers ]
     else src.s_context in
+  let context =
+    if code = "var-type-unknown" then
+      naming_type context
+        (match List.assoc_opt "type" data with Some t -> t | None -> "")
+    else context in
   if List.length context > context_cap then
     raise (Defect (Printf.sprintf
                      "%s @ %s: context of %d lines exceeds the cap of %d"

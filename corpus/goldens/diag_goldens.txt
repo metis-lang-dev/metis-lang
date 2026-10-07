@@ -114,10 +114,10 @@ error link-post-bwd @ diag_compile.llp:46:5 (qui/back)
   | bwd big(nat).
   | type nat: 3 constants
   -> a link may not produce the Horn atom big: bwd predicates are knowledge, not state
-error pred-namespace-unknown @ diag_kernel.llp:15:6 (pred/stray)
+error pred-namespace-unknown @ diag_kernel.llp:19:6 (pred/stray)
   pred stray : nowhere.
   -> declare namespace nowhere, or move stray into a declared one
-error pred-resource-and-bwd @ diag_kernel.llp:17:6 (pred/dual)
+error pred-resource-and-bwd @ diag_kernel.llp:21:6 (pred/dual)
   pred dual : q.
   | namespace q produce (dyn).
   -> dual is declared both `pred` and `bwd`: keep one
@@ -135,7 +135,7 @@ error containment-produce @ diag_dom.llp:14:3 (note/obs)
   | namespace st produce (dyn).
   | layers (dyn pack).
   -> layer 'pack' may not produce heads (namespace 'st'): read it with $heads, or declare the atom in a namespace your layer owns
-error containment-consume @ diag_kernel.llp:27:3 (note/grab)
+error containment-consume @ diag_kernel.llp:31:3 (note/grab)
   %% row containment-consume: the pack spends a lock it may not consume.
   grab [pack] : lock(N) * mkt -o seen.
   | pred lock(nat) : q.
@@ -146,14 +146,14 @@ error containment-consume @ diag_kernel.llp:27:3 (note/grab)
   | type nat: 2 constants
   | layers (dyn pack).
   -> layer 'pack' may not consume lock (namespace 'q'): read it with $lock instead of spending it
-error pred-undeclared @ diag_kernel.llp:29:3 (note/zz)
+error pred-undeclared @ diag_kernel.llp:33:3 (note/zz)
   %% row pred-undeclared: zap is declared nowhere.
   zz [pack] : mkt * zap -o seen.
   | pred mkt : mk.
   | pred seen : mk.
   | namespace mk produce (pack).
   -> declare zap: `pred zap(...) : <namespace>.`
-error bwd-as-resource @ diag_kernel.llp:31:3 (note/bb)
+error bwd-as-resource @ diag_kernel.llp:35:3 (note/bb)
   %% row bwd-as-resource: big is Horn knowledge, not state.
   bb [dyn] : heads -o big(n1).
   | pred heads : st.
@@ -161,7 +161,7 @@ error bwd-as-resource @ diag_kernel.llp:31:3 (note/bb)
   | namespace st produce (dyn).
   | type nat: 2 constants
   -> big is a bwd predicate: use it as a guard premise only, never as a resource (produce)
-error layer-unknown @ diag_kernel.llp:33:3 (note/gl)
+error layer-unknown @ diag_kernel.llp:37:3 (note/gl)
   %% row layer-unknown: ghost is not a layer.
   gl [ghost] : mkt -o seen.
   | pred mkt : mk.
@@ -169,32 +169,31 @@ error layer-unknown @ diag_kernel.llp:33:3 (note/gl)
   | namespace mk produce (pack).
   | layers (dyn pack).
   -> add ghost to the catalog's layers (...), or tag the rule with a declared layer
-error var-type-unknown @ diag_kernel.llp:35:3 (note/vt)
-  %% row var-type-unknown: shade is not a declared type.
-  vt [dyn] : tint(S) -o heads.
+error var-type-unknown @ diag_kernel.llp:41:3 (note/vt)
+  %% row var-type-unknown: shade is not a declared type. A WIDE rule:
+  %% the slice cites only the signature naming shade (spec 08 A2), so
+  %% it stays within the cap however many preds the rule touches.
+  vt [dyn] : tint(S) * w1 * w2 * w3 * w4 * w5 * w6 * w7 * w8 * w9 * w10 * w11 -o heads.
   | pred tint(shade) : q.
-  | pred heads : st.
-  | namespace q produce (dyn).
-  | namespace st produce (dyn).
   -> declare type shade, or fix the signature that names it
-error stage-unknown @ diag_kernel.llp:39:3 (limbo/lb)
+error stage-unknown @ diag_kernel.llp:46:3 (limbo/lb)
   %% row stage-unknown: limbo is not among the stages.
   lb [dyn] : heads -o heads.
   | pred heads : st.
   | namespace st produce (dyn).
   -> add limbo to stages (...)
-error link-stage-unknown @ diag_kernel.llp:42:5 (qui/jump)
+error link-stage-unknown @ diag_kernel.llp:49:5 (qui/jump)
   %% row link-stage-unknown: nowhere is not a stage.
   qui jump [dyn] : note -o nowhere.
   -> declare both link stages (note, nowhere) in stages (...)
-error horn-head-not-bwd @ diag_kernel.llp:22:1 (horn/seen)
+error horn-head-not-bwd @ diag_kernel.llp:26:1 (horn/seen)
   seen :- big(n0).
   | pred seen : mk.
   | bwd big(nat).
   | namespace mk produce (pack).
   | type nat: 2 constants
   -> a Horn rule may only derive bwd predicates: declare seen with `bwd`
-error horn-body-not-bwd @ diag_kernel.llp:24:1 (horn/big)
+error horn-body-not-bwd @ diag_kernel.llp:28:1 (horn/big)
   big(N) :- lock(N).
   | bwd big(nat).
   | pred lock(nat) : q.

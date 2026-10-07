@@ -11,6 +11,10 @@ namespace q produce (dyn).
 namespace odd produce (phantom).
 pred lock(nat) : q.
 pred tint(shade) : q.
+% wide-rule padding for the var-type-unknown row (its old whole-rule
+% slice ran to 15 lines, over the cap of 12).
+pred w1 : q. pred w2 : q. pred w3 : q. pred w4 : q. pred w5 : q. pred w6 : q.
+pred w7 : q. pred w8 : q. pred w9 : q. pred w10 : q. pred w11 : q.
 % row pred-namespace-unknown.
 pred stray : nowhere.
 % row pred-resource-and-bwd.
@@ -31,8 +35,11 @@ stage note {
   bb [dyn] : heads -o big(n1).
   %% row layer-unknown: ghost is not a layer.
   gl [ghost] : mkt -o seen.
-  %% row var-type-unknown: shade is not a declared type.
-  vt [dyn] : tint(S) -o heads.
+  %% row var-type-unknown: shade is not a declared type. A WIDE rule:
+  %% the slice cites only the signature naming shade (spec 08 A2), so
+  %% it stays within the cap however many preds the rule touches.
+  vt [dyn] : tint(S) * w1 * w2 * w3 * w4 * w5 * w6 * w7 * w8 * w9 * w10
+    * w11 -o heads.
 }
 stage limbo {
   %% row stage-unknown: limbo is not among the stages.

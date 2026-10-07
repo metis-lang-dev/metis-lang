@@ -178,7 +178,12 @@ its canonical `pred …`/`bwd …` line -> the namespaces of those preds
 name, first occurrence, as `type T: k constants` -> `layers (…)`
 only for codes that concern layers (containment-*). Cap 12; overflow
 raises a defect, never truncates. Own declarations win over a pack
-base's.
+base's. **Per-code narrowing** (the D0 remedy — "a better slice for
+that code"): `var-type-unknown` keeps only the `pred`/`bwd` lines
+whose signature names the unknown type, in the order above — where the
+type was named is what the repair needs; the whole-rule closure
+overflowed on wide rules (road_zones `menter`: 12 preds + namespace =
+13 lines, 2026-10-07).
 
 A3. **Subject** = the doc lines (`%% …`) + ONE canonical line from the
 shared single-declaration printers (`rule_line`, `decl_line`), which
