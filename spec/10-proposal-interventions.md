@@ -128,3 +128,50 @@ causes). The evaluation report — does whatif/necessity ANSWER the
   narrate honesty); 2 whatif + the comparison report; 3 necessity +
   the PS proxy on the exact tier; 4 wire/console wiring + the §7
   evaluation report on the fiction catalogs.
+
+## §8 — evaluation (the §7 gate, 2026-10-07)
+
+Built REPL-first in metispy (steps 1-4: 5ba693a, 7709f92, 1fdd365,
+step 4), wired to the console as session-local intents. Evidence:
+the step reports of subject s-d0c6b72e; the verbatim runs are in the
+step-4 report.
+
+- **3lp, wolf survival** (`!wolf` = "the wolf is spent", added for this
+  question): `necessity 4 !wolf` → PN = 1 — build_brick is necessary
+  (blow_brick is the only rule that spends the wolf and it reads the
+  brick house); `whatif 3 do(~build_brick) query !wolf` → P = 0 vs 1 by
+  chance. Instant. The PS proxy is uninformative here (P = 1 forced and
+  unforced) — expected: the brick house gets built anyway.
+- **tragedy** (seed 132): PN of #75 Tybalt's murder of Romeo for
+  suicidal(mercutio) ≈ **0.985** (necessary; mourn → depressed →
+  becomeSuicidal), the contrast seed 53 PN ≈ 0.033 (not; the structural
+  cone agrees on both). But the necessary one costs **10 min / 21.9 GB**
+  on the exact tier (6M states); at the interactive budget it refuses,
+  saying the outcome lies beyond what it can answer. 600 seeds: no
+  murder→despair pair under a 6-event horizon.
+- **love_triangle** (seed 1, the two jealousy chains 1<2<4, 3<5):
+  per-chain answers are sharp (#3 for anger(lysander,hermia): PN = 1;
+  #4, a repeat of #1's ground event: PN = 0 although it is a
+  structural ancestor — the measure sees redundancy the cone cannot).
+  But #1 measures PN ≈ 0.22 for an atom of the OTHER chain, structurally
+  independent — the same as for its own chain's (0.217): with an
+  event-count horizon, blocking an event reschedules the others, and
+  that competition leaks into PN.
+
+**Verdict.** `whatif`/`necessity` answer the what-if a session asks —
+in one screen, as a sentence, with the fact, the counterfactual and
+chance side by side — on the catalogs the exact tier can hold (3lp,
+love_triangle, short tragedy tails). They do NOT yet answer tragedy's
+real questions interactively, and the reason is inference, not driver
+speed: the filter's state set explodes with unrelated concurrent
+events. **A runtime port of the driver API (snapshot/restore,
+forced-step, mask) would not change that** — the C++ filter is a
+constant factor, the blowup is exponential. Recommended, in order:
+(1) no runtime port yet; (2) kernel roadmap: interactive PN/whatif
+through the factored tier (factorize/jtree, IR item 2 — today the
+counterfactual instruments ride the exact filter only), or a
+cone-restricted projection (an approximation: own spec); with the
+metis-exact-audit backlog; (3) a scheduling control for PN — a placebo
+block of an unrelated event of the same tier, reported beside PN, or a
+horizon "until quiescence" — so competition for the event clock is not
+read as causation. The port decision is the user's.
