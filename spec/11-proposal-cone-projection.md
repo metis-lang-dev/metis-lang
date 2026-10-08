@@ -26,7 +26,9 @@ query), a backward reachability sweep over the GROUND rule graph,
 after masks prune it: every event whose produce or consume touches a
 cone atom joins the cone, and its consume + persist premises join
 the cone atoms; repeat to closure (horizon-bounded where a bound is
-given). The instruments print the cone up front: "tracking 14 of
+given). Sound reachability pruning from the fork state (events whose
+premises can never assemble are dropped) is the practical reduction
+applied first — exact, often large. The instruments print the cone up front: "tracking 14 of
 212 atoms · 23 of 980 events" — itself a design insight (how much of
 the world the question touches).
 
@@ -58,10 +60,13 @@ the same computation).
   Where stages exist this is the episode boundary; on single-stage
   catalogs (tragedy's `stage all`) it is the whole story — use @N.
 - **`@N` (cone-steps)** — horizon counted in CONE events only: the
-  de-biased analog of "within N events". Insensitive to out-of-cone
+  de-biased analog of "within N events", meaning "N cone events OR
+  when the cone settles, if sooner" (a settled cone never reaches N;
+  both tiers read the same rule). Insensitive to out-of-cone
   scheduling; bounded; the practical default. Default N = the number
   of cone events in the actual remainder (matches necessity's
-  current semantics, de-biased).
+  current semantics, de-biased). `@frame` REFUSES (NotSettled) when
+  the distribution has not settled — never reads an unsettled one.
 - **plain N (global events)** — kept ONLY for §5 validation and
   explicitly flagged "scheduling-sensitive" when used.
 
@@ -153,6 +158,22 @@ kernel change; if a seam is needed it must not move program_key or
 any golden). No metisc, no IR, no runtime. The Lean statement of the
 commutation exactness (disjoint footprints ⇒ readout invariance) is
 noted for formal/ as future material, out of scope here.
+
+## P6 — the necessity verdict (a spec 10 P4 refinement)
+
+The verdict compares the ARMS, not a single number (the Tian–Pearl
+lower bound (P(y) − P(y|do(¬x))) / P(x,y) is 0 when blocking does
+not lower P below chance): "necessary" at PN ≥ 0.95, "not necessary"
+at ≤ 0.05 or whenever blocking does not lower P, and when blocking
+RAISES P the verdict names the INHIBITOR case — the event worked
+against the outcome (love_triangle: blocking #1 raises the other
+chain 0.676 → 0.883). CI tolerances honour the sampled tier.
+
+## §7 — blessed constants
+
+AUTO_BUDGET 100k states: the exact tier fails fast into sampling
+above it; a forced `exact` gets the full interactive budget (500k)
+and may refuse.
 
 ## §D — decisions
 
