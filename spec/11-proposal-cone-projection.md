@@ -68,6 +68,41 @@ the same computation).
 PN under a readout: P(¬ATOM at readout | do(~K)) from the fork at
 K−1; whatif/query/sufficiency take the same `@` suffixes.
 
+## P1a — links (branch finding, amendment)
+
+A quiescence link fires on GLOBAL stage quiescence — a negative
+premise over every clause of the stage, out-of-cone ones included.
+A reachable link therefore pulls its pre and post stages into the
+cone WHOLE (exact, no reduction). The fiction catalogs have no
+links; stage-structured ones pay this honestly.
+
+## P5 — the sampled tier (branch finding, amendment)
+
+The branch measured the structural truth: on densely coupled
+catalogs the cone IS the world (tragedy: 458/459 atoms, every
+outcome tried; `at(C,L)` is persisted by nearly every rule and
+written by travelTo, and the attitude web closes over itself), and
+sound reachability pruning (14800 → 222 live events) does not cut
+the real cost driver — 35 enabled events × 6 steps of breadth. The
+cone/quotient REMAINS the exact tier's reduction (free and exact
+where cones are small); interactivity on tragedy-class catalogs
+comes from a SAMPLED tier instead:
+
+- Paired Monte Carlo for necessity/whatif: both arms (do vs chance)
+  driven by COMMON RANDOM NUMBERS — a variance-reduction device for
+  the difference estimator, NEVER a cross-world coupling claim (each
+  arm estimates its own well-defined marginal; the pairing is
+  statistics, not metaphysics — spec 10's no-canonical-coupling
+  stance stands).
+- The answer is labelled: "sampled, n=…, ± ci"; n grows until the
+  CI meets a target or the time budget; the report states which
+  tier answered and why ("exact refused: …; sampled n=2000").
+- Auto-selection: exact when the projection fits the interactive
+  budget, sampled otherwise; `full`/`exact` forces (and may refuse).
+- Measured on spec 10 §8's tragedy PN (seed 132): n=2000 → 0.980
+  ± 0.006 in 1.6 s; n=20000 → 0.984 ± 0.002 in 16 s; exact 0.9846
+  inside both intervals.
+
 ## P4 — surface
 
 `necessity K ATOM [@frame|@N]`, `whatif … query ATOM [@frame|@N]`,
@@ -83,20 +118,31 @@ SPEC ALIGNMENT (P1 closure verified in code — an out-of-cone event
 that writes a cone atom is a construction bug and a test must prove
 the sweep closes); then:
 
-1. **Agreement**: on every case the FULL filter can answer (3lp,
-   love_triangle, short-tragedy tails), cone and full must agree
-   EXACTLY under the same readout — any mismatch is a bug, never an
-   acceptable approximation (P1/P2 claim exactness).
-2. **Timing**: a table, full vs cone, same questions — including
-   spec 10 §8's tragedy PN (seed 132, murder → suicidal). HARD
-   acceptance: the tragedy case answers at the interactive budget
-   in seconds; the general rule: no instrument answer takes longer
-   than the user's patience for a formalization check.
-3. **Bias**: love_triangle's independent-chain case — PN under @N
-   cone-steps must drop to ~0 where the event-count horizon leaked
-   0.22 (the §8 placebo concern resolved by the readout, not by a
-   placebo).
+1. **Agreement** (unchanged): wherever the exact tier answers, cone
+   and full agree EXACTLY under the same readout — any mismatch is a
+   bug (P1/P2 claim exactness; GATE PASSED on the branch: 3lp 768
+   cases, love_triangle 324, max |Δ| 7e-16; check_closed on every
+   sweep). The sampled tier's own gate: on exactly-answerable cases
+   the CI covers the exact value at its stated level.
+2. **Interactivity** (rewritten — the original "cone makes tragedy
+   exact-interactive" is structurally false, P5): necessity answers
+   on tragedy-class catalogs in SECONDS with honest uncertainty —
+   the §8 tragedy PN via the sampled tier at the default n; the
+   exact tier used automatically below budget; the timing table
+   reports full vs cone vs sampled, and cone speedups are shown
+   where cones are small.
+3. **Readout bias** (rewritten — the branch showed love_triangle's
+   0.22 is PARTLY REAL: move_on consumes the eros every jealousy
+   reads, so the chains are prospectively coupled through resource
+   competition; spec 10 §8's "leak" reading is CORRECTED — part
+   coupling, part readout): the bias test moves to a SYNTHETIC
+   fixture of two provably resource-disjoint chains, where @N
+   cone-steps must give PN ≈ 0 while global-N leaks; love_triangle
+   becomes the coupling DEMO, its report explaining the competition.
 Merge to master only when all three hold and the review is clean.
+Deferred, not in scope: the trace-conditioned (retrospective) cone —
+a different question (conditioning on the actual run's structure);
+noted for a future proposal if the sampled tier proves insufficient.
 
 ## §6 — scope
 
