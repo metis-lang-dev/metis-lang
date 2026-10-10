@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 // The blackboard — BT.cpp's shared-memory seam, with its v4 subtree
 // semantics: every scope is ISOLATED by default; a child scope sees a
 // parent key only through an EXPLICIT remap (child key -> parent

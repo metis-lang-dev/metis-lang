@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 // The artifact loader — the product API for consuming a compiled
 // ground program (the same wire gen_goldens.py emits: N/E/I/S
 // records). BT.cpp's XML-loading analog: python compiles and

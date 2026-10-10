@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 // The C++ weight-port registry — the BT.cpp seam, native side.
 //
 // A catalog names its factors (`@w cpt(C)`); a DOMAIN registers the

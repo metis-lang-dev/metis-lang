@@ -1,3 +1,4 @@
+(* SPDX-License-Identifier: Apache-2.0 *)
 let mset_str (m : Ground.mset) =
   let items = List.sort compare
       (List.filter_map (fun (a, n) ->

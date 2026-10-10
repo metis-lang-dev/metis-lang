@@ -1,3 +1,4 @@
+(* SPDX-License-Identifier: Apache-2.0 *)
 (* The symbolic factored emission (01-ir-spec §4): constant folding,
    CHOICE sites, SSA writes, double-production guards, stall
    analysis. NO tables, NO binding calls — this is the admission/

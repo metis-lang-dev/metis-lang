@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 // The generic decision loop — port of kernel/decision.py::plan.
 // Candidates -> do (intervention) -> project (a ForwardProjection or
 // anything score can read) -> lexicographic round9-quantized scores,

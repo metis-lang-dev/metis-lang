@@ -1,3 +1,4 @@
+(* SPDX-License-Identifier: Apache-2.0 *)
 (* Bayesian-proof-net typing gate over the emitted net (paper Prop 6;
    EFD Defs 3.1+3.2, Lemma 3.1). Structural pass only — box rule,
    SSA single-writer, no dangling premise, polarized acyclicity.

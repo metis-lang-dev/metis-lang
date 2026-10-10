@@ -1,0 +1,10 @@
+metis-lang
+Copyright 2026 Robofortis
+
+This product includes software developed for the metis language
+project (https://github.com/metis-lang-dev/metis-lang).
+
+The paper under paper/ is copyright its authors, all rights
+reserved, and is not covered by the Apache-2.0 grant (see README).
+Bundled third-party packages under contrib/vscode/node_modules/
+retain their own licenses.

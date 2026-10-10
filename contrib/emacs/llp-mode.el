@@ -1,3 +1,4 @@
+;; SPDX-License-Identifier: Apache-2.0
 ;;; llp-mode.el --- Metis LLP (rulescript v2) major mode -*- lexical-binding: t; -*-
 
 ;; Author: metis

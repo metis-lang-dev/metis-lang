@@ -55,5 +55,16 @@ src/metisc --run corpus/love_triangle.llp   # replay a file's embedded
 ## Status
 
 Skeleton cut from the research tree; pre-release. Pending before
-going public: license, LSP served by `metisc` itself (the editor
+going public: LSP served by `metisc` itself (the editor
 clients currently auto-detect a python dev server), spec scrub pass.
+
+## License
+
+Apache License 2.0 (see `LICENSE`, `NOTICE`) — the compiler, runtime
+headers and tools, specs, CI, editor clients, corpus, and the Lean
+mechanization under `formal/`. Copyright 2026 Robofortis.
+
+Exceptions: the paper under `paper/` is copyright its authors, all
+rights reserved (it is licensed by its publication venue, not by this
+repository); the bundled packages under
+`contrib/vscode/node_modules/` retain their own upstream licenses.

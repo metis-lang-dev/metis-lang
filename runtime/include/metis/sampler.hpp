@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 // The trajectory sampler — port of kernel/sampler.py with the same
 // policy-hook semantics as the filter, so exact and sampled draws come
 // from ONE measure (self-consistency checked by the parity runner; no

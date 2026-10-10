@@ -1,3 +1,4 @@
+(* SPDX-License-Identifier: Apache-2.0 *)
 (* Lossless AST + canonical printer (contract: parse (pretty a) = a).
    Mirrors metis/lang/ast.py; ranges expand, comments drop, docs stay. *)
 

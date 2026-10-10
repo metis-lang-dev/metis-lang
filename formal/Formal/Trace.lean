@@ -1,3 +1,4 @@
+-- SPDX-License-Identifier: Apache-2.0
 /-
 The descent skeleton of Theorem 4 (trace invariance on the
 factorizable class F), paper §6.

@@ -1,3 +1,4 @@
+(* SPDX-License-Identifier: Apache-2.0 *)
 (* SLD backward chaining over the closed Horn world (01-ir-spec §1).
    Query variables are "?name"; enumeration order is normative:
    clause declaration order, depth-first, deduplicated first-wins.

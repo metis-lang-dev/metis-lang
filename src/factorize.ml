@@ -1,3 +1,4 @@
+(* SPDX-License-Identifier: Apache-2.0 *)
 exception Factorize_error of string
 
 type env_v = Cst of int | Var of string

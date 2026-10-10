@@ -1,3 +1,4 @@
+(* SPDX-License-Identifier: Apache-2.0 *)
 let sm_next (state : int64 ref) =
   state := Int64.add !state 0x9E3779B97F4A7C15L;
   let z = !state in

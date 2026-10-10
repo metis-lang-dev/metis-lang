@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 // The IR interpreter — the item-3 decision (docs/ir-plan.md): C++
 // consumes the COMPILED artifact (factor-graph structure + AOT
 // elimination schedules, serialized by metis/kernel/ir.py) and

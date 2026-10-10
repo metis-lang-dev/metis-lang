@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 // The metis measure core in C++ — port of metis/kernel/{clause,weight,
 // program,filter}.py. Python is semantic truth (the v1 doctrine): this
 // header exists to be BIT-CLOSE to the oracle, proven by the golden

@@ -1,3 +1,4 @@
+(* SPDX-License-Identifier: Apache-2.0 *)
 (* The golden wire, symbolic half (01-ir-spec §6): every line except
    the trailing referee expectation of M/Z. Runs the bpn typing gate
    before writing a byte. *)

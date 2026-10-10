@@ -1,3 +1,4 @@
+(* SPDX-License-Identifier: Apache-2.0 *)
 (* The portable reference sampler (06-sampler-wire.md): splitmix64 +
    canonical event order + normative selection arithmetic — the
    evaluator ladder's bottom rung, FULL language (no class-F

@@ -1,3 +1,4 @@
+(* SPDX-License-Identifier: Apache-2.0 *)
 (* Recursive-descent parser (00-language-spec §2). Docs attach to the
    next rule/link; range sugar expands in the AST. *)
 

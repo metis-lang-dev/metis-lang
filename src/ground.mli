@@ -1,3 +1,4 @@
+(* SPDX-License-Identifier: Apache-2.0 *)
 (* Π-grounding (01-ir-spec §2). Order is normative: substitutions
    enumerate the schema's var table (first-occurrence order) with the
    LAST var fastest, each var over its type's constants in declaration

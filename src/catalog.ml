@@ -1,3 +1,4 @@
+(* SPDX-License-Identifier: Apache-2.0 *)
 type pattern = string * string list
 
 type clause_schema = {

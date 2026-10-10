@@ -1,3 +1,4 @@
+(* SPDX-License-Identifier: Apache-2.0 *)
 (* Structured diagnostics — findings as certified slices (spec 08 D0).
    Byte-identical with metispy metis/kernel/diagnostics.py: the same
    registry, constructor rules, text and JSON renderings. Depends on

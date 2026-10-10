@@ -1,3 +1,4 @@
+(* SPDX-License-Identifier: Apache-2.0 *)
 (* Canonical identity — the neutral serialization
    (docs/rewrite/03-canonical-key.md). canonical_string must be
    byte-identical to python's kernel/nets.canonical_bytes for every

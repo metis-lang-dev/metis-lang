@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 // Self-checking golden CLI — thin wrapper over metis/golden.hpp and
 // metis/ir.hpp (the same engines an embedding runtime serves in
 // production). A corpus whose first record is `C ` is an IR corpus

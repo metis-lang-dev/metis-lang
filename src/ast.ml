@@ -1,3 +1,4 @@
+(* SPDX-License-Identifier: Apache-2.0 *)
 (* source position of a declaration — the DECLARED NAME's token
    (rule/link/type/pred/bwd name; a fact's or Horn rule's head
    predicate). Diagnostics only: never compiled, never keyed; the

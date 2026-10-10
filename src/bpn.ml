@@ -1,3 +1,4 @@
+(* SPDX-License-Identifier: Apache-2.0 *)
 exception Bpn_error of string
 
 let fail fmt = Printf.ksprintf (fun s -> raise (Bpn_error s)) fmt

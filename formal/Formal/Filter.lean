@@ -1,3 +1,4 @@
+-- SPDX-License-Identifier: Apache-2.0
 /-
 Theorem 2 (exact filtering), paper §3.
 

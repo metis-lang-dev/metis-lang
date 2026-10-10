@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 // Self-checking smoke for the C++ Evaluator (evaluator.hpp — the
 // fw.Evaluator parity surface). Python is semantic truth
 // (gen_fw_artifact.py): the rover artifacts v1/v2 with expectations.

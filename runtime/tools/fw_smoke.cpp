@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 // Framework smoke — the BT.cpp-parity features, self-checking:
 // loader round-trip against analytic values, blackboard scoping and
 // remapping, the projection observer, registry substitution.

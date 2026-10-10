@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 // The sampler rung, C++ (docs/rewrite/06-sampler-wire.md): consume
 // the CANONICAL PROGRAM BYTES (stage-38 wire — no grounder, per the
 // §8.5 doctrine), run splitmix64 seeded traces with the normative

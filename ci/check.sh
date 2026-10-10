@@ -1,4 +1,5 @@
 #!/bin/sh
+# SPDX-License-Identifier: Apache-2.0
 # metis-lang standalone gates — no python, no framework: ocamlopt + a
 # C++17 compiler. The committed goldens carry the referee expectations
 # (M/Z trailing floats, produced by the metispy referee); everything

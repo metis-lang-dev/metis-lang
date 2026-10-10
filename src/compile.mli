@@ -1,3 +1,4 @@
+(* SPDX-License-Identifier: Apache-2.0 *)
 (* AST -> kernel catalog + ports (00-language-spec §5). Findings
    accumulate; Lang_error carries them all.
 

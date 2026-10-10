@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 // The C++ Evaluator — fw.Evaluator parity, the framework's product
 // loop (TODO.md "C++ runtime / framework", item 1):
 //

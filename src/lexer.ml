@@ -1,3 +1,4 @@
+(* SPDX-License-Identifier: Apache-2.0 *)
 type token =
   | Doc of string
   | Str of string

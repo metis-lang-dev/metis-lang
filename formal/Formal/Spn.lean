@@ -1,3 +1,4 @@
+-- SPDX-License-Identifier: Apache-2.0
 /-
 Theorem 3 (equivalence onto the image), paper §5 — in full.
 

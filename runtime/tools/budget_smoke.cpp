@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 // max_states budget smoke (the wayplan-oom-hardening kernel API,
 // merged from chariot_ws): self-checking, mirrors fw_smoke.
 //

@@ -1,3 +1,4 @@
+(* SPDX-License-Identifier: Apache-2.0 *)
 (* Min-fill elimination replay (01-ir-spec §5): width, factor-ops,
    ORDER (the shipped schedule). The (fill, name) lexicographic
    tie-break is normative — the schedule must be byte-identical

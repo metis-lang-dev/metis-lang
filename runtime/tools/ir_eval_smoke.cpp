@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 // Self-checking smoke for the PRODUCT IR runtime (ir.hpp IrArtifact/
 // IrEval — TODO "C++ runtime / framework" item 2). Python
 // FactoredProgram is semantic truth (gen_ir_artifact.py).

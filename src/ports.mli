@@ -1,3 +1,4 @@
+(* SPDX-License-Identifier: Apache-2.0 *)
 (* Ground read-scopes + the symbolic hook table (01-ir-spec §3).
    The binding CLOSURE stays native/referee-side; the compiler needs
    only the symbolic data: factor, ground args, scope, complement.

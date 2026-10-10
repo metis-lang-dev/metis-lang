@@ -1,3 +1,4 @@
+(* SPDX-License-Identifier: Apache-2.0 *)
 exception Ir_error of string
 
 let fail fmt = Printf.ksprintf (fun s -> raise (Ir_error s)) fmt

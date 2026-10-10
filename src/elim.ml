@@ -1,3 +1,4 @@
+(* SPDX-License-Identifier: Apache-2.0 *)
 module SS = Set.Make (String)
 
 let elim_cost scopes cards keep =

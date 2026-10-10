@@ -1,3 +1,4 @@
+(* SPDX-License-Identifier: Apache-2.0 *)
 (* Hand-rolled tokenizer for rulescript v2 (00-language-spec §1).
    Mirrors parser.py _TOKEN; no regex dependency — a certifier ships
    with zero deps. *)

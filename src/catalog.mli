@@ -1,3 +1,4 @@
+(* SPDX-License-Identifier: Apache-2.0 *)
 (* Kernel catalog types + containment typecheck (00-language-spec §6).
    Mirrors metis/kernel/{schema,catalog,typing}.py. All assoc lists
    are INSERTION-ORDERED — order is semantic (01-ir-spec §0). *)

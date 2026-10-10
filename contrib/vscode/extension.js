@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 // Metis LLP — LSP client + REPL integration for .llp buffers.
 //
 // Language server: metis/lang/lsp.py, auto-detected (llp.server.command

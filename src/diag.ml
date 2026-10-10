@@ -1,3 +1,4 @@
+(* SPDX-License-Identifier: Apache-2.0 *)
 type loc = { file : string; line : int; col : int; decl : string }
 
 type src = {

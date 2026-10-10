@@ -1,3 +1,4 @@
+(* SPDX-License-Identifier: Apache-2.0 *)
 let k = [|
   0x428a2f98l; 0x71374491l; 0xb5c0fbcfl; 0xe9b5dba5l;
   0x3956c25bl; 0x59f111f1l; 0x923f82a4l; 0xab1c5ed5l;

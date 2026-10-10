@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 // Golden-file runner as a library — the parity engine the CLI wraps
 // and an embedding runtime can call live (a conformance oracle).
 #pragma once

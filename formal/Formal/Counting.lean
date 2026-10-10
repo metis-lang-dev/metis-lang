@@ -1,3 +1,4 @@
+-- SPDX-License-Identifier: Apache-2.0
 /-
 The counting kernel of Theorem 1 (run-level preservation), paper §3.
 

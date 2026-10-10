@@ -1,3 +1,4 @@
+(* SPDX-License-Identifier: Apache-2.0 *)
 (* Case-manifest driver: the OCaml side of the parity gate
    (02-ocaml-contracts). Emits the symbolic wire for each case;
    compare against cpp/parity/ir_goldens.txt with referee floats
