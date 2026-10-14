@@ -186,6 +186,11 @@ let embedded_case path =
              (String.sub l 1 (String.length l - 1)) in
          match split_ws body with
          | [] -> ()
+         | ["plugin"; _] | ["notch"; _] -> ()
+           (* the interpreter's: the port plugin and a fitted notch
+              overlay bind weights in the REPL (PLUGIN-PORTS.md);
+              bindings are referee-side only, never symbolic (as the
+              manifest's 'registry') *)
          | parts ->
            if not (case_line c parts) then
              failwith ("bad directive: " ^ l)

@@ -229,6 +229,18 @@ complete); the stdout wire (`T`/`F`/`Q`) is unchanged, and the
 symbolic drivers ignore the directive. A trailing `#...` after code on the same line is lexed away
 but is NOT a directive.
 
+Two directives are the interpreter's, not the case's: `plugin <spec>`
+(the port plugin that binds the catalog's weight ports and drives its
+env, `pkg.mod:factory` or `file.py:factory` beside the catalog;
+PLUGIN-PORTS.md) and `notch <file>` (a fitted overlay, the recorder's
+`{"rows": [{port, args, row, notched}]}` file, shipped on that
+plugin's registry at serve exactly as the REPL's `notch load <file>`
+ships it; `notch pop` drops it, and a catalog served without the
+directive prices with the plugin's base binding — the law-discovery
+setting). Weight bindings are referee-side only, never symbolic, so
+`metisc --run` and the symbolic drivers accept and ignore both, as a
+manifest's `registry` line.
+
 `metisc --run <file.llp>` builds the embedded case (`case` name =
 the file's basename; `llp` = the file itself) and replays it on the
 reference sampler: `I` init lines, then per seed a `T` line of fired
