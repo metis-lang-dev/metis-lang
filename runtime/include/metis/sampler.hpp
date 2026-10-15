@@ -1,15 +1,62 @@
 // SPDX-License-Identifier: Apache-2.0
-// The trajectory sampler — port of kernel/sampler.py with the same
-// policy-hook semantics as the filter, so exact and sampled draws come
-// from ONE measure (self-consistency checked by the parity runner; no
-// cross-language RNG parity is claimed — seeds are engine-local).
+// The samplers.
+//
+// The NORMATIVE one (spec 06, docs/rewrite/06-sampler-wire.md; OCaml
+// `metisc --sample` is authoritative, metispy refsample.py and the live
+// REPL sample by it): SplitMix64 with the normative constants and the
+// normative selection — threshold = unit() * total (a left-to-right
+// sum), the first candidate with threshold < its running sum, else the
+// last. Byte-identical traces across OCaml, Python and C++
+// (tools/sample_run: SAMPLE PARITY; metis::Live, live.hpp).
+//
+// run_once below is the older engine-local trajectory sampler — a port
+// of kernel/sampler.py with the filter's policy hook, so exact and
+// sampled draws come from ONE measure; no cross-language RNG parity is
+// claimed for it (mt19937, seeds engine-local).
 #pragma once
 
+#include <cstdint>
 #include <random>
+#include <utility>
+#include <vector>
 
 #include "metis/kernel.hpp"
 
 namespace metis {
+
+// splitmix64, normative constants (06-sampler-wire §3)
+struct SplitMix64 {
+    uint64_t state;
+    explicit SplitMix64(uint64_t seed = 0) : state(seed) {}
+    uint64_t next() {
+        state += 0x9E3779B97F4A7C15ULL;
+        uint64_t z = state;
+        z = (z ^ (z >> 30)) * 0xBF58476D1CE4E5B9ULL;
+        z = (z ^ (z >> 27)) * 0x94D049BB133111EBULL;
+        return z ^ (z >> 31);
+    }
+    double unit() {
+        return static_cast<double>(next() >> 11) *
+               (1.0 / 9007199254740992.0);
+    }
+};
+
+// The normative selection (06-sampler-wire §4) over a non-empty tier
+// of (key, weight > 0) in its normative order: one unit() drawn.
+// Returns the position in `ws`.
+template <class Key>
+size_t normative_pick(const std::vector<std::pair<Key, double>>& ws,
+                      SplitMix64& rng) {
+    double total = 0.0;
+    for (const auto& kw : ws) total += kw.second;
+    const double threshold = rng.unit() * total;
+    double acc = 0.0;
+    for (size_t k = 0; k < ws.size(); ++k) {
+        acc += ws[k].second;
+        if (threshold < acc) return k;
+    }
+    return ws.size() - 1;
+}
 
 inline State run_once(const Program& p, int steps, std::mt19937& rng,
                       const Policy& policy = nullptr) {

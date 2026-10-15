@@ -12,7 +12,10 @@
 // recorded event, so the trace length alone under-runs the final
 // state. One run per seed verifies both its R and F lines.
 //
-//   ./sample_run cpp/parity/sample_goldens.txt
+// SplitMix64 and the selection are the library's (metis/sampler.hpp),
+// the ones metis::Live samples by.
+//
+//   ./sample_run corpus/goldens/sample_goldens.txt
 
 #include <cstdint>
 #include <cstdio>
@@ -22,7 +25,11 @@
 #include <string>
 #include <vector>
 
+#include "metis/sampler.hpp"         // the normative SplitMix64 + selection
+
 namespace {
+
+using metis::SplitMix64;
 
 struct Mset { std::vector<std::pair<std::string, long>> items; };
 
@@ -58,22 +65,6 @@ Mset parse_mset(const std::string& s) {
     push(s.size());
     return m;
 }
-
-// splitmix64 (normative constants, 06-sampler-wire §3)
-struct SplitMix64 {
-    uint64_t s;
-    explicit SplitMix64(uint64_t seed) : s(seed) {}
-    uint64_t next() {
-        s += 0x9E3779B97F4A7C15ULL;
-        uint64_t z = s;
-        z = (z ^ (z >> 30)) * 0xBF58476D1CE4E5B9ULL;
-        z = (z ^ (z >> 27)) * 0x94D049BB133111EBULL;
-        return z ^ (z >> 31);
-    }
-    double unit() {
-        return (next() >> 11) * (1.0 / 9007199254740992.0);
-    }
-};
 
 long falling(long c, int n) {
     long w = 1;
@@ -129,15 +120,7 @@ Trace run(const Program& p, int steps, int seed) {
             }
         }
         if (ws.empty()) { stage = "(done)"; continue; }
-        double total = 0;
-        for (const auto& iw : ws) total += iw.second;
-        double threshold = rng.unit() * total;
-        int chosen = ws.back().first;
-        double acc = 0;
-        for (const auto& iw : ws) {
-            acc += iw.second;
-            if (threshold < acc) { chosen = iw.first; break; }
-        }
+        int chosen = ws[metis::normative_pick(ws, rng)].first;
         t.idx.push_back(chosen);
         const Event& e = p.events[chosen];
         for (const auto& an : e.consume.items) {

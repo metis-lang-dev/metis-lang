@@ -62,8 +62,8 @@ echo "== 7. sampler wire: metisc --sample == goldens; C++ replays them"
 grep -v '^#' "$ROOT/corpus/goldens/sample_goldens.txt" > "$WORK/sample_gold.txt"
 grep -v '^#' "$WORK/sample.txt" > "$WORK/sample_mine.txt"
 diff -u "$WORK/sample_gold.txt" "$WORK/sample_mine.txt"
-"$CXX" -std=c++17 -O2 "$ROOT/runtime/tools/sample_run.cpp" \
-    -o "$WORK/sample_run"
+"$CXX" -std=c++17 -O2 -I"$ROOT/runtime/include" \
+    "$ROOT/runtime/tools/sample_run.cpp" -o "$WORK/sample_run"
 "$WORK/sample_run" "$ROOT/corpus/goldens/sample_goldens.txt" \
     > "$WORK/sample.out" || true
 awk '/SAMPLE PARITY/ { split($3, s, "/");
