@@ -46,7 +46,7 @@ extern "C" {
 #endif
 
 /* bumped on any incompatible change to this header */
-#define METIS_RT_ABI_VERSION 2
+#define METIS_RT_ABI_VERSION 3
 
 typedef enum {
     METIS_RT_OK = 0,           /* the call did what it says */
@@ -121,6 +121,9 @@ typedef struct {
     const char* const* ops;    /* exo: the applied do-lines, normalized */
     size_t n_ops;
     double p;                  /* its probability in its tier; 0 for exo */
+    const char* const* args;   /* the ground args: "go[P=tag3]" -> {"tag3"}
+                                  (what a host's on_event face receives) */
+    size_t n_args;
 } metis_rt_event;
 
 typedef enum {
@@ -203,6 +206,37 @@ METIS_RT_API metis_rt_status metis_rt_counts(metis_rt* rt, const metis_rt_count*
                                              size_t* n);
 METIS_RT_API metis_rt_status metis_rt_fired(metis_rt* rt, size_t* fired);
 METIS_RT_API metis_rt_status metis_rt_n_events(metis_rt* rt, size_t* n);
+
+/* ---- the host (agent/py's PortPlugin): five faces --------------------- */
+
+/* A device host's faces as function pointers (a C or C++ host needs no Go).
+ * The runtime drives TIME (metis_rt_tick); the harness drives the others:
+ * OUTPUT after each fired row (the event's name and args — or register it as
+ * the observer, metis_rt_on_event), SENSOR when the watch reads the env,
+ * snapshot/restore for the record's env and the fork. Strings a face returns
+ * are the host's, valid until its next call. NULL: the face is absent. */
+typedef struct metis_rt_host {
+    void* user;
+    /* TIME: this beat's do-lines on the counts now; *end = 1 ends the episode */
+    metis_rt_status (*tick)(void* user, const metis_rt_count* counts, size_t n,
+                            const char* const** lines, size_t* n_lines, int* end);
+    /* OUTPUT: a fired event actuates the env */
+    void (*on_event)(void* user, const char* name, const char* const* args, size_t n_args);
+    /* SENSOR: the reading the watch compares with the model */
+    metis_rt_status (*observe)(void* user, const metis_rt_count* counts, size_t n,
+                               const metis_rt_count** reading, size_t* n_reading);
+    /* the neutral JSON env (the record's env, the fork) */
+    metis_rt_status (*snapshot)(void* user, const char** json);
+    metis_rt_status (*restore)(void* user, const char* json);
+} metis_rt_host;
+
+/* One host beat (repl.py _tick): host->tick on the counts now, its lines
+ * applied as one exo row (a latched world revives). *end = 1: the episode is
+ * over, nothing applied. No lines: a "tick" row with quiet_rows, else no row
+ * (*applied = 0) — the watch's quiet beat. */
+METIS_RT_API metis_rt_status metis_rt_tick(metis_rt* rt, const metis_rt_host* host,
+                                           int quiet_rows, metis_rt_event* ev,
+                                           int* applied, int* end);
 
 /* K3: the live state as portable text ("metis-live 1": the stage, the
  * latched stage, the rng, the fired length, counts by atom name). Writes

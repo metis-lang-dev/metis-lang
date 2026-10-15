@@ -62,7 +62,8 @@ add_test(NAME conformance
                                ${METIS_CORPUS}/sample_goldens.txt)
 # the live handle through the C ABI, in C
 add_test(NAME abi_smoke
-  COMMAND metis_rt_abi_smoke ${METIS_FIXTURES}/live_cascade.wire)
+  COMMAND metis_rt_abi_smoke ${METIS_FIXTURES}/live_cascade.wire
+                             ${METIS_FIXTURES}/live_love_triangle.wire)
 # the same corpora natively (tools/metis_run, the C++ entry)
 add_test(NAME metis_run
   COMMAND metis_run ${METIS_CORPUS}/ir_goldens.txt

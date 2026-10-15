@@ -54,6 +54,8 @@ struct EventStore {
     metis::LiveEvent ev;
     std::vector<metis_rt_count> consume, produce, persist;
     std::vector<const char*> ops;
+    std::vector<std::string> args;
+    std::vector<const char*> arg_ptrs;
     metis_rt_event out{};
 
     const metis_rt_event& fill(metis::LiveEvent e) {
@@ -84,6 +86,28 @@ struct EventStore {
         out.ops = ops.data();
         out.n_ops = ops.size();
         out.p = ev.p;
+        // the ground args (metispy repl._ground_args): rule[X=a,Y=b] -> a, b
+        args.clear();
+        const size_t lb = ev.name.find('[');
+        if (lb != std::string::npos && ev.kind != "exo") {
+            std::string tag = ev.name.substr(lb + 1);
+            if (!tag.empty() && tag.back() == ']') tag.pop_back();
+            size_t start = 0;
+            for (;;) {
+                const size_t c = tag.find(',', start);
+                const std::string kv = tag.substr(start, c - start);
+                if (!kv.empty()) {
+                    const size_t eq = kv.find('=');
+                    args.push_back(eq == std::string::npos ? kv : kv.substr(eq + 1));
+                }
+                if (c == std::string::npos) break;
+                start = c + 1;
+            }
+        }
+        arg_ptrs.clear();
+        for (const auto& a : args) arg_ptrs.push_back(a.c_str());
+        out.args = arg_ptrs.data();
+        out.n_args = arg_ptrs.size();
         return out;
     }
 };
@@ -408,6 +432,37 @@ metis_rt_status metis_rt_n_events(metis_rt* rt, size_t* n) {
     return guard(rt, [&] {
         if (!n) throw Fail{METIS_RT_EARG, "n_events: output"};
         *n = rt->need().program().program.events.size();
+    });
+}
+
+metis_rt_status metis_rt_tick(metis_rt* rt, const metis_rt_host* host, int quiet_rows,
+                              metis_rt_event* ev, int* applied, int* end) {
+    return guard(rt, [&] {
+        if (!host || !host->tick || !applied || !end)
+            throw Fail{METIS_RT_EARG, "tick: a host with a tick face, and outputs"};
+        metis::Live& l = rt->need();
+        const auto now = l.named_counts();
+        std::vector<metis_rt_count> counts;
+        for (const auto& [a, n] : now) counts.push_back({a.c_str(), n});
+        const char* const* lines = nullptr;
+        size_t n_lines = 0;
+        int over = 0;
+        const metis_rt_status s =
+            host->tick(host->user, counts.data(), counts.size(), &lines, &n_lines, &over);
+        if (s != METIS_RT_OK) throw Fail{s, "tick: the host's tick failed"};
+        *applied = 0;
+        *end = over ? 1 : 0;
+        if (over) return;
+        if (n_lines == 0 && !quiet_rows) return;     // a quiet beat adds no row
+        std::vector<std::string> ls;
+        for (size_t i = 0; i < n_lines; ++i) {
+            if (!lines[i]) throw Fail{METIS_RT_EARG, "tick: a NULL do-line"};
+            ls.emplace_back(lines[i]);
+        }
+        const metis_rt_event& out = rt->event.fill(l.apply(ls));
+        *applied = 1;
+        if (ev) *ev = out;
+        rt->observe(out);
     });
 }
 

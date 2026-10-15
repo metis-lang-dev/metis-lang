@@ -3,9 +3,11 @@
  * error model, K1/K2 (seed, step, enabled, fire, do), K3 (snapshot,
  * restore: the same rows again), K4 (likelihood), the weight callbacks,
  * the observer, latch and revival, and reload's degrade-to-last-good —
- * on the cascade fixture (two stages, a link, ported clauses).
+ * on the cascade fixture (two stages, a link, ported clauses); the host's
+ * TIME face through metis_rt_tick, and the ground args of a tagged event, on
+ * the love triangle's.
  *
- * usage: metis_rt_abi_smoke <live_cascade.wire> */
+ * usage: metis_rt_abi_smoke <live_cascade.wire> <live_love_triangle.wire> */
 #include <stdio.h>
 #include <string.h>
 
@@ -33,6 +35,19 @@ static void count_rows(void* user, const metis_rt_event* ev) {
     ++*(int*)user;
 }
 
+/* a host whose TIME face gives "+ta 2", then a quiet beat, then the end */
+static const char* host_lines[] = {"+ta 2"};
+static metis_rt_status host_tick(void* user, const metis_rt_count* counts, size_t n,
+                                 const char* const** lines, size_t* n_lines, int* end) {
+    int* beat = (int*)user;
+    (void)counts; (void)n;
+    *end = *beat >= 2;
+    *lines = host_lines;
+    *n_lines = *beat == 0 ? 1 : 0;
+    ++*beat;
+    return METIS_RT_OK;
+}
+
 int main(int argc, char** argv) {
     const char* stages[] = {"ua", "ub"};
     const char* ta3[] = {"+ta 3"};
@@ -47,8 +62,8 @@ int main(int argc, char** argv) {
     const char* name = NULL;
     double like = -1;
     metis_rt* rt;
-    if (argc != 2) {
-        fprintf(stderr, "usage: metis_rt_abi_smoke <live_cascade.wire>\n");
+    if (argc != 3) {
+        fprintf(stderr, "usage: metis_rt_abi_smoke <live_cascade.wire> <live_love_triangle.wire>\n");
         return 2;
     }
     rt = metis_rt_new();
@@ -144,6 +159,43 @@ int main(int argc, char** argv) {
           strcmp(snap, again) == 0);
     CHECK(metis_rt_reload(rt, argv[1], NULL, 0, stages, 2) == METIS_RT_OK);
     CHECK(metis_rt_fired(rt, &n) == METIS_RT_OK && n == 0);
+
+    /* the host's TIME face (repl.py _tick): its lines as one exo row; a quiet
+     * beat adds no row unless quiet_rows; the end applies nothing */
+    {
+        int beat = 0, applied = -1, end = -1;
+        metis_rt_host host;
+        memset(&host, 0, sizeof host);
+        host.user = &beat;
+        host.tick = host_tick;
+        CHECK(metis_rt_tick(rt, NULL, 0, &ev, &applied, &end) == METIS_RT_EARG);
+        CHECK(metis_rt_tick(rt, &host, 0, &ev, &applied, &end) == METIS_RT_OK && applied == 1 &&
+              end == 0 && strcmp(ev.name, "do +ta 2") == 0 && ev.n_args == 0);
+        CHECK(metis_rt_tick(rt, &host, 0, &ev, &applied, &end) == METIS_RT_OK && applied == 0 &&
+              end == 0);
+        CHECK(metis_rt_tick(rt, &host, 1, &ev, &applied, &end) == METIS_RT_OK && applied == 0 &&
+              end == 1);
+        beat = 1;                                          /* a quiet beat, with quiet rows */
+        CHECK(metis_rt_tick(rt, &host, 1, &ev, &applied, &end) == METIS_RT_OK && applied == 1 &&
+              strcmp(ev.name, "tick") == 0);
+    }
+    metis_rt_free(rt);
+
+    /* the ground args of a fired tagged event: rule[A=x,B=y,C=z] -> x, y, z */
+    rt = metis_rt_new();
+    CHECK(metis_rt_load(rt, argv[2], NULL, 0, NULL, 0) == METIS_RT_OK);
+    CHECK(metis_rt_seed(rt, 5) == METIS_RT_OK);
+    CHECK(metis_rt_step(rt, &r, &ev) == METIS_RT_OK && r == METIS_RT_FIRED);
+    {
+        const char* lb = strchr(ev.name, '[');
+        CHECK(lb != NULL && ev.n_args == 3);
+        if (lb && ev.n_args == 3) {
+            char want[256];
+            snprintf(want, sizeof want, "%.*s[A=%s,B=%s,C=%s]", (int)(lb - ev.name), ev.name,
+                     ev.args[0], ev.args[1], ev.args[2]);
+            CHECK(strcmp(want, ev.name) == 0);
+        }
+    }
     metis_rt_free(rt);
 
     if (fails == 0) printf("C ABI SMOKE OK\n");
