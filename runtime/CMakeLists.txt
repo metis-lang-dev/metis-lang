@@ -49,14 +49,20 @@ endforeach()
 
 add_executable(metis_rt_conformance tests/conformance.c)
 target_link_libraries(metis_rt_conformance PRIVATE metis_rt)
+add_executable(metis_rt_abi_smoke tests/abi_smoke.c)
+target_link_libraries(metis_rt_abi_smoke PRIVATE metis_rt)
 
 enable_testing()
 
 # the first gate: the goldens through the C ABI (ci/check.sh gate 6's
-# IR PARITY 46/46, and the ground filter corpus)
+# IR PARITY 46/46, the ground filter corpus, gate 7's SAMPLE PARITY 43/43)
 add_test(NAME conformance
   COMMAND metis_rt_conformance ${METIS_CORPUS}/ir_goldens.txt
-                               ${METIS_CORPUS}/goldens.txt)
+                               ${METIS_CORPUS}/goldens.txt
+                               ${METIS_CORPUS}/sample_goldens.txt)
+# the live handle through the C ABI, in C
+add_test(NAME abi_smoke
+  COMMAND metis_rt_abi_smoke ${METIS_FIXTURES}/live_cascade.wire)
 # the same corpora natively (tools/metis_run, the C++ entry)
 add_test(NAME metis_run
   COMMAND metis_run ${METIS_CORPUS}/ir_goldens.txt
@@ -92,7 +98,7 @@ endforeach()
 
 # every tool exits nonzero unless ok == total > 0 (or 0 failures); a
 # printed first failure fails the test even so
-set_tests_properties(conformance metis_run sample_run fw_smoke budget_smoke
+set_tests_properties(conformance abi_smoke metis_run sample_run fw_smoke budget_smoke
                      evaluator_smoke ir_eval_smoke
                      live_cascade live_love_triangle live_weights
                      project_cascade project_love_triangle project_weights

@@ -19,6 +19,7 @@ cc_library(
         "include/metis/loader.hpp",
         "include/metis/plan.hpp",
         "include/metis/registry.hpp",
+        "include/metis/sample_golden.hpp",
         "include/metis/sampler.hpp",
     ],
     includes = ["include"],
