@@ -10,8 +10,9 @@
 //   L <name> · G <stage name> … · B <port> const <v> | if <atom> <then> <else>
 //   P <stage> | <counts> | <steps> | <observed, zeros kept> | <likelihood>
 // A zero is structural (no path reaches the observation) and must be zero
-// here; any other likelihood agrees to 1e-12 relative (the filter sums the
-// same paths in another order). Also the identity: from the artifact's
+// here; any other likelihood agrees to 1e-12 relative (the golden carries
+// 12 significant digits: python's filter sums the paths in hash order, so
+// its last bits vary from run to run, and this one sums them in another). Also the identity: from the artifact's
 // init, the from-state projection is the existing one exactly.
 // Prints K4 LIKELIHOOD ok/total; exits nonzero on any difference.
 #include <cmath>
