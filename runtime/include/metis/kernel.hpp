@@ -133,6 +133,18 @@ class ForwardProjection {
                       Policy policy = nullptr,
                       Observer observe = nullptr,
                       size_t max_states = 0)
+        : ForwardProjection(p, State{p.init_stage, p.init}, steps,
+                            std::move(policy), std::move(observe),
+                            max_states) {}
+
+    // from a given state (K4, runtime-binding): the projection the
+    // watch's surprise test runs from its checkpoint — (stage, counts
+    // sorted by atom id) — over the steps since; from the program's init
+    // it is the constructor above exactly
+    ForwardProjection(const Program& p, State from, int steps,
+                      Policy policy = nullptr,
+                      Observer observe = nullptr,
+                      size_t max_states = 0)
         : prog_(p), policy_(std::move(policy)) {
         // rarest-atom tier index (filter.py / lolli lineage): per
         // (stage, kind), events keyed by their least-common consume
@@ -161,7 +173,7 @@ class ForwardProjection {
             }
         }
         Dist dist;
-        dist.emplace(State{p.init_stage, p.init}, 1.0);
+        dist.emplace(std::move(from), 1.0);
         for (int t = 0; t < steps; ++t) {
             bool ovf = false;
             Dist next = step_(dist, max_states, &ovf);

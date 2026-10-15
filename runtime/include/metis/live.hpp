@@ -17,11 +17,20 @@
 //   apply()    one exogenous row from do-lines "+atom [n]" / "-atom [n]",
 //              in order, a retract clamped at what is present; a latched
 //              stage revives (repl.py _tick, fw/plugin.py exo_event)
+//   snapshot() / restore()   K3: the live state as portable text — the
+//              counts by atom name, the stage and the latched stage by
+//              name, the rng state, the fired length — so it outlives a
+//              reload of the same program (metispy's fork/back contract)
+//   likelihood(from, steps, observed)   K4: P(observed | the program,
+//              from a snapshot's state, over `steps`), priced as the
+//              tier is (kernel/record.py surprise_record: the watch's
+//              surprise test and the record's likelihood)
 //
 // Every fired or applied row comes back as a LiveEvent. Masks, `why`,
 // the watch and the host are the harness's, not the runtime's.
 #pragma once
 
+#include <algorithm>
 #include <cstdint>
 #include <map>
 #include <sstream>
@@ -194,6 +203,65 @@ class Live {
         return m;
     }
 
+    // -- K3: snapshot / restore ------------------------------------------
+
+    std::string snapshot() const {
+        std::string s = "metis-live 1\nstage " + stage_ref(stage_) +
+                        "\nquiet " + (quiet_stage_ == -2 ? "-" : stage_ref(quiet_stage_)) +
+                        "\nrng " + std::to_string(rng_.state) +
+                        "\nfired " + std::to_string(fired_) + "\n";
+        for (const auto& [a, n] : named_counts())
+            s += "count " + a + " " + std::to_string(n) + "\n";
+        return s;
+    }
+
+    // all or nothing: a malformed snapshot or an unknown stage throws
+    // std::invalid_argument and the state is unchanged
+    void restore(const std::string& snap) {
+        Parsed p = parse_snapshot(snap);
+        std::map<Atom, int> counts;
+        for (const auto& [a, n] : p.counts)
+            if (n > 0) counts[lp_.atoms.get(a)] = n;
+        counts_ = std::move(counts);
+        stage_ = p.stage;
+        quiet_stage_ = p.quiet;
+        rng_.state = p.rng;
+        fired_ = p.fired;
+    }
+
+    // -- K4: projection from a given state ----------------------------------
+
+    // the snapshot's state as the kernel's State (atoms interned)
+    State state_of(const std::string& snap) {
+        Parsed p = parse_snapshot(snap);
+        std::map<Atom, int> counts;
+        for (const auto& [a, n] : p.counts)
+            if (n > 0) counts[lp_.atoms.get(a)] = n;
+        return State{p.stage, Counts(counts.begin(), counts.end())};
+    }
+
+    ForwardProjection project(const State& from, int steps) const {
+        return ForwardProjection(lp_.program, from, steps, policy_);
+    }
+
+    // P(every observed atom has exactly its count | from, steps): an atom
+    // the program never names counts 0 unless the state carries it
+    double likelihood(const std::string& from, int steps,
+                      const std::map<std::string, int>& observed) {
+        const State s0 = state_of(from);
+        std::vector<std::pair<Atom, int>> want;
+        for (const auto& [a, n] : observed) want.emplace_back(lp_.atoms.get(a), n);
+        const ForwardProjection pr = project(s0, steps);
+        double like = 0.0;
+        for (const auto& [s, p] : pr.final()) {
+            bool ok = true;
+            for (const auto& [a, n] : want)
+                if (count_of(s.kappa, a) != n) { ok = false; break; }
+            if (ok) like += p;
+        }
+        return like;
+    }
+
     static void parse_do_line(const std::string& line, char& sign,
                               std::string& atom, int& n) {
         std::string s = trim(line);
@@ -226,6 +294,65 @@ class Live {
     }
 
   private:
+    struct Parsed {
+        int stage = 0, quiet = -2;
+        uint64_t rng = 0;
+        size_t fired = 0;
+        std::map<std::string, int> counts;
+    };
+
+    // a stage by name when its name is unique and not empty (a wire
+    // without the sidecar's names): "#<index>" otherwise
+    std::string stage_ref(int s) const {
+        if (s == kDone) return "(done)";
+        const auto& names = lp_.program.stage_names;
+        const std::string& n = names.at(s);
+        if (!n.empty() && std::count(names.begin(), names.end(), n) == 1) return n;
+        return "#" + std::to_string(s);
+    }
+
+    int stage_of(const std::string& ref) const {
+        if (ref == "(done)") return kDone;
+        const auto& names = lp_.program.stage_names;
+        if (!ref.empty() && ref[0] == '#') {
+            const int s = std::stoi(ref.substr(1));
+            if (s >= 0 && s < static_cast<int>(names.size())) return s;
+        }
+        for (size_t i = 0; i < names.size(); ++i)
+            if (!names[i].empty() && names[i] == ref) return static_cast<int>(i);
+        throw std::invalid_argument("snapshot: no stage '" + ref + "' here");
+    }
+
+    Parsed parse_snapshot(const std::string& snap) const {
+        Parsed p;
+        std::istringstream in(snap);
+        std::string line;
+        if (!std::getline(in, line) || line != "metis-live 1")
+            throw std::invalid_argument("snapshot: not a metis-live 1 snapshot");
+        bool stage = false, quiet = false, rng = false, fired = false;
+        while (std::getline(in, line)) {
+            if (line.empty()) continue;
+            std::istringstream ls(line);
+            std::string tag, v;
+            ls >> tag >> v;
+            if (tag == "stage") { p.stage = stage_of(v); stage = true; }
+            else if (tag == "quiet") { p.quiet = v == "-" ? -2 : stage_of(v); quiet = true; }
+            else if (tag == "rng") { p.rng = std::stoull(v); rng = true; }
+            else if (tag == "fired") { p.fired = std::stoull(v); fired = true; }
+            else if (tag == "count") {
+                int n;
+                if (!(ls >> n) || n < 0)
+                    throw std::invalid_argument("snapshot: bad count line '" + line + "'");
+                p.counts[v] = n;
+            } else {
+                throw std::invalid_argument("snapshot: unknown record '" + tag + "'");
+            }
+        }
+        if (!(stage && quiet && rng && fired))
+            throw std::invalid_argument("snapshot: stage, quiet, rng and fired are required");
+        return p;
+    }
+
     static std::string trim(const std::string& s) {
         const char* ws = " \t\r\n";
         const size_t b = s.find_first_not_of(ws);

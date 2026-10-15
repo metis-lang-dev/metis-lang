@@ -18,12 +18,22 @@
 //   A <k> <line> ; <line> …          a tick mid-activity, applied before
 //                                    sample k (the watch ticks every beat)
 //   F <k> <event>                    a forced row before sample k (Live::fire)
+//   Q <stage>                        the host's episode over, the world
+//                                    latched; with an A ahead the run goes
+//                                    on and that tick revives the stage
 //   R <kind> <canon> <stage> | <name> | <a:n …>   one row each sample
 //   E <stage>                        the stage at the end
 // Prints LIVE PARITY ok/total; exits nonzero on any difference.
+//
+// K3 on the same run: before every sample the live state is
+// snapshotted with the host's cursor; each snapshot is restored into a
+// Live loaded afresh from the wire (a reload of the same program), run on,
+// and must give the uninterrupted run's rows and end state exactly, and
+// round-trip (K3 CONTINUITY n/n).
 #include <cstdio>
 #include <fstream>
 #include <map>
+#include <memory>
 #include <stdexcept>
 #include <sstream>
 #include <string>
@@ -128,27 +138,38 @@ int main(int argc, char** argv) {
         } else if (tag == "F") {
             int k;
             ls >> k >> force[k];
-        } else if (tag == "R" || tag == "E") {
+        } else if (tag == "R" || tag == "E" || tag == "Q") {
             want.push_back(line);
         }
     }
 
-    if (!stages.empty()) {
-        if (stages.size() != lp.program.stage_names.size()) {
-            std::printf("FIRST FAIL: %zu stage names for %zu stages\n",
-                        stages.size(), lp.program.stage_names.size());
-            return 1;
-        }
-        lp.program.stage_names = stages;
+    if (!stages.empty() && stages.size() != lp.program.stage_names.size()) {
+        std::printf("FIRST FAIL: %zu stage names for %zu stages\n", stages.size(),
+                    lp.program.stage_names.size());
+        return 1;
     }
     const size_t n_events = lp.program.events.size();
-    std::vector<std::string> got;
-    try {
-        metis::Live live(std::move(lp), canon);
-        if (bound) live.bind(reg);
-        live.seed(seed);
-        size_t t = 0;
-        for (int k = 0; k < samples; ++k) {
+
+    // a Live on the wire (loaded afresh each time: K3's reload), named and bound
+    auto make = [&]() {
+        std::ifstream w(argv[1]);
+        metis::LoadedProgram fresh = metis::load_program(w);
+        if (!stages.empty()) fresh.program.stage_names = stages;
+        auto live = std::make_unique<metis::Live>(std::move(fresh), canon);
+        if (bound) live->bind(reg);
+        return live;
+    };
+    struct Checkpoint {
+        int k;
+        size_t t, rows;
+        std::string snap;
+    };
+    // the REPL's run from sample k0 with the host's cursor at t0; a
+    // checkpoint (the live state + the host's cursor) before every sample
+    auto drive = [&](metis::Live& live, int k0, size_t t, std::vector<std::string>& got,
+                     std::vector<Checkpoint>* cps) {
+        for (int k = k0; k < samples; ++k) {
+            if (cps) cps->push_back({k, t, got.size(), live.snapshot()});
             metis::LiveEvent ev;
             auto a = at.find(k);
             if (a != at.end()) {
@@ -171,12 +192,43 @@ int main(int argc, char** argv) {
             }
             if (t == ticks.size()) {          // the host's episode is over
                 live.latch_done();
-                break;
+                bool ahead = at.upper_bound(k) != at.end() ||
+                             force.upper_bound(k) != force.end();
+                if (!ahead) break;
+                if (got.empty() || got.back().rfind("Q ", 0) != 0)
+                    got.push_back("Q " + live.stage_name(live.stage()));
+                continue;
             }
             ev = live.apply(ticks[t++]);
             got.push_back(row(live, ev));
         }
         got.push_back("E " + live.stage_name(live.stage()));
+    };
+
+    std::vector<std::string> got;
+    std::vector<Checkpoint> cps;
+    int k3_ok = 0;
+    std::string k3_fail;
+    try {
+        auto live = make();
+        live->seed(seed);
+        drive(*live, 0, 0, got, &cps);
+        // K3: each checkpoint restored into a reloaded Live runs on exactly
+        // as the uninterrupted run did; the snapshot round-trips
+        for (const auto& cp : cps) {
+            auto again = make();
+            again->restore(cp.snap);
+            std::vector<std::string> tail(got.begin(), got.begin() + cp.rows);
+            drive(*again, cp.k, cp.t, tail, nullptr);
+            const bool same = tail == got && again->snapshot() == live->snapshot();
+            auto rt = make();
+            rt->restore(cp.snap);
+            if (same && rt->snapshot() == cp.snap) ++k3_ok;
+            else if (k3_fail.empty())
+                k3_fail = "checkpoint at sample " + std::to_string(cp.k) +
+                          (same ? ": the snapshot does not round-trip"
+                                : ": the restored run differs");
+        }
     } catch (const std::exception& e) {
         std::printf("FIRST FAIL: %s\n", e.what());
         return 1;
@@ -193,7 +245,9 @@ int main(int argc, char** argv) {
             first = "row " + std::to_string(k) + ": want '" + w + "', got '" + g + "'";
     }
     if (!first.empty()) std::printf("FIRST FAIL: %s\n", first.c_str());
+    if (!k3_fail.empty()) std::printf("FIRST FAIL: K3 %s\n", k3_fail.c_str());
     std::printf("LIVE PARITY %d/%zu (%s seed %llu, %zu events) %s\n", ok, total,
                 name.c_str(), seed, n_events, argv[2]);
-    return first.empty() && total > 0 ? 0 : 1;
+    std::printf("K3 CONTINUITY %d/%zu checkpoints (%s)\n", k3_ok, cps.size(), name.c_str());
+    return first.empty() && k3_fail.empty() && total > 0 && !cps.empty() ? 0 : 1;
 }
