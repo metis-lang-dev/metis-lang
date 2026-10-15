@@ -1,0 +1,25 @@
+# SPDX-License-Identifier: Apache-2.0
+# The C++ metis measure core (header-only) + the golden parity engine.
+# Rehomed from archive/metis cpp/BUILD.bazel (runtime-binding step 1) for
+# the Bazel consumers; CMakeLists.txt is the primary build (metis_rt, the
+# tools, ctest).
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+    name = "metis_kernel",
+    hdrs = [
+        "include/metis/blackboard.hpp",
+        "include/metis/evaluator.hpp",
+        "include/metis/golden.hpp",
+        "include/metis/ir.hpp",
+        "include/metis/kernel.hpp",
+        "include/metis/loader.hpp",
+        "include/metis/plan.hpp",
+        "include/metis/registry.hpp",
+        "include/metis/sampler.hpp",
+    ],
+    includes = ["include"],
+    copts = ["-std=c++17"],
+)

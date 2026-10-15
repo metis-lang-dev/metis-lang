@@ -9,6 +9,12 @@ metisc:
 check: metisc
 	sh ci/check.sh
 
+# the C++ runtime: libmetis_rt (the C ABI), the six tools, ctest
+runtime:
+	cmake -S runtime -B runtime/build
+	cmake --build runtime/build -j4
+	ctest --test-dir runtime/build --output-on-failure
+
 formal:
 	cd formal && lake build
 
@@ -18,4 +24,4 @@ paper:
 clean:
 	$(MAKE) -C src clean
 
-.PHONY: all metisc check formal paper clean
+.PHONY: all metisc check runtime formal paper clean

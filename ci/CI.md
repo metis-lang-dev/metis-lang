@@ -30,9 +30,13 @@ Repos: `metis-lang` (PUBLIC — free minutes), `metispy`,
 - Steps: `apt-get install ocaml-nox g++` (D1 — the Makefile is
   stdlib-only `ocamlopt`, no opam/dune); `make -C src metisc`;
   `ci/check.sh` (all gates; it owns corpus, goldens, diag registry);
-  if check.sh does not already compile/run the C++ smoke tools
-  (`runtime/tools/*_smoke.cpp`), a smoke step does (g++ -std=c++17,
-  run each).
+  then the C++ runtime through CMake (`runtime/CMakeLists.txt`,
+  runtime-binding step 1): `libmetis_rt`, the six tools, and ctest —
+  `metis_rt_conformance` first (the committed goldens through the C
+  ABI), `metis_run`, `sample_run`, and all four smokes; the evaluator
+  and IR smokes read `runtime/fixtures/`, committed with their metispy
+  commit + generator hash (metispy `parity.yml` regenerates and diffs
+  them: `tools/gen_smoke_fixtures.py --check`).
 - `formal.yml` (separate — Lean is slow): elan + `lake build` in
   `formal/`; triggers: `paths: formal/**`, weekly cron,
   workflow_dispatch; `~/.elan` + lake packages cached. Allowed to
