@@ -17,12 +17,14 @@
 //                                    last, the host's episode is over
 //   A <k> <line> ; <line> …          a tick mid-activity, applied before
 //                                    sample k (the watch ticks every beat)
+//   F <k> <event>                    a forced row before sample k (Live::fire)
 //   R <kind> <canon> <stage> | <name> | <a:n …>   one row each sample
 //   E <stage>                        the stage at the end
 // Prints LIVE PARITY ok/total; exits nonzero on any difference.
 #include <cstdio>
 #include <fstream>
 #include <map>
+#include <stdexcept>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -82,6 +84,7 @@ int main(int argc, char** argv) {
     bool bound = false;
     std::vector<std::vector<std::string>> ticks;
     std::map<int, std::vector<std::string>> at;
+    std::map<int, std::string> force;
     std::vector<std::string> want;
     while (std::getline(in, line)) {
         if (line.empty() || line[0] == '#') continue;
@@ -122,6 +125,9 @@ int main(int argc, char** argv) {
             std::string rest;
             std::getline(ls, rest);
             at[k] = split_lines(rest.empty() ? "-" : rest.substr(1));
+        } else if (tag == "F") {
+            int k;
+            ls >> k >> force[k];
         } else if (tag == "R" || tag == "E") {
             want.push_back(line);
         }
@@ -147,6 +153,16 @@ int main(int argc, char** argv) {
             auto a = at.find(k);
             if (a != at.end()) {
                 ev = live.apply(a->second);
+                got.push_back(row(live, ev));
+            }
+            auto f = force.find(k);
+            if (f != force.end()) {
+                int idx = -1;
+                const auto& evs = live.program().program.events;
+                for (size_t i = 0; i < evs.size(); ++i)
+                    if (evs[i].name == f->second) idx = static_cast<int>(i);
+                if (idx < 0 || !live.fire(idx, &ev))
+                    throw std::runtime_error("cannot force " + f->second);
                 got.push_back(row(live, ev));
             }
             if (live.step(&ev) == metis::StepResult::Fired) {
