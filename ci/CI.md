@@ -4,8 +4,9 @@
 the opus seat to implement and test; the choices D1–D6 below are the
 architect's, open to veto at landing review).**
 
-Repos: `metis-lang` (PUBLIC — free minutes), `metispy`,
-`metis-loop`, `metis-catalog` (PRIVATE — metered minutes).
+Repos: `metis-lang`, `metispy`, `metis-loop`, `metis-catalog` —
+all PUBLIC since 2026-10-16 (free minutes; sibling checkouts need no
+token, so no job is gated on a read secret).
 
 ## Principles
 
@@ -18,7 +19,8 @@ Repos: `metis-lang` (PUBLIC — free minutes), `metispy`,
    behind a scoped rerun, never skipped silently (D2).
 3. **Parity is first-class.** Two toolchains exist to check each
    other; CI must catch cross-repo drift without manual replay (D3).
-4. **Frugal.** Private minutes are metered: one `ubuntu-latest`
+4. **Frugal.** (Written when private minutes were metered; still the
+   rule:) one `ubuntu-latest`
    runner per job (D5), `concurrency` with cancel-in-progress,
    `timeout-minutes: 15`, pip/elan caches, path filters where a job
    is expensive.
@@ -60,7 +62,7 @@ Repos: `metis-lang` (PUBLIC — free minutes), `metispy`,
   (`tests/test_ocaml_parity.py` and parity-marked tests) and a
   `tools/gen_metisc_registry.py` drift check (regenerate, diff
   clean). Triggers: push + **nightly cron** (a metis-lang push
-  cannot trigger a private sibling's workflow without a PAT — the
+  cannot trigger a sibling's workflow without a PAT — the
   cron bounds drift detection at one day) + workflow_dispatch.
 
 ### metis-loop — `ci.yml`
@@ -98,7 +100,7 @@ Repos: `metis-lang` (PUBLIC — free minutes), `metispy`,
   deliberately broken test/catalog must produce a RED run (then
   delete the branch). A CI that cannot fail is decoration.
 - Report: run URLs (green ones and the deliberate red), minutes
-  consumed per private-repo run (frugality check), and any test that
+  consumed per run (frugality check), and any test that
   needed quarantining beyond the bus-FIFO pair — each such test is a
   finding, not a silent skip.
 
