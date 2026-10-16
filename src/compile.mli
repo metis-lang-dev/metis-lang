@@ -21,7 +21,13 @@ type weight_ref = {
 type ports = {
   p_weights : (string * string list) list;   (* factor -> formals *)
   p_reads : (string * Ast.read_pattern list) list;  (* the contract *)
-  p_weight_refs : (string * weight_ref) list }      (* rule -> ref *)
+  p_weight_refs : (string * weight_ref) list;       (* rule -> ref *)
+  (* declared only (the product wire's B manifest, metispy Ports):
+     guard -> formals (a redeclaration replaces), inputs and outputs in
+     declaration order *)
+  p_guards : (string * string list) list;
+  p_inputs : string list;
+  p_outputs : string list }
 
 val resolve_includes : Ast.catalog -> string -> Ast.catalog
 

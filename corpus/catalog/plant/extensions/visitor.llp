@@ -1,0 +1,6 @@
+catalog visitor 1.
+extends plant.
+stage main {
+  %% A visitor has watered me; my soil is moist again.
+  visitor_waters [dyn] : dry * visitor -o moist.
+}

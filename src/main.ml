@@ -136,7 +136,13 @@ let selftest () =
    interpreter can never drift from the manifest driver *)
 let case_line c = function
   | ["init"; a; n] ->
-    c.c_init <- c.c_init @ [(a, int_of_string n)]; true
+    (* one count per atom: a repeated init replaces it in place
+       (metispy's dict) *)
+    let n = int_of_string n in
+    c.c_init <- (if List.mem_assoc a c.c_init
+                 then List.map (fun (x, m) -> (x, if x = a then n else m))
+                     c.c_init
+                 else c.c_init @ [(a, n)]); true
   | ["steps"; n] -> c.c_steps <- int_of_string n; true
   | ["seeds"; n] -> c.c_seeds <- int_of_string n; true
   | ["unknown"; a] -> c.c_unknowns <- c.c_unknowns @ [a]; true
@@ -170,6 +176,40 @@ let drive manifest per_case =
      done
    with End_of_file -> close_in ic)
 
+(* `#init at(e0, f0) 1` -> `#init at(e0,f0) 1`: whitespace inside an
+   atom's innermost parentheses is formatting, never a token boundary
+   (metispy directives.squash_atoms) *)
+let squash_atoms l =
+  let b = Buffer.create (String.length l) in
+  let n = String.length l in
+  let i = ref 0 in
+  while !i < n do
+    (if l.[!i] = '(' then
+       (* an innermost group: no '(' before its ')' *)
+       match String.index_from_opt l (!i + 1) ')' with
+       | Some j when not (String.contains (String.sub l (!i + 1)
+                                              (j - !i - 1)) '(') ->
+         Buffer.add_char b '(';
+         String.iter (fun ch ->
+             if not (List.mem ch [' '; '\t'; '\n'; '\r'; '\x0b'; '\x0c'])
+             then Buffer.add_char b ch)
+           (String.sub l (!i + 1) (j - !i - 1));
+         Buffer.add_char b ')';
+         i := j
+       | _ -> Buffer.add_char b '('
+     else Buffer.add_char b l.[!i]);
+    incr i
+  done;
+  Buffer.contents b
+
+(* a directive's tokens: python str.split() over the squashed line *)
+let split_any_ws s =
+  List.filter (fun x -> x <> "")
+    (String.split_on_char ' '
+       (String.map (fun ch ->
+            if List.mem ch ['\t'; '\n'; '\r'; '\x0b'; '\x0c'] then ' '
+            else ch) s))
+
 (* --run: a .llp carrying its own case as '#'-directives (lines whose
    first non-blank char is '#'; the lexer drops them, so the compiled
    catalog and its key are identical with or without them). *)
@@ -180,11 +220,11 @@ let embedded_case path =
   c.c_llp <- Filename.basename path;
   (try
      while true do
-       let l = String.trim (input_line ic) in
+       let l = squash_atoms (String.trim (input_line ic)) in
        if String.length l > 0 && l.[0] = '#' then begin
          let body = String.trim
              (String.sub l 1 (String.length l - 1)) in
-         match split_ws body with
+         match split_any_ws body with
          | [] -> ()
          | ["plugin"; _] | ["notch"; _] -> ()
            (* the interpreter's: the port plugin and a fitted notch
@@ -278,8 +318,35 @@ let run_file path =
       Printf.printf "Q %s %d/%d\n" q !r seeds)
     hits
 
+(* --wire PROGRAM.llp [--extension E.llp]...: a domain package's served
+   program as the product ground wire (bundle-compiler step 1) — the
+   program compiled with its includes, every extension compiled against
+   the world so far and admitted over it, the ports merged (metispy
+   served_doc), grounded on the program's #init, S its #steps; stdout *)
+let wire_file program extensions =
+  let c = embedded_case program in
+  let load p = Compile.resolve_includes (Parser.parse_file p)
+      (Filename.dirname p) in
+  let past = load program in
+  let (cat, ports) = compile_warn past in
+  let (cat, ports, _) = List.fold_left (fun (cat, ports, (bast : Ast.catalog)) e ->
+      let east = load e in
+      let (ecat, eports) = compile_warn ~base:(cat, bast) east in
+      (Catalog.admit cat ecat, Wire.merge_ports ports eports,
+       { bast with Ast.cdecls = bast.Ast.cdecls @ east.Ast.cdecls;
+                   cdecl_locs = bast.Ast.cdecl_locs @ east.Ast.cdecl_locs }))
+      (cat, ports, past) extensions in
+  let prog = Ground.ground cat c.c_init in
+  List.iter print_endline (Wire.artifact_lines cat ports prog c.c_steps)
+
+let rec wire_args program exts = function
+  | [] -> wire_file program (List.rev exts)
+  | "--extension" :: e :: rest -> wire_args program (e :: exts) rest
+  | a :: _ -> failwith ("--wire: unknown argument " ^ a)
+
 let () =
   (try match Array.to_list Sys.argv with
+  | _ :: "--wire" :: program :: rest -> wire_args program [] rest
   | [_; "--selftest"] -> selftest ()
   | [_; "--keys"; manifest] -> drive manifest key_case
   | [_; "--roundtrip"; manifest] -> drive manifest roundtrip_case
@@ -301,7 +368,8 @@ let () =
     prerr_endline
       "usage: metisc <manifest> | --keys <manifest> | \
        --roundtrip <manifest> | --sample <manifest> | \
-       --run <file.llp> | --diagnostics[-json] <file.llp> [--base \
+       --run <file.llp> | --wire <program.llp> [--extension \
+       <e.llp>]... | --diagnostics[-json] <file.llp> [--base \
        <base.llp>] | --diag-registry | --selftest\n\
        (--diagnostics* LIST diagnostics and exit 0 even when errors are \
        listed — a listing, not a compile; use --run or a manifest for \

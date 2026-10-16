@@ -1,0 +1,31 @@
+% plant — a potted plant that dries out: the person waters it or asks how it is
+% Made in the loop console (new). Say in prose what there is, what can
+% happen and what the person can ask; formalize writes the rules.
+catalog plant 1.
+provenance text "a potted plant that dries out: the person waters it or asks how it is" "2026-10-15".
+layers (dyn).
+stages (main).
+
+namespace plant produce (dyn).
+
+pred moist : plant.
+pred dry : plant.
+pred cmd_water : plant.
+pred cmd_check : plant.
+pred done(water) : plant.
+pred checked(soil) : plant.
+pred sun : plant.
+pred visitor : plant.        % the world's report: someone came by (the host, or the person's World tab)
+
+stage main {
+  %% The sun has been on me for a while; my soil dries out.
+  dry_out [dyn] : moist * sun -o dry.
+  %% When I am dry and you water me, my soil is moist again.
+  water [dyn] : dry * cmd_water -o moist * done(water).
+  %% When you check on me while I am moist, I tell you I am moist.
+  check_moist [dyn] : cmd_check * $moist -o checked(moist).
+  %% When you check on me while I am dry, I tell you I am dry.
+  check_dry [dyn] : cmd_check * $dry -o checked(dry).
+}
+
+#init moist 1

@@ -1,0 +1,286 @@
+% The quadruped robot dog as a metis domain (metis-agent DESIGN.md "The
+% direction of the intent schema", 2026-10-13). Formalized from what the
+% executive's dog already does: the eleven intents of go/grammar/dog-corpus.tsv
+% and the outcomes of the E10 corpus (done · refused with a reason · expired ·
+% progress), no robot code consulted.
+%
+% Who writes what. The person's words are typed by the domain agent into one
+% intent; the harness maps the intent to ONE command token (cmd_*) and the host
+% asserts it as exogenous input (a tick do-line). The catalog's rules consume
+% the command under the body's state and leave an outcome token: done(ACT),
+% refused(ACT), progress(ACT), expired(ACT). The reason for a refusal is the
+% rule that fired — its %% comment is the sentence the narrator reads — and the
+% blocker token it rested on, which `why refused(ACT)` names. The host keeps the
+% body's facts as complementary pairs (battery_ok | battery_low, clear(W) |
+% wall(W), mapped(P) | unmapped(P), …): exactly one of each pair holds, so the
+% accept rule and its refusals are never enabled together. A long command
+% (go, find, follow) is accepted into a task token (moving, searching,
+% following) with progress(ACT), and ends when the host reports arrived /
+% blocked / spotted / timeout. Only one task runs at a time: idle is the slot.
+catalog dog 1.
+provenance text "a quadruped robot dog: body actions, going places, searching, following, questions; each command accepted under the body's state or refused with a reason" "2026-10-13".
+layers (dyn).
+stages (serve).
+
+type posture {standing sitting lying}.
+type side {left right around}.
+type way {forward backward}.
+type place {door kitchen sofa window_chair tag5 tag3 tag_near elsewhere}.
+type thing {extinguisher keys bottle chair table}.
+type act {stand sit lie turn move paw go find follow stop cancel query look time date chat unknown}.
+
+namespace dog produce (dyn).
+
+% the postures other than a given one (a guard: LL has no negation)
+bwd other(posture, posture).
+other(sitting, standing).
+other(lying, standing).
+other(standing, sitting).
+other(lying, sitting).
+other(standing, lying).
+other(sitting, lying).
+
+% the body
+pred posture(posture) : dog.
+pred at(place) : dog.
+pred idle : dog.
+pred moving(place) : dog.
+pred searching(thing) : dog.
+pred following : dog.
+pred seen(thing) : dog.
+pred where(thing, place) : dog.
+pred unseen(thing) : dog.
+
+% the host's facts, complementary pairs it keeps current
+pred battery_ok : dog.
+pred battery_low : dog.
+pred floor_dry : dog.
+pred floor_wet : dog.
+pred free(side) : dog.
+pred obstacle(side) : dog.
+pred clear(way) : dog.
+pred wall(way) : dog.
+pred leg_ok : dog.
+pred leg_hot : dog.
+pred mapped(place) : dog.
+pred unmapped(place) : dog.
+pred open(place) : dog.
+pred closed(place) : dog.
+pred person_in_view : dog.
+pred nobody : dog.
+
+% the host's reports while a task runs
+pred arrived(place) : dog.
+pred blocked(place) : dog.
+pred spotted(thing) : dog.
+pred locked_away(thing) : dog.
+pred lost : dog.
+pred timeout : dog.
+
+% the commands, one token per typed intent
+pred cmd_stand : dog.
+pred cmd_sit : dog.
+pred cmd_lie : dog.
+pred cmd_turn(side) : dog.
+pred cmd_move(way) : dog.
+pred cmd_paw : dog.
+pred busy : dog.          % held while a task (go, find, follow) is live; idle is its complement
+pred cmd_go(place) : dog.
+pred cmd_find(thing) : dog.
+pred cmd_follow : dog.
+pred cmd_stop : dog.
+pred cmd_cancel : dog.
+pred cmd_query(thing) : dog.
+pred cmd_look(place) : dog.
+pred cmd_time : dog.
+pred cmd_date : dog.
+pred cmd_chat : dog.
+pred cmd_unknown : dog.
+
+% the outcomes, by act
+pred done(act) : dog.
+pred refused(act) : dog.
+pred progress(act) : dog.
+pred expired(act) : dog.
+pred cancelled(act) : dog.
+
+stage serve {
+  % ── body actions: immediate, done or refused in the same beat ──
+  %% I stand up.
+  stand [dyn] : cmd_stand * posture(P) * other(P, standing) * $battery_ok * $idle -o posture(standing) * done(stand).
+  %% I can't stand: the battery is too low to stand.
+  stand_low [dyn] : cmd_stand * $posture(P) * other(P, standing) * $battery_low * $idle -o refused(stand).
+  %% I am already standing.
+  stand_already [dyn] : cmd_stand * $posture(standing) * $idle -o refused(stand).
+  %% I sit down.
+  sit [dyn] : cmd_sit * posture(P) * other(P, sitting) * $floor_dry * $idle -o posture(sitting) * done(sit).
+  %% I can't sit: the floor here is wet.
+  sit_wet [dyn] : cmd_sit * $posture(P) * other(P, sitting) * $floor_wet * $idle -o refused(sit).
+  %% I am already sitting.
+  sit_already [dyn] : cmd_sit * $posture(sitting) * $idle -o refused(sit).
+  %% I lie down.
+  lie [dyn] : cmd_lie * posture(P) * other(P, lying) * $idle -o posture(lying) * done(lie).
+  %% I am already lying down.
+  lie_already [dyn] : cmd_lie * $posture(lying) * $idle -o refused(lie).
+  %% I turn the way you said.
+  turn [dyn] : cmd_turn(S) * $posture(standing) * $free(S) * $idle -o done(turn).
+  %% I can't turn that way: an obstacle is too close on that side.
+  turn_obstacle [dyn] : cmd_turn(S) * $posture(standing) * $obstacle(S) * $idle -o refused(turn).
+  %% I can't turn: I have to stand up first.
+  turn_must_stand [dyn] : cmd_turn(S) * $posture(P) * other(P, standing) * $idle -o refused(turn).
+  %% I move the way you said.
+  move [dyn] : cmd_move(W) * $posture(standing) * $clear(W) * $idle -o done(move).
+  %% I can't move that way: there is a wall right there.
+  move_wall [dyn] : cmd_move(W) * $posture(standing) * $wall(W) * $idle -o refused(move).
+  %% I can't move: I have to stand up first.
+  move_must_stand [dyn] : cmd_move(W) * $posture(P) * other(P, standing) * $idle -o refused(move).
+  %% I give you my paw.
+  paw [dyn] : cmd_paw * $leg_ok * $idle -o done(paw).
+  %% I can't lift my paw: my front leg is overheating.
+  paw_hot [dyn] : cmd_paw * $leg_hot * $idle -o refused(paw).
+  %% I can't sit now: I am on a task.
+  sit_busy [dyn] : cmd_sit * $busy -o refused(sit).
+  %% I can't lie down now: I am on a task.
+  lie_busy [dyn] : cmd_lie * $busy -o refused(lie).
+  %% I can't turn now: I am on a task.
+  turn_busy [dyn] : cmd_turn(S) * $busy -o refused(turn).
+  %% I can't move now: I am on a task.
+  move_busy [dyn] : cmd_move(W) * $busy -o refused(move).
+  %% I can't give my paw now: I am on a task.
+  paw_busy [dyn] : cmd_paw * $busy -o refused(paw).
+
+  % ── going somewhere: accepted into a task, then the host reports ──
+  %% I set off for {P}.
+  go [dyn] : cmd_go(P) * idle * $posture(standing) * $mapped(P) * $open(P) -o moving(P) * progress(go) * busy.
+  %% I can't go to {P}: it is not on my map.
+  go_unmapped [dyn] : cmd_go(P) * $unmapped(P) -o refused(go).
+  %% I can't go to {P}: the way to it is closed.
+  go_closed [dyn] : cmd_go(P) * $mapped(P) * $closed(P) -o refused(go).
+  %% I can't go yet: I have to stand up first.
+  go_must_stand [dyn] : cmd_go(P) * $idle * $mapped(P) * $open(P) * $posture(Q) * other(Q, standing) -o refused(go).
+  %% I can't take that now: I am already busy with a task.
+  go_busy [dyn] : cmd_go(P) * $moving(Q) -o refused(go).
+  %% I can't take that now: I am searching.
+  go_busy_find [dyn] : cmd_go(P) * $searching(T) -o refused(go).
+  %% I can't take that now: I am following you.
+  go_busy_follow [dyn] : cmd_go(P) * $following -o refused(go).
+  %% I have arrived at {P}.
+  arrive [dyn] : moving(P) * arrived(P) * at(Q) * busy -o at(P) * idle * done(go).
+  %% I had to stop: the way to {P} is blocked.
+  go_blocked [dyn] : moving(P) * blocked(P) * busy -o idle * refused(go).
+  %% Going to {P} timed out: nothing came back in time.
+  go_expire [dyn] : moving(P) * timeout * busy -o idle * expired(go).
+
+  % ── searching ──
+  %% I start looking for {T}.
+  find [dyn] : cmd_find(T) * idle * $battery_ok -o searching(T) * progress(find) * busy.
+  %% I can't search: the battery is too low to search.
+  find_low [dyn] : cmd_find(T) * $battery_low -o refused(find).
+  %% I can't take that now: I am already busy with a task.
+  find_busy [dyn] : cmd_find(T) * $moving(P) -o refused(find).
+  %% I can't take that now: I am already searching.
+  find_busy_find [dyn] : cmd_find(T) * $searching(U) -o refused(find).
+  %% I can't take that now: I am following you.
+  find_busy_follow [dyn] : cmd_find(T) * $following -o refused(find).
+  %% I found {T}.
+  found [dyn] : searching(T) * spotted(T) * unseen(T) * busy -o seen(T) * idle * done(find).
+  %% I found {T} again.
+  found_again [dyn] : searching(T) * spotted(T) * $seen(T) * busy -o idle * done(find).
+  %% I can't reach {T}: it is locked away.
+  find_locked [dyn] : searching(T) * locked_away(T) * busy -o idle * refused(find).
+  %% The search for {T} timed out: nothing found in time.
+  find_expire [dyn] : searching(T) * timeout * busy -o idle * expired(find).
+
+  % ── following ──
+  %% I follow you.
+  follow [dyn] : cmd_follow * idle * $posture(standing) * $person_in_view -o following * progress(follow) * busy.
+  %% I can't follow: no person is in view.
+  follow_nobody [dyn] : cmd_follow * $nobody -o refused(follow).
+  %% I can't follow yet: I have to stand up first.
+  follow_must_stand [dyn] : cmd_follow * $idle * $person_in_view * $posture(Q) * other(Q, standing) -o refused(follow).
+  %% I can't take that now: I am already busy with a task.
+  follow_busy [dyn] : cmd_follow * $moving(P) -o refused(follow).
+  %% I can't take that now: I am already searching.
+  follow_busy_find [dyn] : cmd_follow * $searching(T) -o refused(follow).
+  %% I am already following you.
+  follow_already [dyn] : cmd_follow * $following -o refused(follow).
+  %% I lost you: nobody is in view any more.
+  follow_lost [dyn] : following * lost * busy -o idle * expired(follow).
+
+  % ── stop and cancel ──
+  %% I stop going to {P}.
+  stop_go [dyn] : cmd_stop * moving(P) * busy -o idle * done(stop) * cancelled(go).
+  %% I stop searching for {T}.
+  stop_find [dyn] : cmd_stop * searching(T) * busy -o idle * done(stop) * cancelled(find).
+  %% I stop following you.
+  stop_follow [dyn] : cmd_stop * following * busy -o idle * done(stop) * cancelled(follow).
+  %% I am already stopped.
+  stop_still [dyn] : cmd_stop * $idle -o refused(stop).
+  %% Okay, I drop that: I am no longer going to {P}.
+  cancel_go [dyn] : cmd_cancel * moving(P) * busy -o idle * done(cancel) * cancelled(go).
+  %% Okay, I drop the search for {T}.
+  cancel_find [dyn] : cmd_cancel * searching(T) * busy -o idle * done(cancel) * cancelled(find).
+  %% Okay, I stop following you.
+  cancel_follow [dyn] : cmd_cancel * following * busy -o idle * done(cancel) * cancelled(follow).
+  %% Okay: there was nothing to drop.
+  cancel_none [dyn] : cmd_cancel * $idle -o done(cancel).
+
+  % ── questions and talk: answered from what the dog holds ──
+  %% I tell you about {T}: last seen at {P}.
+  query_seen [dyn] : cmd_query(T) * $seen(T) * $where(T, P) -o done(query).
+  %% I can't say about {T}: not seen yet.
+  query_unseen [dyn] : cmd_query(T) * $unseen(T) -o refused(query).
+  %% I tell you what I see around {P}: it is on my map.
+  look [dyn] : cmd_look(P) * $mapped(P) -o done(look).
+  %% I can't look at {P}: it is not on my map.
+  look_unmapped [dyn] : cmd_look(P) * $unmapped(P) -o refused(look).
+  %% I tell you the time.
+  time [dyn] : cmd_time -o done(time).
+  %% I tell you the date.
+  date [dyn] : cmd_date -o done(date).
+  %% I answer in kind.
+  chat [dyn] : cmd_chat -o done(chat).
+  %% I can't do that: it is not something I can or may do.
+  unknown [dyn] : cmd_unknown -o refused(unknown).
+}
+
+% the body at the start: standing by the door, nothing in hand
+#init posture(standing) 1
+#init at(door) 1
+#init idle 1
+% the host's facts, one of each pair (the E10 corpus's world)
+#init battery_ok 1
+#init floor_dry 1
+#init free(left) 1
+#init free(right) 1
+#init free(around) 1
+#init clear(forward) 1
+#init wall(backward) 1
+#init leg_ok 1
+#init mapped(door) 1
+#init open(door) 1
+#init mapped(kitchen) 1
+#init closed(kitchen) 1
+#init unmapped(sofa) 1
+#init mapped(window_chair) 1
+#init closed(window_chair) 1
+#init unmapped(tag5) 1
+#init mapped(tag3) 1
+#init open(tag3) 1
+% the nearest tag, whichever it is, and the handle for a place the host cannot resolve
+#init mapped(tag_near) 1
+#init open(tag_near) 1
+#init unmapped(elsewhere) 1
+#init person_in_view 1
+#init unseen(extinguisher) 1
+#init unseen(keys) 1
+#init unseen(bottle) 1
+#init seen(chair) 1
+#init where(chair,kitchen) 1
+#init seen(table) 1
+#init where(table,kitchen) 1
+% declared beliefs: the mirror line
+#query idle
+#query done(go)
+#query refused(go)
+#steps 6

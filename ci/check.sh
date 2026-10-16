@@ -141,4 +141,27 @@ for code in $(awk '$3 == "compile" || $3 == "kernel" || $3 == "admission" \
     || { echo "code $code has no D2 fixture row"; exit 1; }
 done
 
+echo "== 12. product wires: metisc --wire == metispy's bundle wire, every catalog package"
+# bundle-compiler step 1: corpus/catalog holds the catalog packages' served
+# sources and corpus/goldens/catalog_wires the ground.wire metispy's emitter
+# makes of them (metispy tools/gen_catalog_wires.py: commit + generator hash
+# on line 1); metisc --wire (program + extensions, #init/#steps, the B port
+# manifest, the w sections, repr doubles) must reproduce each byte for byte.
+# wire_ports.llp is the synthetic case: every port kind, a complement, doubles
+# whose shortest text is not trivial.
+n_wires=0
+while read -r name program exts; do
+  case "$name" in ''|'#'*) continue ;; esac
+  set -- --wire "$ROOT/$program"
+  for e in $exts; do set -- "$@" --extension "$ROOT/$e"; done
+  "$ROOT/src/metisc" "$@" > "$WORK/wire_$name.txt"
+  tail -n +2 "$ROOT/corpus/goldens/catalog_wires/$name.wire" \
+    | diff -u - "$WORK/wire_$name.txt"
+  n_wires=$((n_wires + 1))
+done < "$ROOT/corpus/catalog/manifest.txt"
+n_gold=$(ls "$ROOT/corpus/goldens/catalog_wires" | wc -l)
+[ "$n_wires" -gt 0 ] && [ "$n_wires" -eq "$n_gold" ] \
+    || { echo "product wires: $n_wires checked, $n_gold goldens"; exit 1; }
+echo "PRODUCT WIRES $n_wires/$n_gold"
+
 echo "ALL GATES GREEN"

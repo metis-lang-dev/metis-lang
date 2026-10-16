@@ -1,0 +1,63 @@
+% The product wire's surface beyond the catalog packages (bundle-compiler
+% step 1): every port kind in the B manifest (declared out of order),
+% guard ports, a parametric weight with its complement, weights whose
+% shortest round-trip text is not trivial, links between stages, and a
+% spaced #init atom.
+catalog wire_ports 3.
+layers (act).
+stages (go back).
+
+type cell {c0 c1 c2}.
+
+namespace m produce (act).
+
+%% where the token is
+pred at(cell) : m.
+%% a mark left behind
+pred mark(cell) : m.
+%% the go stage's turn
+pred turn : m.
+
+bwd next(cell,cell).
+next(c0,c1). next(c1,c2). next(c2,c0).
+
+output zeta.
+output alpha.
+input zulu.
+input bravo.
+guard clear(cell).
+guard calm.
+weight step(C1,C2) reads {at(C1)}.
+weight rest reads {}.
+
+stage go {
+  %% move on, the step's price
+  hop [act] : turn * at(C) * next(C,C2) -o at(C2) * mark(C)  @w step(C,C2).
+  %% stay, the step's complement
+  stay [act] : turn * at(C) * next(C,C2) -o at(C)  @w ~step(C,C2).
+  %% rest a while
+  nap [act] : turn -o turn * mark(c0)  @w 0.30000000000000004.
+  %% a tiny chance
+  slip [act] : turn * mark(C) -o turn  @w 0.00001.
+  %% a big one
+  rush [act] : turn * at(c2) -o at(c0)  @w 15000000000000000.
+}
+
+stage back {
+  %% a third of a chance
+  undo [act] : mark(C) -o at(C)  @w 0.3333333333333333.
+  %% the rest is the port's
+  idle [act] : at(C) -o at(C)  @w rest.
+  %% an odd middle
+  odd [act] : mark(C) * at(C) -o mark(C)  @w 123.456.
+}
+
+%% go hands over to back
+qui gb [act] : go -o back.
+%% back hands over to go
+qui bg [act] : back -o go.
+
+#init at( c1 ) 1
+#init turn 2
+#init mark(c2) 1
+#steps 7

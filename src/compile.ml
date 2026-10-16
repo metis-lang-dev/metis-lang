@@ -11,7 +11,10 @@ type weight_ref = {
 type ports = {
   p_weights : (string * string list) list;
   p_reads : (string * Ast.read_pattern list) list;
-  p_weight_refs : (string * weight_ref) list }
+  p_weight_refs : (string * weight_ref) list;
+  p_guards : (string * string list) list;
+  p_inputs : string list;
+  p_outputs : string list }
 
 let is_upper s = s <> "" && s.[0] >= 'A' && s.[0] <= 'Z'
 
@@ -303,6 +306,7 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
   let types = ref [] and namespaces = ref [] in
   let preds = ref [] and sigs = ref base_sigs and bwd = ref [] in
   let p_weights = ref [] and p_reads = ref [] in
+  let p_guards = ref [] and p_inputs = ref [] and p_outputs = ref [] in
   List.iter (fun d -> match d with
       | DType (n, cs) -> types := !types @ [(n, cs)]
       | DNamespace (n, prod, cons) ->
@@ -319,7 +323,13 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
         (match preads with
          | Some ps -> p_reads := !p_reads @ [(pname, ps)]
          | None -> ())
-      | DPort _ -> ()          (* guard/input/output: declared only *)
+      (* guard/input/output: declared only — the B manifest *)
+      | DPort { pkind = Guard; pname; pargs; _ } ->
+        p_guards := set_assoc pname pargs !p_guards
+      | DPort { pkind = Input; pname; _ } ->
+        p_inputs := !p_inputs @ [pname]
+      | DPort { pkind = Output; pname; _ } ->
+        p_outputs := !p_outputs @ [pname]
       | _ -> ())
     cat.cdecls;
   let is_bwd p = List.mem p !bwd || List.mem p inherited_bwd in
@@ -601,4 +611,5 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
      | [] -> ()
      | fs -> fail_now fs);
   (kcat, { p_weights = !p_weights; p_reads = !p_reads;
-           p_weight_refs = !p_weight_refs })
+           p_weight_refs = !p_weight_refs; p_guards = !p_guards;
+           p_inputs = !p_inputs; p_outputs = !p_outputs })
