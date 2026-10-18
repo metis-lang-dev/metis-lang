@@ -150,5 +150,5 @@ core kept deliberately identical (Thm 1).
 - [x] P4 `()` accepted AND made the canonical pretty() spelling of a
       sole-unit head; `!`-head stays out
 - [x] Acceptance test: `tragedy.cep` ported to
-      `metis-catalog/domains/fiction/tragedy.llp` using P1/P4
+      `metis-catalog/domains/tragedy/tragedy.llp` using P1/P4
       (see the one-to-one porting track in metis-catalog)
