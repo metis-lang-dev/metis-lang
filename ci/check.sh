@@ -72,7 +72,7 @@ awk '/SAMPLE PARITY/ { split($3, s, "/");
     || { cat "$WORK/sample.out"; exit 1; }
 grep "SAMPLE PARITY" "$WORK/sample.out"
 
-echo "== 8. embedded directives: '#' lines are compiler-invisible; --run replays them"
+echo "== 8. embedded directives: '#' lines are compiler-invisible; --run replays them (#interactive: EOF -> the sampler)"
 # the corpus love triangle carries the origin's trace as '#'-directives;
 # it must still roundtrip (gate here, not 3: it is not a manifest case)
 # and --run must reproduce the committed seeded traces byte-for-byte.
@@ -82,6 +82,18 @@ cp "$ROOT/corpus/love_triangle.llp" "$WORK/"
 "$ROOT/src/metisc" --roundtrip "$WORK/rt_directives.txt"
 "$ROOT/src/metisc" --run "$ROOT/corpus/love_triangle.llp" > "$WORK/run.txt"
 diff -u "$ROOT/corpus/goldens/run_goldens.txt" "$WORK/run.txt"
+# '#interactive go' with stdin closed (spec 07 P2; agent-no-intent
+# s-7fd29000 B): one menu, then the sampler for every later choice —
+# the same seeded wire as the plain run, and a hang fails in 20 s
+mkdir -p "$WORK/ia"
+cp "$ROOT/corpus/love_triangle.llp" "$WORK/ia/"
+echo "#interactive go" >> "$WORK/ia/love_triangle.llp"
+timeout 20 "$ROOT/src/metisc" --run "$WORK/ia/love_triangle.llp" </dev/null \
+    > "$WORK/ia/run.txt" 2> "$WORK/ia/err.txt" \
+    || { echo "--run on an #interactive program, stdin closed: rc $?"; exit 1; }
+diff -u "$ROOT/corpus/goldens/run_goldens.txt" "$WORK/ia/run.txt"
+[ "$(grep -c 'choose an event' "$WORK/ia/err.txt")" = 1 ] \
+    || { echo "a menu after EOF"; cat "$WORK/ia/err.txt"; exit 1; }
 
 echo "== 9. Horn facts: vars quantified (spec 5); singleton vars warn (advisory)"
 # fact_vars.llp: eq(X,X) must admit the rule (quantified reading), and

@@ -271,18 +271,24 @@ let run_file path =
   let c = embedded_case path in
   if c.c_steps = 0 then failwith "no #steps directive";
   let seeds = if c.c_seeds = 0 then 1 else c.c_seeds in
-  let (_, _, prog) = build (Filename.dirname path) c in
+  (* the case header first, flushed: a large ground (talespin's 105k
+     events take minutes) is not a silent run *)
   Printf.printf "case %s steps=%d seeds=%d\n"
     c.c_name c.c_steps seeds;
   List.iter (fun (a, n) -> Printf.printf "I %s %d\n" a n) c.c_init;
+  flush stdout;
+  let (_, _, prog) = build (Filename.dirname path) c in
   let events = Refsample.canonical_events prog in
   let queries = List.rev c.c_queries in
   let hits = List.map (fun q -> (q, ref 0)) queries in
   (* '#interactive <stage>': menu on stderr, selection from stdin;
      EOF or junk falls back to the sampler draw, so piped runs
-     complete. The T/F/Q wire on stdout is unchanged. *)
+     complete. After EOF every later choice is the sampler's, with no
+     menu (stdin stays closed: spec 07 P2). The T/F/Q wire on stdout is
+     unchanged. *)
+  let eof = ref false in
   let pick stage ws total =
-    if not (List.mem stage c.c_interactive) then None
+    if !eof || not (List.mem stage c.c_interactive) then None
     else begin
       Printf.eprintf "-- %s: choose an event --\n" stage;
       List.iteri (fun k (i, w) ->
@@ -291,7 +297,8 @@ let run_file path =
       Printf.eprintf "> %!";
       match input_line stdin with
       | exception End_of_file ->
-        prerr_endline "(eof: sampler)"; None
+        eof := true;
+        prerr_endline "(eof: the sampler from here on)"; None
       | l ->
         (match int_of_string_opt (String.trim l) with
          | Some k when k >= 1 && k <= List.length ws ->

@@ -143,9 +143,11 @@ core kept deliberately identical (Thm 1).
       duplicate check added
 - [x] P2 accepted — `interactive <stage>` in the shared case-line
       vocabulary; menu on stderr, choice on stdin, EOF falls back to
-      the sampler; `run_trace_pick` added beside the pinned
-      `run_trace` (constant-None pick = byte-identical wire; gates
-      stayed green: IR 46/46, SAMPLE 43/43)
+      the sampler — for every later choice of the run, with no further
+      menu (stdin stays closed; agent-no-intent s-7fd29000);
+      `run_trace_pick` added beside the pinned `run_trace`
+      (constant-None pick = byte-identical wire; gates stayed green:
+      IR 46/46, SAMPLE 43/43)
 - [x] P3 non-goal confirmed; parallel-schedule wire record deferred
 - [x] P4 `()` accepted AND made the canonical pretty() spelling of a
       sole-unit head; `!`-head stays out
