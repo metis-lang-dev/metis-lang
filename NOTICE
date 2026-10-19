@@ -8,3 +8,10 @@ The paper under paper/ is copyright its authors, all rights
 reserved, and is not covered by the Apache-2.0 grant (see README).
 Bundled third-party packages under contrib/vscode/node_modules/
 retain their own licenses.
+
+corpus/ceptre/ and runtime/fixtures/ceptre/ hold a port of the Ceptre
+love triangle from interactive-lp
+(https://github.com/chrisamaphone/interactive-lp), Copyright (c) 2023
+Chris Martens, and the fixtures compiled from it. They are offered
+under its Anti-Capitalist Software License v1.4 (the LICENSE in each
+directory), not under the Apache-2.0 grant (see corpus/ceptre/README.md).

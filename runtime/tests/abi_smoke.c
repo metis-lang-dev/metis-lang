@@ -7,7 +7,7 @@
  * TIME face through metis_rt_tick, and the ground args of a tagged event, on
  * the love triangle's.
  *
- * usage: metis_rt_abi_smoke <live_cascade.wire> <live_love_triangle.wire> */
+ * usage: metis_rt_abi_smoke <live_cascade.wire> <ceptre/live_love_triangle.wire> */
 #include <stdio.h>
 #include <string.h>
 
@@ -63,7 +63,7 @@ int main(int argc, char** argv) {
     double like = -1;
     metis_rt* rt;
     if (argc != 3) {
-        fprintf(stderr, "usage: metis_rt_abi_smoke <live_cascade.wire> <live_love_triangle.wire>\n");
+        fprintf(stderr, "usage: metis_rt_abi_smoke <live_cascade.wire> <ceptre/live_love_triangle.wire>\n");
         return 2;
     }
     rt = metis_rt_new();

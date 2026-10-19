@@ -115,6 +115,9 @@ the wolf), tragedy (PN of the murder for becomeSuicidal; whatif on
 the eroticize forks), love_triangle (the some-fork from spec 09's
 causes). The evaluation report — does whatif/necessity ANSWER the
 "what if" the user actually asks in sessions? — decides the port.
+(Attribution: 3lp, tragedy and love_triangle are ports of interactive-lp's
+Ceptre examples, Copyright © 2023 Chris Martens, Anti-Capitalist Software
+License v1.4: metis-catalog `domains/ceptre/`, metis-lang `corpus/ceptre/`.)
 
 ## §D — decisions
 

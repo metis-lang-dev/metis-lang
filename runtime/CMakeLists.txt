@@ -63,7 +63,7 @@ add_test(NAME conformance
 # the live handle through the C ABI, in C
 add_test(NAME abi_smoke
   COMMAND metis_rt_abi_smoke ${METIS_FIXTURES}/live_cascade.wire
-                             ${METIS_FIXTURES}/live_love_triangle.wire)
+                             ${METIS_FIXTURES}/ceptre/live_love_triangle.wire)
 # the same corpora natively (tools/metis_run, the C++ entry)
 add_test(NAME metis_run
   COMMAND metis_run ${METIS_CORPUS}/ir_goldens.txt
@@ -88,13 +88,19 @@ add_test(NAME ir_eval_smoke
 # a latched stage revived) and K3 (each sample's snapshot restored into a
 # reloaded Live runs on identically) — live_run; K4 (the likelihood from a
 # state, the watch's surprise test) against surprise_record — project_run
-foreach(case cascade love_triangle weights)
-  add_test(NAME live_${case}
-    COMMAND live_run ${METIS_FIXTURES}/live_${case}.wire
-                     ${METIS_FIXTURES}/live_${case}.txt)
-  add_test(NAME project_${case}
-    COMMAND project_run ${METIS_FIXTURES}/live_${case}.wire
-                        ${METIS_FIXTURES}/proj_${case}.txt)
+# (the love triangle's fixtures sit in ceptre/, under interactive-lp's license)
+foreach(case cascade ceptre/love_triangle weights)
+  get_filename_component(name ${case} NAME)
+  get_filename_component(dir ${case} DIRECTORY)
+  if(dir)
+    set(dir "${dir}/")
+  endif()
+  add_test(NAME live_${name}
+    COMMAND live_run ${METIS_FIXTURES}/${dir}live_${name}.wire
+                     ${METIS_FIXTURES}/${dir}live_${name}.txt)
+  add_test(NAME project_${name}
+    COMMAND project_run ${METIS_FIXTURES}/${dir}live_${name}.wire
+                        ${METIS_FIXTURES}/${dir}proj_${name}.txt)
 endforeach()
 
 # every tool exits nonzero unless ok == total > 0 (or 0 failures); a

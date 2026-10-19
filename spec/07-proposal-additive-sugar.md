@@ -27,6 +27,11 @@ A clause with alternative weighted outcomes:
       -o ( eros(D,C) @w 3
          | anger(D,C) @w 1 ).
 
+(Attribution: the `flirt` rule is adapted from interactive-lp's
+`examples/tragedy.cep`, Copyright © 2023 Chris Martens, Anti-Capitalist
+Software License v1.4; the port is metis-catalog's
+`domains/ceptre/tragedy/`.)
+
 **Desugaring (AST-level, like range sugar):** n clauses sharing the
 body, named `flirt#1 .. flirt#n`, each with its branch's head and
 weight. Expansion happens in the parser exactly as type-range sugar
@@ -152,5 +157,5 @@ core kept deliberately identical (Thm 1).
 - [x] P4 `()` accepted AND made the canonical pretty() spelling of a
       sole-unit head; `!`-head stays out
 - [x] Acceptance test: `tragedy.cep` ported to
-      `metis-catalog/domains/tragedy/tragedy.llp` using P1/P4
+      `metis-catalog/domains/ceptre/tragedy/tragedy.llp` using P1/P4
       (see the one-to-one porting track in metis-catalog)

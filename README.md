@@ -67,8 +67,8 @@ src/metisc corpus/manifest.txt          # emit the IR corpus
 src/metisc --keys corpus/manifest.txt   # canonical program keys
 src/metisc --roundtrip corpus/manifest.txt
 src/metisc --sample corpus/sample_manifest.txt
-src/metisc --run corpus/love_triangle.llp   # replay a file's embedded
-                                            # '#'-directive case (spec §8)
+src/metisc --run corpus/wire_ports.llp     # replay a file's embedded
+                                           # '#'-directive case (spec §8)
 src/metisc --wire corpus/catalog/plant/plant.llp \
     --extension corpus/catalog/plant/extensions/visitor.llp
                                  # a package's served program as the
@@ -90,4 +90,9 @@ mechanization under `formal/`. Copyright 2026 Robofortis.
 Exceptions: the paper under `paper/` is copyright its authors, all
 rights reserved (it is licensed by its publication venue, not by this
 repository); the bundled packages under
-`contrib/vscode/node_modules/` retain their own upstream licenses.
+`contrib/vscode/node_modules/` retain their own upstream licenses;
+`corpus/ceptre/` and `runtime/fixtures/ceptre/` hold the Ceptre love
+triangle (a port of interactive-lp's, Copyright © 2023 Chris Martens) and
+the fixtures compiled from it, offered under its Anti-Capitalist Software
+License v1.4 (the `LICENSE` in each), not under the Apache-2.0 grant
+(`corpus/ceptre/README.md`).
