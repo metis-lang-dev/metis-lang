@@ -29,3 +29,5 @@ stage main {
 }
 
 #init moist 1
+#steps 6
+#seeds 3
