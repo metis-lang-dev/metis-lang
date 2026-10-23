@@ -21,6 +21,7 @@ let registry = [
   ("fact-var-conflict", ("error", "compile"));
   ("var-type-conflict", ("error", "compile"));
   ("var-untypable", ("error", "compile"));
+  ("rhs-var-unbound", ("error", "compile"));
   ("arity-mismatch", ("error", "compile"));
   ("fact-not-bwd", ("error", "compile"));
   ("link-post-bwd", ("error", "compile"));
@@ -82,6 +83,8 @@ let hint code data =
     String.concat "" [ g "var"; " sits at a "; g "type1"; " and a "; g "type2"; " position: rename one occurrence, or fix the predicate signature" ]
   | "var-untypable" ->
     String.concat "" [ g "var"; " occurs in no typed position: use it in an atom whose signature types it, or drop it" ]
+  | "rhs-var-unbound" ->
+    String.concat "" [ "a rule produces only what it read or consumed: bind "; g "var"; " in an atom on the left; a fresh value needs a bwd table or a constant" ]
   | "arity-mismatch" ->
     String.concat "" [ g "pred"; " takes "; g "expected"; " argument(s), got "; g "got"; ": match the declared signature" ]
   | "fact-not-bwd" ->

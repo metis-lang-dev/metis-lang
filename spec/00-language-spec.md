@@ -164,6 +164,12 @@ Order of processing is significant and specified.
        RESULTING INSERTION ORDER OF THE VAR TABLE IS SEMANTIC — it
        is the grounding enumeration order and the `[X=c,Y=d]` tag
        order (01-ir-spec §2).
+     * RANGE RESTRICTION: every var of the head occurs in a body atom
+       (Atom only; a `<>` binds nothing) — else finding
+       `rhs-var-unbound` (error), once per var in head order. A rule
+       produces only what it read or consumed; a fresh value needs a
+       bwd table or a constant. (Accepted before 2026-10-23: the
+       grounder drew such a var over its whole type.)
      * body classification: Distinct → distinct pairs; atom whose
        pred is bwd (own or inherited) → GUARD (Horn premise, never a
        resource); `$`-atom → persist; else consume.

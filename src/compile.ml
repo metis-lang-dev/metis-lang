@@ -479,6 +479,26 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
                     | _ -> ())
                   a.terms)
               atoms;
+            (* range restriction: a right-side variable no left-side atom
+               binds would be drawn over its whole type by the grounder
+               (policy-tuning step 1: a brain's rule OOM-killed at 6G) *)
+            let bound = List.concat_map (fun (a : atom) ->
+                List.filter_map (function
+                    | TVar v -> Some v | TConst _ -> None) a.terms)
+                body_atoms in
+            let free = List.fold_left (fun acc (a : atom) ->
+                List.fold_left (fun acc t -> match t with
+                    | TVar v when not (List.mem v bound)
+                                  && not (List.mem v acc) -> acc @ [v]
+                    | _ -> acc) acc a.terms)
+                [] r.rhead in
+            List.iter (fun v ->
+                emit "rhs-var-unbound"
+                  (Printf.sprintf
+                     "%s: variable %s on the right side is bound nowhere \
+                      on the left" r.rname v)
+                  [ ("var", v) ])
+              free;
             let consume = ref [] and persist = ref []
             and guards = ref [] in
             List.iter (function

@@ -325,3 +325,23 @@ last-wins in metispy (dict) but first-wins in metisc (`List.assoc` over
 the declaration list), so the two read different scopes. Proposal: a
 compile finding `decl-duplicate` (pred/bwd/type/namespace/port) in
 both toolchains, after a sweep of the committed catalogs.
+
+## D — rhs-var-unbound (2026-10-23)
+
+A rule whose right side names a variable no left-side atom binds was
+accepted, and the grounder drew that variable over its whole type:
+policy-tuning step 1's brain wrote `connect [dyn] : $in(Drawer, Desk) *
+$here(Room) -o connected(Drawer_terminal_1, Desk_terminal_1).` and the
+run was OOM-killed at its 6G cap (two free variables × 167 terms, per
+`in` fact and room). The architect ruled it a compile error, after a
+sweep of the committed catalogs (metis-catalog, metis-worlds, and the
+toolchains' own corpora: 1904 rules, none relies on the draw).
+
+`rhs-var-unbound` (error, compile), both toolchains at the same point
+(after var-untypable), one diagnostic per free variable in head order;
+data `{var}`; text `<rule>: variable <V> on the right side is bound
+nowhere on the left`; hint "a rule produces only what it read or
+consumed: bind <V> in an atom on the left; a fresh value needs a bwd
+table or a constant". A `<>` guard binds nothing. D2 row: diag_compile
+`u`. The loop's driver hears it through compiles() like any compile
+error, before grounding.

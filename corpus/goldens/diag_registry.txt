@@ -2,6 +2,7 @@ doc-missing error compile
 fact-var-conflict error compile
 var-type-conflict error compile
 var-untypable error compile
+rhs-var-unbound error compile
 arity-mismatch error compile
 fact-not-bwd error compile
 link-post-bwd error compile

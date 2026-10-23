@@ -34,6 +34,8 @@ stage go {
   c [story] : tok(X) * paint(n0,X) -o mark.
   %% row var-untypable: ghost is undeclared, so Q is typed nowhere.
   v [story] : tok(N) * ghost(Q) -o hit(N).
+  %% row rhs-var-unbound: M on the right side is bound by no atom on the left.
+  u [story] : tok(N) -o hit(M).
   %% row arity-mismatch: tok takes one argument.
   a [story] : tok(n0,n1) -o mark.
   %% row weight-port-undeclared.
