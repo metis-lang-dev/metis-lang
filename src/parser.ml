@@ -277,7 +277,7 @@ let type_consts p =
   punct p '{';
   let const_tok () = match next p with
     | Ident v | Num v -> v
-    | _ -> fail "%s: bad type constant" (where p) in
+    | _ -> fail "%s: bad type constant: a type is its finite set of constants, `type t {a b c}` or a range `{k0..k9}`; a constructor with arguments has no Metis form (Ceptre's `succ nat : nat` becomes a range and a bwd table over it)" (where p) in
   let rec go acc = match peek p with
     | Some (Punct '}') -> ignore (next p); List.rev acc
     | _ ->
