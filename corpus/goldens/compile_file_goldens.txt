@@ -1,0 +1,35 @@
+warning: type 'kind' is abstract (types (kind place)): this unit grounds only through an instance that completes it
+ok diag-abstract: 1 entries; abstract kind (grounds through an instance that completes it)
+rc 0
+diag_compile.llp:14: pred 'mark' declared twice (first at diag_compile.llp:12)
+diag_compile.llp:18: bwd tint: 'shade' is not a type — declare it: `types (shade).` when an instance completes it, or `type shade {…}`.
+diag_compile.llp:23: weight bad: reads needs var formals, got n0
+diag_compile.llp:26: weight scope: $ marker in reads $tok(N)
+diag_compile.llp:26: weight scope: reads var M unbound (not a formal, not guard-enumerated)
+diag_compile.llp:26: weight scope: reads atom 'ghost' is not a declared resource predicate
+diag_compile.llp:26: weight scope: reads guard 'mark' is not declared bwd
+diag_compile.llp:28: fact paint(X,X): var X typed both nat and color
+diag_compile.llp:30: fact tok(n1): predicate not declared bwd
+diag_compile.llp:32: fact big(red): constant 'red' is not a nat (big argument 1)
+diag_compile.llp:36: r: missing %% doc (mandatory)
+diag_compile.llp:38: c: var X typed both nat and color
+diag_compile.llp:40: v: var Q untypable
+diag_compile.llp:42: u: variable M on the right side is bound nowhere on the left
+diag_compile.llp:44: a: tok arity 2 != declared 1
+diag_compile.llp:46: p: weight port 'nope' not declared
+diag_compile.llp:48: q: weight arg K is not a rule var
+diag_compile.llp:52: back: bwd 'big' in link post
+rc 1
+diag_kernel.llp:14: predicate 'stray': unknown namespace 'nowhere'
+diag_kernel.llp:16: predicate 'dual' declared both resource and bwd
+diag_kernel.llp:11: namespace 'odd': unknown layer 'phantom'
+diag_dom.llp:14: pack/obs: layer 'pack' may not produce 'heads' (namespace 'st')
+diag_kernel.llp:26: pack/grab: layer 'pack' may not consume 'lock' (namespace 'q')
+diag_kernel.llp:28: pack/zz: undeclared predicate 'zap' (consume)
+diag_kernel.llp:30: dyn/bb: bwd predicate 'big' used as a resource (produce)
+diag_kernel.llp:32: ghost/gl: unknown layer 'ghost'
+diag_kernel.llp:36: dyn/lb: unknown stage 'limbo'
+diag_kernel.llp:39: dyn/jump: link stage(s) 'note'->'nowhere' unknown
+diag_kernel.llp:21: horn/seen: horn head 'seen' not a declared bwd predicate
+diag_kernel.llp:23: horn/big(N): horn body 'lock' not bwd — the Horn world is closed
+rc 1

@@ -271,6 +271,36 @@ let diagnostics_file ?base ~json path =
       else print_string (Diag.render_text d))
     (Compile.diagnostics ())
 
+(* metisc FILE.llp: compile only (includes resolved) — a lifted domain
+   file passes with its type-abstract advisories (spec 12); a failing
+   compile lists each error as `file:line: text`, as the metis shell's
+   cannot-serve does, and exits 1 *)
+let compile_file path =
+  let ast = Compile.resolve_includes (Parser.parse_file path)
+      (Filename.dirname path) in
+  match compile_warn ast with
+  | (cat, _) ->
+    Printf.printf "ok %s: %d entries%s\n" cat.Catalog.k_name
+      (List.length cat.Catalog.k_entries)
+      (if cat.Catalog.k_abstract = [] then ""
+       else Printf.sprintf "; abstract %s (grounds through an instance \
+                            that completes it)"
+           (String.concat " " cat.Catalog.k_abstract))
+  | exception (Compile.Lang_error msgs | Catalog.Catalog_error msgs) ->
+    let errs = List.filter (fun d -> d.Diag.severity = "error")
+        (Compile.diagnostics ()) in
+    if errs = [] then
+      List.iter (fun m -> prerr_endline ("error: " ^ m)) msgs
+    else
+      List.iter (fun d ->
+          if d.Diag.loc.line > 0 then
+            Printf.eprintf "%s:%d: %s\n"
+              (if d.Diag.loc.file = "" then "<input>"
+               else Filename.basename d.Diag.loc.file) d.Diag.loc.line
+              d.Diag.text
+          else prerr_endline ("error: " ^ d.Diag.text)) errs;
+    exit 1
+
 let run_file path =
   let c = embedded_case path in
   if c.c_steps = 0 then failwith "no #steps directive";
@@ -374,10 +404,12 @@ let () =
   | [_; "--diagnostics-json"; llp; "--base"; b] ->
     diagnostics_file ~base:b ~json:true llp
   | [_; "--diagnostics-json"; llp] -> diagnostics_file ~json:true llp
+  | [_; llp] when Filename.check_suffix llp ".llp" -> compile_file llp
   | [_; manifest] -> drive manifest run_case
   | _ ->
     prerr_endline
-      "usage: metisc <manifest> | --keys <manifest> | \
+      "usage: metisc <manifest> | <file.llp> (compile only) | \
+       --keys <manifest> | \
        --roundtrip <manifest> | --sample <manifest> | \
        --run <file.llp> | --wire <program.llp> [--extension \
        <e.llp>]... | --diagnostics[-json] <file.llp> [--base \

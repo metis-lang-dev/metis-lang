@@ -156,6 +156,15 @@ if ( cd "$ROOT/corpus/diag" && "$ROOT/src/metisc" --run diag_abstract.llp ) \
   echo "--run grounded an abstract type"; exit 1
 fi
 diff -u "$ROOT/corpus/goldens/abstract_run_goldens.txt" "$WORK/abstract_run.txt"
+# metisc FILE.llp compiles only (spec 12 step 2): the lifted file passes
+# with its advisory; a failing compile lists each error as
+# `file:line: text` and exits 1 — the metis shell's cannot-serve lines
+# (metispy test_abstract_types reads the same golden)
+( cd "$ROOT/corpus/diag"
+  for f in diag_abstract.llp diag_compile.llp diag_kernel.llp; do
+    "$ROOT/src/metisc" "$f" && echo "rc 0" || echo "rc $?"
+  done ) > "$WORK/compile_file.txt" 2>&1
+diff -u "$ROOT/corpus/goldens/compile_file_goldens.txt" "$WORK/compile_file.txt"
 # every compile/kernel/admission/ground code has a D2 fixture row (loop
 # and runtime codes get theirs with the REPL surface; internal codes are
 # unreachable from source; retired codes have no emitter)

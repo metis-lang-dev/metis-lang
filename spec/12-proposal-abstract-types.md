@@ -6,7 +6,8 @@ metis-worlds alfworld/domains/director_domain.llp). Implementation in
 BOTH toolchains (metis-lang authoritative, metispy at byte parity),
 goldens, spec 00/08 amendments, then a sweep of every domain file an
 instance completes. Step 1 (the language, both toolchains) IMPLEMENTED
-2026-10-24 (opus); its decisions are §Implementation notes.**
+2026-10-24 (opus); step 2 (the surfaces) IMPLEMENTED the same day; the
+decisions are §Implementation notes.**
 
 ## Motivation
 
@@ -225,4 +226,35 @@ records (the step 3 report lists them).
 - **Hand-built kernel catalogs** lose the kernel's var-type check
   with var-type-unknown's retirement: the compiler is the only door
   (spec 12 P4).
+
+## Implementation notes (step 2, opus, 2026-10-24)
+
+- **The metis shell serves a lifted file** (metispy repl): the catalog
+  compiles; no program, no state, the file's `#init` not applied (it is
+  the instance's to apply). The intro names the abstract types and the
+  verbs that read the file: help, list, show, findings, version,
+  reload, key, transcript, quit. `list` prints the abstract types with
+  where they are declared and every rule with its source lines (no
+  marks: nothing is enabled). Every other verb answers `<verb>: no
+  program — <file> is lifted; ground the instance that includes it`
+  and the type-incomplete findings, `file:line:` each. `findings`
+  lists the advisories and the type-incomplete diagnostics. A reload
+  that completes the types serves the program from the file's `#init`;
+  one that makes it lifted again drops the program.
+- **The --json wire** answers the same: an op a lifted file cannot
+  answer returns `{ok: false, error: <the refusal>, lifted: [types]}`;
+  findings, help and show answer.
+- **cannot serve FILE:** each finding is `file:line: text`, from its
+  diagnostic (the file by its basename, as every diagnostic renders
+  it); a parse or lex error's own `line:col:` gets the file's name.
+  The --json start-up failure carries the same lines.
+- **`metisc FILE.llp`** compiles only: the advisories on stderr, `ok
+  <catalog>: N entries[; abstract T… (grounds through an instance that
+  completes it)]` on stdout, exit 0; a failing compile lists each
+  error as `file:line: text` and exits 1 — the shell's cannot-serve
+  lines. Gate 11 pins both on three fixtures
+  (corpus/goldens/compile_file_goldens.txt), and metispy reproduces
+  the golden from its located lines.
+- **No bundle** for a lifted file (tested: metispy `artifact.build`
+  refuses with type-incomplete).
 
