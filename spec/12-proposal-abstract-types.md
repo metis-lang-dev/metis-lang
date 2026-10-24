@@ -258,3 +258,26 @@ records (the step 3 report lists them).
 - **No bundle** for a lifted file (tested: metispy `artifact.build`
   refuses with type-incomplete).
 
+## Implementation notes (step 3, the sweep, opus, 2026-10-24)
+
+- **Typed** (each compiles alone; the line names the types its
+  signatures use and no declaration of the file defines, in order of
+  first naming): metis-catalog director (`domain kind`), nav (`cell`),
+  xtraffic (`cell idx`) and their byte-equal copies (metis-worlds
+  alfworld director; metispy domains nav/xtraffic; metis-lang
+  corpus/nav_domain.llp); metis-worlds alfworld alfred_domain and the
+  five hierarchy bases, scienceworld's five hierarchy bases.
+- **Base generators**: scienceworld `gen_instance.base_source` (from
+  the perception's signatures), minihack `gen_level.base_source`
+  (`types (cell thing beast)`); metis-loop `alfworld.empty_base`
+  derives from alfred_domain.llp and inherits its line.
+- **Left out**: world_ui and the loop's domains/ui (voice-nav-removal
+  deletes them); metis-catalog road and the metis-lang corpus's
+  road-family handles_domain (the user's standing word: the road
+  catalog stays as it is unless the user asks); the untracked
+  install/experiment copies; the committed policy-run records (no
+  test or gate compiles them alone).
+- **metis-catalog ci/diagnose.sh**: a lifted file typechecks alone —
+  its type-incomplete is its instance's — so it is `ok … (lifted)`,
+  and nav/xtraffic leave diag-exempt.txt.
+
