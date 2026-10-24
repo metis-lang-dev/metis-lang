@@ -3,6 +3,7 @@ catalog nav-domain 1.
 provenance hand "IPPC 2011 Navigation, lifted domain" "2026-07-18".
 layers (dyn).
 stages (nav).
+types (cell).   % completed by the instance that includes this file (spec 12)
 namespace loc produce (dyn).
 pred at(cell) : loc.
 pred dead : loc.
