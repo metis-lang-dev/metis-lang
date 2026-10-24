@@ -37,12 +37,13 @@ let registry = [
   ("include-cycle", ("error", "compile"));
   ("extends-no-base", ("error", "compile"));
   ("decl-duplicate", ("error", "compile"));
+  ("type-unknown", ("error", "compile"));
+  ("type-abstract", ("warning", "compile"));
   ("containment-produce", ("error", "kernel"));
   ("containment-consume", ("error", "kernel"));
   ("pred-undeclared", ("error", "kernel"));
   ("bwd-as-resource", ("error", "kernel"));
   ("layer-unknown", ("error", "kernel"));
-  ("var-type-unknown", ("error", "kernel"));
   ("stage-unknown", ("error", "kernel"));
   ("link-stage-unknown", ("error", "kernel"));
   ("horn-head-not-bwd", ("error", "kernel"));
@@ -53,6 +54,7 @@ let registry = [
   ("pack-redeclares", ("error", "admission"));
   ("pack-claims-base-namespace", ("error", "admission"));
   ("pack-adds-stage", ("error", "admission"));
+  ("type-incomplete", ("error", "ground"));
   ("rule-name-collision", ("warning", "loop"));
   ("provenance-shape", ("warning", "loop"));
   ("reads-undeclared", ("error", "runtime"));
@@ -64,9 +66,10 @@ let registry = [
   ("guard-var-undeclared", ("error", "internal"));
   ("comment-missing", ("error", "internal"));
   ("var-untyped", ("error", "internal"));
-  ("kind-unknown", ("error", "internal")) ]
+  ("kind-unknown", ("error", "internal"));
+  ("var-type-unknown", ("error", "retired")) ]
 
-let gated_phases = [ "compile"; "kernel"; "admission" ]
+let gated_phases = [ "compile"; "kernel"; "admission"; "ground" ]
 
 let hint code data =
   let g k = match List.assoc_opt k data with Some v -> v | None -> "" in
@@ -115,14 +118,16 @@ let hint code data =
     String.concat "" [ "compile this pack against its base catalog "; g "base" ]
   | "decl-duplicate" ->
     String.concat "" [ "a name is declared once per kind: remove this "; g "kind"; " declaration of "; g "name"; ", or rename it (first at "; g "first"; ")" ]
+  | "type-unknown" ->
+    String.concat "" [ "declare "; g "type"; ", or fix the signature of "; g "pred"; " that names it" ]
+  | "type-abstract" ->
+    String.concat "" [ "the instance that includes this file completes "; g "type"; " with `type "; g "type"; " "; "{"; "…"; "}"; ".`: ground that instance" ]
   | "pred-undeclared" ->
     String.concat "" [ "declare "; g "pred"; ": `pred "; g "pred"; "(...) : <namespace>.`" ]
   | "bwd-as-resource" ->
     String.concat "" [ g "pred"; " is a bwd predicate: use it as a guard premise only, never as a resource ("; g "mode"; ")" ]
   | "layer-unknown" ->
     String.concat "" [ "add "; g "layer"; " to the catalog's layers (...), or tag the rule with a declared layer" ]
-  | "var-type-unknown" ->
-    String.concat "" [ "declare type "; g "type"; ", or fix the signature that names it" ]
   | "stage-unknown" ->
     String.concat "" [ "add "; g "stage"; " to stages (...)" ]
   | "link-stage-unknown" ->
@@ -143,6 +148,8 @@ let hint code data =
     String.concat "" [ "a pack owns only its own namespaces: put "; g "pred"; " in a namespace the pack declares" ]
   | "pack-adds-stage" ->
     String.concat "" [ "a pack may not add stage "; g "stage"; ": the stage set is the base's" ]
+  | "type-incomplete" ->
+    String.concat "" [ "ground the instance that includes this file, or complete "; g "type"; " here with `type "; g "type"; " "; "{"; "…"; "}"; ".`" ]
   | "rule-name-collision" ->
     String.concat "" [ "rename one of the "; g "count"; " rules named "; g "rule"; ": trace events and the debug sidecar read SHORT names" ]
   | "provenance-shape" ->
@@ -166,22 +173,6 @@ let no_src = { s_loc = { file = ""; line = 0; col = 0; decl = "" };
 let layer_codes = [ "containment-produce"; "containment-consume";
                     "layer-unknown"; "namespace-layer-unknown" ]
 
-(* The var-type-unknown slice (spec 08 A2): only the pred/bwd lines
-   whose signature names the unknown type -- where the type was named;
-   the rest of the rule's closure overflowed the cap on wide rules.
-   Order kept; byte parity with metispy (diagnostics._naming_type). *)
-let naming_type context ty =
-  let names_it ln =
-    let starts p = String.length ln >= String.length p
-                   && String.sub ln 0 (String.length p) = p in
-    (starts "pred " || starts "bwd ")
-    && (match String.index_opt ln '(', String.index_opt ln ')' with
-        | Some i, Some j when j > i ->
-          String.split_on_char ',' (String.sub ln (i + 1) (j - i - 1))
-          |> List.exists (fun a -> String.trim a = ty)
-        | _ -> false) in
-  List.filter names_it context
-
 let make code text src data =
   let severity = match List.assoc_opt code registry with
     | Some (s, _) -> s
@@ -191,11 +182,6 @@ let make code text src data =
     if List.mem code layer_codes && src.s_layers <> "" then
       src.s_context @ [ src.s_layers ]
     else src.s_context in
-  let context =
-    if code = "var-type-unknown" then
-      naming_type context
-        (match List.assoc_opt "type" data with Some t -> t | None -> "")
-    else context in
   if List.length context > context_cap then
     raise (Defect (Printf.sprintf
                      "%s @ %s: context of %d lines exceeds the cap of %d"

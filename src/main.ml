@@ -255,12 +255,16 @@ let diagnostics_file ?base ~json path =
   Diag.reset ();
   (try
      match based with
-     | None -> ignore (Compile.compile (load path))
+     | None ->
+       (* a unit that compiles adds what grounding it would refuse
+          (type-incomplete, spec 12) *)
+       let (cat, _) = Compile.compile (load path) in
+       ignore (Catalog.incomplete cat)
      | Some (bcat, bast) ->
        (* compile the pack against the base, then admit — admission
           diagnostics join *)
        let (pcat, _) = Compile.compile ~base:(bcat, bast) (load path) in
-       ignore (Catalog.admit bcat pcat)
+       ignore (Catalog.incomplete (Catalog.admit bcat pcat))
    with Compile.Lang_error _ | Catalog.Catalog_error _ -> ());
   List.iter (fun d ->
       if json then print_endline (Diag.to_json d)
@@ -383,7 +387,7 @@ let () =
        pass/fail)";
     exit 2
    with
-   | Compile.Lang_error msgs ->
+   | Compile.Lang_error msgs | Catalog.Catalog_error msgs ->
      List.iter (fun m -> prerr_endline ("error: " ^ m)) msgs; exit 1
    | Parser.Parse_error m ->
      prerr_endline ("parse error: " ^ m); exit 1

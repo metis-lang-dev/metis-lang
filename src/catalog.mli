@@ -41,11 +41,16 @@ type t = {
   k_preds : (string * string) list;          (* pred -> namespace *)
   k_bwd : string list;
   k_entries : entry list;
+  k_abstract : string list;   (* abstract types left abstract (spec 12) *)
   k_srcs : (string * Diag.src) list }
   (* decl slices for catalog-level / admission diagnostics (spec 08),
-     keyed "pred/x", "bwd/x", "namespace/y", "type/t" *)
+     keyed "pred/x", "bwd/x", "namespace/y", "type/t", "types/t" *)
 
 val typecheck : t -> string list             (* findings; [] = OK *)
+
+(* type-incomplete (spec 12): one finding per type left abstract, in
+   declaration order — what grounding refuses with *)
+val incomplete : t -> string list
 
 exception Catalog_error of string list
 

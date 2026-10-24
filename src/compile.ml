@@ -258,6 +258,15 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
        bcat.k_bwd, bcat.k_layers, bcat.k_stages, bcat.k_preds,
        bcat.k_types)
     | None -> ([], [], [], [], [], []) in
+  (* the base's types: every name it declares (abstract ones included)
+     resolves a signature; only the defined ones carry members to check
+     a constant against *)
+  let base_names = List.map fst base_types in
+  let base_types = match base with
+    | Some ((bcat : Catalog.t), _) ->
+      List.filter (fun (t, _) -> not (List.mem t bcat.k_abstract))
+        base_types
+    | None -> [] in
 
   let vocab = cat.cdecls @ (match base with
       | Some (_, bsrc) -> bsrc.cdecls | None -> []) in
@@ -332,6 +341,56 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
         p_outputs := !p_outputs @ [pname]
       | _ -> ())
     cat.cdecls;
+
+  (* abstract types (spec 12): `types (...)` names a type that a `type t
+     {...}` anywhere in the spliced unit (or the base) completes; one
+     left abstract is in the signature with no constants -- an advisory
+     here, a finding when the unit is grounded. A signature naming a
+     type nobody declared is type-unknown, once per type, at the first
+     signature naming it (mirrors metispy compile_catalog) *)
+  let lay = if cat.clayers <> [] then cat.clayers else base_layers in
+  let abstract = ref [] in
+  List.iter (fun (d, l) -> match d with
+      | DTypes ns ->
+        List.iter (fun t ->
+            if not (List.mem_assoc t !types) && not (List.mem t base_names)
+               && not (List.mem_assoc t !abstract) then
+              abstract := !abstract @ [ (t, (d, l)) ]) ns
+      | _ -> ())
+    decl_locs;
+  let declared t = List.mem_assoc t !types || List.mem t base_names
+                   || List.mem_assoc t !abstract in
+  let named = ref [] in
+  List.iter (fun (d, l) ->
+      let sig_ = match d with
+        | DPred (n, args, _) -> Some ("pred", n, args)
+        | DBwd (n, args) -> Some ("bwd", n, args)
+        | _ -> None in
+      match sig_ with
+      | None -> ()
+      | Some (kind, n, args) ->
+        List.iter (fun t ->
+            if not (declared t) && not (List.mem t !named) then begin
+              named := !named @ [ t ];
+              emitter (decl_source vocab lay l (kind ^ "/" ^ n) d)
+                "type-unknown"
+                (Printf.sprintf "%s %s: '%s' is not a type \xe2\x80\x94 \
+                                 declare it: `types (%s).` when an \
+                                 instance completes it, or `type %s \
+                                 {\xe2\x80\xa6}`." kind n t t t)
+                [ ("pred", n); ("type", t) ]
+            end) args)
+    decl_locs;
+  let abstract_src = List.map (fun (t, (d, l)) ->
+      (t, decl_source vocab lay l ("types/" ^ t) d)) !abstract in
+  List.iter (fun (t, (d, _)) ->
+      let line = decl_line d in
+      emitter (List.assoc t abstract_src) "type-abstract"
+        (Printf.sprintf "type '%s' is abstract (%s): this unit grounds \
+                         only through an instance that completes it" t
+           (String.sub line 0 (String.length line - 1)))
+        [ ("type", t) ])
+    !abstract;
   let is_bwd p = List.mem p !bwd || List.mem p inherited_bwd in
   let known_pred p =
     List.mem_assoc p !preds || List.mem_assoc p base_preds in
@@ -611,9 +670,11 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
     else base_stages in
   let kcat = { Catalog.k_name = cat.cname; k_version = cat.cversion;
                k_layers = layers; k_stages = stages;
-               k_types = !types; k_namespaces = !namespaces;
+               k_types = !types @ List.map (fun (t, _) -> (t, [])) !abstract;
+               k_namespaces = !namespaces;
                k_preds = !preds; k_bwd = !bwd;
                k_entries = !entries @ !horn_entries;
+               k_abstract = List.map fst !abstract;
                k_srcs = List.filter_map (fun (d, l) ->
                    let key = match d with
                      | DPred (n, _, _) -> Some ("pred/" ^ n)
@@ -625,7 +686,9 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
                        (k, decl_source vocab
                           (if cat.clayers <> [] then cat.clayers
                            else base_layers) l k d)) key)
-                   decl_locs } in
+                   decl_locs
+                 @ List.map (fun (t, src) -> ("types/" ^ t, src))
+                   abstract_src } in
   if cat.cextends = None then
     (match Catalog.typecheck kcat with
      | [] -> ()

@@ -7,6 +7,8 @@ layers (dyn).
 stages (main).
 
 namespace plant produce (dyn).
+type water {water}.                  % what is done: the watering
+type soil {moist dry}.               % what a check finds
 
 pred moist : plant.
 pred dry : plant.

@@ -44,7 +44,7 @@ Doc lines attach to the NEXT rule or link; they are part of the AST
 
     catalog     ::= [docs] "catalog" ident num "."  decl*
     decl        ::= include | extends | provenance | layers | stages
-                  | typedecl | namespace | pred | bwd | port
+                  | typedecl | abstract | namespace | pred | bwd | port
                   | stagedef | link | hornfact | hornrule
     include     ::= "include" string "."
     extends     ::= "extends" ident "."
@@ -53,6 +53,11 @@ Doc lines attach to the NEXT rule or link; they are part of the AST
     stages      ::= "stages" "(" ident* ")" "."      (only when
                      followed by "(" — else "stage"~ident collision)
     typedecl    ::= "type" ident "{" typeconst* "}" "."
+    abstract    ::= "types" "(" ident* ")" "."       (only when
+                     followed by "(" — elsewhere `types` is an
+                     identifier; spec 12: ABSTRACT types, names whose
+                     members a `type` decl in the spliced unit, or the
+                     instance that includes this file, supplies)
     typeconst   ::= (ident|num) [".." (ident|num)]   (range sugar:
                      shared alpha prefix, inclusive int suffixes,
                      lo <= hi; EXPANDED IN THE AST — round-trip and
@@ -112,6 +117,11 @@ recursively, relative to the includer's directory; cycles are errors.
 The includer keeps its own name/version/provenance. `layers` and
 `stages` are ADOPTED from an included file iff the includer omits
 them (domain file included by a generated instance file).
+A domain file forward-declares the types its instance completes with
+`types (t …).` (spec 12) — RDDL's `types { t : object; }` in the
+domain, its `objects { t : {…}; }` in the instance being Metis's
+`type t {…}.` — so that it compiles alone: it serves, it is listed,
+and only grounding it is refused (§5).
 `compile_catalog` on an AST that still contains includes is an error
 — resolution is a separate pass.
 
@@ -124,6 +134,22 @@ Order of processing is significant and specified.
    pred signatures, bwd signatures, ports. Weight ports with `reads`
    enter the reads table — PRESENCE of `reads` is the factorability
    contract; absent = opaque binding.
+   ABSTRACT TYPES (spec 12): a name in `types (…)` that no `type`
+   declaration of the unit (any decl order; the spliced unit) and no
+   base type defines stays ABSTRACT: it enters the signature with no
+   constants, after the defined types, and the catalog records it
+   (metispy `Catalog.abstract`, metisc `k_abstract`, in `types`
+   order). `types` repeated, or beside a `type` of the same name, is
+   silent. Each one left abstract draws the advisory `type-abstract`
+   (a WARNING, never a finding): "type 't' is abstract (types (…)):
+   this unit grounds only through an instance that completes it".
+   A `pred`/`bwd` signature naming a type that is neither defined nor
+   abstract (own or base) is the finding `type-unknown` at that
+   signature — one per type, at the first signature naming it:
+   "<pred|bwd> <name>: 't' is not a type — declare it: `types (t).`
+   when an instance completes it, or `type t {…}`." Port argument
+   lists are not signatures in this sense (a weight port's are its
+   formals) and are not checked.
 2. Read-scope validation, per weight port with reads: formals must
    be uppercase vars; no `$` in scope atoms; arity match against
    declared sigs; scope atom's pred must be a declared resource pred
@@ -150,9 +176,10 @@ Order of processing is significant and specified.
      constant in an argument position must be a member of the type
      that position declares — `eq(red,n7)` with eq(nat,nat) is a
      finding per bad constant: "<where>: constant 'c' is not a <type>
-     (<pred> argument <k>)". Positions whose type is not declared in
-     the compiled unit are skipped (the kernel typecheck reports
-     undeclared types); a pack checks against base + own types.
+     (<pred> argument <k>)". Positions whose type is abstract are
+     skipped (no members yet: the instance that includes the file
+     compiles the whole unit and checks them); a pack checks against
+     base + own DEFINED types.
      metis-lang gate 10 pins the text.
    - HornRule: vars = SORTED set of var names in head+body.
    - Stage: per rule, in order:
@@ -187,6 +214,14 @@ Order of processing is significant and specified.
 5. If any findings: fail with ALL findings (accumulate, don't stop).
 6. When not a pack (`extends` absent): run the kernel typecheck
    (§6); failure is a catalog error.
+7. GROUNDING (the kernel's `ground`, both toolchains: `metisc --run`,
+   `--wire`, a manifest case; the REPL's run) refuses a catalog with a
+   type still abstract: the finding `type-incomplete` per such type,
+   in `types` order, at its `types (…)` line — "type 't' has no
+   members: declared by `types (…)`, completed by no `type t {…}` —
+   the instance that includes this file supplies it". A pack may
+   complete its base's abstract type (one definition in the pair;
+   admission merges it in place of the abstract entry).
 
 Packs (`extends`): base supplies sigs and bwd for inference;
 layers/stages inherited when omitted; typecheck DEFERRED to
@@ -197,7 +232,7 @@ admission. (Out of the rewrite slice; contract only.)
 Per catalog: every pred's namespace declared; no pred both resource
 and bwd; every namespace right references a declared layer. Per
 entry: comment nonempty; layer declared; schema stage / link
-endpoints declared; every var's type declared; consume/produce
+endpoints declared; consume/produce
 rights: entry's layer ∈ namespace's consume/produce set (READS are
 always allowed — observation cannot violate containment); bwd preds
 never resources; Horn world closed (head and body preds all bwd);

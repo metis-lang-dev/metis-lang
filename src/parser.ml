@@ -324,6 +324,17 @@ let parse ?(file = "") text =
          clayers := name_list_paren p; punct p '.'
        | "stages" when peek ~k:1 p = Some (Punct '(') ->
          ignore (next p); cstages := name_list_paren p; punct p '.'
+       | "types" when peek ~k:1 p = Some (Punct '(') ->
+         (* abstract types (spec 12): the loc is the first declared
+            name's token (A1), the '(' when the list is empty *)
+         ignore (next p);
+         (match peek ~k:1 p with
+          | Some (Ident _) ->
+            let (line, col) = p.poss.(p.i + 1) in
+            at := { file = p.file; line; col }
+          | _ -> at := here p);
+         let names = name_list_paren p in
+         punct p '.'; add (DTypes names)
        | "type" -> named ();
          let tname = expect_ident p in
          let consts = type_consts p in

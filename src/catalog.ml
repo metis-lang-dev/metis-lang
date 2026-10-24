@@ -37,9 +37,10 @@ type t = {
   k_preds : (string * string) list;
   k_bwd : string list;
   k_entries : entry list;
+  k_abstract : string list;   (* abstract types left abstract (spec 12) *)
   k_srcs : (string * Diag.src) list }
   (* decl slices for catalog-level / admission diagnostics (spec 08),
-     keyed "pred/x", "bwd/x", "namespace/y", "type/t" *)
+     keyed "pred/x", "bwd/x", "namespace/y", "type/t", "types/t" *)
 
 let is_upper s = s <> "" && s.[0] >= 'A' && s.[0] <= 'Z'
 
@@ -92,13 +93,9 @@ let check_entry cat e =
       [ ("layer", e.e_layer) ];
     List.rev !f
   end else begin
-    let var_types vars =
-      List.iter (fun (v, ty) ->
-          if List.assoc_opt ty cat.k_types = None then
-            emit f "var-type-unknown"
-              (Printf.sprintf "%s: var '%s' has unknown type '%s'"
-                 e.e_name v ty) src [ ("var", v); ("type", ty) ])
-        vars in
+    (* a variable's type is a signature's (the compiler infers it), and
+       a signature naming an undeclared type is type-unknown at compile
+       time (spec 12; var-type-unknown is retired) *)
     let guard_not_bwd pred =
       if not (List.mem pred cat.k_bwd) then
         emit f "guard-not-bwd"
@@ -120,7 +117,6 @@ let check_entry cat e =
                [ ("pred", bp) ])
          hc.h_body
      | PSchema sc ->
-       var_types sc.cs_vars;
        if not (List.mem sc.cs_stage cat.k_stages) then
          emit f "stage-unknown"
            (Printf.sprintf "%s: unknown stage '%s'" e.e_name sc.cs_stage)
@@ -141,7 +137,6 @@ let check_entry cat e =
              args)
          sc.cs_guards
      | PLink ls ->
-       var_types ls.ls_vars;
        if not (List.mem ls.ls_pre cat.k_stages)
        || not (List.mem ls.ls_post cat.k_stages) then
          emit f "link-stage-unknown"
@@ -190,11 +185,28 @@ let typecheck cat =
   let head = List.rev !f in
   head @ List.concat_map (check_entry cat) cat.k_entries
 
+let incomplete cat =
+  let f = ref [] in
+  List.iter (fun t ->
+      let src = src_of cat ("types/" ^ t) in
+      let decl = match src.Diag.s_subject with
+        | l :: _ when l <> "" -> String.sub l 0 (String.length l - 1)
+        | _ -> Printf.sprintf "types (%s)" t in
+      emit f "type-incomplete"
+        (Printf.sprintf "type '%s' has no members: declared by `%s`, \
+                         completed by no `type %s {\xe2\x80\xa6}` \xe2\x80\x94 the \
+                         instance that includes this file supplies it"
+           t decl t) src [ ("type", t) ])
+    cat.k_abstract;
+  List.rev !f
+
 let admit base pack =
   let f = ref [] in
   let ps = src_of pack in
   List.iter (fun (t, _) ->
-      if List.mem_assoc t base.k_types then
+      (* a pack may complete the base's abstract type (spec 12 P5) *)
+      if List.mem_assoc t base.k_types && not (List.mem t base.k_abstract)
+         && not (List.mem t pack.k_abstract) then
         emit f "pack-redeclares"
           (Printf.sprintf "pack redeclares type '%s'" t) (ps ("type/" ^ t))
           [ ("kind", "type"); ("name", t) ])
@@ -235,15 +247,24 @@ let admit base pack =
           [ ("stage", s) ])
     pack.k_stages;
   if !f <> [] then raise (Catalog_error (List.rev !f));
+  let completes t = List.mem_assoc t pack.k_types
+                    && not (List.mem t pack.k_abstract) in
   let merged = {
     k_name = base.k_name ^ "+" ^ pack.k_name;
     k_version = base.k_version;
     k_layers = base.k_layers; k_stages = base.k_stages;
-    k_types = base.k_types @ pack.k_types;
+    k_types = List.map (fun (t, cs) ->
+        if completes t then (t, List.assoc t pack.k_types) else (t, cs))
+        base.k_types
+      @ List.filter (fun (t, _) -> not (List.mem_assoc t base.k_types))
+        pack.k_types;
     k_namespaces = base.k_namespaces @ pack.k_namespaces;
     k_preds = base.k_preds @ pack.k_preds;
     k_bwd = base.k_bwd @ pack.k_bwd;
     k_entries = base.k_entries @ pack.k_entries;
+    k_abstract = List.filter (fun t -> not (completes t)) base.k_abstract
+      @ List.filter (fun t -> not (List.mem_assoc t base.k_types))
+        pack.k_abstract;
     k_srcs = pack.k_srcs @ base.k_srcs } in
   match typecheck merged with
   | [] -> merged

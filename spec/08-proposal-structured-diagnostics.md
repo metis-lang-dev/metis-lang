@@ -179,11 +179,11 @@ name, first occurrence, as `type T: k constants` -> `layers (…)`
 only for codes that concern layers (containment-*). Cap 12; overflow
 raises a defect, never truncates. Own declarations win over a pack
 base's. **Per-code narrowing** (the D0 remedy — "a better slice for
-that code"): `var-type-unknown` keeps only the `pred`/`bwd` lines
-whose signature names the unknown type, in the order above — where the
-type was named is what the repair needs; the whole-rule closure
-overflowed on wide rules (road_zones `menter`: 12 preds + namespace =
-13 lines, 2026-10-07).
+that code"): `var-type-unknown` kept only the `pred`/`bwd` lines
+whose signature names the unknown type (road_zones `menter`'s
+whole-rule closure overflowed the cap, 2026-10-07). Retired with the
+code by spec 12 (§E): `type-unknown` is reported AT the signature, a
+decl slice, so no narrowing is needed.
 
 A3. **Subject** = the doc lines (`%% …`) + ONE canonical line from the
 shared single-declaration printers (`rule_line`, `decl_line`), which
@@ -325,6 +325,31 @@ last-wins in metispy (dict) but first-wins in metisc (`List.assoc` over
 the declaration list), so the two read different scopes. Proposal: a
 compile finding `decl-duplicate` (pred/bwd/type/namespace/port) in
 both toolchains, after a sweep of the committed catalogs.
+
+## E — abstract types (spec 12, 2026-10-24)
+
+E1. **Codes.** `type-unknown` (error, compile) at the first `pred`/
+`bwd` signature naming an undeclared type, one per type; data
+`{pred, type}`; its slice is the decl slice of that signature (B3).
+`type-abstract` (WARNING, compile): the advisory of a type a unit
+leaves abstract, at its `types (…)` line (decl `types/<t>`, subject
+the `types` line, no context); data `{type}`. `type-incomplete`
+(error, phase `ground`) at the same line, when the kernel grounds.
+`var-type-unknown` is RETIRED (phase `retired`: kept so the code is
+never reused, no emitter): every variable's type is a signature's.
+
+E2. **Phases.** `ground` joins the gated phases (a D2 row is
+required): a listing (`metisc --diagnostics*`, metispy `diagnose`)
+runs the ground check after a clean compile — after admission, for a
+pack — so it lists what grounding would refuse. `retired` codes need
+no row.
+
+E3. **D2 = six runs**: the five of B4 and diag_abstract.llp (ground:
+a lifted file that compiles alone; `#steps 1`, so gate 11 also checks
+that `metisc --run` refuses it, exit 1, with the committed words,
+corpus/goldens/abstract_run_goldens.txt). diag_kernel.llp lost its
+var-type-unknown row; diag_compile.llp gained the type-unknown row
+(`bwd tint(shade).`, named twice, reported once).
 
 ## D — rhs-var-unbound (2026-10-23)
 

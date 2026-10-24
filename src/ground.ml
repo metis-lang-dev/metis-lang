@@ -69,6 +69,10 @@ let ground cat init_atoms =
    | [] -> ()
    | fs -> failwith ("catalog failed checks:\n  "
                      ^ String.concat "\n  " fs));
+  (* an abstract type left abstract: nothing to ground over (spec 12) *)
+  (match Catalog.incomplete cat with
+   | [] -> ()
+   | fs -> raise (Catalog.Catalog_error fs));
   let horn = Horn.make
       (List.filter_map (fun (e : Catalog.entry) ->
            match e.e_payload with

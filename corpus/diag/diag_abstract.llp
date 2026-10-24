@@ -1,0 +1,18 @@
+% D2 fixture (spec 08), GROUND phase (spec 12): a lifted domain file
+% whose type `kind` an instance completes. It compiles alone (the
+% type-abstract advisory) and grounding it is refused (type-incomplete,
+% at the `types (...)` line); `place` is completed further down, so it
+% is not abstract.
+catalog diag-abstract 1.
+layers (dyn).
+stages (go).
+types (kind place).
+namespace st produce (dyn).
+pred seen(kind) : st.
+pred at(place) : st.
+type place {hall}.
+stage go {
+  %% an arrival of a kind is seen once more, in the hall.
+  see [dyn] : seen(K) * $at(hall) -o seen(K).
+}
+#steps 1

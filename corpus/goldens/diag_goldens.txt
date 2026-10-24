@@ -2,10 +2,13 @@ error decl-duplicate @ diag_compile.llp:14:6 (pred/mark)
   pred mark : ns.
   | namespace ns produce (story).
   -> a name is declared once per kind: remove this pred declaration of mark, or rename it (first at diag_compile.llp:12)
-error reads-formal-not-var @ diag_compile.llp:19:8 (weight/bad)
+error type-unknown @ diag_compile.llp:18:5 (bwd/tint)
+  bwd tint(shade).
+  -> declare shade, or fix the signature of tint that names it
+error reads-formal-not-var @ diag_compile.llp:23:8 (weight/bad)
   weight bad(n0) reads {}.
   -> the formals of weight bad must be variables (got n0)
-error reads-persist-marker @ diag_compile.llp:22:8 (weight/scope)
+error reads-persist-marker @ diag_compile.llp:26:8 (weight/scope)
   weight scope(N) reads {$tok(N), hit(M), ghost(N), tok(N) if mark}.
   | pred tok(nat) : ns.
   | pred hit(nat) : ns.
@@ -13,7 +16,7 @@ error reads-persist-marker @ diag_compile.llp:22:8 (weight/scope)
   | namespace ns produce (story).
   | type nat: 3 constants
   -> drop the $ in $tok(N): a reads scope is already read-only
-error reads-var-unbound @ diag_compile.llp:22:8 (weight/scope)
+error reads-var-unbound @ diag_compile.llp:26:8 (weight/scope)
   weight scope(N) reads {$tok(N), hit(M), ghost(N), tok(N) if mark}.
   | pred tok(nat) : ns.
   | pred hit(nat) : ns.
@@ -21,7 +24,7 @@ error reads-var-unbound @ diag_compile.llp:22:8 (weight/scope)
   | namespace ns produce (story).
   | type nat: 3 constants
   -> bind M: make it a formal of scope, or enumerate it with a guard
-error reads-not-resource @ diag_compile.llp:22:8 (weight/scope)
+error reads-not-resource @ diag_compile.llp:26:8 (weight/scope)
   weight scope(N) reads {$tok(N), hit(M), ghost(N), tok(N) if mark}.
   | pred tok(nat) : ns.
   | pred hit(nat) : ns.
@@ -29,7 +32,7 @@ error reads-not-resource @ diag_compile.llp:22:8 (weight/scope)
   | namespace ns produce (story).
   | type nat: 3 constants
   -> a reads scope names resource predicates only: declare ghost with `pred`, or drop it from the scope of scope
-error reads-guard-not-bwd @ diag_compile.llp:22:8 (weight/scope)
+error reads-guard-not-bwd @ diag_compile.llp:26:8 (weight/scope)
   weight scope(N) reads {$tok(N), hit(M), ghost(N), tok(N) if mark}.
   | pred tok(nat) : ns.
   | pred hit(nat) : ns.
@@ -37,36 +40,36 @@ error reads-guard-not-bwd @ diag_compile.llp:22:8 (weight/scope)
   | namespace ns produce (story).
   | type nat: 3 constants
   -> a reads guard must be a bwd predicate: declare mark with `bwd`
-error fact-var-conflict @ diag_compile.llp:24:1 (fact/paint)
+error fact-var-conflict @ diag_compile.llp:28:1 (fact/paint)
   paint(X,X).
   | bwd paint(nat,color).
   | type nat: 3 constants
   | type color: 2 constants
   -> X sits at a nat and a color position: rename one occurrence, or fix the predicate signature
-error fact-not-bwd @ diag_compile.llp:26:1 (fact/tok)
+error fact-not-bwd @ diag_compile.llp:30:1 (fact/tok)
   tok(n1).
   | pred tok(nat) : ns.
   | namespace ns produce (story).
   | type nat: 3 constants
   -> a fact is Horn knowledge: declare tok with `bwd`, or make it an #init resource
-error const-not-in-type @ diag_compile.llp:28:1 (fact/big)
+error const-not-in-type @ diag_compile.llp:32:1 (fact/big)
   big(red).
   | bwd big(nat).
   | type nat: 3 constants
   -> 'red' is not a constant of nat: add it to the type, or fix argument 1 of big
-warning fact-var-singleton @ diag_compile.llp:30:1 (fact/big)
+warning fact-var-singleton @ diag_compile.llp:34:1 (fact/big)
   big(N).
   | bwd big(nat).
   | type nat: 3 constants
   -> if intended, name it AnyN (a leading Any marks a don't-care); otherwise repeat the variable where it belongs
-error doc-missing @ diag_compile.llp:32:3 (go/r)
+error doc-missing @ diag_compile.llp:36:3 (go/r)
   r [story] : tok(N) -o hit(N).
   | pred tok(nat) : ns.
   | pred hit(nat) : ns.
   | namespace ns produce (story).
   | type nat: 3 constants
   -> add a %% doc line above r: the doc is the approved text unit, mandatory on every rule and link
-error var-type-conflict @ diag_compile.llp:34:3 (go/c)
+error var-type-conflict @ diag_compile.llp:38:3 (go/c)
   %% row var-type-conflict: X typed nat (tok) and color (paint).
   c [story] : tok(X) * paint(n0,X) -o mark.
   | pred tok(nat) : ns.
@@ -76,7 +79,7 @@ error var-type-conflict @ diag_compile.llp:34:3 (go/c)
   | type nat: 3 constants
   | type color: 2 constants
   -> X sits at a nat and a color position: rename one occurrence, or fix the predicate signature
-error var-untypable @ diag_compile.llp:36:3 (go/v)
+error var-untypable @ diag_compile.llp:40:3 (go/v)
   %% row var-untypable: ghost is undeclared, so Q is typed nowhere.
   v [story] : tok(N) * ghost(Q) -o hit(N).
   | pred tok(nat) : ns.
@@ -84,7 +87,7 @@ error var-untypable @ diag_compile.llp:36:3 (go/v)
   | namespace ns produce (story).
   | type nat: 3 constants
   -> Q occurs in no typed position: use it in an atom whose signature types it, or drop it
-error rhs-var-unbound @ diag_compile.llp:38:3 (go/u)
+error rhs-var-unbound @ diag_compile.llp:42:3 (go/u)
   %% row rhs-var-unbound: M on the right side is bound by no atom on the left.
   u [story] : tok(N) -o hit(M).
   | pred tok(nat) : ns.
@@ -92,7 +95,7 @@ error rhs-var-unbound @ diag_compile.llp:38:3 (go/u)
   | namespace ns produce (story).
   | type nat: 3 constants
   -> a rule produces only what it read or consumed: bind M in an atom on the left; a fresh value needs a bwd table or a constant
-error arity-mismatch @ diag_compile.llp:40:3 (go/a)
+error arity-mismatch @ diag_compile.llp:44:3 (go/a)
   %% row arity-mismatch: tok takes one argument.
   a [story] : tok(n0,n1) -o mark.
   | pred tok(nat) : ns.
@@ -100,7 +103,7 @@ error arity-mismatch @ diag_compile.llp:40:3 (go/a)
   | namespace ns produce (story).
   | type nat: 3 constants
   -> tok takes 1 argument(s), got 2: match the declared signature
-error weight-port-undeclared @ diag_compile.llp:42:3 (go/p)
+error weight-port-undeclared @ diag_compile.llp:46:3 (go/p)
   %% row weight-port-undeclared.
   p [story] : tok(N) -o hit(N)  @w nope(N).
   | pred tok(nat) : ns.
@@ -108,7 +111,7 @@ error weight-port-undeclared @ diag_compile.llp:42:3 (go/p)
   | namespace ns produce (story).
   | type nat: 3 constants
   -> declare the port (`weight nope(...) reads {...}.`), or drop the @w reference
-error weight-arg-not-var @ diag_compile.llp:44:3 (go/q)
+error weight-arg-not-var @ diag_compile.llp:48:3 (go/q)
   %% row weight-arg-not-var: K is not a variable of this rule.
   q [story] : tok(N) -o hit(N)  @w w(K).
   | pred tok(nat) : ns.
@@ -116,16 +119,16 @@ error weight-arg-not-var @ diag_compile.llp:44:3 (go/q)
   | namespace ns produce (story).
   | type nat: 3 constants
   -> pass rule variables to w: K is not a variable of this rule
-error link-post-bwd @ diag_compile.llp:48:5 (qui/back)
+error link-post-bwd @ diag_compile.llp:52:5 (qui/back)
   %% row link-post-bwd: a link may not produce the Horn atom big.
   qui back [story] : go -o go * big(n0).
   | bwd big(nat).
   | type nat: 3 constants
   -> a link may not produce the Horn atom big: bwd predicates are knowledge, not state
-error pred-namespace-unknown @ diag_kernel.llp:19:6 (pred/stray)
+error pred-namespace-unknown @ diag_kernel.llp:14:6 (pred/stray)
   pred stray : nowhere.
   -> declare namespace nowhere, or move stray into a declared one
-error pred-resource-and-bwd @ diag_kernel.llp:21:6 (pred/dual)
+error pred-resource-and-bwd @ diag_kernel.llp:16:6 (pred/dual)
   pred dual : q.
   | namespace q produce (dyn).
   -> dual is declared both `pred` and `bwd`: keep one
@@ -143,7 +146,7 @@ error containment-produce @ diag_dom.llp:14:3 (note/obs)
   | namespace st produce (dyn).
   | layers (dyn pack).
   -> layer 'pack' may not produce heads (namespace 'st'): read it with $heads, or declare the atom in a namespace your layer owns
-error containment-consume @ diag_kernel.llp:31:3 (note/grab)
+error containment-consume @ diag_kernel.llp:26:3 (note/grab)
   %% row containment-consume: the pack spends a lock it may not consume.
   grab [pack] : lock(N) * mkt -o seen.
   | pred lock(nat) : q.
@@ -154,14 +157,14 @@ error containment-consume @ diag_kernel.llp:31:3 (note/grab)
   | type nat: 2 constants
   | layers (dyn pack).
   -> layer 'pack' may not consume lock (namespace 'q'): read it with $lock instead of spending it
-error pred-undeclared @ diag_kernel.llp:33:3 (note/zz)
+error pred-undeclared @ diag_kernel.llp:28:3 (note/zz)
   %% row pred-undeclared: zap is declared nowhere.
   zz [pack] : mkt * zap -o seen.
   | pred mkt : mk.
   | pred seen : mk.
   | namespace mk produce (pack).
   -> declare zap: `pred zap(...) : <namespace>.`
-error bwd-as-resource @ diag_kernel.llp:35:3 (note/bb)
+error bwd-as-resource @ diag_kernel.llp:30:3 (note/bb)
   %% row bwd-as-resource: big is Horn knowledge, not state.
   bb [dyn] : heads -o big(n1).
   | pred heads : st.
@@ -169,7 +172,7 @@ error bwd-as-resource @ diag_kernel.llp:35:3 (note/bb)
   | namespace st produce (dyn).
   | type nat: 2 constants
   -> big is a bwd predicate: use it as a guard premise only, never as a resource (produce)
-error layer-unknown @ diag_kernel.llp:37:3 (note/gl)
+error layer-unknown @ diag_kernel.llp:32:3 (note/gl)
   %% row layer-unknown: ghost is not a layer.
   gl [ghost] : mkt -o seen.
   | pred mkt : mk.
@@ -177,31 +180,24 @@ error layer-unknown @ diag_kernel.llp:37:3 (note/gl)
   | namespace mk produce (pack).
   | layers (dyn pack).
   -> add ghost to the catalog's layers (...), or tag the rule with a declared layer
-error var-type-unknown @ diag_kernel.llp:41:3 (note/vt)
-  %% row var-type-unknown: shade is not a declared type. A WIDE rule:
-  %% the slice cites only the signature naming shade (spec 08 A2), so
-  %% it stays within the cap however many preds the rule touches.
-  vt [dyn] : tint(S) * w1 * w2 * w3 * w4 * w5 * w6 * w7 * w8 * w9 * w10 * w11 -o heads.
-  | pred tint(shade) : q.
-  -> declare type shade, or fix the signature that names it
-error stage-unknown @ diag_kernel.llp:46:3 (limbo/lb)
+error stage-unknown @ diag_kernel.llp:36:3 (limbo/lb)
   %% row stage-unknown: limbo is not among the stages.
   lb [dyn] : heads -o heads.
   | pred heads : st.
   | namespace st produce (dyn).
   -> add limbo to stages (...)
-error link-stage-unknown @ diag_kernel.llp:49:5 (qui/jump)
+error link-stage-unknown @ diag_kernel.llp:39:5 (qui/jump)
   %% row link-stage-unknown: nowhere is not a stage.
   qui jump [dyn] : note -o nowhere.
   -> declare both link stages (note, nowhere) in stages (...)
-error horn-head-not-bwd @ diag_kernel.llp:26:1 (horn/seen)
+error horn-head-not-bwd @ diag_kernel.llp:21:1 (horn/seen)
   seen :- big(n0).
   | pred seen : mk.
   | bwd big(nat).
   | namespace mk produce (pack).
   | type nat: 2 constants
   -> a Horn rule may only derive bwd predicates: declare seen with `bwd`
-error horn-body-not-bwd @ diag_kernel.llp:28:1 (horn/big)
+error horn-body-not-bwd @ diag_kernel.llp:23:1 (horn/big)
   big(N) :- lock(N).
   | bwd big(nat).
   | pred lock(nat) : q.
@@ -224,3 +220,9 @@ error include-cycle @ diag_cycle_a.llp:3:9 (include/diag_cycle_b.llp)
 error extends-no-base (catalog/diag-extends)
   extends nowhere-base.
   -> compile this pack against its base catalog nowhere-base
+warning type-abstract @ diag_abstract.llp:9:8 (types/kind)
+  types (kind place).
+  -> the instance that includes this file completes kind with `type kind {…}.`: ground that instance
+error type-incomplete @ diag_abstract.llp:9:8 (types/kind)
+  types (kind place).
+  -> ground the instance that includes this file, or complete kind here with `type kind {…}.`

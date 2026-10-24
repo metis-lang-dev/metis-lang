@@ -18,12 +18,13 @@ reads-var-unbound error compile
 include-cycle error compile
 extends-no-base error compile
 decl-duplicate error compile
+type-unknown error compile
+type-abstract warning compile
 containment-produce error kernel
 containment-consume error kernel
 pred-undeclared error kernel
 bwd-as-resource error kernel
 layer-unknown error kernel
-var-type-unknown error kernel
 stage-unknown error kernel
 link-stage-unknown error kernel
 horn-head-not-bwd error kernel
@@ -34,6 +35,7 @@ namespace-layer-unknown error kernel
 pack-redeclares error admission
 pack-claims-base-namespace error admission
 pack-adds-stage error admission
+type-incomplete error ground
 rule-name-collision warning loop
 provenance-shape warning loop
 reads-undeclared error runtime
@@ -46,3 +48,4 @@ guard-var-undeclared error internal
 comment-missing error internal
 var-untyped error internal
 kind-unknown error internal
+var-type-unknown error retired

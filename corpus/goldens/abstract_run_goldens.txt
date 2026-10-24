@@ -1,0 +1,2 @@
+warning: type 'kind' is abstract (types (kind place)): this unit grounds only through an instance that completes it
+error: type 'kind' has no members: declared by `types (kind place)`, completed by no `type kind {…}` — the instance that includes this file supplies it

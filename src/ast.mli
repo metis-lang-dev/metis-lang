@@ -38,6 +38,7 @@ type port_kind = Weight | Guard | Input | Output
 type decl =
   | DInclude of string
   | DType of string * string list
+  | DTypes of string list      (* `types (a b).`: abstract type names (spec 12) *)
   | DNamespace of string * string list * string list option
   | DPred of string * string list * string
   | DBwd of string * string list

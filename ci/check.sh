@@ -123,14 +123,17 @@ echo "== 11. structured diagnostics (spec 08 D2): text + JSON goldens, registry"
 # included diag_dom.llp — pins include-path location splicing),
 # diag_pack.llp against diag_pack_base.llp (admission), and the fatal
 # compile rows diag_cycle_a.llp (include-cycle), diag_extends.llp
-# (extends-no-base). JSON is compared with loc.file -> basename.
+# (extends-no-base), and diag_abstract.llp (ground: a lifted file that
+# compiles alone, its abstract type refused at grounding, spec 12). JSON
+# is compared with loc.file -> basename.
 diag_runs() {
   ( cd "$ROOT/corpus/diag"
     "$ROOT/src/metisc" "$1" diag_compile.llp
     "$ROOT/src/metisc" "$1" diag_kernel.llp
     "$ROOT/src/metisc" "$1" diag_pack.llp --base diag_pack_base.llp
     "$ROOT/src/metisc" "$1" diag_cycle_a.llp
-    "$ROOT/src/metisc" "$1" diag_extends.llp )
+    "$ROOT/src/metisc" "$1" diag_extends.llp
+    "$ROOT/src/metisc" "$1" diag_abstract.llp )
 }
 diag_runs --diagnostics > "$WORK/diag.txt"
 diff -u "$ROOT/corpus/goldens/diag_goldens.txt" "$WORK/diag.txt"
@@ -145,11 +148,19 @@ if ( cd "$ROOT/corpus/diag" && "$ROOT/src/metisc" --diagnostics \
        diag_pack.llp --base diag_compile.llp ) > /dev/null 2>&1; then
   echo "--diagnostics with a failing base exited 0"; exit 1
 fi
-# every compile/kernel/admission code has a D2 fixture row (loop and
-# runtime codes get theirs with the REPL surface; internal codes are
-# unreachable from source)
+# a lifted file grounds only through an instance that completes it:
+# --run refuses diag_abstract.llp's abstract type (spec 12 P3), exit 1,
+# with the committed finding (metispy test_abstract_types reads it too)
+if ( cd "$ROOT/corpus/diag" && "$ROOT/src/metisc" --run diag_abstract.llp ) \
+     > /dev/null 2> "$WORK/abstract_run.txt"; then
+  echo "--run grounded an abstract type"; exit 1
+fi
+diff -u "$ROOT/corpus/goldens/abstract_run_goldens.txt" "$WORK/abstract_run.txt"
+# every compile/kernel/admission/ground code has a D2 fixture row (loop
+# and runtime codes get theirs with the REPL surface; internal codes are
+# unreachable from source; retired codes have no emitter)
 for code in $(awk '$3 == "compile" || $3 == "kernel" || $3 == "admission" \
-                   {print $1}' "$WORK/diag_registry.txt"); do
+                   || $3 == "ground" {print $1}' "$WORK/diag_registry.txt"); do
   grep -qE "^(error|warning|note) $code " "$WORK/diag.txt" \
     || { echo "code $code has no D2 fixture row"; exit 1; }
 done

@@ -5,7 +5,8 @@
 metis-worlds alfworld/domains/director_domain.llp). Implementation in
 BOTH toolchains (metis-lang authoritative, metispy at byte parity),
 goldens, spec 00/08 amendments, then a sweep of every domain file an
-instance completes.**
+instance completes. Step 1 (the language, both toolchains) IMPLEMENTED
+2026-10-24 (opus); its decisions are §Implementation notes.**
 
 ## Motivation
 
@@ -170,3 +171,44 @@ instance; nothing else changes for them.
 4. Both toolchains byte-equal on the new texts; ci/check.sh green;
    the sweep's files compile alone; the editor shows the finding on
    the signature's line.
+
+## Implementation notes (step 1, opus, 2026-10-24)
+
+- **The advisory has its own code**, `type-abstract` (warning,
+  compile): the channel of the once-only fact var is a registered
+  warning code, so the advisory needs one. Its location and slice are
+  type-incomplete's.
+- **Location.** A `types (…)` decl's loc is its FIRST name's token
+  (spec 08 A1, the declared name; `(` when the list is empty); every
+  type it declares reports at that loc (one decl, one loc).
+- **The texts name the decl as written**: `types (kind domain)`, not
+  `types (kind)`, in both the advisory and the finding.
+- **Port argument lists are not checked** for type-unknown: only
+  `pred`/`bwd` signatures. A weight port's arguments are its formals
+  (`weight w(N)`) or loose names (`weight move(cell)`), and no var is
+  typed from them; checking them would refuse `weight bad(n0)` (the
+  reads-formal-not-var fixture) for the wrong reason.
+- **Stricter than before, by design.** var-type-unknown fired only
+  where a RULE VARIABLE sat at a position of the undeclared type; a
+  signature whose undeclared type held only constants (`pred
+  done(water)` with `done(water)`) compiled. type-unknown refuses it.
+  The committed sweep (metis-catalog, metis-worlds, metis-loop, the
+  toolchains' corpora, metispy's domains: 623 files) has 17 files
+  that compiled before and do not now: metis-catalog plant (fixed in
+  step 1, `type water {water}.` `type soil {moist dry}.` — the ground
+  program and wire unchanged; its artifact sidecar now lists the two
+  types as slots) and 15 metis-loop policy-run records whose bases
+  the loop's world adapters write without types (step 3: the base
+  generators gain their `types (…)` line). 83 files that failed with
+  var-type-unknown now fail with type-unknown, once per type.
+- **The canonical key and the IR need no mark**: both are of a GROUND
+  program, and a unit with an abstract type never grounds (P3).
+- **Packs** complete a base's abstract type at admission (P5); the
+  base's own constants at those positions are not checked again (a
+  pack compiles against the base, it does not recompile it). An
+  instance that includes the file compiles the whole unit and checks
+  them.
+- **Hand-built kernel catalogs** lose the kernel's var-type check
+  with var-type-unknown's retirement: the compiler is the only door
+  (spec 12 P4).
+
