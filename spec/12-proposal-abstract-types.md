@@ -92,11 +92,17 @@ type today.
 abstract. It attaches the advisory (never a finding, same channel as
 the once-only fact var, byte-identical across toolchains):
 
-    advisory: type 'kind' is abstract (types (kind)): this unit
-    grounds only through an instance that completes it
+    advisory: type 'kind' is abstract (types (kind domain)): this
+    unit grounds only through an instance that completes it
 
-`metisc FILE` (compile, `--diagnostics-json`, the bundle) therefore
-passes; the bundle's manifest lists `abstract: [kind, domain]`.
+(the decl as written: `types (kind domain)` in director_domain.llp).
+`metisc FILE` (compile, `--diagnostics-json`) therefore passes. No
+bundle is emitted for an abstract unit (the architect's ruling,
+2026-10-24): a bundle is a GROUND artifact, and every emitter grounds
+through the one refusing entry (metisc `--wire` → `Ground.ground`;
+metispy `artifact.build` and tools/gen_catalog_wires.py →
+`Catalog.ground`, the only caller of `ground_program`), so it refuses
+with P3's finding.
 
 ## P3 — the semantic check: grounding
 
@@ -104,9 +110,9 @@ Grounding a catalog with an abstract type still abstract is a
 FINDING, code `type-incomplete`, at the `types (…)` line that
 declared it:
 
-    type 'kind' has no members: declared by `types (kind)`, completed
-    by no `type kind {…}` — the instance that includes this file
-    supplies it
+    type 'kind' has no members: declared by `types (kind domain)`,
+    completed by no `type kind {…}` — the instance that includes this
+    file supplies it
 
 It is raised by: `metisc --run` / `--wire` / any ground, the REPL's
 run, step, `#init` application, state after grounding, the kernel's
@@ -152,9 +158,16 @@ it: metis-worlds alfworld/domains/director_domain.llp (`kind domain`),
 the hierarchy bases gen_hier.py lifts (`object`, `receptacle` …
 where the instance supplies them), web/domains/world_ui; metis-loop
 domains/ui; metis-catalog domains/nav, road, xtraffic and the goldens
-cases — found by compiling each included file on its own. Generators
-(gen_hier.py) keep writing the completing `type … {…}` lines in the
-instance; nothing else changes for them.
+cases — found by compiling each included file on its own. The
+generators of BASES write the `types (…)` line too (the architect's
+ruling on step 1, 2026-10-24): metis-worlds scienceworld
+gen_instance.base_source, minihack gen_level.base_source, metis-loop
+pi/policy alfworld.empty_base — the loop's bases compile alone. Only
+the generators of COMPLETING instances (gen_hier.py's beat and instance
+lines, the worlds' gen_instance.generate) stay unchanged: they keep
+writing the `type … {…}` lines. Committed policy-run records are
+regenerated only where a test or gate compiles them; the rest stay as
+records (the step 3 report lists them).
 
 ## Acceptance
 
@@ -181,8 +194,9 @@ instance; nothing else changes for them.
 - **Location.** A `types (…)` decl's loc is its FIRST name's token
   (spec 08 A1, the declared name; `(` when the list is empty); every
   type it declares reports at that loc (one decl, one loc).
-- **The texts name the decl as written**: `types (kind domain)`, not
-  `types (kind)`, in both the advisory and the finding.
+- **The texts name the decl as written**: `types (kind domain)`, in
+  both the advisory and the finding (P2/P3's examples amended; ruled
+  2026-10-24).
 - **Port argument lists are not checked** for type-unknown: only
   `pred`/`bwd` signatures. A weight port's arguments are its formals
   (`weight w(N)`) or loose names (`weight move(cell)`), and no var is
