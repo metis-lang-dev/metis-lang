@@ -36,8 +36,9 @@ The composer stays shelved; everything in §8 is stated for form S and maps onto
   the goal. The protocol gains `tick__stop`, the agent's one-tick signal that the person said stop (world
   `out`, director `in`), and `tick__cancel(D)`, the director's signal to the members on its path, sent by
   `stop_cancel` as it pops them. Every member carries a generated protocol stub, a begin and a cancel rule
-  per goal kind: the member gives back `idle` and drops the goal itself, and no host writes a member's
-  internals. The stub has no rule for a stray cancel.
+  per goal kind, and one absorb rule for the done-and-stop race: the member gives back `idle` and drops the
+  goal itself. The agent only relays `tick__cancel(D)`, like any director `out` to a member `in`; it reads no
+  member state, withdraws nothing and reloads nothing.
 - §10.4: a case binds the program's weight ports to constants, `ports: {look: 1.0}`: numeric only, an unknown
   port name refused by name.
 
@@ -683,9 +684,9 @@ pred cancel(specialist) : proto.         % grant side: a STOP, the goal withdraw
 - **A STOP is a CANCEL, not a REVOKE (amendment 7).**
   - A REVOKE (`tick__revoke(D, R)`, §8.5 rule 4 and §9.3) takes the BODY and keeps the goal: a preempted
     member keeps its goal, waits queued, and resumes on it when the resource comes back.
-  - A CANCEL (`tick__cancel(D)`, nature `signal`, director `out`, member `in`) takes the GOAL. The agent never
-    writes it: a director `out` no rule produces is an I2 finding, and a member `in` with no producer an I3
-    one.
+  - A CANCEL (`tick__cancel(D)`, nature `signal`, director `out`, member `in`) takes the GOAL. The agent
+    relays it like any director `out` to a member `in`, and never writes one itself: a director `out` no rule
+    produces is an I2 finding, and a member `in` with no producer an I3 one.
   - The stop itself is `tick__stop` (0-ary, nature `signal`), a ONE-TICK world signal. The agent asserts it
     for the stop's tick and retracts it at the next, and the composition lists it under `world.out`.
   - The director cancels exactly the members on its path, and pops each in the same rule (the generic base):
@@ -695,18 +696,23 @@ pred cancel(specialist) : proto.         % grant side: a STOP, the goal withdraw
     ```
 
     The cancel goes only where a goal is, together with the goal's withdrawal. Consuming `path(D)` is the
-    once-per-stop guard, so no start token is needed and nothing must be re-armed for the next stop.
-  - Every member carries a GENERATED PROTOCOL STUB, two rules per goal kind K:
+    once-per-stop guard, so no start token is needed and nothing must be re-armed. The director is not
+    reloaded on a stop: "0 reloads, same sessions" holds.
+  - Every member carries a GENERATED PROTOCOL STUB, two rules per goal kind K and one absorb rule:
 
     ```
-    begin_K  [dyn] : idle * $K(G) -o busy * tick__active(D).     % reads the goal, idle → busy, reports active
-    cancel_K [dyn] : busy * tick__cancel(D) * K(G) -o idle.      % the cancel: the goal dropped, idle given back
+    begin_K     [dyn] : idle * $K(G) -o busy * tick__active(D).   % reads the goal, idle → busy, reports active
+    cancel_K    [dyn] : busy * tick__cancel(D) * K(G) -o idle.    % the cancel: the goal dropped, idle given back
+    cancel_none [dyn] : idle * tick__cancel(D) -o idle.           % the done-and-stop race
     ```
 
-    The member gives back `idle` and drops the goal itself: no host writes a member's internals. A revoke
-    touches neither rule, so a preempted member stays `busy` on its goal. There is NO absorb rule for a
-    stray cancel (`idle * tick__cancel(D)`). A stray is a director mistake: an absorb rule would hide it,
-    and the stub shows it instead as an unconsumed in-copy.
+    - The member gives back `idle` and drops the goal itself: no host writes a member's internals. A revoke
+      touches none of these rules, so a preempted member stays `busy` on its goal.
+    - A member idle with a forwarded goal it has not begun begins and cancels in one beat (`begin_K`, then
+      `cancel_K`), so nothing is withdrawn from outside.
+    - `cancel_none` is for the ONE real race: the member's done and the stop land in one director beat, with
+      `path_pop` and `stop_cancel` both enabled. It is not a licence for cancels to idle members in
+      general; `stop_cancel` sends none.
 
 **Dependencies:** specialist → protocol ← director, with capacity below all of them. This is a DAG, so each
 member is keyed and grounded alone (§8.1).
