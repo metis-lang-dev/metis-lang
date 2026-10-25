@@ -33,8 +33,8 @@ The composer stays shelved; everything in §8 is stated for form S and maps onto
 
 **Amendment 7, 2026-10-25 (metis, nina's step 3b rulings: design v8 §13 on s-404d001f):**
 - §8.4: a STOP is a CANCEL, distinct from a REVOKE. A revoke takes the body and keeps the goal; a cancel takes
-  the goal. The protocol gains `tick__cancel(D)`, a signal the director's deactivate sends on a stop with the
-  goal's withdrawal. Every member carries a generated protocol stub, a begin and a cancel rule per goal kind:
+  the goal. The protocol gains `tick__cancel(D)`, a signal the director sends on a stop with the goal's
+  withdrawal, and `tick__stop`, the agent's signal that the person said stop (world `out`, director `in`). Every member carries a generated protocol stub, a begin and a cancel rule per goal kind:
   the member gives back `idle` and drops the goal itself, and no host writes a member's internals.
 - §10.4: a case binds the program's weight ports to constants, `ports: {look: 1.0}`: numeric only, an unknown
   port name refused by name.
@@ -681,8 +681,12 @@ pred cancel(specialist) : proto.         % grant side: a STOP, the goal withdraw
 - **A STOP is a CANCEL, not a REVOKE (amendment 7).**
   - A REVOKE (`tick__revoke(D, R)`, §8.5 rule 4 and §9.3) takes the BODY and keeps the goal: a preempted
     member keeps its goal, waits queued, and resumes on it when the resource comes back.
-  - A CANCEL (`tick__cancel(D)`, nature `signal`, director `out`, member `in`) takes the GOAL. The director's
-    deactivate emits it on a stop, together with the goal's withdrawal.
+  - A CANCEL (`tick__cancel(D)`, nature `signal`, director `out`, member `in`) takes the GOAL. The director
+    emits it on a stop, together with the goal's withdrawal.
+  - The stop itself is `tick__stop` (0-ary, nature `signal`): the agent writes it when the person says stop,
+    and the composition lists it under `world.out`. The director turns it into the cancels by its own rule
+    (the generic base's `stop_cancel`, metispy 4338bf2). The agent never writes `tick__cancel` into a member:
+    a director `out` no rule produces is an I2 finding, and a member `in` with no producer an I3 one.
   - Every member carries a GENERATED PROTOCOL STUB, two rules per goal kind K:
 
     ```
