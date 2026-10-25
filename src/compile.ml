@@ -178,13 +178,26 @@ let diagnostics () = Diag.collected ()
    that position declares (`eq(red,n7)` with eq(nat,nat): finding);
    positions whose type is not declared here are skipped — the kernel
    typecheck reports undeclared types (metispy: _check_consts) *)
-let check_consts ?emit where (atoms : atom list) sigs types findings =
+(* a type's constants as a set, built once per compile; the first
+   declaration of a name wins, as List.assoc_opt over the list did *)
+let type_members types =
+  let t = Hashtbl.create 16 in
+  List.iter (fun (ty, cs) ->
+      if not (Hashtbl.mem t ty) then begin
+        let m = Hashtbl.create (List.length cs) in
+        List.iter (fun c -> Hashtbl.replace m c ()) cs;
+        Hashtbl.add t ty m
+      end)
+    types;
+  t
+
+let check_consts ?emit where (atoms : atom list) sigs members findings =
   List.iter (fun (a : atom) ->
       match List.assoc_opt a.pred sigs with
       | Some sig_ when List.length sig_ = List.length a.terms ->
         List.iteri (fun i (t, ty) ->
-            match t, List.assoc_opt ty types with
-            | TConst c, Some cs when not (List.mem c cs) ->
+            match t, Hashtbl.find_opt members ty with
+            | TConst c, Some cs when not (Hashtbl.mem cs c) ->
               let text = Printf.sprintf
                   "%s: constant '%s' is not a %s (%s argument %d)"
                   where c ty a.pred (i + 1) in
@@ -460,6 +473,7 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
 
   (* sweep 2: entries (decl order); horn entries appended last *)
   let entries = ref [] and horn_entries = ref [] in
+  let members = type_members (!types @ base_types) in
   let p_weight_refs = ref [] in
   let horn_layer =
     match cat.clayers with l :: _ -> l | [] -> "horn" in
@@ -491,7 +505,7 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
           ignore (infer_vars ~emit ~conflict_code:"fact-var-conflict"
                     ("fact " ^ atom_str a) [a] !sigs findings);
           check_consts ~emit ("fact " ^ atom_str a) [a] !sigs
-            (!types @ base_types) findings;
+            members findings;
           List.iter (fun (text, v, ty) ->
               emit "fact-var-singleton" text [ ("var", v); ("type", ty) ])
             (singleton_fact_vars a !sigs);
@@ -505,7 +519,7 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
         let hsrc = src_of dloc ("horn/" ^ h.pred) "" (decl_line d)
             (h :: body) in
         check_consts ~emit:(emitter hsrc) ("horn " ^ atom_str h)
-          (h :: body) !sigs (!types @ base_types) findings;
+          (h :: body) !sigs members findings;
         let vs = List.sort_uniq compare
             (List.concat_map (fun (a : atom) ->
                  List.filter_map (function
@@ -528,7 +542,7 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
                 (Printf.sprintf "%s: missing %%%% doc (mandatory)" r.rname)
                 [ ("rule", r.rname) ];
             let vars = infer_vars ~emit r.rname atoms !sigs findings in
-            check_consts ~emit r.rname atoms !sigs (!types @ base_types)
+            check_consts ~emit r.rname atoms !sigs members
               findings;
             List.iter (fun (a : atom) ->
                 List.iter (function
@@ -633,7 +647,7 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
             (Printf.sprintf "%s: missing %%%% doc (mandatory)" l.lname)
             [ ("rule", l.lname) ];
         let vars = infer_vars ~emit l.lname atoms !sigs findings in
-        check_consts ~emit l.lname atoms !sigs (!types @ base_types)
+        check_consts ~emit l.lname atoms !sigs members
           findings;
         let consume = ref [] and persist = ref []
         and guards = ref [] in
