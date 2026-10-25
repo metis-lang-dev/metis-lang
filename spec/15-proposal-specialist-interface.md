@@ -31,6 +31,15 @@ them; it adds three fields, each with its reason (§2.3).**
 
 The composer stays shelved; everything in §8 is stated for form S and maps onto form P.
 
+**Amendment 3, 2026-10-25 (metis, from the user's deployment and modularity points: brief v5 §10, v6 §11):**
+- **§9, the deployment view.** The BUNDLE is a composition package selected and sealed for a device, plus a
+  runtime manifest, with OTA compatibility by interface keys. Further: the WAKE SET (form S only); actors with
+  stamped messages, `age`, and grants as LEASES; F3 "deterministic given the message order", so the journal is
+  the replay oracle.
+- **§10, interface packages and a specialist's external interface.** Shared preds are owned by interface
+  packages, each pred with a nature. New checks I10–I12. Testing a specialist alone uses a generic interface
+  stub; a specialist's certificate never depends on a director.
+
 ## 0. Scope
 
 - **In:**
@@ -653,6 +662,207 @@ copies. Rule 4 is unchanged.
 - **A port may carry `copies: k`** (§8.3).
 
 There are no renames. nina's fields and amendment 1's are unchanged.
+
+## 9. Amendment 3a: the deployment view — bundle, wake set, actors, the replay oracle (brief v5 §10)
+
+### 9.1 The bundle
+
+A **bundle** B is a composition package Π (§8.1), selected for one robot or appliance and sealed, together
+with a **runtime manifest** RM. For each member, RM gives:
+- the runtime that executes it (the Go embedded runtime over `libmetis_rt`, the C++ `metis::Live`, the
+  metispy REPL);
+- its placement: in-process, or an actor of its own (§9.3);
+- the binding of each of its ports to a **domain library** (the host code that computes: the semantic map,
+  perception, a planner, a device driver), with that library's name, version and own key.
+
+RM also carries the deployment policy of §9.2 (`evict_after`, `on_wake`).
+
+    cert(B) = ( cert(Π), runtime_key(RM) )
+
+- **`runtime_key`** is the SHA-256 of RM's canonical form: sorted keys, the member list in manifest order.
+- **cert(Π)** (§8.1) already covers the semantics. RM covers what runs it. A library upgrade changes
+  runtime_key, not cert(Π).
+
+**OTA.**
+- **A deployed bundle changes only by OTA**, either whole or per member.
+- **A member m′ may replace m iff:**
+  - both were certified against the SAME interface package keys (§10.3; the protocol module is one of them);
+  - and the new composition passes I1–I12 again. The check is static and cheap, and it runs before the swap.
+- **Every OTA produces a new bundle key.** A member swap keeps cert(Π)'s structure: one member key changes, and
+  the package key is recomputed.
+
+### 9.2 The wake set, and lazy loading (form S only)
+
+A specialist's manifest `in` set (§2.1) IS its **wake set**.
+- **The wake test.** The runtime evaluates it over the blackboard's per-port change counters (§8.5 rule 1:
+  c_p > seen_S(p) through a change not tagged with source S), or over its declared clock. It does this WITHOUT
+  loading the specialist.
+- **"Beat on change" and "load on change" are the same rule.** The director never names a specialist's code,
+  only protocol atoms (I8).
+- **What a sleeping specialist receives on waking:**
+  - a **reading** (only `$`-read): the copy taken at the waking boundary, the latest value; intermediate
+    values are not replayed, since a copy is a snapshot (§8.3);
+  - a **signal** (consumed): it is held in the specialist's mailbox while it sleeps and delivered at the
+    waking boundary. It is linear, so it is never dropped. A `copies: k` port accumulates up to its declared
+    multiplicity.
+
+**Eviction.** A specialist is evicted when all of these hold:
+- it has been idle (did not beat) for `evict_after` ticks (in RM; absent means never);
+- it holds no lease (§9.3);
+- no goal copy addressed to it is unconsumed.
+
+Its private state is then checkpointed: the session's atoms, stage and RNG state as the K3 snapshot, which is
+data. A re-wake restores the checkpoint (`on_wake: resume`, the default) or starts from the member's init
+(`on_wake: fresh`).
+
+**Form P cannot do this.** In one grounded program every member is present at once: hundreds of specialists
+would be loaded together, and the model's surface would be the union. Lazy loading, eviction and per-member OTA
+are form S properties, stated as such.
+
+### 9.3 Actors, boundary stamps, `age`, leases
+
+**An actor** is one session, plus its domain library, plus a mailbox. Its messages are exactly the protocol's:
+- **in:** the boundary copies of its `in` ports, each carrying the **boundary stamp** b at which it was taken;
+- **out:** its reports, intents and requests, each stamped with the latest boundary whose copies the actor had
+  consumed when it produced them. "Which world it answers" is therefore explicit.
+
+The in-process relay of form S today (nina's step 2) is the degenerate case: one process, one boundary, zero
+latency, every stamp equal to the current boundary. Across processes, the same protocol runs with stamps.
+
+**Desync is bounded, not prevented.** The protocol module (§8.4) gains:
+
+```
+types (… age).                              % 0..K, completed by the composition (K = the director's horizon)
+pred age(specialist, age) : proto.          % host-asserted at each boundary: the current boundary minus the
+                                            % stamp of S's latest report, capped at K (director: in)
+pred lease(resource, specialist, age) : proto.  % a grant as a LEASE: the boundaries it has left (director-private)
+pred revoke(resource, specialist) : proto.  % director: out, specialist: in — the lease is gone
+```
+
+- **Staleness is a fact.** The director's rules may ignore an intent from S while `age(S, k)` with k above its
+  limit. That is the director's rule, with the limit as its constant.
+- **A grant is a lease.**
+  - The director's grant rule produces `grant(R, S)` (to S) and `lease(R, S, m)`, both director-private.
+  - Its own countdown rules decrement the lease at each director beat, and renew it on a fresh report from S
+    (one whose age is under the limit).
+  - On reaching 0, the director's `expire` rule releases R back to the director's token and sends
+    `revoke(R, S)`.
+  - **The director releases on expiry, never because the actor fell silent.** A stalled actor cannot hold the
+    body past m boundaries.
+- **I5 with leases.** `held_by: [lease]`: the P-invariant over R + Σ lease(R, ·, ·) holds through grant,
+  renew and expire.
+
+### 9.4 The message order is the replay oracle
+
+§8.2's F3 becomes:
+
+- **(F3′) The relay is deterministic given the message order:** the order in which messages arrive at each
+  mailbox, and the boundary at which each is taken.
+
+With actors, latency is the environment's. Message timing is not part of the composite's measure.
+
+- **The factorization holds per actor, given its input log:**
+
+      P(τ | logs) = Π_d P_d(τ_d | log_d)
+
+  where log_d is member d's stamped messages in the order they were taken.
+- **What the journal records:** each member's seed, its checkpoint (if any), and its input log.
+- **Replay of a bundle** is replay of each member's session from its init or checkpoint against its log. Each
+  member's trace is byte-identical by construction, since the kernel is seeded. The composite trace is the
+  members' traces merged by boundary stamp.
+- **What is NOT reproduced:** the timing that produced the logs. Replay is of a given run, not of the network.
+
+## 10. Amendment 3b: interface packages and a specialist's external interface (brief v6 §11)
+
+### 10.1 Interface packages own the shared preds
+
+A shared pred is declared ONCE, in an **interface package**:
+- it is a lifted file with only declarations: `types (…)` abstract types (spec 12) and `pred`s over them;
+- it has no rules, no facts and no stages;
+- it has its own `catalog <name> <version>.` and its own spec-03 key.
+
+There are two kinds:
+- **the protocol module** (§8.4, with §9.3's additions): the generic one, with status, active, done, stuck,
+  report, goal, grant, revoke, age and lease;
+- **a family's crossing vocabulary**: `iface/<family>.llp`, for example `iface/alfworld.llp` with goto,
+  reached, open, accessible, take, taken, put, placed, elsewhere; `iface/kitchen.llp`; `iface/nav.llp`.
+
+A specialist INCLUDES the interface packages it speaks, and its manifest states its DIRECTION on each of their
+preds (§2.1: in / out / resource / world-private). It no longer declares a shared pred itself. Forward
+declarations stay for TYPES (spec 12); shared PREDS come from the include. This supersedes I8(b): "the cut is
+declared by the protocol module" becomes "by an interface package", and the protocol module is one of them.
+
+**Each interface pred has a NATURE.** Following the YAML-first ruling (§7 Q1), it is declared in the interface
+package's own manifest, `nature: {pred: signal | resource | report}`:
+
+| nature | a specialist may declare | the director may declare |
+|---|---|---|
+| `signal` (world readings and peer-crossing vocabulary) | `in`, `out`, `world-private` | `in`, `out` |
+| `resource` | `resource` only: never `out`, never `in` | holds it (I5): grants and leases |
+| `report` (status, active, done, stuck, report) | `out` only: never `in` | `in` |
+
+### 10.2 New checks
+
+- **I10, ownership.** Every pred a member lists in `shared`, and every pred of the cut (§3), is declared by
+  exactly one interface package the member includes (`iface-shared-local` when a member declares it itself;
+  `iface-pred-owned-twice` when two interface packages declare the same name). Two specialists that each
+  declare a shared pred are "two vocabularies by accident", and the check refuses them.
+- **I11, natures.** Each member's direction on an interface pred is one its nature allows, by the table of
+  §10.1 (`iface-nature`).
+- **I12, keys.** In a bundle, every member's included interface packages have the bundle's keys for them: the
+  same name means the same spec-03 key (`iface-key-mismatch`). This is the OTA compatibility of §9.1, as a
+  check.
+
+The §7 Q2 ruling applies at the interface package: a pred has one signature. alfworld's four `refused`
+signatures become one pred per signature (`refused_take(object)`, `refused_put(receptacle)`, …) in
+`iface/alfworld.llp`, or one pred over a sum type the package declares.
+
+### 10.3 A specialist's external interface
+
+    EI(S) = ( [ (interface package, its key) included by S ],
+              S's directions on their preds,
+              S's abstract types (made concrete by the bundle's capacity),
+              S's status atoms,
+              the resources S requests )
+
+- **`ei_key(S)`** is the SHA-256 of EI(S)'s canonical form.
+- **The bundle's I-check reads EI(S), not S's rules.** I1–I12 need only the external interfaces and the static
+  graph.
+- **OTA compatibility of m′ for m:** the same interface package keys (I12). The bundle's I-checks are then
+  re-run with EI(m′) in m's place.
+
+### 10.4 Testing a specialist alone: the case closes the interface, the stub is generic
+
+There is no micro-director per package. It would duplicate director logic, be certified as part of the
+specialist, and drift from the real director.
+
+- **A specialist's case** is what the kernel already runs: an init, a script of deliveries, and the expected
+  atoms (`#init`, `#cases`, traces). It closes the interface with facts. At each scripted boundary it feeds the
+  `in` copies (and grants), and it reads the `out` reports and intents.
+- **The INTERFACE STUB** is one generic driver, parameterized by the specialist's manifest and EI. It belongs
+  to metispy and the catalog packages job, as a later step after specialist-tree step 2.
+  - It knows what to feed: the `in` set.
+  - It knows what to collect: the `out` set.
+  - It knows how to score: the status atoms.
+  - It knows what to grant: a `grant`/`lease` fact asserted when the script says so.
+
+  One stub for all packages, and no package-specific harness code.
+- **Certificates.** A specialist's certificate is its program_key plus its cases passing against the stub.
+  **It never depends on which director it will meet**: the protocol module is a declaration package, with no
+  rules. A composition's certificate (§8.1) adds the I-checks and the composite cases (the shared-pot
+  kitchen). The interface packages have no rules, so they have no cases; their key, their contract text and
+  their natures are their certificate.
+
+### 10.5 For the two hierarchies, and nina's step 2
+
+- **The protocol module file is the first interface package.**
+- **alfworld hier.** `iface/alfworld.llp` takes the crossing preds of §1.2 (with `refused` split per §10.2).
+  nav, access, grasp, place and task include it and the protocol module. Their manifests' directions are
+  unchanged; their local `pred` declarations of those names go.
+- **minihack mh_hier** follows the same pattern (`iface/minihack.llp`: goto, reached, closed, guarded, open,
+  fight, opened, cleared, refused).
+- **The world readings** that are `world-private` (amendment 1a) stay declared by the specialist. Each is a
+  per-member copy, not a crossing pred, so I10 does not apply to them.
 
 ## Acceptance (for the design step)
 
