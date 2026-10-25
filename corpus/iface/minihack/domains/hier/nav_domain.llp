@@ -22,7 +22,7 @@ stage act {
   %% I am on {G}.
   arrive [dyn] : goto(G) * $agent_at(G) * $stairs_down(G) -o reached(G).   % a frontier goal is no arrival: the host rebinds it
   %% I step {D}, to {P}.
-  move [dyn] : agent_at(C) * $next(C, D, P) * $toward(P) * $step(P) -o agent_at(P).   % awake only with a goal (the director)
+  move [dyn] : $goto(goal) * agent_at(C) * $next(C, D, P) * $toward(P) * $step(P) -o agent_at(P).   % only with its goal
   %% The door {D} is closed.
   shut [dyn] : goto(goal) * $agent_at(C) * $next(C, D, P) * $toward(P) * $door(P, closed) -o closed(P).   % the host's goal: its route's end
   %% {B} is in my way, {D}.

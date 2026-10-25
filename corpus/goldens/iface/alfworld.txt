@@ -72,6 +72,5 @@ warning I2 director: in tick__done is read by no rule (in-unread)
 warning I2 director: in tick__stuck is read by no rule (in-unread)
 warning I4 director: rule path_off withdraws its own out tick__goal (a level the direct member may withdraw)
 note I3 director: in tick__status is produced only by the host's status assertion (amendment 1b) (transitional)
-note I11 interface package protocol_domain declares no natures: I11 not run
-result 33 error(s), 5 warning(s), 2 note(s)
+result 33 error(s), 5 warning(s), 1 note(s)
 rc 1
