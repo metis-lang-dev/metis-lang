@@ -105,7 +105,17 @@ let tokens_pos text =
     else if is_punct c then begin emit (Punct c); incr i end
     else lex_fail text !i "bad character %C" c
   done;
+  (* positions in one forward pass: the offsets are increasing (emit
+     order), so one cursor carries line and line start across them —
+     line_col per token rescanned from byte 0, tokens x bytes
+     (eval-perf step 2c); same (line, col) as line_col *)
   let offs = Array.of_list (List.rev !pos) in
-  (List.rev !out, Array.map (line_col text) offs)
+  let line = ref 1 and bol = ref 0 and k = ref 0 in
+  (List.rev !out, Array.map (fun offset ->
+       while !k < min offset n do
+         if text.[!k] = '\n' then begin incr line; bol := !k + 1 end;
+         incr k
+       done;
+       (!line, offset - !bol + 1)) offs)
 
 let tokens text = fst (tokens_pos text)
