@@ -121,9 +121,13 @@ let artifact_lines (cat : Catalog.t) (ports : Compile.ports)
     Printf.sprintf "E %d %d %s %s%s%s" stage post (weight_text ev.ev_weight)
       (String.map (fun c -> if c = ' ' then '_' else c) ev.ev_name)
       (sections ev) (wsection ports ev) in
+  (* tail-recursive map and append: the stdlib's List.map and (@) are
+     not, and overflow the 8 MB stack at ~1M events (eval-perf step 2f) *)
+  let map f l = List.rev (List.rev_map f l) in
+  let ( @ ) a b = List.rev_append (List.rev a) b in
   let clauses = List.concat_map (fun (s, evs) ->
-      List.map (event (idx s) (-1)) evs) prog.stages in
-  let links = List.map (fun (ev : Ground.event) ->
+      map (event (idx s) (-1)) evs) prog.stages in
+  let links = map (fun (ev : Ground.event) ->
       match ev.ev_pre, ev.ev_post with
       | Some pre, Some post -> event (idx pre) (idx post) ev
       | _ -> failwith ("link without pre/post: " ^ ev.ev_name))
