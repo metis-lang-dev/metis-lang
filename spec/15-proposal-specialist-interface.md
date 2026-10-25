@@ -1,10 +1,24 @@
-# PROPOSAL 15 — the specialist interface: the static rule×pred graph, the manifest's directions, the composer's contract
+# PROPOSAL 15 — the specialist interface: the static rule×pred graph, the manifest's directions, the composition contract
 
 **Status: PROPOSED 2026-10-25, design only, no code (specialist-tree s-404d001f step 1b, metis). It writes down
 what brief v2 §8 ruled: the tick is ONE program, built by a COMPOSER from separate specialist domains. Its
 examples are the two hierarchies that exist: metis-worlds alfworld `domains/hier` and minihack `mh_hier`. The
 manifest field names are nina's provisional ones (`shared`, `status`, `capacity`). This spec renames none of
-them; it adds three fields, each with its reason (§2.4).**
+them; it adds three fields, each with its reason (§2.3).**
+
+**Amendment 1, 2026-10-25 (metis, from nina's review; ruled by the architect on s-404d001f, with ruling v3):**
+- (a) A fourth direction, `world-private`: a world reading each stage or session holds through its own binding
+  (§2.1). It is exempt from I3/I4, so the hands and the position are contention only when a composition shares
+  them (§3, §5).
+- (b) Statuses are derived from the trace rows' stage, and the host asserts `tick__status(S, k)`. There is no
+  `tick__fired` head atom (§4.4).
+- (c) Ruling v3: the runtime already EXISTS as N DomainAgent sessions, with the host's semantic map as the
+  blackboard. §4 is therefore the COMPOSITION contract in two forms:
+  - (S) today's sessions, the host relaying what the direct stage would link — step 2, incremental on today's
+    Live;
+  - (P) one program with stages, built by the composer — deferred.
+
+  The checks I1–I7, the directions and the composition manifest are the same in both forms.
 
 ## 0. Scope
 
@@ -14,13 +28,13 @@ them; it adds three fields, each with its reason (§2.4).**
   - §3: the interface check on that graph, and the cut it reports.
   - §2: the manifest fields that carry the interface: a direction per shared pred per specialist, the
     optional status atoms, and the capacity instance.
-  - §4: the composer's input contract. N specialist domains, a direct domain and a capacity instance go in;
-    one program comes out, with a stage per specialist, a direct stage, links at quiescence, a broadcast copy
-    of each signal per consuming subscriber, and requests/grants for resources. The flat-program equivalence
-    is claimed only for the sequential special case (§4.6).
+  - §4: the composition contract. N specialist domains, a direct domain and a capacity instance compose,
+    either as today's N sessions with the host relaying (form S), or as one program with a stage per
+    specialist and a direct stage (form P, the composer, deferred). Both have a broadcast copy of each signal
+    per consuming subscriber and requests/grants for resources. The flat-program equivalence is claimed only
+    for the sequential special case (§4.6).
 - **Out:**
-  - N kernel sessions (ruled out until a measured need appears).
-  - The tick runtime itself (step 2, nina).
+  - The runtime itself (step 2: incremental on today's sessions, ruling v3).
   - Argument-level (ground) cuts (§7).
   - Any change to spec 09's run graph, or to the kernel's semantics. The composed program is an ordinary
     catalog; everything here is a compile-time transformation plus a check.
@@ -141,15 +155,15 @@ program: nav_domain.llp           # the LIFTED domain file (abstract types, spec
 shared:                           # every pred not listed here is PRIVATE to nav
   goto: in
   reached: out
-  at: out                         # nav moves the robot in the model: the single writer (§3, I4)
-  recat: in
+  at: world-private               # read through nav's own binding (amendment 1a)
+  recat: world-private
   motion: resource
 status:                           # optional (brief §8 C)
   success: [reached]
   failure: []
 ```
 
-- **`shared: {pred: in | out | resource}`.** The direction is per (pred, specialist), per ruling A1. The same
+- **`shared: {pred: in | out | resource | world-private}`.** The direction is per (pred, specialist), per ruling A1. The same
   pred may be `out` for one specialist and `in` for another.
   - **`in`**: the specialist reads (`r`) or consumes (`c`) the pred and never produces it for others. A head
     occurrence of an `in` pred in this specialist's own rules is a *self-continuation*: the composer renames it
@@ -160,6 +174,17 @@ status:                           # optional (brief §8 C)
   - **`resource`**: the specialist's requests compete for this token (ruling A3). Its rules never consume or
     produce the resource itself. It emits request atoms (its own `out` preds), and the direct stage's grant
     rules consume a request together with the token (§4.5).
+  - **`world-private`** (amendment 1a): a world reading the host syncs into THIS specialist's own copy,
+    through this specialist's own binding.
+    - In form S that is exactly today's per-session reading. In form P it is the private copy `S__p`, written
+      by the host's sync of that stage.
+    - The specialist may read, consume or produce its copy (its model's prediction); the next sync settles it.
+    - It never crosses to another member, so I3 and I4 do not apply to it.
+    - The reason it is not `in`: in alfworld's view mode each host reads the world through a different binding,
+      frozen for a woken specialist and live for the planner. So nav's `at(lhere)` and task's `at(lhere)` can
+      be different facts, and one shared atom would be wrong.
+    - An `in` reading that is shared (one atom, §4.3) is only right when every consumer reads it through the
+      same binding.
 - **`status: {success: [...], failure: [...]}`**: optional atoms whose production this tick IS the
   specialist's success or failure (ruling C). Each listed atom must be one of the specialist's `out` preds.
   Without `status`, the specialist's status is only `running` (some rule fired this tick) or `idle` (none did).
@@ -235,8 +260,8 @@ of severity error unless marked. The codes are the `iface-*` family, added to th
 |---|---|---|
 | **I1** private stays private | A pred NOT in a specialist's `shared` map is renamed `S__p` (§4.2) and so cannot appear in another stage. The check refuses a pred that one specialist lists as shared and another declares without listing, because it is ambiguous whether they mean the same atom (`iface-shared-unlisted`). | `refused`: grasp, place and task must all list it; access declares it too, so access lists it or drops the declaration |
 | **I2** direction agrees with the roles | `in` ⇒ no `o` except self-continuation; `out` ⇒ `o` ∈ roles; `resource` ⇒ the pred is absent from the specialist's rules (`iface-direction`). | alfworld access lists `refused: out` but no rule produces it (`refused: -`): finding; minihack act's `refused` is the same. minihack task declares `opened`, `cleared` (`-`): an `in` nobody reads, a warning (`iface-in-unread`) |
-| **I3** every `in` has a producer | For each (S, p: in), some peer has p: `out`, or p ∈ `world.out`, or D produces p (`iface-in-unproduced`). | alfworld `fetch`: task's `in`, produced by the world (the person's goal, `world.out`); minihack `reach` alike |
-| **I4** one writer of a state pred | A pred consumed by more than one member (specialist, D, or the world as writer) is a contention point. It must be a `resource` (I5) or a broadcast signal, one copy per consumer (§4.3) (`iface-multi-writer`). An `out` consumed by its producer must be conserved per rule (`c` and `o` in the same rule). | alfworld `holds`/`holding`/`handsfree` (grasp writes, place writes) and `inrecep`/`objat` (grasp consumes, place produces): two writers of the body's state, the hands. Either a `hands` resource with grants, or world-owned readings (`world.out`) with grasp/place's writes turned into requests. alfworld `at` / minihack `agent_at`: nav consumes and re-produces (`cor`), and the host also asserts it. One writer must be chosen: the world (nav's `go`/`move` become requests for `motion`) or nav (the host stops asserting it). This is the one real decision the check surfaces in both trees |
+| **I3** every `in` has a producer | `world-private` preds are exempt (their producer is the host's sync). For each (S, p: in), some peer has p: `out`, or p ∈ `world.out`, or D produces p (`iface-in-unproduced`). | alfworld `fetch`: task's `in`, produced by the world (the person's goal, `world.out`); minihack `reach` alike |
+| **I4** one writer of a state pred | `world-private` preds are exempt: one copy per member, one writer per copy (the host's sync). A shared pred consumed by more than one member (specialist, D, or the world as writer) is a contention point. It must be a `resource` (I5) or a broadcast signal, one copy per consumer (§4.3) (`iface-multi-writer`). An `out` consumed by its producer must be conserved per rule (`c` and `o` in the same rule). | alfworld `holds`/`holding`/`handsfree` (grasp writes, place writes) and `inrecep`/`objat` (grasp consumes, place produces): two writers of the body's state, the hands. Either a `hands` resource with grants, or world-owned readings (`world.out`) with grasp/place's writes turned into requests. alfworld `at` / minihack `agent_at`: nav consumes and re-produces (`cor`), and the host also asserts it. One writer must be chosen: the world (nav's `go`/`move` become requests for `motion`) or nav (the host stops asserting it). Under `world-private` (today's per-session reading, amendment 1a) neither set is contention; the finding fires only for a composition that SHARES these preds |
 | **I5** every resource owned once | For each resource p with `count` n and `held_by` H: every rule of the composition that mentions p or an atom of H has Δ(p) + Σ_{h∈H} Δ(h) = 0 (a P-invariant of the net), and the direct domain's init holds exactly n of p and none of H. Only D's rules consume p (`iface-resource-*`). | `motion`, count 1: `grant: want_move(D) * motion -o moving(D)`, `release: moved(D) * moving(D) -o motion`; nav and act both list `motion: resource` (the beast case) |
 | **I6** types agree | Same abstract name ⇒ same type, completed once by the capacity. A concrete type used by a shared pred is declared identically everywhere (`iface-type`). | minihack nav and act both declare `type dir {n e s w ne se sw nw}` for `next(cell, dir, cell)`: identical, OK |
 | **I7** reserved names | No domain pred contains `__`. Status atoms are `out` preds of their specialist (`iface-reserved`, `iface-status-not-out`). | none today |
@@ -253,7 +278,25 @@ of A) where neither p nor q is in `world` or read by D.
 
 The note is information for the author, not a refusal. A5 accepts the return address as intended.
 
-## 4. The composer's input contract
+## 4. The composition contract (amendment 1c: two forms)
+
+The same contract holds in two forms. Every element below says what it is in each.
+
+| element | form S: N sessions (today's runtime; step 2) | form P: one program with stages (the composer; deferred) |
+|---|---|---|
+| a specialist | its own DomainAgent session (its own Repl and RNG) | `stage S`, with its private preds renamed `S__p` |
+| privacy | separate sessions: nothing crosses unless relayed | renaming (§4.2) |
+| `world-private` p | the session's own reading, synced by the host through that session's binding (today's behaviour) | `S__p`, written by the host's sync of stage S |
+| a shared `in` reading | the host syncs one fact into every subscribing session through ONE binding | one atom p, read by every subscriber |
+| a broadcast signal | the host asserts one copy into each consuming session | `p__S` copies; producers emit their tensor (§4.3) |
+| the tick | each session runs to quiescence (or to its beat) on the tick; then the director session | links at quiescence, `(S₁ … Sₙ direct)` (§4.4) |
+| reports in | the host relays each specialist's `out` reports and status into the director session, as it relays chain goal/result today | `out` atoms consumed by `direct`, as copies |
+| grants out | the director session's grant rules produce the holding atom; the host syncs the grant into the holder's session | `direct`'s grant rules (§4.5) |
+| statuses | from each session's trace rows; the host asserts `tick__status(S, k)` into the director session | from the trace rows' stage; the host asserts `tick__status(S, k)` at the S→direct link |
+
+The checks I1–I7 (§3), the directions (§2.1) and the composition manifest (§2.3) are the same for both forms.
+In form S, what the host relays is exactly what form P's links and copies would carry. §4.1–4.6 give form P in
+detail; form S reads them through this table.
 
 ### 4.1 Inputs
 
@@ -306,10 +349,15 @@ single atom, which is objection A1 and why §4.6 is restricted.
 - **For worlds that never quiesce** (RDDL), the beat boundary of `domain.yaml`'s clock replaces quiescence
   (ruling B). The composer emits the same links, and the clock bounds the beats per stage. That is the host's,
   as today.
-- **Status.** The composer adds the reserved head atom `tick__fired(S)` to every rule of S. D reads
-  `$tick__fired(S)`, the status atoms (which are `out`, so broadcast to D when D consumes them) and
-  `tick__status` constants. `tick__end` consumes the `tick__fired` atoms before `qui tick`. This is the only
-  instrumentation, and it is invisible on the world-facing stream (ruling D).
+- **Status (amendment 1b).** No instrumentation: the specialist's rows stay untouched (ruling D).
+  - The status of S this tick derives from the trace rows whose event belongs to S's stage (form P) or session
+    (form S):
+    - `success` if one of them produced a `status.success` atom;
+    - `failure` if one produced a `status.failure` atom;
+    - `running` if any row fired;
+    - `idle` if none fired.
+  - The host asserts `tick__status(S, k)` into the direct stage at the S→direct link (form P), or into the
+    director session (form S). For D, that atom is a world-in reading written by the host.
 
 ### 4.5 Requests and grants (ruling A3)
 
@@ -362,30 +410,31 @@ So the alfworld manifests, read off §1.2 with today's behaviour kept, are:
 | specialist | shared | status |
 |---|---|---|
 | task | fetch: in; reached, accessible, taken, placed, refused: in; goto, open, take, put: out; done, stuck, wrong_dest, wrong_object: out; inrecep, holds, absent, believed, lost: in | success [done], failure [stuck, wrong_dest, wrong_object] |
-| nav | goto: in; reached: out; at: out (single writer: I4's decision); recat: in | success [reached] |
+| nav | goto: in; reached: out; at, recat: world-private | success [reached] |
 | access | open: in; accessible, elsewhere, refused: out; at, recat, openable, notopenable, closed: in; opened: out (single writer) | success [accessible], failure [refused, elsewhere] |
-| grasp | take: in; taken, refused, elsewhere: out; holds, holding, handsfree, inrecep, objat: I4 (hands) | success [taken], failure [refused, elsewhere] |
-| place | put: in; placed, refused, elsewhere: out; same I4 set as grasp | success [placed], failure [refused, elsewhere] |
+| grasp | take: in; taken, refused, elsewhere: out; holds, holding, handsfree, inrecep, objat: world-private (the hands) | success [taken], failure [refused, elsewhere] |
+| place | put: in; placed, refused, elsewhere: out; the same world-private set as grasp | success [placed], failure [refused, elsewhere] |
 
 minihack mh_hier:
 
 | specialist | shared | status |
 |---|---|---|
 | task | reach: in (world); reached, refused: in; opened, cleared: in (warning: unread); goto: out; done, stuck: out | success [done], failure [stuck] |
-| nav | goto: in; reached, closed, guarded: out; agent_at: I4; step, door, monster, next, toward, stairs_down: in (world readings); motion: resource (with act) | success [reached], failure [closed, guarded] |
+| nav | goto: in; reached, closed, guarded: out; agent_at: world-private; step, door, monster, next, toward, stairs_down: in (world readings); motion: resource (with act) | success [reached], failure [closed, guarded] |
 | act | open, fight: in; opened, cleared: out; refused: out (finding: no producing rule); agent_at, step, door, monster, next: in; said: in (world, consumed: its own copy); motion: resource | success [opened, cleared], failure [refused] |
 
 What the check reports on today's sources, before anyone writes a manifest:
 - **Errors**:
   - alfworld access's and minihack act's `refused`: declared and listed `out`, never produced. The host
     asserts it today, so it is a `world.out`, not the specialist's.
-- **Decisions for step 2**:
+- **Two sets that are `world-private` today** (amendment 1a):
   - the hands in alfworld (grasp and place both write `holds`, `holding`, `handsfree`, `inrecep`, `objat`);
   - the position in both trees (`at`/`agent_at`: nav and the host both write it).
 
-  Neither is a bug in today's per-session runtime, where each domain has its own copy. Both become contention
-  the moment the specialists share one multiset. The composer cannot pick a default for either: the choice
-  (world reading vs single writer vs resource) is a modelling decision.
+  Declared `world-private`, which is what today's per-session runtime does (each session its own copy, synced
+  by its own host), neither is contention. They become I4 findings only if a composition declares them shared
+  (`in`/`out`) across members. That choice (world-private vs a shared reading vs single writer vs resource) is
+  a modelling decision no tool can default. The tables above declare them `world-private`.
 - **Notes**:
   - minihack task's unread `opened`/`cleared`;
   - minihack's `goto`/`reached` call/return pair.
@@ -394,8 +443,8 @@ What the check reports on today's sources, before anyone writes a manifest:
 
 - **`metisc --interface COMPOSITION.yaml`**: G(Π), checks I1–I7, and the cut report, as text and as spec 08
   JSON. The new `iface-*` codes are added to the D2 registry, with one fixture row each.
-- **`metisc --compose COMPOSITION.yaml`**: writes the composed `.llp` and its port map. A composition that
-  fails the check is not written.
+- **`metisc --compose COMPOSITION.yaml`** (form P, deferred by ruling v3): writes the composed `.llp` and its
+  port map. A composition that fails the check is not written. The check (`--interface`) serves both forms.
 - **metispy at byte parity**, as for every compile surface. nina's composer (step 2) can call either, or
   implement §4 itself against these goldens.
 - **Goldens**: the two compositions of §5 (cut reports, diagnostics, composed files), plus a sequential
