@@ -16,21 +16,56 @@ type clause = { head : pattern; body : pattern list;
 type db = { by_pred : (string, clause list) Hashtbl.t;
             mutable fresh : int;
             table : (pattern, string list list) Hashtbl.t;
-            active : (pattern, unit) Hashtbl.t }
+            active : (pattern, unit) Hashtbl.t;
+            facts : (string, fact_index) Hashtbl.t }
+
+(* BY-POSITION FACT INDEX (eval-perf step 2): a predicate whose
+   clauses are all ground facts is answered from an index, untabled,
+   instead of a scan of every clause per new call (the cells^3 of a
+   static adjacency table). Answers are exactly the scan's: the
+   candidates of a bound position are a superset of the matches, kept
+   in clause order, and each is unified as the scan would. *)
+and fact_index = { fx_all : clause list;
+                   fx_ground : (string list, unit) Hashtbl.t;
+                   fx_pos : (int * string, clause list) Hashtbl.t }
 
 let depth_bound = 256
+
+let is_qvar t = String.length t > 0 && t.[0] = '?'
+
+let ground_fact c =
+  c.body = [] && c.vars = [] && not (List.exists is_qvar (snd c.head))
+
+let index_facts cls =
+  let fx = { fx_all = cls; fx_ground = Hashtbl.create 64;
+             fx_pos = Hashtbl.create 64 } in
+  (* newest-first, reversed once: clause order kept per bucket *)
+  List.iter (fun c ->
+      Hashtbl.replace fx.fx_ground (snd c.head) ();
+      List.iteri (fun i a ->
+          let k = (i, a) in
+          Hashtbl.replace fx.fx_pos k
+            (c :: (try Hashtbl.find fx.fx_pos k with Not_found -> [])))
+        (snd c.head))
+    cls;
+  Hashtbl.filter_map_inplace (fun _ l -> Some (List.rev l)) fx.fx_pos;
+  fx
 
 let make clauses =
   let by_pred = Hashtbl.create 16 in
   List.iter (fun c ->
       let k = fst c.head in
-      let cur = try Hashtbl.find by_pred k with Not_found -> [] in
-      Hashtbl.replace by_pred k (cur @ [c]))
+      Hashtbl.replace by_pred k
+        (c :: (try Hashtbl.find by_pred k with Not_found -> [])))
     clauses;
+  Hashtbl.filter_map_inplace (fun _ l -> Some (List.rev l)) by_pred;
+  let facts = Hashtbl.create 16 in
+  Hashtbl.iter (fun k cls ->
+      if List.for_all ground_fact cls then
+        Hashtbl.replace facts k (index_facts cls))
+    by_pred;
   { by_pred; fresh = 0; table = Hashtbl.create 64;
-    active = Hashtbl.create 16 }
-
-let is_qvar t = String.length t > 0 && t.[0] = '?'
+    active = Hashtbl.create 16; facts }
 
 let rename db cl =
   if cl.vars = [] then cl
@@ -87,12 +122,16 @@ let rec solve db goals subst depth k =
     else begin
       let g = (fst g0, List.map (fun a -> walk a subst) (snd g0)) in
       let key = (fst g, variant (snd g)) in
-      match Hashtbl.find_opt db.table key with
-      | None when Hashtbl.mem db.active key ->
-        resolve db g rest subst depth k      (* re-entrant: plain SLD *)
-      | found ->
-        let answers = match found with
-          | Some a -> a | None -> complete db g key in
+      let answers = match Hashtbl.find_opt db.facts (fst g) with
+        | Some fx -> Some (fact_answers fx g (snd key))
+        | None ->
+          match Hashtbl.find_opt db.table key with
+          | None when Hashtbl.mem db.active key -> None
+          | Some a -> Some a
+          | None -> Some (complete db g key) in
+      match answers with
+      | None -> resolve db g rest subst depth k  (* re-entrant: plain SLD *)
+      | Some answers ->
         List.exists (fun ans ->
             db.fresh <- db.fresh + 1;
             let inst = List.map (fun a ->
@@ -113,6 +152,38 @@ and resolve db g rest subst depth k =
       | None -> false
       | Some s2 -> solve db (r.body @ rest) s2 (depth - 1) k)
     cls
+
+(* complete's answers for a fact-only predicate, from its index: a
+   ground call is a lookup; otherwise the smallest bucket of a bound
+   position (all facts when none is bound), unified in clause order *)
+and fact_answers fx g args =
+  if not (List.exists is_qvar args) then
+    (if Hashtbl.mem fx.fx_ground args then [args] else [])
+  else begin
+    let best = ref None in
+    List.iteri (fun i a ->
+        if not (is_qvar a) then begin
+          let b = try Hashtbl.find fx.fx_pos (i, a) with Not_found -> [] in
+          let n = List.length b in
+          match !best with
+          | Some (m, _) when m <= n -> ()
+          | _ -> best := Some (n, b)
+        end)
+      args;
+    let cands = match !best with Some (_, b) -> b | None -> fx.fx_all in
+    let answers = ref [] and seen = Hashtbl.create 8 in
+    List.iter (fun cl ->
+        match unify cl.head g [] with
+        | None -> ()
+        | Some s ->
+          let ans = variant (List.map (fun a -> walk a s) (snd g)) in
+          if not (Hashtbl.mem seen ans) then begin
+            Hashtbl.add seen ans ();
+            answers := ans :: !answers
+          end)
+      cands;
+    List.rev !answers
+  end
 
 (* all distinct answers (g's args instantiated, variables
    canonicalized) in SLD order — the first only, for a ground g *)
