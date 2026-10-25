@@ -42,7 +42,10 @@ The composer stays shelved; everything in §8 is stated for form S and maps onto
 - §8.4, the stop's other rules (step 3c, design §14): the director releases what is held (`stop_release`)
   and passes over the queued tickets (`stop_dequeue`, producing `skipped`); a routing director's wake bridge
   returns the routing to its start without a reload; `path_stuck` gives stuck its asymmetry. Every signal a
-  director reads is a world line of its tick, and a member's in-copies apply in stamp order.
+  director reads is asserted as a world line of its tick, nothing is applied between ticks, and a member's
+  in-copies apply in stamp order. A cancel reaches a member before its next beat, so no report is made from a
+  cancelled engagement: the agent guarantees the order, and the base assumes it. The stop's tick is
+  director-first (the one exception to the Moore latch): a stop's response is one tick for the members.
 - §10.4: a case binds the program's weight ports to constants, `ports: {look: 1.0}`: numeric only, an unknown
   port name refused by name.
 
@@ -692,9 +695,14 @@ pred cancel(specialist) : proto.         % grant side: a STOP, the goal withdraw
     relays it like any director `out` to a member `in`, and never writes one itself: a director `out` no rule
     produces is an I2 finding, and a member `in` with no producer an I3 one.
   - The stop itself is `tick__stop` (0-ary, nature `signal`), a ONE-TICK world signal, and the composition
-    lists it under `world.out`. The agent applies `+tick__stop` in the director's do-row for the stop's tick,
-    together with the release of the previous tick's outs, and `-tick__stop` one tick later. **Every signal a
-    director reads is a world line of its tick, never a take between ticks.**
+    lists it under `world.out`. The assertion `+tick__stop` is a world line: it lands in the director's
+    do-row for the stop's tick, together with the release of the previous tick's outs. The retraction
+    `-tick__stop` is a take at the next tick, before that tick's first beat. **Every signal a director reads
+    is asserted as a world line of its tick; nothing is applied between ticks.**
+  - **The stop's tick is DIRECTOR-FIRST.** The director beats first and alone with the stop, and its outs
+    (the cancels, the revokes) are applied before the members beat; every other tick keeps the Moore latch
+    (§8.5 rule 2). So the stop's response is ONE tick for the members, against ρ = 2 for a preemption
+    (§2.3).
   - The director cancels exactly the members on its path, and pops each in the same rule (the generic base):
 
     ```
@@ -754,6 +762,14 @@ pred cancel(specialist) : proto.         % grant side: a STOP, the goal withdraw
     - `cancel_none` is for the ONE real race: the member's done and the stop land in one director beat, with
       `path_pop` and `stop_cancel` both enabled. It is not a licence for cancels to idle members in
       general; `stop_cancel` sends none.
+    - **No stale reports.** A cancel reaches a member before its next beat, so no report is ever made from
+      a cancelled engagement.
+      - The agent guarantees the order (the relay-order rule: a member's in-copies apply in stamp order, a
+        director's cancel before the member's next beat), and the base assumes it.
+      - Without it, a stale want after a stop takes a fresh ticket (`want_queue` takes one per want), and a
+        resource can be granted to a member that is idle. The base gets no guard: one on `tick__goal` would
+        drop every self-triggered member's want.
+      - A release that meets a fresh grant waits in `release_report_wait`.
 
 **Dependencies:** specialist → protocol ← director, with capacity below all of them. This is a DAG, so each
 member is keyed and grounded alone (§8.1).
@@ -797,7 +813,8 @@ The base tick is only the boundary at which copies are taken and latched outputs
    under the tick.)
 2. **Moore latch.** d's reports, intents and grants produced at boundary t's beat are released at boundary
    t+1 (F2). Within a tick there is no feedback path, so no loop can close inside one. Across ticks a loop
-   takes two boundaries per round and shows in the status journal.
+   takes two boundaries per round and shows in the status journal. **The one exception is the stop's tick
+   (amendment 7, §8.4): it is director-first.**
 3. **No beat on one's own echo.** Each change on the blackboard is tagged with its source member (or `world`
    for the host's sync of a world reading). A change whose source is d does not make d beat: c_p advances, but
    rule 1 skips it for d. Effects that go through the world are not echoes: nav's own move changes `at`

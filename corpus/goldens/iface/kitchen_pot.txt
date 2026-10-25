@@ -1,32 +1,33 @@
 interface composition.yaml
 iface protocol_domain home:iface/protocol_domain.llp 78116a6c02a8584a595dd1d4d9bc465613a68eb1d62785e3791d75fa4cacbc60
 capacity tick_types.llp 74131adc71314190927aa82a4cb6168b41e716fc9a3578576563e4cdec08109c
-member pot_director direct pot_director/pot_director.llp key 56b9513a90cf37319ea79e663c7a49738136338360738b03308089054903a88f ei 2a27312a067ee955ad7d5a7f0f1be27fd7f81e2f3000758c7c165eda32d809d2
-member cook_a specialist cook_a/cook_a.llp key d9a7a57557b5d753879adec515bffd9bc002b3295d97be88b0513e7a63138acf ei bce790ac2b47f084cf4cb896f6d8aa87c5d2fa20d09f8116e451176b3b1938b8
-member cook_b specialist cook_b/cook_b.llp key 66b20b48721a82efa4f783c96654f76131175b836bfe87678cd0beb4a55512b5 ei b2c291cf1895346c487cca4ba1b33d30e5e5f18d81c34797548bd1e06cfa8794
-package 9a0c35e928f70a61fc1d916c5098b725b579c5775a3b28115af4f25d4c6aa5ec
+member pot_director direct pot_director/pot_director.llp key 56b9513a90cf37319ea79e663c7a49738136338360738b03308089054903a88f ei 5147c404324c5a2b630ec56770b814a07cdb12821a319ed45fb1046f0fae278a
+member cook_a specialist cook_a/cook_a.llp key 12e322d77b6e54220156e7133a79972cb1021a68f99fc75cf44878b00078278c ei 63e2c572773cdc4e710a9416df917c7f3312f2a79614f2ba242c57dd0b90225f
+member cook_b specialist cook_b/cook_b.llp key 382e0ff3548d52400773960e02c8e009cebce8a993125e0333dbfb96a1c15e07 ei 6610840b29a428c96909c65139e48be8599a82fb75ffb51d123b88241e044e07
+package 439ad34d823590883ddce233d769798b76c38c011d63b91f4d5355e5f0b88e61
 include home iface/director_tree_domain.llp home:iface/director_tree_domain.llp key fac20cd724f563a137e45895a663ab5c179e75629ad3bf1abebb434605caf022 by pot_director
 include dir protocol_domain.llp home:iface/protocol_domain.llp key d88e6c824b6bbb0534fef47148e8904553e97071670ce2e7e2e14edc267d7e69 by pot_director cook_a cook_b
 include dir ../tick_types.llp tick_types.llp key 74131adc71314190927aa82a4cb6168b41e716fc9a3578576563e4cdec08109c by pot_director cook_a cook_b
-include dir ../cook_domain.llp cook_domain.llp key 43deaf22c62d8f5c272b083661794c04e50f30fc8d442e37983a11b69a0ced28 by cook_a cook_b
-cut 10
+include dir ../cook_domain.llp cook_domain.llp key eedf2b31851854c24e0aae928ca74bbaa7a0046fb2adad5a7606352ff9d5f94e by cook_a cook_b
+cut 12
   pot resource: out [] in [] resource [cook_a cook_b]
-  tick__active signal: out [] in [pot_director(c)]
+  tick__active signal: out [cook_a(o) cook_b(o)] in [pot_director(c)]
+  tick__cancel signal: out [pot_director(o)] in [cook_a(c) cook_b(c)]
   tick__done signal: out [cook_a(o) cook_b(o)] in [pot_director(c)]
   tick__goal state: out [pot_director(co)] in []
   tick__grant signal: out [pot_director(o)] in [cook_a(cr) cook_b(cr)]
   tick__release signal: out [cook_a(o) cook_b(o)] in [pot_director(c)]
   tick__revoke reading: out [pot_director(o)] in []
   tick__status reading: out [host(transitional)] in [pot_director]
+  tick__stop reading: out [world] in [pot_director(r)]
   tick__stuck signal: out [] in [pot_director(c)]
   tick__want signal: out [cook_a(o) cook_b(o)] in [pot_director(c)]
 private pot_director=18 cook_a=11 cook_b=11
 warning I2 pot_director: in tick__status is read by no rule (in-unread)
-warning I3 pot_director: in tick__active is a report nobody sends
 warning I3 pot_director: in tick__stuck is a report nobody sends
 warning I4 pot_director: rule stop_cancel withdraws its own out tick__goal (a level the direct member may withdraw)
 warning I4 pot_director: rule path_pop withdraws its own out tick__goal (a level the direct member may withdraw)
 note I3 pot_director: in tick__status is produced only by the host's status assertion (amendment 1b) (transitional)
 note I8 cook_domain.llp, a lifted domain shared by cook_a, cook_b
-result 0 error(s), 5 warning(s), 2 note(s)
+result 0 error(s), 4 warning(s), 2 note(s)
 rc 0

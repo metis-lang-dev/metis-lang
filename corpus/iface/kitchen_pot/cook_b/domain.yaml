@@ -6,6 +6,6 @@ voice: third
 program: cook_b.llp
 host: cook_host.py:make
 clock: {beats: 1}
-shared: {hand_free: world-private, held_onion: world-private, held_dish: world-private, held_soup: world-private, pot_space: world-private, pot_onion: world-private, cooking: world-private, order: world-private, tick__want: out, tick__release: out, tick__done: out, tick__grant: in, pot: resource}
+shared: {hand_free: world-private, held_onion: world-private, held_dish: world-private, held_soup: world-private, pot_space: world-private, pot_onion: world-private, cooking: world-private, order: world-private, tick__want: out, tick__release: out, tick__active: out, tick__done: out, tick__grant: in, tick__cancel: in, pot: resource}
 status: {success: [tick__done], failure: []}
 gating: program                  # its pot rules read the grant ($tick__grant(S, pot)): the program gates itself
