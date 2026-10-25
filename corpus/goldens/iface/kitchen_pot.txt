@@ -1,12 +1,12 @@
 interface composition.yaml
-iface protocol_domain home:iface/protocol_domain.llp 747bdb0d87929296645e17e42ca8378d9086de56a26070e6fdf964f3683f298d
+iface protocol_domain home:iface/protocol_domain.llp 78116a6c02a8584a595dd1d4d9bc465613a68eb1d62785e3791d75fa4cacbc60
 capacity tick_types.llp 74131adc71314190927aa82a4cb6168b41e716fc9a3578576563e4cdec08109c
-member pot_director direct pot_director/pot_director.llp key 23bc4d0b45b7f393d4343f1946d02e04d40ccec6180079f352a208463b538d1f ei 83c032ae9be22b72d2d89fa3f2e6549b332f76ff2af87f6a28e227fdc908609f
-member cook_a specialist cook_a/cook_a.llp key 59d56e9482420ac2016241d14a0ec951e8290632faaaae2711c57bcdb7402116 ei 1e36300a3dfc4ac27569f25953142baf0b04c044d717ba4aaf415507f86cca91
-member cook_b specialist cook_b/cook_b.llp key 395b08c25068181bdca667c8f23981b5ef37a34ffd50b49759841286c893990f ei ae7b26482a5d8f9878d475b805e2eb3e0a032e29a9a0d32d3d090cfcf6d3b64f
-package fc06ce150a13141bad92ed6613878f61dbb73601c642137398479543c9777753
-include home iface/director_tree_domain.llp home:iface/director_tree_domain.llp key f1e839e33378a54441b557a2645ddc91d4b4ad59c0b839a29bbd9eda81dac5cd by pot_director
-include dir protocol_domain.llp home:iface/protocol_domain.llp key 43b383330c3bc353f22d6167d42e51e4a163425feea4a816f87e5ce02c053f5d by pot_director cook_a cook_b
+member pot_director direct pot_director/pot_director.llp key 56b9513a90cf37319ea79e663c7a49738136338360738b03308089054903a88f ei 2a27312a067ee955ad7d5a7f0f1be27fd7f81e2f3000758c7c165eda32d809d2
+member cook_a specialist cook_a/cook_a.llp key d9a7a57557b5d753879adec515bffd9bc002b3295d97be88b0513e7a63138acf ei bce790ac2b47f084cf4cb896f6d8aa87c5d2fa20d09f8116e451176b3b1938b8
+member cook_b specialist cook_b/cook_b.llp key 66b20b48721a82efa4f783c96654f76131175b836bfe87678cd0beb4a55512b5 ei b2c291cf1895346c487cca4ba1b33d30e5e5f18d81c34797548bd1e06cfa8794
+package 9a0c35e928f70a61fc1d916c5098b725b579c5775a3b28115af4f25d4c6aa5ec
+include home iface/director_tree_domain.llp home:iface/director_tree_domain.llp key fac20cd724f563a137e45895a663ab5c179e75629ad3bf1abebb434605caf022 by pot_director
+include dir protocol_domain.llp home:iface/protocol_domain.llp key d88e6c824b6bbb0534fef47148e8904553e97071670ce2e7e2e14edc267d7e69 by pot_director cook_a cook_b
 include dir ../tick_types.llp tick_types.llp key 74131adc71314190927aa82a4cb6168b41e716fc9a3578576563e4cdec08109c by pot_director cook_a cook_b
 include dir ../cook_domain.llp cook_domain.llp key 43deaf22c62d8f5c272b083661794c04e50f30fc8d442e37983a11b69a0ced28 by cook_a cook_b
 cut 10
@@ -24,8 +24,9 @@ private pot_director=18 cook_a=11 cook_b=11
 warning I2 pot_director: in tick__status is read by no rule (in-unread)
 warning I3 pot_director: in tick__active is a report nobody sends
 warning I3 pot_director: in tick__stuck is a report nobody sends
+warning I4 pot_director: rule stop_cancel withdraws its own out tick__goal (a level the direct member may withdraw)
 warning I4 pot_director: rule path_pop withdraws its own out tick__goal (a level the direct member may withdraw)
 note I3 pot_director: in tick__status is produced only by the host's status assertion (amendment 1b) (transitional)
 note I8 cook_domain.llp, a lifted domain shared by cook_a, cook_b
-result 0 error(s), 4 warning(s), 2 note(s)
+result 0 error(s), 5 warning(s), 2 note(s)
 rc 0

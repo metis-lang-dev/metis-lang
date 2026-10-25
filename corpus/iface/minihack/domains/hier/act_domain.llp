@@ -20,17 +20,43 @@ pred kicked(cell) : act.
 pred swung(cell) : act.
 pred idle : act.                            % the tree: no goal taken
 pred busy : act.                            % … a goal taken (reported active once)
+type resp {none brake_min_correct brake_min}.
+pred oncoming(beast) : act.              % the host's: the situation layer's opp_dir and dangerous, in roles
+pred resp_lon(resp) : act.               % the host's: the fold's response along the way
+pred brakes(resp) : act.                 % static: the responses that brake
+pred closing(beast) : act.               % the host's: oncoming and not beside yet
+pred alert(beast) : act.
+pred struck(beast) : act.
+pred braced(beast) : act.
+pred fighting : act.
+pred owed(cell) : act.
 stage act {
   %% I see to {P}.
   begin_open [dyn] : $open(P) * idle -o busy * tick__active(act).
   %% I take on {P}.
-  begin_fight [dyn] : $fight(P) * idle -o busy * tick__active(act).
+  begin_fight [dyn] : $fight(P) * idle -o busy * fighting * tick__active(act).
+  %% Stopped: I drop my goal.
+  cancel_alert [dyn] : tick__cancel(act) * alert(V0) * busy -o idle.
+  %% Stopped: I drop my goal.
+  cancel_fight_fighting [dyn] : tick__cancel(act) * busy * fight(V0) * fighting -o idle.
+  %% Stopped: I drop my goal.
+  cancel_fighting_swung [dyn] : tick__cancel(act) * busy * fighting * swung(V0) -o idle.
+  %% Stopped: I drop my goal.
+  cancel_kicked [dyn] : tick__cancel(act) * busy * kicked(V0) -o idle.
+  %% Stopped: I drop my goal.
+  cancel_open [dyn] : tick__cancel(act) * busy * open(V0) -o idle.
+  %% Stopped: I drop my goal.
+  cancel_struck [dyn] : tick__cancel(act) * busy * struck(V0) -o idle.
+  %% Stopped: I drop my goal.
+  cancel_tried [dyn] : tick__cancel(act) * busy * tried(V0) -o idle.
+  %% Stopped as I finished: nothing left to drop.
+  cancel_none [dyn] : idle * tick__cancel(act) -o idle.   % the race: its done and the stop in one director beat (path_pop, stop_cancel: the sampled order)
   %% The door {D} is closed: I open it.
-  open_door [dyn] : open(P) * $busy * $agent_at(C) * $next(C, D, P) * $door(P, closed) -o tried(P).
+  open_door [dyn] : open(P) * $busy * $tick__grant(act, motion) * $agent_at(C) * $next(C, D, P) * $door(P, closed) -o tried(P).
   %% The door {D} is locked: I kick it.
-  kick_door [dyn] : tried(P) * said(door_locked) * $agent_at(C) * $next(C, D, P) * $door(P, closed) -o kicked(P).
+  kick_door [dyn] : tried(P) * said(door_locked) * $tick__grant(act, motion) * $agent_at(C) * $next(C, D, P) * $door(P, closed) -o kicked(P).
   %% It holds: I kick it again.
-  kick_on [dyn] : kicked(P) * said(whamm) * $agent_at(C) * $next(C, D, P) * $door(P, closed) -o kicked(P).
+  kick_on [dyn] : kicked(P) * said(whamm) * $tick__grant(act, motion) * $agent_at(C) * $next(C, D, P) * $door(P, closed) -o kicked(P).
   %% The door is broken: the way is open.
   door_gone [dyn] : kicked(P) * busy * $step(P) -o opened(P) * idle * tick__done(act).
   %% The door is open.
@@ -38,11 +64,29 @@ stage act {
   %% The door is already open.
   was_open [dyn] : open(P) * busy * $door(P, open) -o opened(P) * idle * tick__done(act).
   %% {B} is in my way, {D}: I fight it.
-  move_fight [dyn] : fight(P) * $busy * $agent_at(C) * $next(C, D, P) * $monster(B, P) -o swung(P).
+  move_fight [dyn] : fight(P) * $busy * $fighting * $tick__grant(act, motion) * $agent_at(C) * $next(C, D, P) * $monster(B, P) -o swung(P).
   %% It still stands: again.
   fight_on [dyn] : swung(P) * said(hit) * $monster(B, P) -o fight(P).
   %% The way is clear.
-  clear [dyn] : swung(P) * busy * $step(P) -o cleared(P) * idle * tick__done(act).
+  clear [dyn] : swung(P) * busy * fighting * $step(P) -o cleared(P) * idle * tick__done(act).
   %% The way is clear.
-  was_clear [dyn] : fight(P) * busy * $step(P) -o cleared(P) * idle * tick__done(act).
+  was_clear [dyn] : fight(P) * busy * fighting * $step(P) -o cleared(P) * idle * tick__done(act).
+  %% {B} is coming at me: I take over.
+  guard [dyn] : $oncoming(B) * $resp_lon(R) * $brakes(R) * idle -o busy * alert(B) * tick__active(act) * tick__want(act, motion).
+  %% {B} is coming: I stand and let it come.
+  wait_for [dyn] : $alert(B) * $busy * $tick__grant(act, motion) * closing(B) -o braced(B).
+  %% {B} is beside me, {D}: I strike.
+  move_strike [dyn] : alert(B) * $busy * $tick__grant(act, motion) * $agent_at(C) * $next(C, D, P) * $monster(B, P) -o struck(B).
+  %% It still stands: again.
+  strike_on [dyn] : struck(B) * said(hit) * $monster(B, P) -o alert(B).
+  %% It is no danger now: the way is mine no more.
+  stand_down [dyn] : alert(B) * busy * $resp_lon(none) -o idle * tick__done(act) * tick__release(act, motion).
+  %% It is down: the way is clear.
+  struck_down [dyn] : struck(B) * busy * $resp_lon(none) -o idle * tick__done(act) * tick__release(act, motion).
+  %% I was asked to clear {P}: it is the beast I am on already.
+  absorb [dyn] : fight(P) * $alert(B) * $monster(B, P) -o owed(P).
+  %% I was asked to clear {P}: it is the beast I am on already.
+  absorb_struck [dyn] : fight(P) * $struck(B) * $monster(B, P) -o owed(P).
+  %% Nothing is coming any more: {P} is clear.
+  pay [dyn] : owed(P) * $resp_lon(none) -o cleared(P).
 }

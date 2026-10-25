@@ -20,12 +20,16 @@ pred busy : nav.                            % … a goal taken (reported active 
 stage act {
   %% I go for {G}.
   begin [dyn] : $goto(G) * idle -o busy * tick__active(nav).   % reads its goal: re-putting it out would be a new arrival
+  %% Stopped: I drop my goal.
+  cancel_goto [dyn] : tick__cancel(nav) * busy * goto(V0) -o idle.
+  %% Stopped as I finished: nothing left to drop.
+  cancel_none [dyn] : idle * tick__cancel(nav) -o idle.   % the race: its done and the stop in one director beat (path_pop, stop_cancel: the sampled order)
   %% I am on {G}.
   arrive [dyn] : goto(G) * busy * $agent_at(G) * $stairs_down(G) -o reached(G) * idle * tick__done(nav).
   %% I step {D}, to {P}.
-  move [dyn] : $goto(goal) * $busy * agent_at(C) * $next(C, D, P) * $toward(P) * $step(P) -o agent_at(P).
+  move [dyn] : $goto(goal) * $busy * $tick__grant(nav, motion) * agent_at(C) * $next(C, D, P) * $toward(P) * $step(P) -o agent_at(P).
   %% The door {D} is closed.
-  shut [dyn] : goto(goal) * busy * $agent_at(C) * $next(C, D, P) * $toward(P) * $door(P, closed) -o closed(P) * idle.
+  shut [dyn] : goto(goal) * busy * $tick__grant(nav, motion) * $agent_at(C) * $next(C, D, P) * $toward(P) * $door(P, closed) -o closed(P) * idle.
   %% {B} is in my way, {D}.
-  in_way [dyn] : goto(goal) * busy * $agent_at(C) * $next(C, D, P) * $toward(P) * $monster(B, P) -o guarded(P) * idle.
+  in_way [dyn] : goto(goal) * busy * $tick__grant(nav, motion) * $agent_at(C) * $next(C, D, P) * $toward(P) * $monster(B, P) -o guarded(P) * idle.
 }

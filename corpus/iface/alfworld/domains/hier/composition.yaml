@@ -4,4 +4,4 @@ protocol: iface/protocol_domain.llp
 interfaces: [iface/alfworld.llp]
 specialists: [task, nav, access, grasp, place]
 direct: director
-world: {out: [absent, at, believed, checked, closed, fetch, handsfree, holding, holds, inrecep, lost, notopenable, objat, openable, opened, recat], in: [goto, open, take, put]}
+world: {out: [absent, at, believed, checked, closed, fetch, handsfree, holding, holds, inrecep, lost, notopenable, objat, openable, opened, recat, tick__stop], in: [goto, open, take, put]}

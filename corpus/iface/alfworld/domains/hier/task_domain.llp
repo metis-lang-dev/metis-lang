@@ -46,20 +46,24 @@ pred to(receptacle) : task.               % the destination this fetch names
 pred carry(object) : task.                % carrying it to the destination
 
 stage act {
+  %% Stopped: I drop my goal.
+  cancel_carry_to [dyn] : tick__cancel(task) * carry(V0) * to(V1) -o one.
+  %% Stopped: I drop my goal.
+  cancel_to_want [dyn] : tick__cancel(task) * to(V0) * want(V1) -o one.
   %% I'll fetch {O} to {R}.
   fetch [dyn] : fetch(O, R) * $target(O) * $dest(R) * $inrecep(O, R0) * R0 <> R -o want(O) * to(R) * start * tick__active(task).
   %% {O} is already in {R}: nothing to do.
-  already [dyn] : fetch(O, R) * $target(O) * $dest(R) * $inrecep(O, R) -o done * tick__active(task) * tick__done(task).
+  already [dyn] : fetch(O, R) * $target(O) * $dest(R) * $inrecep(O, R) -o done * tick__done(task).
   %% I left {O} in {R}: I go and look.
   verify [dyn] : fetch(O, R) * $target(O) * $dest(R) * $believed(O, R) -o want(O) * to(R) * goto(R) * tick__active(task).
   %% I can't find {X}: I stop and ask.
-  nowhere [dyn] : fetch(O, R) * $target(O) * $dest(R) * $lost(X) -o stuck(X) * tick__active(task) * tick__stuck(task).
+  nowhere [dyn] : fetch(O, R) * $target(O) * $dest(R) * $lost(X) -o stuck(X) * tick__stuck(task).
   %% I have {O}: to {R}.
   held [dyn] : fetch(O, R) * $target(O) * $dest(R) * $holds(O) -o carry(O) * to(R) * goto(R) * tick__active(task).
   %% {R} is not where this task wants {O}. | put {O} in {D} | stop
-  not_dest [dyn] : fetch(O, R) * $target(O) * $notdest(R) * $dest(D) -o wrong_dest(R) * tick__active(task) * tick__stuck(task).
+  not_dest [dyn] : fetch(O, R) * $target(O) * $notdest(R) * $dest(D) -o wrong_dest(R) * tick__stuck(task).
   %% {O} is not what this task fetches. | put {T} in {R} | stop
-  not_target [dyn] : fetch(O, R) * $nottarget(O) * $target(T) -o wrong_object(O) * tick__active(task) * tick__stuck(task).
+  not_target [dyn] : fetch(O, R) * $nottarget(O) * $target(T) -o wrong_object(O) * tick__stuck(task).
   %% {O} is in {R}: I go there.
   go_for [dyn] : want(O) * start * $inrecep(O, R) -o want(O) * goto(R)  @w look(O, R).
   %% At {R}: I need it open.

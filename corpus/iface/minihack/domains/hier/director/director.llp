@@ -40,6 +40,7 @@ young_grant(a0).
 mature_status(a1).
 mature_status(a2).
 mature_status(a3).
+priority(act, nav).
 
 #init active(task) 1
 #init attention(task) 1

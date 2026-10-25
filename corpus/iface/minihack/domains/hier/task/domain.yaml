@@ -7,5 +7,5 @@ display: MiniHack task
 line: "the task"
 voice: own
 intent: {spec: intent.yaml}
-shared: {reach: in, reached: in, opened: in, cleared: in, refused: in, goto: out, done: out, stuck: out, tick__active: out, tick__done: out, tick__stuck: out}
+shared: {reach: in, reached: in, opened: in, cleared: in, refused: in, goto: out, done: out, stuck: out, tick__active: out, tick__done: out, tick__stuck: out, tick__cancel: in}
 status: {success: [done], failure: [stuck]}

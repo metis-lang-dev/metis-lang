@@ -8,6 +8,8 @@ include "iface/minihack.llp".   % the family's crossing preds, declared once (to
 namespace task produce (dyn).
 pred want(cell) : task.
 stage act {
+  %% Stopped: I drop my goal.
+  cancel_want [dyn] : tick__cancel(task) * want(V0) -o one.
   %% I'll walk onto {G}.
   go [dyn] : reach(G) -o want(G) * goto(G) * tick__active(task).
   %% I am on {G}: done.

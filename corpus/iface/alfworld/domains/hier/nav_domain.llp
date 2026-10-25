@@ -21,6 +21,10 @@ pred at(location) : nav.                  % the world: exactly one
 stage act {
   %% I take my goal.
   begin [dyn] : $goto(X0) * idle -o busy * tick__active(nav).
+  %% Stopped: I drop my goal.
+  cancel_goto [dyn] : tick__cancel(nav) * busy * goto(V0) -o idle.
+  %% Stopped as I finished: nothing left to drop.
+  cancel_none [dyn] : idle * tick__cancel(nav) -o idle.   % the race: its done and the stop in one director beat (path_pop, stop_cancel: the sampled order)
   %% I go to {R}.
   go [dyn] : goto(R) * at(L) * $recat(R, L2) * L <> L2 * busy -o at(L2) * reached(R) * idle * tick__done(nav).
   %% {R} is right here.

@@ -39,6 +39,10 @@ The composer stays shelved; everything in §8 is stated for form S and maps onto
   per goal kind, and one absorb rule for the done-and-stop race: the member gives back `idle` and drops the
   goal itself. The agent only relays `tick__cancel(D)`, like any director `out` to a member `in`; it reads no
   member state, withdraws nothing and reloads nothing.
+- §8.4, the stop's other rules (step 3c, design §14): the director releases what is held (`stop_release`)
+  and passes over the queued tickets (`stop_dequeue`, producing `skipped`); a routing director's wake bridge
+  returns the routing to its start without a reload; `path_stuck` gives stuck its asymmetry. Every signal a
+  director reads is a world line of its tick, and a member's in-copies apply in stamp order.
 - §10.4: a case binds the program's weight ports to constants, `ports: {look: 1.0}`: numeric only, an unknown
   port name refused by name.
 
@@ -687,8 +691,10 @@ pred cancel(specialist) : proto.         % grant side: a STOP, the goal withdraw
   - A CANCEL (`tick__cancel(D)`, nature `signal`, director `out`, member `in`) takes the GOAL. The agent
     relays it like any director `out` to a member `in`, and never writes one itself: a director `out` no rule
     produces is an I2 finding, and a member `in` with no producer an I3 one.
-  - The stop itself is `tick__stop` (0-ary, nature `signal`), a ONE-TICK world signal. The agent asserts it
-    for the stop's tick and retracts it at the next, and the composition lists it under `world.out`.
+  - The stop itself is `tick__stop` (0-ary, nature `signal`), a ONE-TICK world signal, and the composition
+    lists it under `world.out`. The agent applies `+tick__stop` in the director's do-row for the stop's tick,
+    together with the release of the previous tick's outs, and `-tick__stop` one tick later. **Every signal a
+    director reads is a world line of its tick, never a take between ticks.**
   - The director cancels exactly the members on its path, and pops each in the same rule (the generic base):
 
     ```
@@ -697,7 +703,38 @@ pred cancel(specialist) : proto.         % grant side: a STOP, the goal withdraw
 
     The cancel goes only where a goal is, together with the goal's withdrawal. Consuming `path(D)` is the
     once-per-stop guard, so no start token is needed and nothing must be re-armed. The director is not
-    reloaded on a stop: "0 reloads, same sessions" holds.
+    reloaded on a stop: "0 reloads, same sessions" holds. `stop_cancel` withdraws the director's own
+    `tick__goal`, a level, so I4 lists it as a warning beside `path_pop` and `path_off`.
+  - The same tick, the base frees what is held and passes over the queue:
+
+    ```
+    stop_release [dyn] : $tick__stop * holder(D, R) * held(D, A) -o free(R) * tick__revoke(D, R).
+    stop_dequeue [dyn] : $tick__stop * queued(D, R, T) -o skipped(R, T).
+    ```
+
+    - The revoke on a stop is the director's, and the agent relays it.
+    - A dropped ticket becomes `skipped`, never nothing. `serving(R, T)` advances only through a grant at the
+      served ticket or `skip_ticket`, so a ticket simply consumed would leave `serving` on it forever, and
+      every later request would queue and never be granted. With `skipped`, every ticket in
+      [serving, issue) stays queued or skipped, which `preempt` relies on too. A waiter wants again on its
+      next goal.
+  - **A routing director** (one that includes `iface/director_tree_wake.llp`) returns its routing to its
+    start on the same tick, without a reload:
+    - `stop_sleep`: every woken specialist is made `inactive`. This has no `sleep(D)` effect, because the
+      sleep's own `path_off` and release would race the base's stop rules; the agent deactivates the
+      specialists.
+    - `stop_unsend`, `stop_unpend`: the goals sent and put aside are dropped.
+    - `stop_fresh`: no detour is open.
+    - `stop_attend`: the attention is back on the planner.
+  - **Stuck is asymmetric.** Stuck releases a holder and keeps its goal (`release_stuck`); stuck ends a
+    planner's goal and pops its path:
+
+    ```
+    path_stuck [dyn] : tick__stuck(D) * $planner(D) * path(D) * tick__goal(D) -o offpath(D).
+    ```
+
+    A stuck planner has no goal left for a stop to cancel. A planner never holds a resource, so
+    `release_stuck` never takes its report.
   - Every member carries a GENERATED PROTOCOL STUB, two rules per goal kind K and one absorb rule:
 
     ```
@@ -708,8 +745,12 @@ pred cancel(specialist) : proto.         % grant side: a STOP, the goal withdraw
 
     - The member gives back `idle` and drops the goal itself: no host writes a member's internals. A revoke
       touches none of these rules, so a preempted member stays `busy` on its goal.
-    - A member idle with a forwarded goal it has not begun begins and cancels in one beat (`begin_K`, then
-      `cancel_K`), so nothing is withdrawn from outside.
+    - **Relay order.** A member's pending in-copies apply in stamp order, and a cancel is never coalesced
+      into one beat with a goal forwarded at an earlier stamp (as the Moore latch, §8.5 rule 2). A member
+      idle with a forwarded goal it has not begun therefore begins on the goal's beat (`begin_K`) and
+      cancels on the next (`cancel_K`), and nothing is withdrawn from outside. Without the rule, a member
+      that missed a beat would hold the goal and the cancel together, and the sampler could pick
+      `cancel_none` before `begin_K`, leaving the goal alive.
     - `cancel_none` is for the ONE real race: the member's done and the stop land in one director beat, with
       `path_pop` and `stop_cancel` both enabled. It is not a licence for cancels to idle members in
       general; `stop_cancel` sends none.

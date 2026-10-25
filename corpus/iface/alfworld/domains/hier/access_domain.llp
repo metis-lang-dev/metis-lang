@@ -25,6 +25,10 @@ pred checked(receptacle) : access.
 stage act {
   %% I take my goal.
   begin [dyn] : $open(X0) * idle -o busy * tick__active(access).
+  %% Stopped: I drop my goal.
+  cancel_open [dyn] : tick__cancel(access) * busy * open(V0) -o idle.
+  %% Stopped as I finished: nothing left to drop.
+  cancel_none [dyn] : idle * tick__cancel(access) -o idle.   % the race: its done and the stop in one director beat (path_pop, stop_cancel: the sampled order)
   %% I open {R}.
   open_closed [dyn] : open(R) * $at(L) * $recat(R, L) * $openable(R) * closed(R) * busy -o opened(R) * checked(R) * accessible(R) * idle * tick__done(access).
   %% {R} is already open.

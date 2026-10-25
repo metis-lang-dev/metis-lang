@@ -4,4 +4,4 @@ protocol: iface/protocol_domain.llp
 interfaces: [iface/minihack.llp]
 specialists: [task, nav, act]
 direct: director
-world: {out: [agent_at, door, monster, next, reach, said, stairs_down, step, toward], in: [goto, open, fight]}
+world: {out: [agent_at, door, monster, next, reach, said, stairs_down, step, toward, tick__stop], in: [goto, open, fight]}

@@ -6,5 +6,6 @@ records: records/
 display: MiniHack act
 line: "the act"
 voice: own
-shared: {agent_at: world-private, step: world-private, door: world-private, monster: world-private, next: world-private, said: world-private, open: in, fight: in, opened: out, cleared: out, tick__active: out, tick__done: out, motion: resource}
+shared: {agent_at: world-private, step: world-private, door: world-private, monster: world-private, next: world-private, said: world-private, open: in, fight: in, opened: out, cleared: out, tick__active: out, tick__done: out, oncoming: world-private, closing: world-private, resp_lon: world-private, tick__want: out, tick__release: out, tick__grant: in, tick__cancel: in, motion: resource}
 status: {success: [opened, cleared], failure: []}
+gating: program
