@@ -1,13 +1,16 @@
 % grasp_domain — taking things (alf-hierarchy step 1, the architect, 2026-10-22): picking an
-% object up as a specialist. Goal in: take(O); result out: taken(O), or refused(O) when the agent
+% object up as a specialist. Goal in: take(O); result out: taken(O), or refused_take(O) when the agent
 % is elsewhere, the receptacle is shut, or the hands are full (each with its reason line).
 catalog grasp_domain 1.
 provenance text "ALFWorld pick-up as a lifted specialist: take an object from where it is" "2026-10-22".
 layers (dyn).
 stages (act).
 types (receptacle location object).   % completed by the instance that includes this file (spec 12)
+include "iface/alfworld.llp".   % the family's crossing preds, declared once (tools/iface_gen.py)
 
 namespace grasp produce (dyn).
+pred idle : grasp.                     % the tree: no goal taken
+pred busy : grasp.                     % … a goal taken (reported active once)
 
 pred recat(receptacle, location) : grasp.    % the projection's, as openable/notopenable (the map)
 pred openable(receptacle) : grasp.
@@ -21,20 +24,18 @@ pred closed(receptacle) : grasp.
 pred holds(object) : grasp.
 pred holding : grasp.
 pred handsfree : grasp.
-pred take(object) : grasp.                % the goal (in)
-pred taken(object) : grasp.               % the result (out)
-pred refused(object) : grasp.             % the refusal (out)
-pred elsewhere(receptacle) : grasp.      % the refusal the director detours: I am not there
 
 stage act {
+  %% I take my goal.
+  begin [dyn] : $take(X0) * idle -o busy * tick__active(grasp).
   %% I take {O} from {R}.
-  take_open [dyn] : take(O) * $at(L) * $recat(R, L) * inrecep(O, R) * objat(O, L) * handsfree * $openable(R) * $opened(R) -o holds(O) * holding * taken(O).
+  take_open [dyn] : take(O) * $at(L) * $recat(R, L) * inrecep(O, R) * objat(O, L) * handsfree * $openable(R) * $opened(R) * busy -o holds(O) * holding * taken(O) * idle * tick__done(grasp).
   %% I take {O} from {R}.
-  take_plain [dyn] : take(O) * $at(L) * $recat(R, L) * inrecep(O, R) * objat(O, L) * handsfree * $notopenable(R) -o holds(O) * holding * taken(O).
+  take_plain [dyn] : take(O) * $at(L) * $recat(R, L) * inrecep(O, R) * objat(O, L) * handsfree * $notopenable(R) * busy -o holds(O) * holding * taken(O) * idle * tick__done(grasp).
   %% I am not where {O} is.
-  not_here [dyn] : take(O) * $at(L) * $inrecep(O, R) * $recat(R, L2) * L <> L2 -o elsewhere(R).
+  not_here [dyn] : take(O) * $at(L) * $inrecep(O, R) * $recat(R, L2) * L <> L2 * busy -o elsewhere(R) * idle.
   %% {R} is shut: I cannot reach {O}.
-  shut [dyn] : take(O) * $at(L) * $recat(R, L) * $inrecep(O, R) * $closed(R) -o refused(O).
+  shut [dyn] : take(O) * $at(L) * $recat(R, L) * $inrecep(O, R) * $closed(R) * busy -o refused_take(O) * idle * tick__stuck(grasp).
   %% My hands are full.
-  hands_full [dyn] : take(O) * $at(L) * $objat(O, L) * $holding -o refused(O).
+  hands_full [dyn] : take(O) * $at(L) * $objat(O, L) * $holding * busy -o refused_take(O) * idle * tick__stuck(grasp).
 }

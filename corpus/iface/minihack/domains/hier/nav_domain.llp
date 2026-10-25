@@ -4,6 +4,7 @@ provenance text "MiniHack's navigator: the host's path, one step a beat" "2026-1
 layers (dyn).
 stages (act).
 types (cell beast).
+include "iface/minihack.llp".   % the family's crossing preds, declared once (tools/iface_gen.py)
 type dir {n e s w ne se sw nw}.
 type doorstate {open closed}.
 namespace nav produce (dyn).
@@ -14,17 +15,17 @@ pred monster(beast, cell) : nav.
 pred stairs_down(cell) : nav.              % the host's map: the stairs, under the robot too
 pred next(cell, dir, cell) : nav.        % the host's: between bound cells, on the live session
 pred toward(cell) : nav.                   % the host's: the next cell of its path
-pred goto(cell) : nav.
-pred reached(cell) : nav.
-pred closed(cell) : nav.
-pred guarded(cell) : nav.
+pred idle : nav.                            % the tree: no goal taken
+pred busy : nav.                            % … a goal taken (reported active once)
 stage act {
+  %% I go for {G}.
+  begin [dyn] : $goto(G) * idle -o busy * tick__active(nav).   % reads its goal: re-putting it out would be a new arrival
   %% I am on {G}.
-  arrive [dyn] : goto(G) * $agent_at(G) * $stairs_down(G) -o reached(G).   % a frontier goal is no arrival: the host rebinds it
+  arrive [dyn] : goto(G) * busy * $agent_at(G) * $stairs_down(G) -o reached(G) * idle * tick__done(nav).
   %% I step {D}, to {P}.
-  move [dyn] : $goto(goal) * agent_at(C) * $next(C, D, P) * $toward(P) * $step(P) -o agent_at(P).   % only with its goal
+  move [dyn] : $goto(goal) * $busy * agent_at(C) * $next(C, D, P) * $toward(P) * $step(P) -o agent_at(P).
   %% The door {D} is closed.
-  shut [dyn] : goto(goal) * $agent_at(C) * $next(C, D, P) * $toward(P) * $door(P, closed) -o closed(P).   % the host's goal: its route's end
+  shut [dyn] : goto(goal) * busy * $agent_at(C) * $next(C, D, P) * $toward(P) * $door(P, closed) -o closed(P) * idle.
   %% {B} is in my way, {D}.
-  in_way [dyn] : goto(goal) * $agent_at(C) * $next(C, D, P) * $toward(P) * $monster(B, P) -o guarded(P).
+  in_way [dyn] : goto(goal) * busy * $agent_at(C) * $next(C, D, P) * $toward(P) * $monster(B, P) -o guarded(P) * idle.
 }

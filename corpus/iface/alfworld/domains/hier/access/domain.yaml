@@ -6,5 +6,5 @@ records: records/
 display: ALFWorld access (pick_and_place_simple_tomato_none_microwave_13__trial_t20190908_125158_098734)
 line: "access"
 voice: own
-shared: {at: world-private, recat: world-private, openable: world-private, notopenable: world-private, opened: world-private, closed: world-private, checked: world-private, open: in, accessible: out, refused: out, elsewhere: out, motion: resource}
-status: {success: [accessible], failure: [refused]}
+shared: {at: world-private, recat: world-private, openable: world-private, notopenable: world-private, opened: world-private, closed: world-private, checked: world-private, open: in, accessible: out, elsewhere: out, tick__active: out, tick__done: out, motion: resource}
+status: {success: [accessible], failure: []}

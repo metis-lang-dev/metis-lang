@@ -8,3 +8,4 @@ include "../tick_types.llp".
 
 #steps 8
 #seeds 1
+#init idle 1

@@ -1,70 +1,52 @@
 interface composition.yaml
 iface protocol_domain home:iface/protocol_domain.llp 747bdb0d87929296645e17e42ca8378d9086de56a26070e6fdf964f3683f298d
+iface minihack_iface iface/minihack.llp d6fb1ca3ab924f6f4d108e671a0c11bcc49e940a7e19ea5053945abc01a841d8
 capacity capacity.llp 154af6234d85acb6901f7a8a7bbc108fd9132725007314b4aec9ccd90436c61c
 member director direct director/director.llp key 79a2e18f11559b295a11347aa26bab5099a4180fe2af5279ac2e7420918f341e ei 2cb7d88803759b5ec87d55dfe7bdeda1b3da84bc82409fcca19ea1a349c1e9a6
-member task specialist task/task.llp key 9e22b0dd1d9f76be96a3b28ca4a7c2260b455e4900c88b269d2f0974a53c88bd ei b029f4662281f72e1a6bb4378f33a51236fbe98302fa2d7baab47b05d50a15d6
-member nav specialist nav/nav.llp key b7703a5622ac26fd25990e891e7d06421e0fed28f654c92a255d0a8999b68944 ei 0fa940d8048406a7e2b460788126ec9003adb9a57fb8b2813991fdbaded14a1b
-member act specialist act/act.llp key cda2f82366e4a313da8336f5171ae11f062ac954f3df44ad4eec49f8729fd3ea ei d9e9a1e3c1501ba39d649835b032766c2f40416d21493dcf50d30abd9e447b3b
-package 3e3a1ba770151c5170e2da0269b3cacce66e56b0ce873f055ee5b030a8c0154f
+member task specialist task/task.llp key a3ca5dee5bc486c5dad1860fd8057a5f2c51039b209a47ee979a51ffbaba10ef ei dcd16c3062fafa2d8480582087061d693343eab3595b9c3d88fa15c6be897051
+member nav specialist nav/nav.llp key 28882f3a9cb2c718bbcd9f82f74996f60229288b30eb805abb83a89d8cbdf583 ei 2a0570f4eab2d038bfa6170789f8f273dcb709586f3265769af67bd107b6952f
+member act specialist act/act.llp key 02a0506db18779c634f73a408f52dcd3503835fb96b087a2485769645d3c223d ei 71d2d61d03bf171b9b570bc3a490f05735b12eb54ff86a5993e82d10edd6b707
+package 053c018caef1bdfb72fc30088cb6ee2445c05559299b888d9b78849562de915e
 include dir ../../director_domain.llp ../director_domain.llp key eae3a58005b47eba86ebcb7f5352bcbbf73e4a33bf26c2faba28eff453a6574e by director
 include home iface/director_tree_domain.llp home:iface/director_tree_domain.llp key f1e839e33378a54441b557a2645ddc91d4b4ad59c0b839a29bbd9eda81dac5cd by director
 include dir protocol_domain.llp home:iface/protocol_domain.llp key 43b383330c3bc353f22d6167d42e51e4a163425feea4a816f87e5ce02c053f5d by director task nav act
 include home iface/director_tree_wake.llp home:iface/director_tree_wake.llp key 252e1fe2ca61f9653e19a162df57493384b874a78170cbfd42f2594e04a5a440 by director
-include dir ../task_domain.llp task_domain.llp key 00c743a853eea8fd6e8eb6d93df6d928f109b80dee93a26dec6207fdafb119ec by task
+include dir ../task_domain.llp task_domain.llp key 05d7917a4fb1465f64dc57730c09d905b3a1355805bc29e6486a829db653e6de by task
+include dir iface/minihack.llp iface/minihack.llp key 315fc7b5080434a9e93289f9999f68fae1caf218828996d04e05b146c2e2be62 by task nav act
 include dir ../capacity.llp capacity.llp key 154af6234d85acb6901f7a8a7bbc108fd9132725007314b4aec9ccd90436c61c by task nav act
 include dir ../tick_types.llp tick_types.llp key 1b6bb2856ccee308a7eac539b5bb7f1524b607dd5e13c15c64d16bdf08c68b98 by task nav act
-include dir ../nav_domain.llp nav_domain.llp key ae9ad363ba7a87a27001f93857ce8f0fe498315a08679b37d85818d122bee6fa by nav
-include dir ../act_domain.llp act_domain.llp key baf18eb6f9bbfb5a0cb03aeccabdfb067b60833e578fd094315e83fed9943a5b by act
+include dir ../nav_domain.llp nav_domain.llp key e9296982846211df8874e4f1aa4d487fbf8027d891fade4a5b76b1ca7fef0061 by nav
+include dir ../act_domain.llp act_domain.llp key be7637846026444c4b24b1188cbffa0c353fd17e9a218bd09440c6057966ef17 by act
 cut 20
   cleared reading: out [act(o)] in [task]
   closed reading: out [nav(o)] in []
   done reading: out [task(o)] in []
-  fight signal: out [director(relay, transitional)] in [act(co) world]
+  fight signal: out [director(relay, transitional)] in [act(cor) world]
   goto signal: out [task(o)] in [nav(cr) world]
   guarded reading: out [nav(o)] in []
   motion resource: out [] in [] resource [nav act]
-  open signal: out [director(relay, transitional)] in [act(c) world]
+  open signal: out [director(relay, transitional)] in [act(cr) world]
   opened reading: out [act(o)] in [task]
   reach signal: out [world] in [task(c)]
   reached signal: out [nav(o)] in [task(c)]
-  refused signal: out [act director(relay, transitional)] in [task(c)]
+  refused signal: out [director(relay, transitional)] in [task(c)]
   stuck reading: out [task(o)] in []
-  tick__active signal: out [] in [director(c)]
-  tick__done signal: out [] in [director(c)]
+  tick__active signal: out [task(o) nav(o) act(o)] in [director(c)]
+  tick__done signal: out [task(o) nav(o) act(o)] in [director(c)]
   tick__goal state: out [director(co)] in []
   tick__grant reading: out [director(o)] in []
   tick__revoke reading: out [director(o)] in []
   tick__status reading: out [host(transitional)] in [director]
-  tick__stuck signal: out [] in [director(c)]
-private director=32 task=1 nav=7 act=9
-error I2 act: out refused is produced by no rule (roles -)
-error I10 task: shared reach is declared by task itself (task_domain.llp), not by an interface package
-error I10 task: shared reached is declared by task itself (task_domain.llp), not by an interface package
-error I10 task: shared opened is declared by task itself (task_domain.llp), not by an interface package
-error I10 task: shared cleared is declared by task itself (task_domain.llp), not by an interface package
-error I10 task: shared refused is declared by task itself (task_domain.llp), not by an interface package
-error I10 task: shared goto is declared by task itself (task_domain.llp), not by an interface package
-error I10 task: shared done is declared by task itself (task_domain.llp), not by an interface package
-error I10 task: shared stuck is declared by task itself (task_domain.llp), not by an interface package
-error I10 nav: shared goto is declared by nav itself (nav_domain.llp), not by an interface package
-error I10 nav: shared reached is declared by nav itself (nav_domain.llp), not by an interface package
-error I10 nav: shared closed is declared by nav itself (nav_domain.llp), not by an interface package
-error I10 nav: shared guarded is declared by nav itself (nav_domain.llp), not by an interface package
-error I10 act: shared open is declared by act itself (act_domain.llp), not by an interface package
-error I10 act: shared fight is declared by act itself (act_domain.llp), not by an interface package
-error I10 act: shared opened is declared by act itself (act_domain.llp), not by an interface package
-error I10 act: shared cleared is declared by act itself (act_domain.llp), not by an interface package
-error I10 act: shared refused is declared by act itself (act_domain.llp), not by an interface package
+  tick__stuck signal: out [task(o)] in [director(c)]
+private director=32 task=1 nav=9 act=11
 warning I2 task: in opened is read by no rule (in-unread)
 warning I2 task: in cleared is read by no rule (in-unread)
 warning I2 director: in tick__status is read by no rule (in-unread)
-warning I3 director: in tick__active is a report nobody sends
-warning I3 director: in tick__done is a report nobody sends
-warning I3 director: in tick__stuck is a report nobody sends
 warning I4 director: rule path_pop withdraws its own out tick__goal (a level the direct member may withdraw)
 warning I4 director: rule path_off withdraws its own out tick__goal (a level the direct member may withdraw)
+note I3 task: in refused is produced only by director's relay facts, until goal(S, K) (§8.4) (transitional)
 note I3 act: in open is produced only by director's relay facts, until goal(S, K) (§8.4) (transitional)
 note I3 act: in fight is produced only by director's relay facts, until goal(S, K) (§8.4) (transitional)
 note I3 director: in tick__status is produced only by the host's status assertion (amendment 1b) (transitional)
-result 18 error(s), 8 warning(s), 3 note(s)
-rc 1
+result 0 error(s), 5 warning(s), 4 note(s)
+rc 0

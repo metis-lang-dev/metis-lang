@@ -4,6 +4,7 @@ provenance text "MiniHack's one-cell actions: a door, a beast beside the robot" 
 layers (dyn).
 stages (act).
 types (cell beast).
+include "iface/minihack.llp".   % the family's crossing preds, declared once (tools/iface_gen.py)
 type dir {n e s w ne se sw nw}.
 type doorstate {open closed}.
 type said_kind {ate blocked cant died door_closed door_here door_locked door_opened fell_pit hit hunger hurt killed nevermind nothing_here nothing_to_apply other picked prompt see_here stopped trap_door unlocked welcome whamm}.
@@ -14,33 +15,34 @@ pred door(cell, doorstate) : act.
 pred monster(beast, cell) : act.
 pred said(said_kind) : act.             % the world's message, one beat
 pred next(cell, dir, cell) : act.        % the host's: between bound cells, on the live session
-pred open(cell) : act.
-pred fight(cell) : act.
 pred tried(cell) : act.
 pred kicked(cell) : act.
 pred swung(cell) : act.
-pred opened(cell) : act.
-pred cleared(cell) : act.
-pred refused(cell) : act.
+pred idle : act.                            % the tree: no goal taken
+pred busy : act.                            % … a goal taken (reported active once)
 stage act {
+  %% I see to {P}.
+  begin_open [dyn] : $open(P) * idle -o busy * tick__active(act).
+  %% I take on {P}.
+  begin_fight [dyn] : $fight(P) * idle -o busy * tick__active(act).
   %% The door {D} is closed: I open it.
-  open_door [dyn] : open(P) * $agent_at(C) * $next(C, D, P) * $door(P, closed) -o tried(P).
+  open_door [dyn] : open(P) * $busy * $agent_at(C) * $next(C, D, P) * $door(P, closed) -o tried(P).
   %% The door {D} is locked: I kick it.
   kick_door [dyn] : tried(P) * said(door_locked) * $agent_at(C) * $next(C, D, P) * $door(P, closed) -o kicked(P).
   %% It holds: I kick it again.
   kick_on [dyn] : kicked(P) * said(whamm) * $agent_at(C) * $next(C, D, P) * $door(P, closed) -o kicked(P).
   %% The door is broken: the way is open.
-  door_gone [dyn] : kicked(P) * $step(P) -o opened(P).
+  door_gone [dyn] : kicked(P) * busy * $step(P) -o opened(P) * idle * tick__done(act).
   %% The door is open.
-  door_open [dyn] : tried(P) * $door(P, open) -o opened(P).
+  door_open [dyn] : tried(P) * busy * $door(P, open) -o opened(P) * idle * tick__done(act).
   %% The door is already open.
-  was_open [dyn] : open(P) * $door(P, open) -o opened(P).
+  was_open [dyn] : open(P) * busy * $door(P, open) -o opened(P) * idle * tick__done(act).
   %% {B} is in my way, {D}: I fight it.
-  move_fight [dyn] : fight(P) * $agent_at(C) * $next(C, D, P) * $monster(B, P) -o swung(P).
+  move_fight [dyn] : fight(P) * $busy * $agent_at(C) * $next(C, D, P) * $monster(B, P) -o swung(P).
   %% It still stands: again.
   fight_on [dyn] : swung(P) * said(hit) * $monster(B, P) -o fight(P).
   %% The way is clear.
-  clear [dyn] : swung(P) * $step(P) -o cleared(P).
+  clear [dyn] : swung(P) * busy * $step(P) -o cleared(P) * idle * tick__done(act).
   %% The way is clear.
-  was_clear [dyn] : fight(P) * $step(P) -o cleared(P).
+  was_clear [dyn] : fight(P) * busy * $step(P) -o cleared(P) * idle * tick__done(act).
 }

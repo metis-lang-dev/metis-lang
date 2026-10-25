@@ -4,21 +4,14 @@ provenance text "MiniHack's task: walk onto the goal, the specialists asked one 
 layers (dyn).
 stages (act).
 types (cell).
+include "iface/minihack.llp".   % the family's crossing preds, declared once (tools/iface_gen.py)
 namespace task produce (dyn).
-pred reach(cell) : task.                   % the one way in: the person's REACH
 pred want(cell) : task.
-pred goto(cell) : task.
-pred reached(cell) : task.
-pred opened(cell) : task.
-pred cleared(cell) : task.
-pred refused(cell) : task.
-pred done : task.
-pred stuck(cell) : task.
 stage act {
   %% I'll walk onto {G}.
-  go [dyn] : reach(G) -o want(G) * goto(G).
+  go [dyn] : reach(G) -o want(G) * goto(G) * tick__active(task).
   %% I am on {G}: done.
-  arrived [dyn] : want(G) * reached(G) -o done.
+  arrived [dyn] : want(G) * reached(G) -o done * tick__done(task).
   %% {X} was refused and I have no rule for it: I stop and ask.
-  stuck_on [dyn] : want(G) * refused(X) -o stuck(X).
+  stuck_on [dyn] : want(G) * refused(X) -o stuck(X) * tick__stuck(task).
 }

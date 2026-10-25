@@ -5,7 +5,7 @@ include "../../director_domain.llp".
 include "iface/director_tree_domain.llp".
 include "iface/director_tree_wake.llp".
 type domain {nav access grasp place task}.
-type kind {accessible done elsewhere fetch goto open placed put reached refused stuck take taken wrong_dest wrong_object}.
+type kind {accessible done elsewhere fetch goto open placed put reached refused refused_put refused_take stuck take taken wrong_dest wrong_object}.
 
 specialist(nav).
 specialist(access).
@@ -21,6 +21,8 @@ handles(task, reached).
 handles(task, accessible).
 handles(task, taken).
 handles(task, placed).
+handles(task, refused_take).
+handles(task, refused_put).
 handles(task, refused).
 result(reached).
 result(accessible).

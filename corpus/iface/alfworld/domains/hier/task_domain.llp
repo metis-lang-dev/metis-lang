@@ -14,6 +14,7 @@ provenance text "ALFWorld pick-and-place as the task domain over four specialist
 layers (dyn).
 stages (act).
 types (object receptacle thing).   % completed by the instance that includes this file (spec 12)
+include "iface/alfworld.llp".   % the family's crossing preds, declared once (tools/iface_gen.py)
 
 namespace task produce (dyn).
 
@@ -21,6 +22,8 @@ bwd target(object).                       % the task: an object the task wants m
 bwd dest(receptacle).                     % … and a receptacle it wants it in
 bwd notdest(receptacle).                  % the complements, given by the instance (over roles: task/task.llp)
 bwd nottarget(object).
+bwd thing_of(object, thing).              % an object as a thing (stuck's type), and a receptacle: the instance's casts
+bwd place_of(receptacle, thing).
 
 % the belief that the object is in the receptacle (semantic-map s-d4270bed): the host answers it from
 % the semantic map, normalized over the places asserted to hold it
@@ -34,43 +37,29 @@ pred absent(object, receptacle) : task.
 pred lost(thing) : task.                  % … and no place left to look (a thing: stuck's own type)
 pred believed(object, receptacle) : task. % … in its destination by an earlier look, not seen there now: go and look
 % the sub-goals (out)
-pred goto(receptacle) : task.
-pred open(receptacle) : task.
-pred take(object) : task.
-pred put(object, receptacle) : task.
 % the results (in)
-pred reached(receptacle) : task.
-pred accessible(receptacle) : task.
-pred taken(object) : task.
-pred placed(object, receptacle) : task.
-pred refused(thing) : task.
 % the one way in: the goal, typed by the person (the FETCH intent) or seeded by the driver
-pred fetch(object, receptacle) : task.
 % the task's own tokens
 pred start : task.                        % the first sub-goal not yet asked (once)
 pred want(object) : task.                 % fetching the object
 pred to(receptacle) : task.               % the destination this fetch names
 pred carry(object) : task.                % carrying it to the destination
-pred done : task.
-pred stuck(thing) : task.                 % a specialist refused and no rule handles it
-pred wrong_dest(receptacle) : task.       % the fetch names a receptacle this task does not want
-pred wrong_object(object) : task.         % … or an object it does not want (a silent substitution otherwise: opus's F1)
 
 stage act {
   %% I'll fetch {O} to {R}.
-  fetch [dyn] : fetch(O, R) * $target(O) * $dest(R) * $inrecep(O, R0) * R0 <> R -o want(O) * to(R) * start.
+  fetch [dyn] : fetch(O, R) * $target(O) * $dest(R) * $inrecep(O, R0) * R0 <> R -o want(O) * to(R) * start * tick__active(task).
   %% {O} is already in {R}: nothing to do.
-  already [dyn] : fetch(O, R) * $target(O) * $dest(R) * $inrecep(O, R) -o done.
+  already [dyn] : fetch(O, R) * $target(O) * $dest(R) * $inrecep(O, R) -o done * tick__active(task) * tick__done(task).
   %% I left {O} in {R}: I go and look.
-  verify [dyn] : fetch(O, R) * $target(O) * $dest(R) * $believed(O, R) -o want(O) * to(R) * goto(R).
+  verify [dyn] : fetch(O, R) * $target(O) * $dest(R) * $believed(O, R) -o want(O) * to(R) * goto(R) * tick__active(task).
   %% I can't find {X}: I stop and ask.
-  nowhere [dyn] : fetch(O, R) * $target(O) * $dest(R) * $lost(X) -o stuck(X).
+  nowhere [dyn] : fetch(O, R) * $target(O) * $dest(R) * $lost(X) -o stuck(X) * tick__active(task) * tick__stuck(task).
   %% I have {O}: to {R}.
-  held [dyn] : fetch(O, R) * $target(O) * $dest(R) * $holds(O) -o carry(O) * to(R) * goto(R).
+  held [dyn] : fetch(O, R) * $target(O) * $dest(R) * $holds(O) -o carry(O) * to(R) * goto(R) * tick__active(task).
   %% {R} is not where this task wants {O}. | put {O} in {D} | stop
-  not_dest [dyn] : fetch(O, R) * $target(O) * $notdest(R) * $dest(D) -o wrong_dest(R).
+  not_dest [dyn] : fetch(O, R) * $target(O) * $notdest(R) * $dest(D) -o wrong_dest(R) * tick__active(task) * tick__stuck(task).
   %% {O} is not what this task fetches. | put {T} in {R} | stop
-  not_target [dyn] : fetch(O, R) * $nottarget(O) * $target(T) -o wrong_object(O).
+  not_target [dyn] : fetch(O, R) * $nottarget(O) * $target(T) -o wrong_object(O) * tick__active(task) * tick__stuck(task).
   %% {O} is in {R}: I go there.
   go_for [dyn] : want(O) * start * $inrecep(O, R) -o want(O) * goto(R)  @w look(O, R).
   %% At {R}: I need it open.
@@ -80,13 +69,13 @@ stage act {
   %% At {R}: I need it open to see.
   open_look [dyn] : want(O) * reached(R) * $to(R) * $believed(O, R) -o want(O) * open(R).
   %% {O} is in {R}: done.
-  verified [dyn] : want(O) * accessible(R) * $to(R) * $inrecep(O, R) -o done.
+  verified [dyn] : want(O) * accessible(R) * $to(R) * $inrecep(O, R) -o done * tick__done(task).
   %% {O} is not in {R}: I look elsewhere.
   not_here [dyn] : want(O) * reached(R) * $absent(O, R) -o want(O) * start.
   %% {O} is not in {R}: I look elsewhere.
   not_in [dyn] : want(O) * accessible(R) * $absent(O, R) -o want(O) * start.
   %% I can't find {X}: I stop and ask.
-  lost_it [dyn] : want(O) * start * $lost(X) -o stuck(X).
+  lost_it [dyn] : want(O) * start * $lost(X) -o stuck(X) * tick__stuck(task).
   %% I have {O}: to {R}.
   go_dest [dyn] : want(O) * taken(O) * $to(R) -o carry(O) * goto(R).
   %% At {R}: I need it open.
@@ -94,9 +83,13 @@ stage act {
   %% {R} is accessible: I put {O} in.
   put_dest [dyn] : carry(O) * accessible(R) * $to(R) -o carry(O) * put(O, R).
   %% {O} is in {R}: done.
-  finish [dyn] : carry(O) * placed(O, R) -o done.
+  finish [dyn] : carry(O) * placed(O, R) -o done * tick__done(task).
   %% {X} was refused and I have no rule for it: I stop and ask.
-  stuck_fetch [dyn] : want(O) * refused(X) -o stuck(X).
+  stuck_fetch [dyn] : want(O) * refused(X) -o stuck(X) * tick__stuck(task).
   %% {X} was refused and I have no rule for it: I stop and ask.
-  stuck_carry [dyn] : carry(O) * refused(X) -o stuck(X).
+  stuck_carry [dyn] : carry(O) * refused(X) -o stuck(X) * tick__stuck(task).
+  %% {X} was refused and I have no rule for it: I stop and ask.
+  stuck_take [dyn] : want(O) * refused_take(X) * $thing_of(X, T) -o stuck(T) * tick__stuck(task).
+  %% {X} was refused and I have no rule for it: I stop and ask.
+  stuck_put [dyn] : carry(O) * refused_put(X) * $place_of(X, T) -o stuck(T) * tick__stuck(task).
 }

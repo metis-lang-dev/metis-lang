@@ -6,5 +6,5 @@ records: records/
 display: ALFWorld grasp (pick_and_place_simple_tomato_none_microwave_13__trial_t20190908_125158_098734)
 line: "grasp"
 voice: own
-shared: {at: world-private, recat: world-private, openable: world-private, notopenable: world-private, objat: world-private, inrecep: world-private, opened: world-private, closed: world-private, holds: world-private, holding: world-private, handsfree: world-private, take: in, taken: out, refused: out, elsewhere: out, motion: resource}
-status: {success: [taken], failure: [refused]}
+shared: {at: world-private, recat: world-private, openable: world-private, notopenable: world-private, objat: world-private, inrecep: world-private, opened: world-private, closed: world-private, holds: world-private, holding: world-private, handsfree: world-private, take: in, taken: out, refused_take: out, elsewhere: out, tick__active: out, tick__done: out, tick__stuck: out, motion: resource}
+status: {success: [taken], failure: [refused_take]}

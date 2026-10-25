@@ -5,3 +5,5 @@ include "../nav_domain.llp".
 include "../capacity.llp".
 include "iface/protocol_domain.llp".
 include "../tick_types.llp".
+
+#init idle 1

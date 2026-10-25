@@ -50,6 +50,7 @@ mature_status(a3).
 #init issue(motion,t0) 1
 #init serving(motion,t0) 1
 #init path(task) 1
+#init tick__goal(task) 1
 #init offpath(nav) 1
 #init offpath(act) 1
 #init nowant(nav) 1

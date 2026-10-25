@@ -6,6 +6,6 @@ records: records/
 display: ALFWorld task (pick_and_place_simple_tomato_none_microwave_13__trial_t20190908_125158_098734)
 line: "task"
 voice: own
-shared: {inrecep: world-private, holds: world-private, absent: world-private, lost: world-private, believed: world-private, fetch: in, reached: in, accessible: in, taken: in, placed: in, refused: in, goto: out, open: out, take: out, put: out, done: out, stuck: out, wrong_dest: out, wrong_object: out}
+shared: {inrecep: world-private, holds: world-private, absent: world-private, lost: world-private, believed: world-private, fetch: in, reached: in, accessible: in, taken: in, placed: in, refused_take: in, refused_put: in, refused: in, goto: out, open: out, take: out, put: out, done: out, stuck: out, wrong_dest: out, wrong_object: out, tick__active: out, tick__done: out, tick__stuck: out}
 status: {success: [done], failure: [stuck, wrong_dest, wrong_object]}
 intent: {spec: intent.yaml}

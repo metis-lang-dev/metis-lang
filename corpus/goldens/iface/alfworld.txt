@@ -1,85 +1,57 @@
 interface composition.yaml
 iface protocol_domain home:iface/protocol_domain.llp 747bdb0d87929296645e17e42ca8378d9086de56a26070e6fdf964f3683f298d
+iface alfworld_iface iface/alfworld.llp 79e4a04ce633a7b3385e20c5a57a354dd0fd295f149fe9e43e2e411562beb425
 capacity capacity.llp f07d764186e208ce11e3ea7febf40d00b43883bd59e7b27cd1d85fe78ec77f08
-member director direct director/director.llp key bf90115dfd274da8f0fd8625f08026452accf5a55bc0554999b27076b45ce512 ei 2cb7d88803759b5ec87d55dfe7bdeda1b3da84bc82409fcca19ea1a349c1e9a6
-member task specialist task/task.llp key f0ce5664ea253355ae3f2d133f96f0d5e5b1939914d62b8c88facaead5757458 ei a773757d76c46ebafebdc684e5f46d0a683ec31a754544c6cde14f32ef0a5e6a
-member nav specialist nav/nav.llp key a53cc7172f00c92cd29fba8ebade1dc3d7f44152e5d9af62329cbdf09cc431b1 ei a6661577476b026ce4e528881c25826b1a127cb4fff93c0aca08f96db70632a3
-member access specialist access/access.llp key 1b00aa906a35642c77c2c1df45fe8fc86da06ff7477557b7ae5976376ce8036f ei 01598698e82f0ab6dcac15a5f9b6f1f2f613acb534ff8feef7d6329038670f47
-member grasp specialist grasp/grasp.llp key 8657c46b0340292122deaeb0a5e33ef543a83a33ff10642e81f504d9079e18d1 ei 0d2d64865247de79fdd493125ae57e9c2e914ffefaac11d275dc7e86d9d7b53c
-member place specialist place/place.llp key a8b425e8b19d9d560092bb1be1e797dcbe288a8e6c462889d5e45afab261e8fc ei 317b389b131686ff3fe84c10b140b7fe4a1a11c7c7fee2353400d25c2f07f196
-package 92b447f4dd054891706bcea6f419ebc1ecd3587fc19148cbd54e876858e69bc3
+member director direct director/director.llp key fd86093334a9f38ce79e8dec39bf8588a4222581f2756acaf6998e83deb611e2 ei 2cb7d88803759b5ec87d55dfe7bdeda1b3da84bc82409fcca19ea1a349c1e9a6
+member task specialist task/task.llp key 825bed13d62ccdfc9699fd549b8d825b56ecc29493255c08bb8b3f525a2cd6f7 ei 702866ae391ad128759f999600ffe81ce929c5841b071916f80adf665aa7da2d
+member nav specialist nav/nav.llp key 45485db409f5664524130b13e1e3cec67db0047b1b2a660f522d325858a0defd ei cd28ab11d82f008af57414ce7aa5b5378af9503572e863ba115d4791b432b610
+member access specialist access/access.llp key f2aeaea7461b3b2d162e09f7d94d47d12185a832966358885c3e624cc39f6971 ei cbc7b4748384b3fec5eb5d8b32d14cc8b179e2648f1dbe9e2f32dd5b53422cc9
+member grasp specialist grasp/grasp.llp key 4935e0cf281c04615164c9815aa92d0b6a50b463a1bb819600247167892e2ac5 ei fbfd7ada76fe74a06c606988c541d87ab66e068ff810f1a7ce193c1c42c54cc9
+member place specialist place/place.llp key d45e0e2dc7d21e46cd8a90fb8f4b0b5528d13576201d91d08a418de73585183b ei 952baa8012455122472d8002947a346b0aed5002f4c7d32ab6ae17e66886724d
+package f9ef895de8466732444152c1e2c94be1040c7d65224c1c7b3aa4f277d1b10924
 include dir ../../director_domain.llp ../director_domain.llp key eae3a58005b47eba86ebcb7f5352bcbbf73e4a33bf26c2faba28eff453a6574e by director
 include home iface/director_tree_domain.llp home:iface/director_tree_domain.llp key f1e839e33378a54441b557a2645ddc91d4b4ad59c0b839a29bbd9eda81dac5cd by director
 include dir protocol_domain.llp home:iface/protocol_domain.llp key 43b383330c3bc353f22d6167d42e51e4a163425feea4a816f87e5ce02c053f5d by director task nav access grasp place
 include home iface/director_tree_wake.llp home:iface/director_tree_wake.llp key 252e1fe2ca61f9653e19a162df57493384b874a78170cbfd42f2594e04a5a440 by director
-include dir ../task_domain.llp task_domain.llp key eecfd0e1d34cadbb978471f85592d6961a6f4efe244633c7d586582561716272 by task
+include dir ../task_domain.llp task_domain.llp key 1756e1d99c78323be66d31dee4b53c9eb2bb486c80933657fcd2fd8174885b62 by task
+include dir iface/alfworld.llp iface/alfworld.llp key 61edf2cf12d7e890a6464c1811048ba545481bc9404f0730ca2ef10e328fc133 by task nav access grasp place
 include dir ../capacity.llp capacity.llp key f07d764186e208ce11e3ea7febf40d00b43883bd59e7b27cd1d85fe78ec77f08 by task nav access grasp place
 include dir ../tick_types.llp tick_types.llp key 8693624fad226e5fa67a0d723e85aea876408c41241cb82a8045d2bf9deccf91 by task nav access grasp place
-include dir ../nav_domain.llp nav_domain.llp key 552c201e640b147242064aa3d981735f03641ec535dc8878a3528c36d7276d36 by nav
-include dir ../access_domain.llp access_domain.llp key 90084cac67d1b7cd8e36904c2599bf42ef6e187f068e5fda3fa3ad19c89241ed by access
-include dir ../grasp_domain.llp grasp_domain.llp key 8f0023b41d6baa120f09f77f22685480e5664a4d7cab70ffaeb00261dde026a6 by grasp
-include dir ../place_domain.llp place_domain.llp key 9655587754da27364f41eaf9b43f768522e1739159ffdb0d298db3af0086ec61 by place
-cut 23
+include dir ../nav_domain.llp nav_domain.llp key 43eff2d45fc98df6c457a67594c1c9a79d91bfd2b1ad8b57f7641e761e844fca by nav
+include dir ../access_domain.llp access_domain.llp key e0fde6d294e497bae7c204ec85b40e5164181dc7dcb0b7d35c9342bf947193dc by access
+include dir ../grasp_domain.llp grasp_domain.llp key ba44c51bdd4d13f361aa34055e2db250e43145d55c495be72a8394cb0c0aaf74 by grasp
+include dir ../place_domain.llp place_domain.llp key 797fd9d755a2acbe90e168201f810866012cee83c4564c58bcdd3a25fcb5e20d by place
+cut 25
   accessible signal: out [access(o)] in [task(c)]
   done reading: out [task(o)] in []
   elsewhere reading: out [access(o) grasp(o) place(o)] in []
   fetch signal: out [world] in [task(c)]
-  goto signal: out [task(o) director(relay, transitional)] in [nav(c) world]
+  goto signal: out [task(o) director(relay, transitional)] in [nav(cr) world]
   motion resource: out [] in [] resource [nav access grasp place]
-  open signal: out [task(o)] in [access(c) world]
+  open signal: out [task(o)] in [access(cr) world]
   placed signal: out [place(o)] in [task(c)]
-  put signal: out [task(o)] in [place(c) world]
+  put signal: out [task(o)] in [place(cr) world]
   reached signal: out [nav(o)] in [task(c)]
-  refused signal: out [access grasp(o) place(o) director(relay, transitional)] in [task(c)]
+  refused signal: out [director(relay, transitional)] in [task(c)]
+  refused_put signal: out [place(o)] in [task(c)]
+  refused_take signal: out [grasp(o)] in [task(c)]
   stuck reading: out [task(o)] in []
-  take signal: out [task(o)] in [grasp(c) world]
+  take signal: out [task(o)] in [grasp(cr) world]
   taken signal: out [grasp(o)] in [task(c)]
-  tick__active signal: out [] in [director(c)]
-  tick__done signal: out [] in [director(c)]
+  tick__active signal: out [task(o) nav(o) access(o) grasp(o) place(o)] in [director(c)]
+  tick__done signal: out [task(o) nav(o) access(o) grasp(o) place(o)] in [director(c)]
   tick__goal state: out [director(co)] in []
   tick__grant reading: out [director(o)] in []
   tick__revoke reading: out [director(o)] in []
   tick__status reading: out [host(transitional)] in [director]
-  tick__stuck signal: out [] in [director(c)]
+  tick__stuck signal: out [task(o) grasp(o) place(o)] in [director(c)]
   wrong_dest reading: out [task(o)] in []
   wrong_object reading: out [task(o)] in []
-private director=32 task=9 nav=2 access=7 grasp=11 place=11
-error I2 access: out refused is produced by no rule (roles -)
-error I6 refused has several signatures: refused(receptacle) in access, refused(object) in grasp, refused(receptacle) in place, refused(thing) in task
-error I10 task: shared fetch is declared by task itself (task_domain.llp), not by an interface package
-error I10 task: shared reached is declared by task itself (task_domain.llp), not by an interface package
-error I10 task: shared accessible is declared by task itself (task_domain.llp), not by an interface package
-error I10 task: shared taken is declared by task itself (task_domain.llp), not by an interface package
-error I10 task: shared placed is declared by task itself (task_domain.llp), not by an interface package
-error I10 task: shared refused is declared by task itself (task_domain.llp), not by an interface package
-error I10 task: shared goto is declared by task itself (task_domain.llp), not by an interface package
-error I10 task: shared open is declared by task itself (task_domain.llp), not by an interface package
-error I10 task: shared take is declared by task itself (task_domain.llp), not by an interface package
-error I10 task: shared put is declared by task itself (task_domain.llp), not by an interface package
-error I10 task: shared done is declared by task itself (task_domain.llp), not by an interface package
-error I10 task: shared stuck is declared by task itself (task_domain.llp), not by an interface package
-error I10 task: shared wrong_dest is declared by task itself (task_domain.llp), not by an interface package
-error I10 task: shared wrong_object is declared by task itself (task_domain.llp), not by an interface package
-error I10 nav: shared goto is declared by nav itself (nav_domain.llp), not by an interface package
-error I10 nav: shared reached is declared by nav itself (nav_domain.llp), not by an interface package
-error I10 access: shared open is declared by access itself (access_domain.llp), not by an interface package
-error I10 access: shared accessible is declared by access itself (access_domain.llp), not by an interface package
-error I10 access: shared refused is declared by access itself (access_domain.llp), not by an interface package
-error I10 access: shared elsewhere is declared by access itself (access_domain.llp), not by an interface package
-error I10 grasp: shared take is declared by grasp itself (grasp_domain.llp), not by an interface package
-error I10 grasp: shared taken is declared by grasp itself (grasp_domain.llp), not by an interface package
-error I10 grasp: shared refused is declared by grasp itself (grasp_domain.llp), not by an interface package
-error I10 grasp: shared elsewhere is declared by grasp itself (grasp_domain.llp), not by an interface package
-error I10 place: shared put is declared by place itself (place_domain.llp), not by an interface package
-error I10 place: shared placed is declared by place itself (place_domain.llp), not by an interface package
-error I10 place: shared refused is declared by place itself (place_domain.llp), not by an interface package
-error I10 place: shared elsewhere is declared by place itself (place_domain.llp), not by an interface package
+private director=32 task=9 nav=4 access=9 grasp=13 place=13
 warning I2 director: in tick__status is read by no rule (in-unread)
-warning I3 director: in tick__active is a report nobody sends
-warning I3 director: in tick__done is a report nobody sends
-warning I3 director: in tick__stuck is a report nobody sends
 warning I4 director: rule path_pop withdraws its own out tick__goal (a level the direct member may withdraw)
 warning I4 director: rule path_off withdraws its own out tick__goal (a level the direct member may withdraw)
+note I3 task: in refused is produced only by director's relay facts, until goal(S, K) (§8.4) (transitional)
 note I3 director: in tick__status is produced only by the host's status assertion (amendment 1b) (transitional)
-result 30 error(s), 6 warning(s), 1 note(s)
-rc 1
+result 0 error(s), 3 warning(s), 2 note(s)
+rc 0
