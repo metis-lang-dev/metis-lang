@@ -463,16 +463,17 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
   let p_weight_refs = ref [] in
   let horn_layer =
     match cat.clayers with l :: _ -> l | [] -> "horn" in
+  (* newest-first, reversed once into k_entries (O(1) per clause) *)
   let add_horn ?(src = Diag.no_src) payload =
-    horn_entries := !horn_entries @
-      [{ Catalog.e_name =
+    horn_entries :=
+      { Catalog.e_name =
            (* "horn/<head atom>" as metispy names it (str(atom)):
               clauses of one predicate stay distinguishable *)
            (let (hp, ha) = payload.Catalog.h_head in
             "horn/" ^ (if ha = [] then hp
                        else hp ^ "(" ^ String.concat "," ha ^ ")"));
          e_layer = horn_layer; e_comment = "Horn clause.";
-         e_payload = Catalog.PHorn payload; e_src = src }] in
+         e_payload = Catalog.PHorn payload; e_src = src } :: !horn_entries in
   List.iter2 (fun d dloc -> match d with
       | DFact a ->
         let fsrc = src_of dloc ("fact/" ^ a.pred) "" (decl_line d) [a] in
@@ -673,7 +674,7 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
                k_types = !types @ List.map (fun (t, _) -> (t, [])) !abstract;
                k_namespaces = !namespaces;
                k_preds = !preds; k_bwd = !bwd;
-               k_entries = !entries @ !horn_entries;
+               k_entries = !entries @ List.rev !horn_entries;
                k_abstract = List.map fst !abstract;
                k_srcs = List.filter_map (fun (d, l) ->
                    let key = match d with
