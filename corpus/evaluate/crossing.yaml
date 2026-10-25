@@ -1,0 +1,8 @@
+# nav-belief step 2: the crossing's manifest — queries by tick (`tick: robot`, spec/16 §10.1)
+program: crossing.llp
+beliefs:
+  intent: {port: mind, one: I}
+evaluate:
+  engaged: {risk: engaged(_), within: 3, tick: robot}
+  stairs: {reach: home, within: 4, tick: robot}
+  engaged_at: {risk: engaged(_), at: 3, tick: robot}

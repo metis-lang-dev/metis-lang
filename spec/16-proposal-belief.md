@@ -484,10 +484,32 @@ reads row t at step t. The map's filter stays in the map; only its forecast ente
     {hostile 0.4, wandering 0.6}, and hazards by step 0.6 → 0.9 (hostile) and 0.1 → 0.15 (wandering).
     Collision risk within 8 = 7561264673123217407/30896711193600000000 ≈ 0.24473, over 6 worlds.
   - `--brute` is equal, and metispy's per-step filter, mixed over the 6 worlds, agrees to binary64.
-- **Steps are events, rows are ticks.** For step 2 the horizon counts events (§5, ruled), while a predict
-  row is a tick of the world. A world model whose tick is one fixed cycle of events can index its table by
-  tick: the row advances when the cycle closes (for example at the link back into the first stage). That is
-  the tick-based horizon §5 anticipates, and it waits for step 3's world model to fix what a tick is.
+- **Rows by TICK: `tick: STAGE`** (built; opus's world-model cycle: stages `robot` then `beasts`, a tick
+  opening on each link back into `robot`).
+  - A query given `tick: STAGE` (embedded: `… within h tick STAGE`) counts its horizon AND its step rows in
+    ticks. A tick opens on every link INTO that stage; the initial state is in tick 0.
+  - Each state carries its tick: states in different ticks never merge, and a rule factor reads the row of
+    its state's tick, so traces that spend different numbers of events in a tick stay exact.
+  - A state that opens tick h is finished: `within` takes Q up to it, and `at` reads Q there. A state at
+    DONE is finished as it stands.
+  - The world model's cycle must close: every tick must end (opus's robot stage ends in its one event, its
+    beasts stage when each free beast has had its engage-or-hold).
+  - Without `tick`, the horizon and the rows count events, as before.
+  - The V line names it: `V engaged risk engaged(_) within 3 tick robot = …`.
+- **The fixture `crossing.llp`** (and `cases/crossing.yaml`, the same listing) is that cycle:
+  - the robot walks (`@w 0.7`) or waits (`@w 0.3`) once per tick;
+  - two beasts with categorical intents (b1 hostile 0.5, b2 hostile 0.2) each engage or hold once per tick,
+    by first-passage hazards per tick in nina's shape (`closing(B, I)` per row).
+
+  The results:
+  - engaged within 3 ticks = 323818289/500000000 ≈ 0.64764, which is exactly
+    1 − Π_B Σ_I p(I) Π_t (1 − c_t(B, I));
+  - stairs within 4 ticks = 2401/10000 = 0.7⁴;
+  - `at 3` equals `within 3`, since `engaged` is never consumed;
+  - `--brute` is equal (1,043,264 paths for the stairs, 2.9 s).
+  - metispy's `ForwardProjection` agrees to binary64, with the rows read by a `ticked` counter atom and the
+    fixture's `fuel` ending each world after h − 1 links. That is the independent witness of the tick
+    reading.
 
 ## 11. Step 2, the fixtures, and the questions for the ruling
 

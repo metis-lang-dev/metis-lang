@@ -1,0 +1,10 @@
+# nav-belief step 2: the crossing as a case — the beasts' hazards by tick, a row per tick (nina's predict_table
+# shape: an atom table closing(B, I) per row)
+manifest: ../crossing.yaml
+init: [at(c0), turn, free(b1), free(b2), fuel 10]
+ports:
+  mind: {mind(b1, hostile): 0.5, mind(b1, wandering): 0.5, mind(b2, hostile): 0.2, mind(b2, wandering): 0.8}
+  closing:
+    step: [{closing(b1, hostile): 0.3, closing(b1, wandering): 0.05, closing(b2, hostile): 0.2, closing(b2, wandering): 0.02},
+           {closing(b1, hostile): 0.5, closing(b1, wandering): 0.05, closing(b2, hostile): 0.4, closing(b2, wandering): 0.02},
+           {closing(b1, hostile): 0.7, closing(b1, wandering): 0.1, closing(b2, hostile): 0.6, closing(b2, wandering): 0.05}]

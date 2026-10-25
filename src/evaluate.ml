@@ -32,7 +32,9 @@ type quant = Within | At
 type query = {
   q_name : string; q_kind : string;
   q_conj : (string * string list) list;     (* `_` matches any argument *)
-  q_quant : quant; q_h : int; q_budget : int }
+  q_quant : quant; q_h : int; q_budget : int;
+  q_tick : string option }      (* §10.1: h and the step rows count ticks, a tick opening on each
+                                   entry into this stage *)
 type level_src = From_query of string | From_belief of string
 type level = { l_pred : string; l_src : level_src;
                l_at : Rat.t list; l_names : string list }
@@ -80,20 +82,21 @@ let parse dirs =
           | ("within" | "at") as w :: h :: tail ->
             (* the budget, and the world model the query runs over (§5,
                `model`: read by `groups`, the caller's) *)
-            let rec opts b = function
-              | [] -> b
-              | "budget" :: n :: r -> opts (int_of_string n) r
-              | "model" :: _ :: r -> opts b r
+            let rec opts (b, tk) = function
+              | [] -> (b, tk)
+              | "budget" :: n :: r -> opts (int_of_string n, tk) r
+              | "model" :: _ :: r -> opts (b, tk) r
+              | "tick" :: stage :: r -> opts (b, Some stage) r
               | _ -> bad toks in
-            let budget = opts 500_000 tail in
-            (List.rev acc, (if w = "within" then Within else At), int_of_string h, budget)
+            let (budget, tick) = opts (500_000, None) tail in
+            (List.rev acc, (if w = "within" then Within else At), int_of_string h, budget, tick)
           | "*" :: tail -> pat acc tail
           | a :: tail -> pat (split_atom a :: acc) tail
           | [] -> bad toks in
-        let (conj, quant, h, budget) = pat [] rest in
+        let (conj, quant, h, budget, tick) = pat [] rest in
         if conj = [] then bad toks;
         queries := { q_name = name; q_kind = kind; q_conj = conj; q_quant = quant;
-                     q_h = h; q_budget = budget } :: !queries
+                     q_h = h; q_budget = budget; q_tick = tick } :: !queries
       | ["expect"; name; v] -> expects := (name, v) :: !expects
       | "level" :: pred :: "from" :: rest ->
         let (src, rest) = match rest with
@@ -117,7 +120,8 @@ let parse dirs =
 
 (* -- states ----------------------------------------------------------- *)
 
-type state = { stage : string; counts : int SM.t; undrawn : int list }
+type state = { stage : string; counts : int SM.t; undrawn : int list;
+               tick : int }      (* the ticks opened since the start (0 without `tick`) *)
 
 let get c a = match SM.find_opt a c with Some n -> n | None -> 0
 
@@ -128,6 +132,7 @@ let key st =
             Buffer.add_string b (string_of_int n); Buffer.add_char b ' ') st.counts;
   Buffer.add_char b '|';
   List.iter (fun g -> Buffer.add_string b (string_of_int g); Buffer.add_char b ' ') st.undrawn;
+  if st.tick > 0 then (Buffer.add_char b '|'; Buffer.add_string b (string_of_int st.tick));
   Buffer.contents b
 
 let matches (p, args) a =
@@ -348,7 +353,7 @@ let run src cat ports prog ~init dirs ~brute =
       | _ ->
         let tot = List.fold_left (fun acc (_, w) -> Rat.add acc w) Rat.zero ws in
         List.map (fun (i, w) -> (Some i, Rat.div w tot)) ws in
-  let apply st = function
+  let apply tk st = function
     | None -> { st with stage = done_stage }
     | Some i ->
       let r = rows.(i) in
@@ -357,9 +362,12 @@ let run src cat ports prog ~init dirs ~brute =
           let m = get c a - n in if m > 0 then SM.add a m c else SM.remove a c)
           st.counts ev.Ground.ev_consume in
       let c = List.fold_left (fun c (a, n) -> SM.add a (get c a + n) c) c ev.Ground.ev_produce in
-      { st with counts = c;
-                stage = (match r.Refsample.kind, ev.Ground.ev_post with
-                    | `Link, Some p -> p | _ -> st.stage) }
+      let stage = match r.Refsample.kind, ev.Ground.ev_post with
+        | `Link, Some p -> p | _ -> st.stage in
+      (* a link into the tick's stage opens the next tick *)
+      let tick = match r.Refsample.kind, tk with
+        | `Link, Some s when s = stage -> st.tick + 1 | _ -> st.tick in
+      { st with counts = c; stage; tick }
   in
   (* R2: a group is drawn where its presence could first matter *)
   let rec settle must st m =
@@ -374,27 +382,35 @@ let run src cat ports prog ~init dirs ~brute =
   let st0 = { stage = prog.Ground.init_stage;
               counts = List.fold_left (fun c (a, n) -> if n > 0 then SM.add a n c else c)
                   SM.empty init;
-              undrawn = List.init ng Fun.id } in
+              undrawn = List.init ng Fun.id; tick = 0 } in
   let maxbits = ref 0 in
   let note m = let b = Rat.den_bits m in if b > !maxbits then maxbits := b in
   let instrument q =
     let qg g = List.exists (fun a -> List.exists (fun c -> matches c a) q.q_conj) g.g_atoms in
     let must g st = qg g || List.mem st.stage g.g_stages in
     let hit = ref Rat.zero and cut = ref Rat.zero and retained = ref 0 in
+    (* by tick (§10.1): a state that has opened tick h is finished, and so
+       is one at DONE; at: the final slice is what finishes *)
+    let finished st = match q.q_tick with
+      | Some _ -> st.tick >= q.q_h || st.stage = done_stage | None -> false in
+    let final = Hashtbl.create 64 in
+    let put tbl st m =
+      let k = key st in
+      match Hashtbl.find_opt tbl k with
+      | Some (s, m0) -> Hashtbl.replace tbl k (s, Rat.add m0 m)
+      | None -> Hashtbl.replace tbl k (st, m) in
     let admit tbl (st, m) =
       note m;
       if q.q_quant = Within && holds st.counts q.q_conj then hit := Rat.add !hit m
-      else if q.q_quant = Within && st.stage = done_stage then ()     (* a miss, frozen *)
-      else
-        let k = key st in
-        match Hashtbl.find_opt tbl k with
-        | Some (s, m0) -> Hashtbl.replace tbl k (s, Rat.add m0 m)
-        | None -> Hashtbl.replace tbl k (st, m) in
+      else if q.q_quant = Within && (st.stage = done_stage || finished st) then ()   (* a miss *)
+      else if finished st then put final st m
+      else put tbl st m in
     let cur = ref (Hashtbl.create 64) in
     List.iter (admit !cur) (settle must st0 Rat.one);
     retained := Hashtbl.length !cur;
     let t = ref 0 in
-    while !t < q.q_h && Hashtbl.length !cur > 0 do
+    let row st = match q.q_tick with Some _ -> st.tick | None -> !t - 1 in
+    while (q.q_tick <> None || !t < q.q_h) && Hashtbl.length !cur > 0 do
       incr t;
       let out = Hashtbl.create 64 in
       let states = List.sort (fun (a, _) (b, _) -> compare a b)
@@ -403,8 +419,8 @@ let run src cat ports prog ~init dirs ~brute =
           if !retained + Hashtbl.length out >= q.q_budget then cut := Rat.add !cut m
           else
             List.iter (fun (e, p) ->
-                List.iter (admit out) (settle must (apply st e) (Rat.mul m p)))
-              (choice st (!t - 1)))
+                List.iter (admit out) (settle must (apply q.q_tick st e) (Rat.mul m p)))
+              (choice st (row st)))
         states;
       retained := !retained + Hashtbl.length out;
       cur := out
@@ -412,22 +428,28 @@ let run src cat ports prog ~init dirs ~brute =
     let lo = match q.q_quant with
       | Within -> !hit
       | At -> Hashtbl.fold (fun _ (st, m) acc ->
-          if holds st.counts q.q_conj then Rat.add acc m else acc) !cur Rat.zero in
+          if holds st.counts q.q_conj then Rat.add acc m else acc)
+          (if q.q_tick = None then !cur else final) Rat.zero in
     (lo, Rat.add lo !cut, !cut, !retained) in
   let referee q =
     let hit = ref Rat.zero and paths = ref 0 in
+    let over st t = st.stage = done_stage
+                    || (match q.q_tick with Some _ -> st.tick >= q.q_h | None -> t = q.q_h) in
+    let row st t = match q.q_tick with Some _ -> st.tick | None -> t in
     let rec dfs st m t =
+      let next () = List.iter (fun (e, p) -> dfs (apply q.q_tick st e) (Rat.mul m p) (t + 1))
+          (choice st (row st t)) in
       match q.q_quant with
       | Within ->
         if holds st.counts q.q_conj then (hit := Rat.add !hit m; incr paths)
-        else if t = q.q_h || st.stage = done_stage then incr paths
-        else List.iter (fun (e, p) -> dfs (apply st e) (Rat.mul m p) (t + 1)) (choice st t)
+        else if over st t then incr paths
+        else next ()
       | At ->
-        if t = q.q_h || st.stage = done_stage then begin
+        if over st t then begin
           incr paths;
           if holds st.counts q.q_conj then hit := Rat.add !hit m
         end
-        else List.iter (fun (e, p) -> dfs (apply st e) (Rat.mul m p) (t + 1)) (choice st t) in
+        else next () in
     List.iter (fun (st, m) -> dfs st m 0) (settle (fun _ _ -> true) st0 Rat.one);
     (!hit, !paths) in
   (* the listing *)
@@ -457,8 +479,9 @@ let run src cat ports prog ~init dirs ~brute =
   let results = ref [] and costs = ref [] and mism = ref 0 in
   let vlines = List.map (fun q ->
       let pat = String.concat " * " (List.map (fun (p, a) -> render p a) q.q_conj) in
-      let head = Printf.sprintf "V %s %s %s %s %d" q.q_name q.q_kind pat
-          (if q.q_quant = Within then "within" else "at") q.q_h in
+      let head = Printf.sprintf "V %s %s %s %s %d%s" q.q_name q.q_kind pat
+          (if q.q_quant = Within then "within" else "at") q.q_h
+          (match q.q_tick with Some s -> " tick " ^ s | None -> "") in
       maxbits := 0;
       let t0 = Sys.time () in
       let (lo, hi, cut, line) =
@@ -617,10 +640,12 @@ let case_of_yaml path =
           let budget = match List.assoc_opt "budget" f with
             | Some b -> ["budget"; str "budget" b] | None -> [] in
           let budget = budget @ (match List.assoc_opt "model" f with
-              | Some m -> ["model"; str "model" m] | None -> []) in
+              | Some m -> ["model"; str "model" m] | None -> [])
+                       @ (match List.assoc_opt "tick" f with
+                           | Some t -> ["tick"; str "tick" t] | None -> []) in
           List.iter (fun (k, _) ->
-              if not (List.mem k ["reach"; "risk"; "within"; "at"; "budget"; "model"]) then
-                bad "evaluate %s: unknown key %s (reach|risk, within|at, budget, model)" name k)
+              if not (List.mem k ["reach"; "risk"; "within"; "at"; "budget"; "model"; "tick"]) then
+                bad "evaluate %s: unknown key %s (reach|risk, within|at, budget, model, tick)" name k)
             f;
           let toks = List.filter (( <> ) "")
               (String.split_on_char ' ' (squash pat)) in

@@ -233,7 +233,8 @@ echo "== 14. the one-tick instrument (spec 16 §6, §7): metisc --evaluate == --
 # belief, the cases/ manifest convention, port-function, port-unknown,
 # a bad key, queries over a world model — wgc_world, and alfworld's
 # installed task over its eval/world.llp — model-path, and the lane: a
-# port read as a table by step, spec 16 §10.1). The listing
+# port read as a table by step, by event or by tick (the crossing),
+# spec 16 §10.1). The listing
 # (stdout and stderr) and the exit code == the
 # golden; every exact V line (`= p/q`) == the brute-force referee's, as
 # rationals; a cut line's interval holds the referee's value through the

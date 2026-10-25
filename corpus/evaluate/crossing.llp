@@ -1,0 +1,68 @@
+% nav-belief step 2 fixture (spec/16 §10.1, rows by TICK): opus's world-model cycle. A tick opens at stage robot
+% (the robot's one event, a step or a wait, and the beasts' wake), then stage beasts (one engage-or-hold per beast
+% still free). The beasts' first-passage hazards come by tick in nina's predict_table shape: closing(B, I) per row,
+% I the beast's intent, a categorical belief. `fuel` and `ticked` are the fixture's: fuel ends the world (for
+% metispy's witness), and ticked counts the ticks it reads the rows by.
+catalog crossing 1.
+provenance hand "a crossing with two beasts: rows by tick" "2026-10-26".
+layers (dyn).
+stages (robot beasts).
+type cell {c0 c1 c2 c3 c4}.
+type beast {b1 b2}.
+type intent {hostile wandering}.
+namespace cr produce (dyn).
+pred at(cell) : cr.
+pred turn : cr.
+pred free(beast) : cr.
+pred held(beast) : cr.
+pred engaged(beast) : cr.
+pred intent(beast, intent) : cr.
+pred home : cr.
+pred fuel : cr.
+pred ticked : cr.
+bwd next(cell, cell).
+next(c0, c1).
+next(c1, c2).
+next(c2, c3).
+next(c3, c4).
+bwd stairs(cell).
+stairs(c4).
+weight mind(B, I) reads {intent(B, I)}.
+weight closing(B, I) reads {intent(B, I)}.
+stage robot {
+  %% I step on from {P} to {Q}.
+  walk [dyn] : turn * at(P) * next(P, Q) -o at(Q)  @w 0.7.
+  %% I wait at {P}.
+  wait [dyn] : turn * $at(P) -o ()  @w 0.3.
+  %% {B} is free again.
+  wake [dyn] : held(B) -o free(B).
+  %% At the stairs.
+  arrive [dyn] : at(P) * $stairs(P) -o home.
+}
+%% The robot has moved: the beasts' turn.
+qui to_beasts [dyn] : robot -o beasts.
+stage beasts {
+  %% {B}, {I}, engages me.
+  engage [dyn] : free(B) * $intent(B, I) -o engaged(B)  @w closing(B, I).
+  %% {B}, {I}, holds off this tick.
+  hold [dyn] : free(B) * $intent(B, I) -o held(B)  @w ~closing(B, I).
+}
+%% The beasts have moved: the next tick opens at the robot.
+qui to_robot [dyn] : beasts * fuel -o robot * turn * ticked.
+#init at(c0) 1
+#init turn 1
+#init free(b1) 1
+#init free(b2) 1
+#init fuel 10
+#belief intent one I by mind
+#port mind(b1, hostile) 0.5
+#port mind(b1, wandering) 0.5
+#port mind(b2, hostile) 0.2
+#port mind(b2, wandering) 0.8
+#port closing(b1, hostile) step 0.3 0.5 0.7
+#port closing(b1, wandering) step 0.05 0.05 0.1
+#port closing(b2, hostile) step 0.2 0.4 0.6
+#port closing(b2, wandering) step 0.02 0.02 0.05
+#evaluate engaged risk engaged(_) within 3 tick robot
+#evaluate stairs reach home within 4 tick robot
+#evaluate engaged_at risk engaged(_) at 3 tick robot

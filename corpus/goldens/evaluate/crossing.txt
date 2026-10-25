@@ -1,0 +1,7 @@
+N belief-read engage intent
+N belief-read hold intent
+N step-table closing rows 3
+V engaged risk engaged(_) within 3 tick robot = 323818289/500000000 ~ 0.64763657799999996 worlds 4 states 339
+V stairs reach home within 4 tick robot = 2401/10000 ~ 0.24010000000000001 worlds 4 states 2379
+V engaged_at risk engaged(_) at 3 tick robot = 323818289/500000000 ~ 0.64763657799999996 worlds 4 states 1191
+rc 0
