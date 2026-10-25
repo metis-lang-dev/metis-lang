@@ -38,9 +38,6 @@ cut 20
   tick__stuck signal: out [] in [director(c)]
 private director=32 task=1 nav=7 act=9
 error I2 act: out refused is produced by no rule (roles -)
-error I3 director: in tick__active has no producer (no member's out, not world.out, not produced by director)
-error I3 director: in tick__done has no producer (no member's out, not world.out, not produced by director)
-error I3 director: in tick__stuck has no producer (no member's out, not world.out, not produced by director)
 error I10 task: shared reach is declared by task itself (task_domain.llp), not by an interface package
 error I10 task: shared reached is declared by task itself (task_domain.llp), not by an interface package
 error I10 task: shared opened is declared by task itself (task_domain.llp), not by an interface package
@@ -61,10 +58,13 @@ error I10 act: shared refused is declared by act itself (act_domain.llp), not by
 warning I2 task: in opened is read by no rule (in-unread)
 warning I2 task: in cleared is read by no rule (in-unread)
 warning I2 director: in tick__status is read by no rule (in-unread)
+warning I3 director: in tick__active is a report nobody sends
+warning I3 director: in tick__done is a report nobody sends
+warning I3 director: in tick__stuck is a report nobody sends
 warning I4 director: rule path_pop withdraws its own out tick__goal (a level the direct member may withdraw)
 warning I4 director: rule path_off withdraws its own out tick__goal (a level the direct member may withdraw)
 note I3 act: in open is produced only by director's relay facts, until goal(S, K) (§8.4) (transitional)
 note I3 act: in fight is produced only by director's relay facts, until goal(S, K) (§8.4) (transitional)
 note I3 director: in tick__status is produced only by the host's status assertion (amendment 1b) (transitional)
-result 21 error(s), 5 warning(s), 3 note(s)
+result 18 error(s), 8 warning(s), 3 note(s)
 rc 1

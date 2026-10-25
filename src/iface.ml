@@ -339,6 +339,7 @@ let run comp_path =
   (* includes that resolve nowhere *)
   List.iter (fun m ->
       List.iter (fun e -> add "error" "include" "%s: %s" m.m_name e) m.m_inc_err) members;
+  let shared_bases = ref [] in
   (* compile *)
   List.iter (fun m -> match m.m_compile with
       | Some e -> add "error" "compile" "%s: does not compile: %s" m.m_name e
@@ -402,9 +403,20 @@ let run comp_path =
           if d = "in" then begin
             let peer = List.exists (fun m' ->
                 m'.m_name <> m.m_name && List.assoc_opt p m'.m_shared = Some "out") members in
-            if not (peer || List.mem p world_out || List.mem p d_heads || List.mem p host_out) then
-              add "error" "I3" "%s: in %s has no producer (no member's out, not world.out, not produced by %s)"
-                m.m_name p dm.m_name
+            if not (peer || List.mem p world_out || List.mem p d_heads || List.mem p host_out) then begin
+              (* ruled (step 3b): a protocol REPORT nobody sends is a
+                 warning (tick__active/tick__stuck in a sequential
+                 composition); signals and resources keep the error *)
+              let nature = List.find_map (fun i ->
+                  match i.i_nature with
+                  | Some n when List.mem p i.i_preds -> List.assoc_opt p n
+                  | _ -> None) ipkgs in
+              if nature = Some "report" then
+                add "warning" "I3" "%s: in %s is a report nobody sends" m.m_name p
+              else
+                add "error" "I3" "%s: in %s has no producer (no member's out, not world.out, not produced by %s)"
+                  m.m_name p dm.m_name
+            end
             else if not (peer || List.mem p world_out || List.mem p d_rule_heads) then
               add "note" "I3" "%s: in %s is produced only by %s (transitional)" m.m_name p
                 (if List.mem p host_out then "the host's status assertion (amendment 1b)"
@@ -549,14 +561,26 @@ let run comp_path =
         m.m_includes)
     members;
   ignore program_dirs;
+  (* ruled (step 3b): a file with rules included by several members is a
+     SHARED LIFTED DOMAIN (a base several members instantiate) when it is
+     no member's top file and lies in no member's package directory;
+     otherwise one member reaches into another *)
   let shared_files = List.sort_uniq compare (List.concat_map (fun m -> m.m_files) members) in
   List.iter (fun f ->
       let users = List.filter (fun m -> List.mem f m.m_files) members in
       if List.length users > 1 && f <> capacity && ipath_of_file f = None then begin
         let has_rules = List.exists (fun m -> List.exists (fun r -> r.r_file = f) m.m_rules) users in
-        if has_rules then
-          add "error" "I8" "%s is included by %s and has rules: only declaration files are shared"
-            (show f) (String.concat ", " (List.map (fun m -> m.m_name) users))
+        let names = String.concat ", " (List.map (fun m -> m.m_name) users) in
+        if has_rules then begin
+          if List.exists (fun m -> m.m_program = f
+                                   || Filename.dirname f = Filename.dirname m.m_program) members then
+            add "error" "I8" "%s is included by %s and is a member's own file: only a lifted domain is shared"
+              (show f) names
+          else begin
+            shared_bases := f :: !shared_bases;
+            add "note" "I8" "%s, a lifted domain shared by %s" (show f) names
+          end
+        end
       end)
     shared_files;
   let names = List.map (fun m -> m.m_name) members in
@@ -655,7 +679,11 @@ let run comp_path =
        @ List.map (fun (k, l) -> Printf.sprintf "status %s %s" k (String.concat " " l))
          (List.sort compare m.m_status)
        @ List.map (fun (p, _) -> "resource " ^ p)
-         (List.filter (fun (_, d) -> d = "resource") (List.sort compare m.m_shared)))
+         (List.filter (fun (_, d) -> d = "resource") (List.sort compare m.m_shared))
+       (* a shared lifted domain's key (ruled): instances must agree on their base *)
+       @ List.map (fun f -> Printf.sprintf "base %s %s" (Filename.basename f)
+                      (Sha256.hex (Ast.pretty (Ast.strip_locs (Parser.parse_file f)))))
+         (List.filter (fun f -> List.mem f m.m_files) (List.sort compare !shared_bases)))
     ^ "\n" in
   let cap_key = Sha256.hex (Ast.pretty (Ast.strip_locs (Parser.parse_file capacity))) in
   let canon_comp = String.concat "\n" (List.map (fun (k, v) ->

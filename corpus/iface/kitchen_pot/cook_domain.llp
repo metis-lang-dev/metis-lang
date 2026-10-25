@@ -1,0 +1,46 @@
+% cook_domain — a cook of the shared-pot kitchen (specialist-tree s-404d001f step 3a; steps/step3-cases-brief.md):
+% two cooks, ONE pot. The cook works its own orders with its own hand (fetch an onion, a dish; serve) and asks
+% for the pot when it holds an onion (tick__want, a report of the protocol module). The pot's rules read the
+% grant themselves ($tick__grant(S, pot): the manifest's gating: program), so a cook without the pot keeps its
+% onion and its request: its state is never ahead of the world. After plating it gives the pot back
+% (tick__release) — its own copy of the grant consumed, so a grant the director has not revoked yet (the
+% hysteresis) is never used for the next soup: that needs a new request and a new grant — and serves (tick__done). kitchen.llp's recipe (three onions make a soup), per cook.
+catalog cook_domain 1.
+provenance text "a cook of the shared-pot kitchen: its own hand, the one pot by request and grant" "2026-10-25".
+include "iface/protocol_domain.llp".
+layers (dyn).
+stages (act).
+namespace cook produce (dyn).
+
+% ── the kitchen as this cook reads it (world-private: its own copy, synced by its own host) ──
+pred hand_free : cook.
+pred held_onion : cook.
+pred held_dish : cook.
+pred held_soup : cook.
+pred pot_space : cook.                    % room in the pot (one atom per onion it takes)
+pred pot_onion : cook.                    % onions in the pot
+pred cooking : cook.                      % a soup cooks in the pot
+pred order : cook.                        % one of this cook's orders waiting
+
+% ── the cook's own ──
+bwd self(domain).                         % which cook this is (the instance's fact)
+pred calm(domain) : cook.                 % no request out
+pred asked(domain) : cook.                % its request is out: until it gives the pot back
+pred mine(domain) : cook.                 % the soup cooking is this cook's
+
+stage act {
+  %% I take an onion for my order.
+  fetch_onion [dyn] : $order * hand_free * $pot_space -o held_onion.
+  %% I need the pot: I ask for it.
+  ask_pot [dyn] : $held_onion * $self(S) * calm(S) -o asked(S) * tick__want(S, pot).
+  %% The pot is mine: I put my onion in.
+  load [dyn] : held_onion * pot_space * $self(S) * $asked(S) * $tick__grant(S, pot) -o hand_free * pot_onion.
+  %% Three onions are in: I start the soup.
+  start [dyn] : $hand_free * pot_onion * pot_onion * pot_onion * $self(S) * $asked(S) * $tick__grant(S, pot) -o cooking * mine(S).
+  %% My soup cooks: I take a dish.
+  fetch_dish [dyn] : $order * hand_free * $mine(S) * $self(S) -o held_dish.
+  %% My soup is done: I plate it and give the pot back.
+  plate [dyn] : held_dish * cooking * mine(S) * asked(S) * $self(S) * tick__grant(S, pot) -o held_soup * pot_space * pot_space * pot_space * tick__release(S, pot) * calm(S).   % the pot emptied: room for three; its copy of the grant given up with it (the next soup needs a new grant)
+  %% I serve my order.
+  serve [dyn] : held_soup * order * $self(S) -o hand_free * tick__done(S).
+}

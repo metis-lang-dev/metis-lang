@@ -1,0 +1,35 @@
+% pot_director — the shared-pot kitchen's director (specialist-tree s-404d001f step 3a): the generic tree director
+% (metispy's iface/director_tree_domain.llp: requests queued and granted, released on report, with the
+% hysteresis) and this kitchen's instance: its members, its one pot, k = 2, no priority. It routes nothing (no
+% kinds): the cooks work their own orders and only the pot passes through it.
+catalog pot_director 1.
+provenance text "the shared-pot kitchen's director: the one pot by request, grant and release" "2026-10-25".
+include "iface/director_tree_domain.llp".
+include "../tick_types.llp".
+
+type kind {none}.                         % it routes nothing: the Live's director loop still asks for its arrival
+                                          % kinds (one that never arrives; a finding of step 3a)
+bwd specialist(domain).                   % the members (the agent's director loop reads them: the statuses it relays)
+specialist(cook_a).
+specialist(cook_b).
+
+% the hysteresis: a grant is not revoked before its age a2 (k = 2); a status is acted on from a1 (m = 1)
+young_grant(a0).
+young_grant(a1).
+mature_grant(a2).
+mature_grant(a3).
+mature_status(a1).
+mature_status(a2).
+mature_status(a3).
+
+#init free(pot) 1
+#init offpath(cook_a) 1
+#init offpath(cook_b) 1
+#init nowant(cook_a) 1
+#init nowant(cook_b) 1
+#init nolate(cook_a) 1
+#init nolate(cook_b) 1
+#init age_of(cook_a, a0) 1
+#init age_of(cook_b, a0) 1
+#init issue(pot, t0) 1
+#init serving(pot, t0) 1

@@ -1,0 +1,7 @@
+% cook_a — a cook of the shared-pot kitchen (the base and the kitchen's types; specialist-tree s-404d001f step 3a).
+catalog cook_a 1.
+provenance text "the shared-pot kitchen's cook_a" "2026-10-25".
+include "../cook_domain.llp".
+include "../tick_types.llp".
+self(cook_a).
+#init calm(cook_a) 1

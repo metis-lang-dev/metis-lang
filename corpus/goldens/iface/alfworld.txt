@@ -45,9 +45,6 @@ cut 23
   wrong_object reading: out [task(o)] in []
 private director=32 task=9 nav=2 access=7 grasp=11 place=11
 error I2 access: out refused is produced by no rule (roles -)
-error I3 director: in tick__active has no producer (no member's out, not world.out, not produced by director)
-error I3 director: in tick__done has no producer (no member's out, not world.out, not produced by director)
-error I3 director: in tick__stuck has no producer (no member's out, not world.out, not produced by director)
 error I6 refused has several signatures: refused(receptacle) in access, refused(object) in grasp, refused(receptacle) in place, refused(thing) in task
 error I10 task: shared fetch is declared by task itself (task_domain.llp), not by an interface package
 error I10 task: shared reached is declared by task itself (task_domain.llp), not by an interface package
@@ -78,8 +75,11 @@ error I10 place: shared placed is declared by place itself (place_domain.llp), n
 error I10 place: shared refused is declared by place itself (place_domain.llp), not by an interface package
 error I10 place: shared elsewhere is declared by place itself (place_domain.llp), not by an interface package
 warning I2 director: in tick__status is read by no rule (in-unread)
+warning I3 director: in tick__active is a report nobody sends
+warning I3 director: in tick__done is a report nobody sends
+warning I3 director: in tick__stuck is a report nobody sends
 warning I4 director: rule path_pop withdraws its own out tick__goal (a level the direct member may withdraw)
 warning I4 director: rule path_off withdraws its own out tick__goal (a level the direct member may withdraw)
 note I3 director: in tick__status is produced only by the host's status assertion (amendment 1b) (transitional)
-result 33 error(s), 3 warning(s), 1 note(s)
+result 30 error(s), 6 warning(s), 1 note(s)
 rc 1
