@@ -1,0 +1,6 @@
+# spec16 step 4, a case-only refusal: model-path. A world model outside the package is refused.
+manifest: ../wgc_bank.yaml
+init: [farmer(near), boat, tally]
+ports: {where: 0.5}
+evaluate:
+  escape: {risk: gone(_), within: 4, model: ../../outside.llp}

@@ -1,0 +1,9 @@
+% spec/16 step 4 fixture: a WORLD MODEL over wgc_bank (spec/16 §3, §5 `model`): what the world does besides the
+% farmer — the wolf, left on a bank without him, may wander off. A query that names this file runs over it; the
+% others run over the program itself.
+catalog wgc_world 1.
+include "wgc_bank.llp".
+stage shore {
+  %% Left on {A} without the farmer, the wolf wanders off.
+  wander [dyn] : on(wolf, A) * $farmer(B) * across(A, B) -o ()  @w 0.5.
+}

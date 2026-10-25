@@ -178,6 +178,17 @@ evaluate:
   cone` is a later option. The worlds will want a TICK-based horizon once the world model (step 3) fixes
   what one tick is for a member: its events per tick (and §2.3 of spec 15's ρ) convert one into the other.
 - **`budget`** is the state budget (§6.3). It defaults to the exact filter's 500,000.
+- **`model: PATH`** (step 4) names the WORLD MODEL the query runs over (§3): an `.llp` that includes the
+  member's program and adds the world's rules. Without it, the query runs over the program itself.
+  - The path is relative to the package root: the manifest's directory, or, in the embedded form
+    (`#evaluate … within h model PATH`), the `.llp`'s. A path that is absolute or climbs out of the root is
+    refused (`model-path`).
+  - Queries are run grouped by their model, the groups in the order of the paths as written (the program's
+    own path for the queries without one). Each group has the case's init, beliefs and ports. An `expect`
+    and a level go with their query; a belief level goes with the first group. The listing is the groups'
+    listings in that order.
+  - metispy's manifest check (`manifests.KEYS`, `{reach|risk, within|at, budget?, model?}`) and its live
+    level hook group the same way.
 - **The embedded form.** For an `.llp` with its own case (spec 00 §8), one directive per query:
   `#evaluate lose risk stuck(_) within 8`. Port values for such a file: `#port look(target, p0) 0.6`, one per
   argument tuple. Beliefs: `#belief inrecep one R by look`. These mirror the manifest and case fields for dev
@@ -200,6 +211,16 @@ evaluate:
     its commas in a flow value (`{look(target, p0): 0.6}`), and spaces inside an atom are formatting, as in a
     directive.
   - A case and its embedded form give the same directives, so the same listing, byte for byte (gate 14).
+  - **Block YAML in a member manifest is a READER LIMIT, not the rule.** The rule for both toolchains: a
+    manifest may use block MAPPINGS; block LISTS are not part of it.
+    - metispy reads full YAML, and metisc's instrument reader reads block mappings.
+    - Only spec 15's interface reader (`metisc --interface`) is narrower: it reads a member's `domain.yaml`
+      as `key: value` lines with flow values. Until it is lifted, a member in a composition writes the
+      spec/16 fields as flow lines (`evaluate: {fetch: {reach: done, within: 14, model: world.llp}}`), as
+      alfworld's task does.
+    - Lifting it is one change, in iface.ml's member loader (`read_yaml_block` in place of `read_yaml`). The
+      composition file can follow, and the `yaml_block` fixture would then refuse a block LIST, not a block
+      mapping.
 
 ## 6. The instrument: one-tick semantics (normative)
 

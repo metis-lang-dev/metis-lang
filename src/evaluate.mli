@@ -25,5 +25,16 @@ val run : Ast.catalog -> Catalog.t -> Compile.ports -> Ground.program
    gives: the manifest's beliefs:, levels: and evaluate:, the case's
    init:, ports: (a number, or a table atom -> number), evaluate: and
    expect:. The manifest is the case's `manifest:`, else domain.yaml in
-   the parent of a `cases/` directory, else beside the case. *)
-val case_of_yaml : string -> string * (string * int) list * string list list
+   the parent of a `cases/` directory, else beside the case. Returns
+   the package directory (the manifest's), the program (relative to
+   it), the init and the directives. *)
+val case_of_yaml : string -> string * string * (string * int) list * string list list
+
+(* the directives split by the world model each query runs over
+   (`model PATH`, spec/16 §3, §5; none: the program), sorted by that
+   path as written: (model or program, its directives). Beliefs and
+   ports go to every group; an expectation and a level go with their
+   query; belief levels, and anything naming no query, go to the first.
+   A model path that is absolute or climbs out of the package is
+   refused (`model-path`). *)
+val groups : string list list -> program:string -> (string * string list list) list

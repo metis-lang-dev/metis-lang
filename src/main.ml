@@ -382,26 +382,34 @@ let run_file path =
    refusal. --brute is the referee: every world, every path. *)
 let evaluate_file path ~brute ~cost =
   match
-    (* a case YAML and its manifest (spec/16 §5), or the embedded form *)
-    if Filename.check_suffix path ".yaml" then Evaluate.case_of_yaml path
-    else
-      let c = embedded_case path in
-      (Filename.concat (Filename.dirname path) c.c_llp, c.c_init, c.c_instrument)
+    (* a case YAML and its manifest (spec/16 §5), or the embedded form;
+       then its queries grouped by the world model each runs over *)
+    let (base, program, init, dirs) =
+      if Filename.check_suffix path ".yaml" then Evaluate.case_of_yaml path
+      else
+        let c = embedded_case path in
+        (Filename.dirname path, c.c_llp, c.c_init, c.c_instrument) in
+    (base, init, Evaluate.groups dirs ~program)
   with
   | exception Iface.Yaml_error m -> prerr_endline ("error: " ^ m); exit 1
   | exception Evaluate.Refused (code, m) ->
     Printf.eprintf "refused %s: %s\n" code m; exit 2
-  | (llp, init, dirs) ->
-  let src = parse_llp (Filename.dirname llp) (Filename.basename llp) in
-  let (cat, ports) = compile_warn src in
-  let prog = Ground.ground cat init in
-  match Evaluate.run src cat ports prog ~init dirs ~brute with
-  | r ->
-    List.iter print_endline r.Evaluate.lines;
-    if cost then List.iter prerr_endline r.Evaluate.costs;
-    exit (if r.Evaluate.mismatches > 0 then 1 else 0)
-  | exception Evaluate.Refused (code, m) ->
-    Printf.eprintf "refused %s: %s\n" code m; exit 2
+  | (base, init, groups) ->
+    let mism = ref 0 in
+    List.iter (fun (llp, dirs) ->
+        let llp = Filename.concat base llp in
+        let src = parse_llp (Filename.dirname llp) (Filename.basename llp) in
+        let (cat, ports) = compile_warn src in
+        let prog = Ground.ground cat init in
+        match Evaluate.run src cat ports prog ~init dirs ~brute with
+        | r ->
+          List.iter print_endline r.Evaluate.lines;
+          if cost then List.iter prerr_endline r.Evaluate.costs;
+          mism := !mism + r.Evaluate.mismatches
+        | exception Evaluate.Refused (code, m) ->
+          flush stdout; Printf.eprintf "refused %s: %s\n" code m; exit 2)
+      groups;
+    exit (if !mism > 0 then 1 else 0)
 
 let rec evaluate_args path brute cost = function
   | [] -> evaluate_file path ~brute ~cost

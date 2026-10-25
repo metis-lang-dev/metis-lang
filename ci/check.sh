@@ -199,13 +199,14 @@ echo "PRODUCT WIRES $n_wires/$n_gold"
 
 echo "== 13. interface check (spec 15 §6): metisc --interface == goldens, every composition"
 # corpus/iface/<case>/…/composition.yaml: the alfworld and minihack tree
-# installs (metis-worlds main 143bc0f, nina's gen_hier / mh_hier, each
-# with its family interface package iface/<family>.llp), kitchen_pot
+# installs (metis-worlds main bda52e4, nina's gen_hier / mh_hier, each
+# with its family interface package iface/<family>.llp; alfworld's task
+# with its world model eval/*.llp, spec 16 §3), kitchen_pot
 # (metis-catalog master 8f2bc93) and one deliberately broken composition
 # per check; the
 # listing (stdout and stderr) and the exit code, from corpus/iface so
 # every path in it is relative; METIS_HOME is the corpus-local package
-# root (corpus/iface/_home: metispy master 1d0a4d6's iface/ packages, unchanged at b2d2c8e)
+# root (corpus/iface/_home: metispy master 1d0a4d6's iface/ packages, unchanged at 9c7330c)
 n_if=0
 for comp in $(cd "$ROOT/corpus/iface" && find . -name composition.yaml | sed 's#^\./##' | sort); do
   name=${comp%%/*}
@@ -230,7 +231,9 @@ echo "== 14. the one-tick instrument (spec 16 §6, §7): metisc --evaluate == --
 # manifest): the same fixtures as cases, whose listing must be the
 # embedded form's golden byte for byte, and the case-only ones (a lone
 # belief, the cases/ manifest convention, port-function, port-unknown,
-# a bad key). The listing (stdout and stderr) and the exit code == the
+# a bad key, queries over a world model — wgc_world, and alfworld's
+# installed task over its eval/world.llp — and model-path). The listing
+# (stdout and stderr) and the exit code == the
 # golden; every exact V line (`= p/q`) == the brute-force referee's, as
 # rationals; a cut line's interval holds the referee's value through the
 # fixture's own #expect

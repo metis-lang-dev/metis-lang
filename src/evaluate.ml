@@ -73,10 +73,14 @@ let parse dirs =
           failwith ("evaluate: the query " ^ name ^ " twice");
         let rec pat acc = function
           | ("within" | "at") as w :: h :: tail ->
-            let budget = match tail with
-              | [] -> 500_000
-              | ["budget"; n] -> int_of_string n
+            (* the budget, and the world model the query runs over (§5,
+               `model`: read by `groups`, the caller's) *)
+            let rec opts b = function
+              | [] -> b
+              | "budget" :: n :: r -> opts (int_of_string n) r
+              | "model" :: _ :: r -> opts b r
               | _ -> bad toks in
+            let budget = opts 500_000 tail in
             (List.rev acc, (if w = "within" then Within else At), int_of_string h, budget)
           | "*" :: tail -> pat acc tail
           | a :: tail -> pat (split_atom a :: acc) tail
@@ -591,6 +595,12 @@ let case_of_yaml path =
             | _ -> bad "evaluate %s: one of within, at" name in
           let budget = match List.assoc_opt "budget" f with
             | Some b -> ["budget"; str "budget" b] | None -> [] in
+          let budget = budget @ (match List.assoc_opt "model" f with
+              | Some m -> ["model"; str "model" m] | None -> []) in
+          List.iter (fun (k, _) ->
+              if not (List.mem k ["reach"; "risk"; "within"; "at"; "budget"; "model"]) then
+                bad "evaluate %s: unknown key %s (reach|risk, within|at, budget, model)" name k)
+            f;
           let toks = List.filter (( <> ) "")
               (String.split_on_char ' ' (squash pat)) in
           ["evaluate"; name; kind] @ toks @ [q; h] @ budget)
@@ -628,4 +638,41 @@ let case_of_yaml path =
   let expects = match List.assoc_opt "expect" case with
     | None -> []
     | Some v -> List.map (fun (n, x) -> ["expect"; n; str "expect" x]) (map "expect" v) in
-  (program, init, beliefs @ ports @ queries man @ queries case @ expects @ levels)
+  (Filename.dirname mpath, str "program" (List.assoc "program" man), init,
+   beliefs @ ports @ queries man @ queries case @ expects @ levels)
+
+(* -- the queries' world models (spec/16 §3, §5 `model`) ---------------- *)
+
+let model_of d =
+  let rec f = function "model" :: p :: _ -> Some p | _ :: r -> f r | [] -> None in
+  match d with "evaluate" :: _ -> f d | _ -> None
+
+let groups dirs ~program =
+  List.iter (fun d ->
+      match model_of d with
+      | None -> ()
+      | Some m ->
+        (* inside the package: relative, and never above its root *)
+        let depth = List.fold_left (fun acc c ->
+            if acc < 0 then acc
+            else match c with "" | "." -> acc | ".." -> acc - 1 | _ -> acc + 1)
+            0 (String.split_on_char '/' m) in
+        if not (Filename.is_relative m) || depth < 0 then
+          refuse "model-path" "evaluate %s: model %s is outside the package" (List.nth d 1) m)
+    dirs;
+  let qkey = List.filter_map (fun d -> match d with
+      | "evaluate" :: name :: _ ->
+        Some (name, match model_of d with Some m -> m | None -> program)
+      | _ -> None) dirs in
+  let keys = match List.sort_uniq compare (List.map snd qkey) with [] -> [program] | ks -> ks in
+  List.mapi (fun i key ->
+      let first = i = 0 in
+      let mine q = match List.assoc_opt q qkey with Some k -> k = key | None -> first in
+      (key, List.filter (fun d -> match d with
+           | ("belief" | "port") :: _ -> true
+           | "evaluate" :: name :: _ -> mine name
+           | "expect" :: name :: _ -> mine name
+           | "level" :: _ :: "from" :: "belief" :: _ -> first
+           | "level" :: _ :: "from" :: q :: _ -> mine q
+           | _ -> first) dirs))
+    keys

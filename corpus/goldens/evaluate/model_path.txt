@@ -1,0 +1,2 @@
+refused model-path: evaluate escape: model ../../outside.llp is outside the package
+rc 2

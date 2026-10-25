@@ -1,0 +1,13 @@
+# spec16 step 4: wgc_model's case — the program's queries and the world model's, one case
+manifest: ../wgc_model.yaml
+init: [farmer(near), boat, tally]
+ports:
+  where:
+    where(wolf, near): 1
+    where(wolf, far): 0
+    where(goat, near): 0.75
+    where(goat, far): 0.25
+    where(cabbage, near): 0.5
+    where(cabbage, far): 0.5
+expect:
+  lose: 301/576

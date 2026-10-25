@@ -1,0 +1,13 @@
+# spec16 step 4: queries over a world model (`model:`, spec/16 §3, §5) beside queries over the program
+program: wgc_bank.llp
+beliefs:
+  on: {port: where, one: A}
+evaluate:
+  lose: {risk: gone(_), within: 8}
+  lose_world: {risk: gone(_), within: 8, model: wgc_world.llp}     # the same risk where the wolf may wander
+  win_world: {reach: solved, within: 14, model: wgc_world.llp}
+levels:
+  lose_level:
+    from: {evaluate: lose_world}
+    at: [0.1, 0.6]
+    names: [low, mid, high]

@@ -1,0 +1,12 @@
+N belief-read carry on
+N belief-read eat on
+N belief-read done on
+V lose risk gone(_) within 8 = 301/576 ~ 0.52256944444444442 worlds 4 states 73
+N belief-read carry on
+N belief-read eat on
+N belief-read done on
+N belief-read wander on
+V lose_world risk gone(_) within 8 = 48841/120960 ~ 0.40377810846560847 worlds 4 states 88
+V win_world reach solved within 14 = 1/16 ~ 0.0625 worlds 4 states 205
+L lose_level(mid)
+rc 0
