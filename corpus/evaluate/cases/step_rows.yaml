@@ -1,0 +1,7 @@
+# nav-belief step 2, a case-only error: rows of a table by step must name the same atoms
+manifest: ../lane_cells.yaml
+init: [at(c0)]
+ports:
+  where: {where(c4): 1, where(c0): 0, where(c1): 0, where(c2): 0, where(c3): 0, where(c5): 0, where(c6): 0}
+  closing:
+    step: [{closing(c4): 0.2}, {closing(c5): 0.4}]

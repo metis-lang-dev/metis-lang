@@ -1,0 +1,2 @@
+error: cases/step_rows.yaml: ports closing: step: every row the same atoms as the first (closing(c4))
+rc 1

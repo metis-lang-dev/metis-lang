@@ -1,0 +1,8 @@
+# nav-belief step 2: the lane with its predict as a table by step whose rows are atom tables (spec/16 §10.1):
+# the closing probability per cell of the beast, each row one step of the horizon
+program: lane.llp
+beliefs:
+  beast: {port: where, one: C}
+evaluate:
+  collide: {risk: hit, within: 8}
+  stairs: {reach: home, within: 8}

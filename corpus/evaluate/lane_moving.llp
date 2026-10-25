@@ -1,0 +1,12 @@
+% nav-belief step 2 fixture: the closing probability rising along the horizon (0.2 now, 0.9 by step 6): the predict, row t at step t
+catalog lane_moving 1.
+include "lane.llp".
+#init at(c0) 1
+#belief beast one C by where
+#port where 0
+#port where(c4) 0.5
+#port where(c5) 0.3
+#port where(c6) 0.2
+#port closing step 0.2 0.3 0.45 0.6 0.75 0.85 0.9
+#evaluate collide risk hit within 8
+#evaluate stairs reach home within 8

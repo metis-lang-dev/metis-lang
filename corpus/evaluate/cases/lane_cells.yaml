@@ -1,0 +1,11 @@
+# nav-belief step 2: the beast closes faster as the horizon goes on, and faster still from the far cells (it has
+# seen the agent and runs); rows past the table's end repeat its last row
+manifest: ../lane_cells.yaml
+init: [at(c0)]
+ports:
+  where: {where(c0): 0, where(c1): 0, where(c2): 0, where(c3): 0, where(c4): 0.5, where(c5): 0.3, where(c6): 0.2}
+  closing:
+    step: [{closing(c0): 0.1, closing(c1): 0.1, closing(c2): 0.1, closing(c3): 0.2, closing(c4): 0.2, closing(c5): 0.3, closing(c6): 0.3},
+           {closing(c0): 0.2, closing(c1): 0.2, closing(c2): 0.2, closing(c3): 0.3, closing(c4): 0.4, closing(c5): 0.5, closing(c6): 0.5},
+           {closing(c0): 0.3, closing(c1): 0.3, closing(c2): 0.4, closing(c3): 0.5, closing(c4): 0.6, closing(c5): 0.7, closing(c6): 0.7},
+           {closing(c0): 0.5, closing(c1): 0.5, closing(c2): 0.6, closing(c3): 0.7, closing(c4): 0.8, closing(c5): 0.9, closing(c6): 0.9}]

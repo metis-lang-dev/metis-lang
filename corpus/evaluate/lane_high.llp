@@ -1,0 +1,12 @@
+% nav-belief step 2 fixture: the closing probability frozen at 0.9: the far end of the moving table, held
+catalog lane_high 1.
+include "lane.llp".
+#init at(c0) 1
+#belief beast one C by where
+#port where 0
+#port where(c4) 0.5
+#port where(c5) 0.3
+#port where(c6) 0.2
+#port closing 0.9
+#evaluate collide risk hit within 8
+#evaluate stairs reach home within 8

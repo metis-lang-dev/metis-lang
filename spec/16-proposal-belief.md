@@ -209,7 +209,8 @@ evaluate:
   - Both files are read by metisc's YAML subset: `key: value` lines and flow lists and maps (spec 15's
     reader), plus block MAPPINGS by indentation. Block lists (`- x`) are refused. An atom's parentheses hold
     its commas in a flow value (`{look(target, p0): 0.6}`), and spaces inside an atom are formatting, as in a
-    directive.
+    directive. A flow value may run over several lines: a line that leaves a bracket open takes the next
+    lines until it closes (a table by step, §10.1).
   - A case and its embedded form give the same directives, so the same listing, byte for byte (gate 14).
   - **Block YAML in a member manifest is a READER LIMIT, not the rule.** The rule for both toolchains: a
     manifest may use block MAPPINGS; block LISTS are not part of it.
@@ -397,13 +398,77 @@ Peephole and factoring in the paper's sense (§8, the cut-net's width) are the n
 state count needs them. None is proposed before step 2 measures the cost against h and the number of belief
 groups.
 
-## 10. Later, stated, not in this spec: ports as functions
+## 10. Ports as functions: the predict inside the instrument
 
 The map's PREDICT inside the instrument: a port whose value moves along the horizon (the object carried, a
 beast's position, a plant drying) makes the belief a hidden Markov chain over the horizon. That is the
 instrument filtering, which this spec leaves in the map. Its form when it comes: a port bound as a function
 of (step, the frozen table), still evaluated by the host, never in the IR. The exact rational semantics and
 the cut carry over; the multilinearity of §8 does not.
+
+### 10.1 The cheap form, brought forward: a port as a table by step (nav-belief s-794cf4c1 step 2)
+
+The host computes the predict OUTSIDE the instrument, one row per step of the horizon, and the instrument
+reads row t at step t. The map's filter stays in the map; only its forecast enters, as numbers.
+- **The binding.**
+  - Case form: `ports: {closing: {step: [ROW0, ROW1, …]}}`. A row is a number (every argument tuple) or an
+    atom table `{closing(c4): 0.2, …}`, and every row names the same atoms as the first.
+  - Embedded form: `#port closing step v0 v1 …` or `#port closing(c4) step v0 v1 …`.
+  - A row past the table's end repeats its last row, so the frozen table is the one-row case and every case
+    before §10.1 means what it meant. A row that is not a number or a table is `port-function`; rows naming
+    different atoms are refused by the reader.
+- **The semantics** (normative; `--brute` likewise).
+  - A rule factor `@w f(args)` (or `~f`) prices the event chosen at step t, the move from slice t to slice
+    t+1 (t = 0 … h−1), by row t.
+  - A BELIEF's presence draw reads row 0, whenever R2 defers it: the draw is the world at the tick, and the
+    deferral only places it.
+  - A belief level reads row 0 too.
+  - The instrument's slices are synchronous (every state of slice t is at step t), so merging is unchanged,
+    and so is the cut.
+- **The listing** says which ports are read by step: `N step-table <port> rows <n>`, after the belief-read
+  notes.
+- **§8's multilinearity is lost for such a port.** The value is no longer linear in each group's
+  distribution through μ₀ alone: the rows multiply along every trace, and they are functions of the predict.
+  So the certificate holds over the INITIAL levels: the cells are the tick's levels, as in §8, and the
+  predict that turns the tick's belief into the rows is part of the certified host library. That is
+  specialist-tree's bundle view (design §10, spec 15 §9.1): the bundle seals the predict's code with the
+  program, as it seals the host's sync. A cell whose query reads a by-step port is listed
+  `certified over the initial levels, predict in the bundle`, never by §8's vertex bound.
+- **The fixture** (`corpus/evaluate/lane*.llp`, `cases/lane_cells.yaml`) is a lane: the agent walks c0 → c6,
+  and a beast believed at c4 / c5 / c6 (0.5 / 0.3 / 0.2) closes in by `@w closing(Q)` or holds by
+  `@w ~closing(Q)`. The risk of meeting it within 8 events, and the stairs within 8:
+
+  | closing | collide (risk hit within 8) | stairs (reach home within 8) |
+  |---|---|---|
+  | frozen 0.2 (one row) | 100713344309/486202500000 ≈ 0.20714 | 131/5760 ≈ 0.02274 |
+  | by step 0.2, 0.3, 0.45, 0.6, 0.75, 0.85, 0.9 | 14252096951893/48545280000000 ≈ 0.29358 | 2681/115200 ≈ 0.02327 |
+  | frozen 0.9 | 43062553087871/124467840000000 ≈ 0.34597 | 269/11520 ≈ 0.02335 |
+  | by step and by cell (`lane_cells`, 4 rows of atom tables) | 10541259829/32400000000 ≈ 0.32535 | 179/7680 ≈ 0.02331 |
+
+  The moving belief lies between its first and last rows held frozen, as it should. Each value equals
+  `--brute`'s. The step semantics' independent witness is metispy's `ForwardProjection` with the table read
+  per step through its policy hook, mixed over the three worlds by hand: it agrees with all three lanes to
+  binary64. The table is a hand table until semantic_world's `predict_table(h)` is committed; then a fixture
+  from a recorded table joins.
+- **semantic_world's `predict_table(h)`** (nina's settled shape: `rows: {closing|near|hostile: [[p per beast]
+  for t in 1..H]}`, `roles: {b1: name, b2: name}`) maps onto the table by step:
+  - its row t (t = 1 … H) is the instrument's row t − 1;
+  - each beast's column becomes the atom `closing(<role>)` through `roles`, so a row is an atom table.
+
+  Two points decide whether a column may be a RULE factor:
+  1. **A rule factor is a per-step probability of the move** (a hazard: P(the beast closes at this step |
+     where it is)), not a marginal. "P(nearer the ego than now at step t)" is cumulative: read as a factor at
+     every step, it compounds. The rule-factor column is the per-step one. A marginal belongs in a query
+     or a level, not in `@w`.
+  2. **An intent constant over the horizon** (`hostile`) is better a categorical BELIEF than a by-step port:
+     `intent(B, I)` with `one: I`, drawn at row 0, with the per-intent motion as static-weight rules in the
+     world model. The intent then persists along each trace (a hostile beast closes at every step, not at the
+     mixture's average rate), and §8's vertex bound holds for it. By-step tables are for what moves and does
+     not factor: a position spread over the map's graph.
+- **Steps are events, rows are ticks.** For step 2 the horizon counts events (§5, ruled), while a predict
+  row is a tick of the world. A world model whose tick is one fixed cycle of events can index its table by
+  tick: the row advances when the cycle closes (for example at the link back into the first stage). That is
+  the tick-based horizon §5 anticipates, and it waits for step 3's world model to fix what a tick is.
 
 ## 11. Step 2, the fixtures, and the questions for the ruling
 

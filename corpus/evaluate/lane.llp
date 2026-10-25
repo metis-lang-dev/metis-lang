@@ -1,0 +1,37 @@
+% nav-belief step 2 fixture (spec/16 §10.1): a lane. The agent walks from c0 to the stairs at c6; a beast ahead,
+% where the map believes it is (where: categorical over its cell), may close in one cell at a time. Its closing
+% probability comes from the map's PREDICT: a table by step, row t read at step t (a hand table until
+% semantic_world's predict_table gives its shape). A frozen table is the one-row case.
+catalog lane 1.
+provenance hand "a lane with a closing beast, for the per-step port table" "2026-10-26".
+layers (dyn).
+stages (go).
+type cell {c0 c1 c2 c3 c4 c5 c6}.
+namespace ln produce (dyn).
+pred at(cell) : ln.
+pred beast(cell) : ln.
+pred hit : ln.
+pred home : ln.
+bwd next(cell, cell).
+next(c0, c1).
+next(c1, c2).
+next(c2, c3).
+next(c3, c4).
+next(c4, c5).
+next(c5, c6).
+bwd stairs(cell).
+stairs(c6).
+weight where(C) reads {beast(C)}.
+weight closing(C) reads {beast(C)}.
+stage go {
+  %% I step on from {P} to {Q}.
+  walk [dyn] : at(P) * next(P, Q) -o at(Q).
+  %% The beast at {Q} closes in to {P}.
+  close [dyn] : beast(Q) * next(P, Q) -o beast(P)  @w closing(Q).
+  %% The beast at {Q} holds its place.
+  hold [dyn] : $beast(Q) -o ()  @w ~closing(Q).
+  %% The beast meets me at {P}.
+  meet [dyn] : at(P) * $beast(P) -o hit.
+  %% At the stairs.
+  arrive [dyn] : at(P) * $stairs(P) -o home.
+}

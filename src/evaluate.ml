@@ -58,16 +58,21 @@ let parse dirs =
       | ["belief"; p; k; v; "by"; port] when k = "one" || k = "lone" ->
         beliefs := { b_pred = p; b_mode = (if k = "one" then One v else Lone v);
                      b_port = port } :: !beliefs
-      | ["port"; spec; v] ->
+      | "port" :: spec :: vs when vs <> [] && vs <> ["step"] ->
         let (name, args) = split_atom spec in
         let key = if String.contains spec '(' then Some args else None in
+        (* one value (the frozen table), or `step v0 v1 …`: a value per
+           step of the horizon, row t read at step t (spec/16 §10.1) *)
+        let vs = match vs with "step" :: r -> r | [v] -> [v] | _ -> bad toks in
         (* a port bound to anything but a number is a binding that
            computes: the host's function form, spec/16 §10 *)
-        if float_of_string_opt v = None then
-          refuse "port-function" "port %s bound to %s: a binding that computes is the host's \
-                                  function form (spec/16 §10, later); a case binds numbers or a \
-                                  table of them" spec v;
-        tbl := (name, key, number ("port " ^ spec) v) :: !tbl
+        List.iter (fun v ->
+            if float_of_string_opt v = None then
+              refuse "port-function" "port %s bound to %s: a binding that computes is the host's \
+                                      function form (spec/16 §10, later); a case binds numbers, a \
+                                      table of them, or a table by step" spec v)
+          vs;
+        tbl := (name, key, Array.of_list (List.map (number ("port " ^ spec)) vs)) :: !tbl
       | "evaluate" :: name :: kind :: rest when kind = "reach" || kind = "risk" ->
         if List.exists (fun q -> q.q_name = name) !queries then
           failwith ("evaluate: the query " ^ name ^ " twice");
@@ -179,7 +184,10 @@ let run src cat ports prog ~init dirs ~brute =
           (List.length args) n (List.length formals)
       | _ -> ())
     tbl;
-  let port_value port args =
+  (* row t at step t; past the table's end, its last row (the frozen
+     table is the one-row case) *)
+  let at_step rows t = rows.(min t (Array.length rows - 1)) in
+  let port_rows port args =
     match List.find_opt (fun (n, a, _) -> n = port && a = Some args) tbl with
     | Some (_, _, v) -> v
     | None ->
@@ -188,26 +196,31 @@ let run src cat ports prog ~init dirs ~brute =
        | None -> refuse "port-unbound" "weight port %s is unbound at %s: the case binds it \
                                        (#port %s VALUE, or a value per argument tuple)"
                    port (render port args) port) in
-  (* the events, their frozen weights: prior × the port factor *)
+  (* a belief's presence draw reads row 0: the world at the tick *)
+  let port_value port args = at_step (port_rows port args) 0 in
+  (* the events' weights, prior × the port factor, one per row of the
+     port's table (one row: frozen) *)
   let rows = Refsample.canonical_events prog in
-  let w0 = Array.map (fun (r : Refsample.event_row) ->
+  let w_rows = Array.map (fun (r : Refsample.event_row) ->
       let w = number ("rule " ^ r.ev.Ground.ev_name)
           (Printf.sprintf "%.17g" r.ev.Ground.ev_weight) in
-      if r.kind = `Link then w
+      if r.kind = `Link then [| w |]
       else match List.assoc_opt (Ports.base_name r.ev.Ground.ev_name)
                    ports.Compile.p_weight_refs with
-        | None -> w
+        | None -> [| w |]
         | Some wr ->
           let subst = Ports.tag_subst r.ev.Ground.ev_name in
           let args = List.map (fun a -> match List.assoc_opt a subst with
               | Some c -> c | None -> a) wr.Compile.w_args in
-          let v = port_value wr.Compile.w_factor args in
-          let f = if not wr.Compile.w_compl then v
-            else try Rat.sub Rat.one v
-              with Rat.Negative _ -> refuse "port-value" "~%s: %s above 1"
-                                       wr.Compile.w_factor (render wr.Compile.w_factor args) in
-          Rat.mul w f)
+          Array.map (fun v ->
+              let f = if not wr.Compile.w_compl then v
+                else try Rat.sub Rat.one v
+                  with Rat.Negative _ -> refuse "port-value" "~%s: %s above 1"
+                                           wr.Compile.w_factor (render wr.Compile.w_factor args) in
+              Rat.mul w f)
+            (port_rows wr.Compile.w_factor args))
       rows in
+  let weight i t = at_step w_rows.(i) t in
   let idx kind stage = List.filter (fun i -> rows.(i).Refsample.kind = kind
                                               && rows.(i).Refsample.stage = stage)
       (List.init (Array.length rows) Fun.id) in
@@ -319,14 +332,14 @@ let run src cat ports prog ~init dirs ~brute =
   let ng = Array.length groups in
   let worlds = Array.fold_left (fun acc g -> acc * List.length g.g_worlds) 1 groups in
   (* the choice at a state: spec 06 §4's tiers, exactly *)
-  let choice st =
+  let choice st t =
     if st.stage = done_stage then [(None, Rat.one)]
     else
       let weigh kind =
         List.filter_map (fun i ->
             let n = phi st.counts rows.(i).Refsample.ev in
             if n = 0 then None
-            else let w = Rat.mul w0.(i) (Rat.of_int n) in
+            else let w = Rat.mul (weight i t) (Rat.of_int n) in
               if Rat.is_zero w then None else Some (i, w))
           (tier kind st.stage) in
       let ws = match weigh `Clause with [] -> weigh `Link | ws -> ws in
@@ -391,7 +404,7 @@ let run src cat ports prog ~init dirs ~brute =
           else
             List.iter (fun (e, p) ->
                 List.iter (admit out) (settle must (apply st e) (Rat.mul m p)))
-              (choice st))
+              (choice st (!t - 1)))
         states;
       retained := !retained + Hashtbl.length out;
       cur := out
@@ -408,13 +421,13 @@ let run src cat ports prog ~init dirs ~brute =
       | Within ->
         if holds st.counts q.q_conj then (hit := Rat.add !hit m; incr paths)
         else if t = q.q_h || st.stage = done_stage then incr paths
-        else List.iter (fun (e, p) -> dfs (apply st e) (Rat.mul m p) (t + 1)) (choice st)
+        else List.iter (fun (e, p) -> dfs (apply st e) (Rat.mul m p) (t + 1)) (choice st t)
       | At ->
         if t = q.q_h || st.stage = done_stage then begin
           incr paths;
           if holds st.counts q.q_conj then hit := Rat.add !hit m
         end
-        else List.iter (fun (e, p) -> dfs (apply st e) (Rat.mul m p) (t + 1)) (choice st) in
+        else List.iter (fun (e, p) -> dfs (apply st e) (Rat.mul m p) (t + 1)) (choice st t) in
     List.iter (fun (st, m) -> dfs st m 0) (settle (fun _ _ -> true) st0 Rat.one);
     (!hit, !paths) in
   (* the listing *)
@@ -433,6 +446,14 @@ let run src cat ports prog ~init dirs ~brute =
             notes := line :: !notes)
         bpreds)
     cat.Catalog.k_entries;
+  (* a port read by step (spec/16 §10.1): its rows, and §8's
+     multilinearity gone for it *)
+  List.iter (fun (n, _, r) ->
+      let k = List.fold_left (fun acc (m, _, r') -> if m = n then max acc (Array.length r') else acc)
+          0 tbl in
+      let line = Printf.sprintf "N step-table %s rows %d" n k in
+      if Array.length r > 1 && not (List.mem line !notes) then notes := line :: !notes)
+    tbl;
   let results = ref [] and costs = ref [] and mism = ref 0 in
   let vlines = List.map (fun q ->
       let pat = String.concat " * " (List.map (fun (p, a) -> render p a) q.q_conj) in
@@ -624,6 +645,27 @@ let case_of_yaml path =
       List.concat_map (fun (port, b) ->
           match b with
           | S x -> [["port"; port; x]]
+          | M [("step", L rows)] ->
+            (* a table by step (spec/16 §10.1): a number per row, or the
+               same atom table in every row *)
+            (match rows with
+             | [] -> bad "ports %s: step: an empty table" port
+             | S _ :: _ ->
+               [["port"; port; "step"] @ List.map (str ("ports " ^ port ^ " step")) rows]
+             | M first :: _ ->
+               let atoms = List.map fst first in
+               let tbls = List.map (fun r -> match r with
+                   | M t when List.sort compare (List.map fst t) = List.sort compare atoms -> t
+                   | _ -> bad "ports %s: step: every row the same atoms as the first (%s)" port
+                            (String.concat ", " atoms)) rows in
+               List.map (fun atom ->
+                   let a = squash atom in
+                   if fst (split_atom a) <> port then
+                     bad "ports %s: the entry %s is not an argument tuple of %s" port atom port;
+                   ["port"; a; "step"]
+                   @ List.map (fun t -> str ("ports " ^ atom) (List.assoc atom t)) tbls)
+                 atoms
+             | L _ :: _ -> bad "ports %s: step: a row is a number or an atom table" port)
           | M tbl ->
             List.map (fun (atom, x) ->
                 let a = squash atom in

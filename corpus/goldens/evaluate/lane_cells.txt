@@ -1,0 +1,7 @@
+N belief-read close beast
+N belief-read hold beast
+N belief-read meet beast
+N step-table closing rows 4
+V collide risk hit within 8 = 10541259829/32400000000 ~ 0.32534752558641977 worlds 3 states 232
+V stairs reach home within 8 = 179/7680 ~ 0.023307291666666667 worlds 3 states 250
+rc 0

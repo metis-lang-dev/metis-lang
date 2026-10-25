@@ -89,6 +89,31 @@ let leaf file lno rest =
   then S (String.sub rest 1 (String.length rest - 2))
   else S rest
 
+(* a flow value may run over several lines: a line whose brackets are
+   left open (outside quotes) takes the next lines until they close *)
+let continued lines =
+  let depth s =
+    let d = ref 0 and q = ref false in
+    String.iter (fun c ->
+        if c = '"' then q := not !q
+        else if not !q then
+          (if c = '[' || c = '{' then incr d else if c = ']' || c = '}' then decr d)) s;
+    !d in
+  let rec go acc = function
+    | [] -> List.rev acc
+    | (lno, l) :: tl ->
+      let t = String.trim l in
+      if t = "" || t.[0] = '#' then go ((lno, l) :: acc) tl
+      else
+        let rec more line d tl =
+          if d <= 0 then (line, tl)
+          else match tl with
+            | [] -> (line, [])
+            | (_, l') :: tl' -> more (line ^ " " ^ String.trim l') (d + depth l') tl' in
+        let (line, tl) = more l (depth l) tl in
+        go ((lno, line) :: acc) tl in
+  go [] lines
+
 (* the instrument's case and manifest reader (spec/16 §5): the subset
    above, plus block MAPPINGS — `key:` alone on its line opens a map
    whose entries are indented below it, at one indentation; leaves are
@@ -118,7 +143,7 @@ let read_yaml_block file =
           Some (lno, !ind, key,
                 strip_comment (String.sub t (i + 1) (String.length t - i - 1)))
       end)
-      (List.mapi (fun k l -> (k + 1, l)) (List.rev !raw)) in
+      (continued (List.mapi (fun k l -> (k + 1, l)) (List.rev !raw))) in
   let rec map_at ind acc = function
     | (lno, i, _, _) :: _ when i > ind -> err lno "unexpected indentation"
     | (lno, i, key, rest) :: tl when i = ind ->
