@@ -455,7 +455,7 @@ reads row t at step t. The map's filter stays in the map; only its forecast ente
   - its row t (t = 1 … H) is the instrument's row t − 1;
   - each beast's column becomes the atom `closing(<role>)` through `roles`, so a row is an atom table.
 
-  Two points decide whether a column may be a RULE factor:
+  Two points decided whether a column may be a RULE factor, both ruled (the architect, 2026-10-26):
   1. **A rule factor is a per-step probability of the move** (a hazard: P(the beast closes at this step |
      where it is)), not a marginal. "P(nearer the ego than now at step t)" is cumulative: read as a factor at
      every step, it compounds. The rule-factor column is the per-step one. A marginal belongs in a query
@@ -465,6 +465,25 @@ reads row t at step t. The map's filter stays in the map; only its forecast ente
      world model. The intent then persists along each trace (a hostile beast closes at every step, not at the
      mixture's average rate), and §8's vertex bound holds for it. By-step tables are for what moves and does
      not factor: a position spread over the map's graph.
+
+  **The recommended shape (ruled).**
+  - The intent is a categorical belief, `intent(B, I)` with `one: I`, drawn once per world.
+  - The step table carries per-step HAZARDS CONDITIONED ON THE INTENT, one atom table `closing(B, I)` per row.
+  - The world model's motion rules read the intent and price by it:
+
+        close [dyn] : beast(B, Q) * next(P, Q) * $intent(B, I) -o beast(B, P)  @w closing(B, I).
+        hold  [dyn] : $beast(B, Q) * $intent(B, I) -o ()                      @w ~closing(B, I).
+
+    A trace under intent I then reads row t's hazard for I. The intent factors (§8 holds for it), and only
+    the hazards move by step.
+  - Marginals ("nearer than now", "near") feed levels only.
+
+  semantic_world's predict_table now carries `rows.step_closing` (the per-step hazard, from the belief
+  rolled to t − 1) and a top-level `intent` (the categorical belief).
+  - The fixture `corpus/evaluate/lane_intent.llp` is the shape with one beast: `intent(I)` one of
+    {hostile 0.4, wandering 0.6}, and hazards by step 0.6 → 0.9 (hostile) and 0.1 → 0.15 (wandering).
+    Collision risk within 8 = 7561264673123217407/30896711193600000000 ≈ 0.24473, over 6 worlds.
+  - `--brute` is equal, and metispy's per-step filter, mixed over the 6 worlds, agrees to binary64.
 - **Steps are events, rows are ticks.** For step 2 the horizon counts events (§5, ruled), while a predict
   row is a tick of the world. A world model whose tick is one fixed cycle of events can index its table by
   tick: the row advances when the cycle closes (for example at the link back into the first stage). That is

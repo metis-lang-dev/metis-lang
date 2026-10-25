@@ -1,0 +1,53 @@
+% nav-belief step 2 fixture (spec/16 §10.1, the recommended shape): the lane with the beast's INTENT a
+% categorical belief (mind: one I), drawn once per world, and the predict's per-step hazards conditioned on it,
+% an atom table closing(I) per row; the rules price @w closing(I) with $intent(I) in the body, so the trace
+% under intent I reads row t's hazard for I. The position belief (where) as in lane.llp.
+catalog lane_intent 1.
+provenance hand "the lane with an intent belief and intent-conditioned hazards" "2026-10-26".
+layers (dyn).
+stages (go).
+type cell {c0 c1 c2 c3 c4 c5 c6}.
+type intent {hostile wandering}.
+namespace ln produce (dyn).
+pred at(cell) : ln.
+pred beast(cell) : ln.
+pred intent(intent) : ln.
+pred hit : ln.
+pred home : ln.
+bwd next(cell, cell).
+next(c0, c1).
+next(c1, c2).
+next(c2, c3).
+next(c3, c4).
+next(c4, c5).
+next(c5, c6).
+bwd stairs(cell).
+stairs(c6).
+weight where(C) reads {beast(C)}.
+weight mind(I) reads {intent(I)}.
+weight closing(I) reads {intent(I)}.
+stage go {
+  %% I step on from {P} to {Q}.
+  walk [dyn] : at(P) * next(P, Q) -o at(Q).
+  %% The beast at {Q}, {I}, closes in to {P}.
+  close [dyn] : beast(Q) * next(P, Q) * $intent(I) -o beast(P)  @w closing(I).
+  %% The beast at {Q}, {I}, holds its place.
+  hold [dyn] : $beast(Q) * $intent(I) -o ()  @w ~closing(I).
+  %% The beast meets me at {P}.
+  meet [dyn] : at(P) * $beast(P) -o hit.
+  %% At the stairs.
+  arrive [dyn] : at(P) * $stairs(P) -o home.
+}
+#init at(c0) 1
+#belief beast one C by where
+#belief intent one I by mind
+#port where 0
+#port where(c4) 0.5
+#port where(c5) 0.3
+#port where(c6) 0.2
+#port mind(hostile) 0.4
+#port mind(wandering) 0.6
+#port closing(hostile) step 0.6 0.7 0.8 0.9
+#port closing(wandering) step 0.1 0.1 0.15 0.15
+#evaluate collide risk hit within 8
+#evaluate stairs reach home within 8
