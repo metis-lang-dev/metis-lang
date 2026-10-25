@@ -18,7 +18,7 @@ diag_compile.llp:42: u: variable M on the right side is bound nowhere on the lef
 diag_compile.llp:44: a: tok arity 2 != declared 1
 diag_compile.llp:46: p: weight port 'nope' not declared
 diag_compile.llp:48: q: weight arg K is not a rule var
-diag_compile.llp:52: back: bwd 'big' in link post
+diag_compile.llp:54: back: bwd 'big' in link post
 rc 1
 diag_kernel.llp:14: predicate 'stray': unknown namespace 'nowhere'
 diag_kernel.llp:16: predicate 'dual' declared both resource and bwd
