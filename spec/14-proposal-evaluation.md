@@ -69,9 +69,12 @@ prune.
 2. **Cyclic guard bodies.** For example a triangle `$e(X,Y) * $e(Y,Z) * $e(Z,X)`. P1's per-variable semi-join
    is not worst-case optimal there. The bound is AGM: |out| ≤ Π |Rⱼ|^{wⱼ} over a fractional edge cover w, reached
    by a worst-case-optimal join (leapfrog triejoin, generic join).
-   - No rule has a cyclic guard body today. A GYO reduction of every schema's and link's guard hypergraph over
-     metis-catalog (domains, goldens, demo), metis-worlds and metis-lang/corpus found 1,293 rules, 180 of them
-     with two or more guards, and 0 cyclic. The reduction does flag a triangle.
+   - One rule has a cyclic guard body today: the road grid's `hit` (metis-catalog domains/road/grid_domain.llp,
+     included by road_grid.llp), a pair/window triangle over A, B, X, in the parked road catalog. The 1,293
+     rules of the programs that compile (a GYO reduction of every schema's and link's guard hypergraph over
+     metis-catalog, metis-worlds and metis-lang/corpus; 180 with two or more guards) are acyclic. The scan that
+     first said 0 skipped the programs metispy fails to compile; the road grid files fail on spec 12's
+     type-unknown. The reduction does flag a triangle.
    - Proposed as a check, not a pass: the compiler reports a rule whose guard hypergraph is cyclic (a
      diagnostic, spec 08), so the cost is never a surprise.
 3. **Variable order.** P1 filters in declaration order. A rule whose first-declared variable is unguarded and
@@ -153,7 +156,7 @@ The invariants:
 | P4t | tuple multisets (immutable flat tuples behind the mapping protocol) | metispy representation | as named | [E] measured (roles); **breaks 25 tests** (in-place mutation, a pair-unpacking reader in the cone and intervention verbs) | 361 B/event (3×), reads 1.7–2× slower | **no** (ruled; recorded) |
 | P5 | dead-event pruning from init | after grounding | Drop an event that needs an atom neither in init nor produced by any event (the producible fixpoint). EFD §6's pruning applied on the generative side | [S] from that init only; the content key changes. Sound for a live session only with spec 13's re-grounding on assert | pred 200 with the room's adj in init: 1.28M → ~5.9k events (≈ 200×), 1.35 GB → ~6 MB | **no-go** while spec 13 is no-go (its trigger 3 met only by cell-level forms, which roles avoid) |
 | P10 | **incremental min-fill** in metisc `Elim` | IR build | Keep each variable's fill in a priority queue. On eliminating v, update only v's neighbours and their neighbours, not every remaining variable | the same elimination order (ties broken as today) | `elim_cost` about V³ → about V · d² log V (d the elimination degree): 137 s at 2,900 vars → ~seconds; the H = 100 room IRs stop hitting the cap at emit, not elim | go for metisc (compile-host cost only; order equality is checkable by digest of the O/Y orders) |
-| P11 | cyclic-guard diagnostic | compile | Report a rule whose guard hypergraph is cyclic (§1.2): its grounding is AGM-bounded, not output-linear | none (a listing) | — (0 of 1,293 rules in the corpus today) | go as a spec 08 code |
+| P11 | cyclic-guard diagnostic | compile | Report a rule whose guard hypergraph is cyclic (§1.2): its grounding is AGM-bounded, not output-linear | none (a listing) | — (1 in the corpus: the road grid's `hit`) | go as a spec 08 code |
 | P8 | IR peephole: fuse a deterministic write box into its single reader; drop guard boxes whose indicator is 1 on every reachable row; prune by the query cone (EFD §6, our spec 11 cone) | emission | as named | [S]: same marginals | constant factors on box count. **Width unchanged** (Thm 8.2's cost is in the width, which min-fill already chooses) | note only |
 | P9 | ⊗/⅋ cut merging (EFD Thm 8.3) | IR typing | group several occurrence edges between two clusters into one joint variable | [S] | none: the same names, the same width (a sequentialization result) | note only |
 | P12 | rarest-atom tier in the sampled path | runtime | metispy's `ForwardProjection` and filter weigh candidates as the REPL now does | [T] | the REPL's gains, for exact filtering at many states | go if a filter-heavy world appears (none measured) |
