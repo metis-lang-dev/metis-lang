@@ -1,0 +1,9 @@
+N belief-read solo1 torch
+N belief-read solo2 torch
+N belief-read solo5 torch
+N belief-read solo8 torch
+N belief-read pair2 torch
+N belief-read pair5 torch
+N belief-read pair8 torch
+V solved reach solved within 20 = 2361718822176/225899851829146985675 ~ 1.0454716118903078e-08 worlds 2 states 312
+rc 0

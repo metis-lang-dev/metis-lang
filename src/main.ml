@@ -14,12 +14,14 @@ type case = {
   mutable c_unknowns : string list;
   mutable c_queries : string list;
   mutable c_liks : (string * int) list list;
-  mutable c_interactive : string list }
+  mutable c_interactive : string list;
+  mutable c_instrument : string list list }   (* spec/16: belief, port,
+                                                  evaluate, expect, level *)
 
 let fresh () = { c_name = ""; c_llp = ""; c_pack = None;
                  c_init = []; c_steps = 0; c_seeds = 0;
                  c_unknowns = []; c_queries = []; c_liks = [];
-                 c_interactive = [] }
+                 c_interactive = []; c_instrument = [] }
 
 let split_ws s =
   List.filter (fun x -> x <> "") (String.split_on_char ' ' s)
@@ -240,6 +242,9 @@ let embedded_case path =
               overlay bind weights in the REPL (PLUGIN-PORTS.md);
               bindings are referee-side only, never symbolic (as the
               manifest's 'registry') *)
+         | (("belief" | "port" | "evaluate" | "expect" | "level") :: _) as parts ->
+           (* the instrument's (spec/16 §5): read by --evaluate only *)
+           c.c_instrument <- c.c_instrument @ [parts]
          | parts ->
            if not (case_line c parts) then
              failwith ("bad directive: " ^ l)
@@ -368,6 +373,32 @@ let run_file path =
       Printf.printf "Q %s %d/%d\n" q !r seeds)
     hits
 
+(* --evaluate FILE.llp [--brute] [--cost]: the one-tick instrument
+   (spec/16 §6, §7) on the file's embedded case — its #init, and its
+   #belief / #port / #evaluate / #expect / #level lines. V lines (and N
+   belief-read notes, L levels, X failed expectations) on stdout, the
+   cost lines on stderr with --cost; exit 1 on a failed #expect, 2 on a
+   refusal. --brute is the referee: every world, every path. *)
+let evaluate_file path ~brute ~cost =
+  let c = embedded_case path in
+  let dir = Filename.dirname path in
+  let src = parse_llp dir c.c_llp in
+  let (cat, ports) = compile_warn src in
+  let prog = Ground.ground cat c.c_init in
+  match Evaluate.run src cat ports prog ~init:c.c_init c.c_instrument ~brute with
+  | r ->
+    List.iter print_endline r.Evaluate.lines;
+    if cost then List.iter prerr_endline r.Evaluate.costs;
+    exit (if r.Evaluate.mismatches > 0 then 1 else 0)
+  | exception Evaluate.Refused (code, m) ->
+    Printf.eprintf "refused %s: %s\n" code m; exit 2
+
+let rec evaluate_args path brute cost = function
+  | [] -> evaluate_file path ~brute ~cost
+  | "--brute" :: rest -> evaluate_args path true cost rest
+  | "--cost" :: rest -> evaluate_args path brute true rest
+  | a :: _ -> failwith ("--evaluate: unknown argument " ^ a)
+
 (* --wire PROGRAM.llp [--extension E.llp]...: a domain package's served
    program as the product ground wire (bundle-compiler step 1) — the
    program compiled with its includes, every extension compiled against
@@ -397,6 +428,7 @@ let rec wire_args program exts = function
 let () =
   (try match Array.to_list Sys.argv with
   | _ :: "--wire" :: program :: rest -> wire_args program [] rest
+  | _ :: "--evaluate" :: llp :: rest -> evaluate_args llp false false rest
   | [_; "--selftest"] -> selftest ()
   | [_; "--keys"; manifest] -> drive manifest key_case
   | [_; "--roundtrip"; manifest] -> drive manifest roundtrip_case
@@ -428,7 +460,7 @@ let () =
       "usage: metisc <manifest> | <file.llp> (compile only) | \
        --keys <manifest> | \
        --roundtrip <manifest> | --sample <manifest> | \
-       --run <file.llp> | --wire <program.llp> [--extension \
+       --run <file.llp> | --evaluate <file.llp> [--brute] [--cost] | --wire <program.llp> [--extension \
        <e.llp>]... | --diagnostics[-json] <file.llp> [--base \
        <base.llp>] | --diag-registry | --selftest\n\
        (--diagnostics* LIST diagnostics and exit 0 even when errors are \

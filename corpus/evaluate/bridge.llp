@@ -1,0 +1,79 @@
+% SOURCE: en.wikipedia.org/wiki/Bridge_and_torch_problem
+% (fetched 2026-10-09), problem statement verbatim:
+%
+% "Four people come to a river in the night."
+% "There is a narrow bridge, and it can only hold two people at a
+%  time."
+% "They have one torch and, because it's night, the torch has to be
+%  used when crossing the bridge."
+% "Person A can cross the bridge in 1 minute, B in 2 minutes, C in 5
+%  minutes, and D in 8 minutes."
+% "When two people cross the bridge together, they must move at the
+%  slower person's pace."
+% "The question is, can they all get across the bridge if the torch
+%  lasts only 15 minutes?"
+%
+% Formalized from the statement alone — no solution consulted. The
+% torch IS the resource: a fuse of 15 wick tokens; a crossing burns
+% wick equal to its duration (the slower pace). LLP rules consume
+% fixed multisets, so the durations 1/2/5/8 become one crossing rule
+% per cost class, with bwd facts naming who/which pair burns at that
+% rate. The question "can they all get across in 15" = P[solved] > 0.
+catalog bridge 1.
+provenance text "bridge and torch: four people, two at a time at the slower pace, one torch of 15 minutes" "2026-10-09".
+layers (dyn).
+stages (walk).
+type person {a b c d}.
+type side {near far}.
+namespace br produce (dyn).
+pred pos(person, side) : br.
+pred torch(side) : br.
+pred wick : br.
+pred solved : br.
+pred tally : br.
+bwd across(side, side).
+across(near, far).
+across(far, near).
+bwd pace1(person).
+pace1(a).
+bwd pace2(person).
+pace2(b).
+bwd pace5(person).
+pace5(c).
+bwd pace8(person).
+pace8(d).
+bwd max2(person, person).
+max2(a, b).
+bwd max5(person, person).
+max5(a, c).
+max5(b, c).
+bwd max8(person, person).
+max8(a, d).
+max8(b, d).
+max8(c, d).
+stage walk {
+  %% "Person A can cross the bridge in 1 minute" — alone, "the torch has to be used when crossing"
+  solo1 [dyn] : torch(S) * pos(X, S) * pace1(X) * across(S, T) * wick -o torch(T) * pos(X, T).
+  %% "B in 2 minutes"
+  solo2 [dyn] : torch(S) * pos(X, S) * pace2(X) * across(S, T) * wick * wick -o torch(T) * pos(X, T).
+  %% "C in 5 minutes"
+  solo5 [dyn] : torch(S) * pos(X, S) * pace5(X) * across(S, T) * wick * wick * wick * wick * wick -o torch(T) * pos(X, T).
+  %% "and D in 8 minutes"
+  solo8 [dyn] : torch(S) * pos(X, S) * pace8(X) * across(S, T) * wick * wick * wick * wick * wick * wick * wick * wick -o torch(T) * pos(X, T).
+  %% "it can only hold two people at a time" / "they must move at the slower person's pace"
+  pair2 [dyn] : torch(S) * pos(X, S) * pos(Y, S) * max2(X, Y) * across(S, T) * wick * wick -o torch(T) * pos(X, T) * pos(Y, T).
+  %% "they must move at the slower person's pace"
+  pair5 [dyn] : torch(S) * pos(X, S) * pos(Y, S) * max5(X, Y) * across(S, T) * wick * wick * wick * wick * wick -o torch(T) * pos(X, T) * pos(Y, T).
+  %% "they must move at the slower person's pace"
+  pair8 [dyn] : torch(S) * pos(X, S) * pos(Y, S) * max8(X, Y) * across(S, T) * wick * wick * wick * wick * wick * wick * wick * wick -o torch(T) * pos(X, T) * pos(Y, T).
+  %% "can they all get across the bridge"
+  done [dyn] : tally * $pos(a, far) * $pos(b, far) * $pos(c, far) * $pos(d, far) -o solved.
+}
+#init pos(a,near) 1
+#init pos(b,near) 1
+#init pos(c,near) 1
+#init pos(d,near) 1
+#init torch(near) 1
+#init wick 15
+#init tally 1
+#steps 20

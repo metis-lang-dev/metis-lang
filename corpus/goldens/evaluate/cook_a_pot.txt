@@ -1,0 +1,11 @@
+N belief-read fetch_onion order
+N belief-read ask_pot order
+N belief-read ask_plate order
+N belief-read load tick__grant
+N belief-read start tick__grant
+N belief-read fetch_dish order
+N belief-read plate tick__grant
+N belief-read serve order
+V served reach tick__done(cook_a) within 12 = 12/25 ~ 0.47999999999999998 worlds 4 states 15
+V asked reach tick__want(cook_a,pot) within 3 = 4/5 ~ 0.80000000000000004 worlds 4 states 6
+rc 0

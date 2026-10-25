@@ -1,0 +1,16 @@
+N belief-read carry on
+N belief-read eat on
+N belief-read done on
+V lose risk gone(_) within 8 = 301/576 ~ 0.52256944444444442 worlds 4 states 73
+V goat risk gone(goat) within 8 = 391/1152 ~ 0.33940972222222221 worlds 4 states 88
+V win reach solved within 14 = 1/12 ~ 0.083333333333333329 worlds 4 states 187
+V win_cut reach solved within 14 in [1/16, 1/1] ~ [0.0625, 1] cut 0.9375 worlds 4 states 60
+V far_at reach farmer(far) at 5 = 15/32 ~ 0.46875 worlds 4 states 55
+V far_within reach farmer(far) within 5 = 1/1 ~ 1 worlds 4 states 4
+L lose_level(mid)
+L sure(certain,wolf,near)
+L sure(likely,goat,near)
+L sure(unlikely,goat,far)
+L sure(likely,cabbage,near)
+L sure(likely,cabbage,far)
+rc 0

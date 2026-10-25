@@ -1,0 +1,16 @@
+% spec/16 step 2 fixture: bridge and torch (metis-catalog master 8f2bc93 domains/bridge, copied as bridge.llp) with
+% a categorical belief over the torch's starting side, lamp(S), and the wick at 14 (the puzzle's budget sweep:
+% 15 solves, 14 and 13 do not).
+catalog bridge_w14 1.
+include "bridge.llp".
+weight lamp(S) reads {torch(S)}.
+#init pos(a,near) 1
+#init pos(b,near) 1
+#init pos(c,near) 1
+#init pos(d,near) 1
+#init wick 14
+#init tally 1
+#belief torch one S by lamp
+#port lamp(near) 0.9
+#port lamp(far) 0.1
+#evaluate solved reach solved within 20

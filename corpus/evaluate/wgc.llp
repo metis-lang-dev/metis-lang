@@ -1,0 +1,60 @@
+% SOURCE: en.wikipedia.org/wiki/Wolf,_goat_and_cabbage_problem
+% (fetched 2026-10-09), problem statement verbatim:
+%
+% "A farmer with a wolf, a goat, and a cabbage must cross a river by
+%  boat."
+% "The boat can carry only the farmer and a single item."
+% "If left unattended together, the wolf would eat the goat, or the
+%  goat would eat the cabbage."
+% "The farmer must help them all cross the river without anything
+%  being eaten."
+%
+% Formalized from the statement alone — no solution consulted. The
+% tick: stage ferry (one boat move) -> quiescence -> stage shore
+% (unattended pairs eat, deterministically: eats MUST fire before the
+% stage can settle) -> quiescence -> ferry again.
+catalog wgc 1.
+provenance text "wolf, goat and cabbage: a farmer ferries them across a river, one at a time, nothing eaten" "2026-10-09".
+layers (dyn).
+stages (ferry shore).
+type item {wolf goat cabbage}.
+type bank {near far}.
+namespace wg produce (dyn).
+pred on(item, bank) : wg.
+pred farmer(bank) : wg.
+pred boat : wg.
+pred landed : wg.
+pred gone(item) : wg.
+pred solved : wg.
+pred tally : wg.
+bwd across(bank, bank).
+across(near, far).
+across(far, near).
+bwd eats(item, item).
+eats(wolf, goat).
+eats(goat, cabbage).
+stage ferry {
+  %% "The boat can carry only the farmer and a single item."
+  carry [dyn] : boat * farmer(A) * on(X, A) * across(A, B) -o farmer(B) * on(X, B) * landed.
+  %% "A farmer with a wolf, a goat, and a cabbage must cross a river by boat." (the boat crosses with the farmer alone too)
+  row [dyn] : boat * farmer(A) * across(A, B) -o farmer(B) * landed.
+}
+%% the boat has landed: the banks settle
+qui tide [dyn] : ferry -o shore.
+stage shore {
+  %% "If left unattended together, the wolf would eat the goat, or the goat would eat the cabbage."
+  eat [dyn] : on(Y, A) * $on(X, A) * eats(X, Y) * $farmer(B) * across(A, B) -o gone(Y).
+  %% "The farmer must help them all cross the river without anything being eaten."
+  done [dyn] : tally * $on(wolf, far) * $on(goat, far) * $on(cabbage, far) * $farmer(far) -o solved.
+  %% the boat is ready for the next trip
+  turn [dyn] : landed -o boat.
+}
+%% the banks have settled: the farmer may row again
+qui ebb [dyn] : shore -o ferry.
+#init farmer(near) 1
+#init on(wolf,near) 1
+#init on(goat,near) 1
+#init on(cabbage,near) 1
+#init boat 1
+#init tally 1
+#steps 40

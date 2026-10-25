@@ -1,0 +1,11 @@
+% spec/16 step 2 refusal fixture: belief-port: the port reads gone, not the belief pred on
+catalog refuse_port 1.
+include "wgc.llp".
+weight where(X, A) reads {on(X, A)}.
+weight seen(X) reads {gone(X)}.
+#belief on one A by seen
+#port seen 0.5
+#init farmer(near) 1
+#init boat 1
+#init tally 1
+#evaluate lose risk gone(_) within 4

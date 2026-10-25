@@ -4,7 +4,7 @@
 
 SRC = ast lexer parser diag catalog horn compile ground ports wire factorize \
       sha256 nets refsample \
-      bpn elim ir iface
+      bpn elim ir iface rat evaluate
 FILES = $(foreach m,$(SRC),$(m).mli $(m).ml) main.ml
 
 metisc: $(FILES)

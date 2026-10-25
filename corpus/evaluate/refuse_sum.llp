@@ -1,0 +1,15 @@
+% spec/16 step 2 refusal fixture: belief-sum: the goat's banks sum to 0.9
+catalog refuse_sum 1.
+include "wgc.llp".
+weight where(X, A) reads {on(X, A)}.
+#belief on one A by where
+#port where(wolf, near) 1
+#port where(wolf, far) 0
+#port where(goat, near) 0.6
+#port where(goat, far) 0.3
+#port where(cabbage, near) 1
+#port where(cabbage, far) 0
+#init farmer(near) 1
+#init boat 1
+#init tally 1
+#evaluate lose risk gone(_) within 4

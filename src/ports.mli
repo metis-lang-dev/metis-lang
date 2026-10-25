@@ -17,3 +17,11 @@ val hooks : Ground.program -> Compile.ports -> Catalog.t
 
 val ground_reads : Compile.ports -> string -> string list -> Horn.db
   -> string list
+
+(* the catalog's Horn database (the guards' facts and rules) *)
+val horn_db : Catalog.t -> Horn.db
+
+(* a ground event name's rule ("go_for[O=t,R=p0]" -> "go_for") and its
+   tag substitution ([O, t; R, p0]) *)
+val base_name : string -> string
+val tag_subst : string -> (string * string) list

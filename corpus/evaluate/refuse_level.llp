@@ -1,0 +1,14 @@
+% spec/16 step 2 refusal fixture: level-type: four names for the three constants of risk
+catalog refuse_level 1.
+include "wgc.llp".
+weight where(X, A) reads {on(X, A)}.
+namespace lvl produce (dyn).
+type risk {low mid high}.
+pred lose_level(risk) : lvl.
+#belief on one A by where
+#port where 0.5
+#level lose_level from lose at 0.1 0.5 0.9 names none low mid high
+#init farmer(near) 1
+#init boat 1
+#init tally 1
+#evaluate lose risk gone(_) within 4

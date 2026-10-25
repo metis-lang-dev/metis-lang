@@ -1,0 +1,2 @@
+refused belief-init: init on(wolf,near): a belief atom — the instrument draws it from its port, the case's init must not list it
+rc 2

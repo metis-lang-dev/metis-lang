@@ -1,9 +1,9 @@
 # PROPOSAL 16 — belief in the language: categorical ports, belief facts, level ports, the one-tick instrument
 
-**Status: PROPOSED 2026-10-25, design only, no code (spec16 s-b12d90f2 step 1, metis; the architect's brief v1).
-Step 2 is the metisc prototype, step 3 metispy parity and one alfworld use. Nothing here changes the grammar:
-the declarations are manifest fields, the query is a case field with an embedded `#` directive (spec 00 §8),
-so the program_key of every existing program is unchanged.**
+**Status: RULED 2026-10-25 (spec16 s-b12d90f2 step 1, metis; the architect's brief v1 and rulings on §11).
+Step 2, the metisc prototype, is IMPLEMENTED on a branch (§12); step 3 is metispy parity and one alfworld use.
+Nothing here changes the grammar: the declarations are manifest fields, the query is a case field with an
+embedded `#` directive (spec 00 §8), so the program_key of every existing program is unchanged.**
 
 The user's framing (2026-10-25):
 - With fixed weights, a program is a certified MDP.
@@ -174,7 +174,9 @@ evaluate:
 - **`within: h`** is the probability that the outcome holds at SOME step t ≤ h, the first passage, with t
   counting the program's events (spec 06 §4: a clause or a link, one per step; DONE absorbs). `at: h` instead
   reads presence at step h, as the REPL's `query ATOM @h` does. For an outcome no rule consumes once it holds
-  (`done`, `solved`), the two are equal.
+  (`done`, `solved`), the two are equal. Events, not spec 11's cone steps, are ruled for step 2; `within h
+  cone` is a later option. The worlds will want a TICK-based horizon once the world model (step 3) fixes
+  what one tick is for a member: its events per tick (and §2.3 of spec 15's ρ) convert one into the other.
 - **`budget`** is the state budget (§6.3). It defaults to the exact filter's 500,000.
 - **The embedded form.** For an `.llp` with its own case (spec 00 §8), one directive per query:
   `#evaluate lose risk stuck(_) within 8`. Port values for such a file: `#port look(target, p0) 0.6`, one per
@@ -238,15 +240,22 @@ REPL's refusal at the budget (spec 10's "lower the horizon") becomes a bound.
 ### 6.4 Arithmetic: exact rationals
 
 The normative value is a RATIONAL:
-- every number enters as the exact value of its binary64 (rule weights as `strtod` parses them, spec 00 §7;
-  port values, thresholds);
+- every number (a rule weight, a port value, a threshold) enters as the exact DECIMAL of its binary64's
+  shortest round-trip representation: a rule weight as `strtod` parsed it (spec 00 §7), a host's float
+  binding, a case's literal. So 0.7 enters as 7/10, and a distribution written 0.7, 0.3 sums to exactly 1.
+  The binary64's own exact value (0.6999999999999999555…) would not, and no `one` group written in decimals
+  would pass §2's check. (Step 2's finding; the draft said "the exact value of its binary64".) metispy's
+  form is `Fraction(repr(x))`;
 - φ is an integer, and every product, normalisation and sum is exact.
 
 So the result does not depend on summation order, and the brute-force referee (§7) agrees to the last digit
 by construction. The printed decimal is the correctly rounded binary64 of the rational, `%.17g`.
 - metisc is stdlib-only, so it carries a small arbitrary-precision natural (add, mul, divmod, gcd).
 - metispy has `fractions.Fraction`.
-- A binary64 fast path with a stated error bound is a later option. It is not the referee.
+- A binary64 fast path with a stated error bound is a later option (ruled). It is not the referee.
+- **The denominators grow with the horizon.** Normalisation at every step multiplies them: under rule
+  weights 0.7 / 0.3 a value gains about one decimal digit per step (403 digits at h = 400, §12). Dyadic
+  weights (1, 0.5, 0.25) and uniform choices keep them small.
 
 ## 7. The CLI
 
@@ -258,17 +267,25 @@ One line per query:
 
 ```
 V <name> <reach|risk> <outcome> within <h> = <p>/<q> ~ <%.17g> worlds <k> states <n>
-V <name> <reach|risk> <outcome> within <h> in [<p>/<q>, <p'>/<q'>] ~ [<lo>, <hi>] cut worlds <k> states <N>
-L <level-pred> <level> <name|key>                      one per level port the case derives
-N belief-read <rule> <pred>                            §3's notes
+V <name> <reach|risk> <outcome> within <h> in [<p>/<q>, <p'>/<q'>] ~ [<lo>, <hi>] cut <%.17g> worlds <k> states <N>
+L <level-pred>(<level>[, key…])                        one per level atom the case derives (`lo..hi cut` across)
+N belief-read <rule> <pred>                            §3's notes, first, in catalog order
+X <name> expected <v> got <value>                      a failed `expect`
 ```
 
-- **Exit codes.** 0 when every `expect:` holds (an expected value equals the rational's `%.17g`, or lies in
-  the interval). 1 on a mismatch. 2 on a refusal (`belief-sum`, `belief-init`, `belief-port`, `level-type`,
-  `port-function`), each with its finding text.
-- **`--evaluate --brute`** is the referee: it enumerates worlds × every event path of length ≤ h explicitly,
-  with no merging, no absorption shortcut and no budget, and prints the same `V` lines. Step 2's gate is
-  `--evaluate` = `--brute`, as rationals, on every fixture.
+`--cost` adds one line per query on stderr: `C <name> h <h> groups <g> worlds <k> bits <b> digits <d> ms <t>`
+(b the largest denominator met, in bits; d the result's denominator, in digits; t CPU time).
+
+- **Exit codes.** 0 when every `expect:` holds (`p/q` equal to the rational; a decimal equal to its
+  binary64, or within the interval). 1 on a mismatch. 2 on a refusal, `refused <code>: <text>` on stderr:
+  `belief-bwd` (a bwd pred as a belief), `belief-port`, `belief-init`, `belief-sum`, `port-unbound` (a
+  weight port the case does not bind), `port-value` (not a number, or above 1 under `~`), `level-type`.
+  `port-function` is not reachable from a case, whose bindings are tables; it is the host's refusal.
+- **`--evaluate --brute`** is the referee: it draws every world up front and enumerates every event path of
+  length ≤ h, with no merging, no deferred draw and no budget. Its `V` lines end `paths <n>`. It shares the
+  step (spec 06 §4) with the instrument, so it referees R1–R4 and the cut, not the step semantics; those
+  are refereed by metispy's exact filter, run per world (§12). Step 2's gate is `--evaluate` = `--brute`,
+  as rationals, on every fixture.
 
 ## 8. Certification: the cell table
 
@@ -287,13 +304,34 @@ N belief-read <rule> <pred>                            §3's notes
   - A multilinear function over a product of polytopes has its extremes at products of vertices. So
     [lo_c, hi_c] is the min and max over the cell's vertex combinations, each one exact instrument run (with
     its own cut interval).
+- **The vertex count.** Per group, by its declaration and its belief levels:
+
+  | group | its region in a cell | vertices |
+  |---|---|---|
+  | independent atom | [a, b] (no belief level: [0, 1]) | 2 |
+  | `one` over k members | {a ≤ p ≤ b, Σ p = 1} (no level: the simplex) | ≤ k · 2^(k−1) (no level: k, the pure worlds) |
+  | `lone` over k members | {a ≤ p ≤ b, Σ p ≤ 1} (no level: the corner simplex) | ≤ 2^k + k · 2^(k−1) (no level: k + 1) |
+
+  A cell costs Π_g V_g instrument runs. With no belief level, a cell's vertices are the PURE worlds, and its
+  bound is the min and max of P(Q | w) over the worlds: the numbers `--brute` already enumerates.
+  - The step 2 fixtures declare no belief level, so each has one cell: **wgc_bank 2 · 2 · 2 = 8 runs**
+    (three `one` groups of k = 2), **bridge 2 per wick case** (one `one` group of k = 2), **cook_a 2 · 2 = 4**
+    (two independent atoms).
+  - With wgc_bank's `sure` level (thresholds 0.5, 0.9), a k = 2 group's two levels must agree with
+    p_far = 1 − p_near. That leaves 5 consistent level pairs per group: four segments with 2 vertices each,
+    and the point p_near = p_far = 0.5 (likely, likely) with 1. So 5³ = 125 cells, and Σ over the cells of
+    Π_g V_g = (2 + 2 + 2 + 1 + 2)³ = 729 exact runs: the sweep the certificate would make. It is specified,
+    not built in step 2 (ruled).
 - **The enumerator is the budget sweep.** This is the bridge puzzle's method: there, one exact run per wick
   count (15 > 0, 14 = 0, metis-catalog `domains/bridge`) answered a question no single run could. Here, one
   exact run per vertex per cell.
 - **A choice weight that reads a belief port** (`@w look`) makes the trace measure itself depend on the
   belief, as a ratio of the port's values. The function is then rational, not multilinear, and the vertex
   bound is not sound. Such a cell is listed `uncertified (choice reads a belief)`. The certified form gates
-  the decision on a belief LEVEL with static weights. See §11, question 3.
+  the decision on a belief LEVEL with static weights. Both forms stay legal; the certificate tells them apart
+  (ruled). The alfworld task keeps `@w look` until belief-levels (s-80d9a065) decides between the level rule
+  and the weight-port rule; if the weight port stays, alfworld's cell stays uncertified, which is the honest
+  statement.
 
 ## 9. The paper's rewrites apply to the instrument, never to the tick
 
@@ -333,10 +371,19 @@ small enough for `--brute`:
 - **bridge-torch** (`domains/bridge`): a categorical belief over the torch's starting side, `torch(S)` with
   `one: S`. Query: `reach solved within 20`, and the wick sweep 13/14/15 as three cases (the §8 enumerator in
   miniature).
-- **kitchen_pot's cook_a** (spec 15's fixture): an independent belief on `pot_space` and on the grant
-  `tick__grant(cook_a, pot)` (will the pot come this tick's world). Query: `reach tick__done(cook_a)` within h.
+- **kitchen_pot's cook_a** (spec 15's fixture): independent beliefs on the grant `tick__grant(cook_a, pot)`
+  (will this tick's world give it the pot) and on `order` (does an order wait). `pot_space` is a count (three
+  atoms), not a presence, so it stays in the init. Query: `reach tick__done(cook_a)` within h.
 
-**Questions for the ruling.**
+**The rulings (the architect, 2026-10-25).** 1 yes: the manifest; the certificate key covers the canonical line
+of `beliefs:`, `levels:` and `evaluate:`. 2 yes: the instrument answers [lo, hi] and prints the cut mass; the
+REPL's `query` keeps refusing. 3: both forms legal, the certificate tells them apart (§8); alfworld's `go_for`
+is not changed by the spec. 4 yes: rationals as the referee, binary64 later with a stated bound; step 2
+reports the digit growth. 5 yes: events for step 2, `within h cone` later, a tick-based horizon when step 3's
+world model fixes a tick (§5). 6 yes: `--evaluate`, `--brute`. The §8 cell sweep is specified, not built in
+step 2; the belief-read notes and the bwd refusal are required outputs.
+
+**The questions as they were put.**
 1. **Manifest, not grammar**, for `beliefs:` and `levels:` (§2): agreed? Then the program_key never moves for a
    belief, and the certificate key covers their canonical line.
 2. **The budget cuts to an interval** (§6.3) instead of refusing as the REPL does: agreed? The REPL's
@@ -348,3 +395,46 @@ small enough for `--brute`:
 5. **The horizon counts events** (spec 06), not cone steps (spec 11's interleaving-insensitive readout): agreed
    for step 2, with `within h cone` a later option?
 6. **The CLI name** `metisc --evaluate`, with `--brute` as the referee flag: keep?
+
+## 12. Step 2 as built (metisc, branch spec16-instrument)
+
+- **`src/rat.ml`** is the exact arithmetic: naturals in base-2^24 limbs (Knuth's division, Euclid's gcd),
+  reduced rationals, the shortest-round-trip decimal intake, and correctly rounded conversion to binary64.
+  It agrees with Python's `Fraction` on 300 random cases, the conversion included.
+- **`src/evaluate.ml`** is the instrument:
+  - the groups (R1: a group no event touches and no query mentions is dropped, after its sum is checked);
+  - the deferred draws (R2: per stage, the groups its clauses or links touch, plus the query's groups at
+    step 0);
+  - absorption (R3), merging (R4), the canonical-order cut;
+  - `--brute`, the `N`/`L`/`X` lines and the refusals.
+
+  R5 (the cone) is not built. The case form built is the embedded one (`#belief`, `#port`, `#evaluate`,
+  `#expect`, `#level` in an `.llp`). The manifest and case-YAML reader is not built in step 2; it reads into
+  the same directives.
+- **The gate:** ci/check.sh gate 14, `EVALUATE 11/11`. Five fixtures with beliefs (wgc_bank, bridge_w15/14/13,
+  cook_a_pot) and six refusals (`belief-bwd`, `belief-init`, `belief-port`, `belief-sum`, `port-unbound`,
+  `level-type`). Each listing and exit code equals its golden, and every exact `V` line equals `--brute`'s,
+  as a rational.
+- **An independent check:** metispy's `ForwardProjection`, run on each world and mixed by hand, gives every
+  fixture's number to binary64 (wgc's three, bridge 15/14/13, cook_a).
+
+**The cost table** (CPU, one core; `--cost`; brute where it finishes):
+
+| program | varied | states (`--evaluate`) | paths (`--brute`) | worlds | result digits | ms evaluate / brute |
+|---|---|---|---|---|---|---|
+| wgc reach solved, 3 groups | h = 8 / 14 / 20 / 30 | 94 / 191 / 290 / 455 | 66 / 397 / 1,194 / 14,770 | 8 | 4 / 5 / 5 / 6 | 0.9 / 1.2 … 2.4 / 71.8 |
+| same | h = 40 / 60 / 80 | 619 / 950 / 1,279 | — | 8 | 9 / 14 / 18 | 2.7 / 4.1 / 5.3 |
+| wgc risk gone(_) within 20 | groups 0 / 1 / 2 / 3 | 90 / 126 / 203 / 207 | 58 / 216 / 457 / 885 | 1 / 2 / 4 / 8 | 4 / 6 / 6 / 8 | ≤ 1.7 / ≤ 7.5 |
+| bridge w15 reach solved | h = 5 / 10 / 20 / 30 | 161 / 290 / 312 / 312 | 367 / 1,349 / 1,408 / 1,408 | 2 | 1 / 21 / 21 / 21 | ≤ 5.2 / ≤ 14 |
+| coins: K beliefs read in ONE stage | K = 4 / 6 / 8 | 256 / 4,096 / 65,536 | 896 / 108,672 / 24,350,720 | 2^K | 6 / 8 / 11 | 2.9 / 4.3; 47 / 245; 1,134 / 66,093 |
+| same | K = 10 / 12 / 14 | the budget (500,000): cut to [lo, hi] | — | 2^K | — | 9,471 / 6,675 / 5,507 |
+| walk, rule weights 0.7 / 0.3 | h = 25 / 50 / 100 / 200 / 400 | 364 / 1,132 / 2,682 / 5,782 / 11,982 | 10,674,093 at h = 25 | 2 | 22 / 48 / 99 / 201 / 403 | 3.1 (brute 38,181) / 17 / 71 / 348 / 2,220 |
+
+- **Merging is what pays.** Paths grow exponentially in h; states grow about linearly on these programs.
+- **Groups read in one stage multiply the worlds.** R2 cannot defer them, and the cost is 2^K worlds times
+  the program's own states. Deferral pays only when the groups are met in different stages or not at all.
+- **The digits grow linearly in h under non-dyadic weights** (about one per step for 0.7 / 0.3), and the time
+  per state grows with them: 11,982 states in 2.2 s at 403 digits. That is the price of the rational referee,
+  and the reason for a binary64 fast path later.
+- **A cut interval's upper end is weak** when misses are known only at h: wgc's `win_cut` at budget 60 is
+  [1/16, 1], its exact value 1/12. The lower end is the work done; the width is what the budget hid.

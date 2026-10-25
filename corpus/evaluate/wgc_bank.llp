@@ -1,0 +1,33 @@
+% spec/16 step 2 fixture: wolf-goat-cabbage (metis-catalog master 8f2bc93 domains/wgc, copied as wgc.llp) with a
+% categorical belief over each item's starting bank: where(X, A), exactly one bank per item. The farmer's
+% choices are the program's own, uniform.
+catalog wgc_bank 1.
+include "wgc.llp".
+weight where(X, A) reads {on(X, A)}.
+% the level preds the instrument's level ports name (spec/16 §4)
+namespace lvl produce (dyn).
+type risk {low mid high}.
+pred lose_level(risk) : lvl.
+type certainty {unlikely likely certain}.
+pred sure(certainty, item, bank) : lvl.
+#init farmer(near) 1
+#init boat 1
+#init tally 1
+#belief on one A by where
+#port where(wolf, near) 1
+#port where(wolf, far) 0
+#port where(goat, near) 0.75
+#port where(goat, far) 0.25
+#port where(cabbage, near) 0.5
+#port where(cabbage, far) 0.5
+#evaluate lose risk gone(_) within 8
+#evaluate goat risk gone(goat) within 8
+#evaluate win reach solved within 14
+#evaluate win_cut reach solved within 14 budget 60
+#evaluate far_at reach farmer(far) at 5
+#evaluate far_within reach farmer(far) within 5
+#expect win 1/12
+#expect lose 0.52256944444444442
+#expect win_cut 0.083333333333333329
+#level lose_level from lose at 0.1 0.6 names low mid high
+#level sure from belief where at 0.5 0.9 names unlikely likely certain

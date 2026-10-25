@@ -1,0 +1,16 @@
+% spec/16 step 2 fixture: kitchen_pot's cook_a (corpus/iface/kitchen_pot, metis-catalog master 8f2bc93) alone, with
+% two independent beliefs: whether this tick's world grants it the pot (granted) and whether an order waits
+% (ordered). Its plate reports tick__done.
+catalog cook_a_pot 1.
+include "../iface/kitchen_pot/cook_a/cook_a.llp".
+weight granted(S, R) reads {tick__grant(S, R)}.
+weight ordered reads {order}.
+#init calm(cook_a) 1
+#init hand_free 1
+#init pot_space 3
+#belief tick__grant by granted
+#belief order by ordered
+#port granted 0.6
+#port ordered 0.8
+#evaluate served reach tick__done(cook_a) within 12
+#evaluate asked reach tick__want(cook_a,pot) within 3

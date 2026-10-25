@@ -1,0 +1,2 @@
+refused level-type: level lose_level: its first argument's type must have the constants none low mid high, in order
+rc 2

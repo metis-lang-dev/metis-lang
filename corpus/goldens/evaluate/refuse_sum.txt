@@ -1,0 +1,2 @@
+refused belief-sum: belief on one A: the group on(goat,_) sums to 9/10 (0.90000000000000002), not 1
+rc 2

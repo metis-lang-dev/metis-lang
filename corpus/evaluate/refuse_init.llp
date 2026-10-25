@@ -1,0 +1,11 @@
+% spec/16 step 2 refusal fixture: belief-init: the init lists a belief atom
+catalog refuse_init 1.
+include "wgc.llp".
+weight where(X, A) reads {on(X, A)}.
+#belief on one A by where
+#port where 0.5
+#init on(wolf,near) 1
+#init farmer(near) 1
+#init boat 1
+#init tally 1
+#evaluate lose risk gone(_) within 4

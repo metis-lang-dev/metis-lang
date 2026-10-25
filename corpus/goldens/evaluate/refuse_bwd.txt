@@ -1,0 +1,2 @@
+refused belief-bwd: belief eats: a bwd pred is a guard, eliminated at grounding; every world shares one ground program, so a belief pred is a resource pred ($-read it)
+rc 2

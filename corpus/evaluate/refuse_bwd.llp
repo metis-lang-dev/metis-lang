@@ -1,0 +1,10 @@
+% spec/16 step 2 refusal fixture: belief-bwd: eats is a bwd pred (a guard), so it cannot carry a belief
+catalog refuse_bwd 1.
+include "wgc.llp".
+weight where(X, A) reads {on(X, A)}.
+#belief eats by where
+#port where 0.5
+#init farmer(near) 1
+#init boat 1
+#init tally 1
+#evaluate lose risk gone(_) within 4
