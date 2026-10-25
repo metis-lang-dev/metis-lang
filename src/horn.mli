@@ -17,3 +17,7 @@ val derivable : db -> pattern -> bool
 (* bindings of the sorted ?-vars of the goal conjunction (keys sans
    '?'), SLD order, deduped on the bound-value tuple *)
 val solutions : db -> pattern list -> (string * string) list list
+
+(* the distinct values ?-variable v takes over the facts matching the
+   pattern; None unless the predicate is all ground facts *)
+val fact_values : db -> pattern -> string -> string list option

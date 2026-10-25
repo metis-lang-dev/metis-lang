@@ -30,31 +30,66 @@ let multiset patterns subst : mset =
       else m @ [(a, 1)])
     [] patterns
 
-(* cartesian product, FIRST domain slowest / LAST fastest *)
-let rec product = function
-  | [] -> [[]]
-  | d :: rest ->
-    let tails = product rest in
-    List.concat_map (fun c -> List.map (fun t -> c :: t) tails) d
-
+(* GUARD-FIRST BINDING (eval-perf step 2h): the substitutions are the
+   product's, enumerated depth first — FIRST var slowest, each over its
+   type in declaration order — but a guard over a fact-only predicate
+   narrows a var to the values its matching facts give as soon as the
+   var is bound (its unbound positions free), so only prefixes some row
+   can complete are formed. A pruned prefix has a guard no fact matches:
+   the leaf check below refuses every completion of it too. The leaf
+   check is unchanged, so the result is the old one, in its order. *)
 let substitutions vars distinct guards
     (types : (string * string list) list) horn =
   let names = List.map fst vars in
   let domains = List.map (fun (_, ty) -> List.assoc ty types) vars in
-  List.filter_map (fun combo ->
-      let subst = List.combine names combo in
-      if List.exists (fun (x, y) ->
-          List.assoc x subst = List.assoc y subst) distinct
-      then None
-      else if List.for_all (fun (g, args) ->
-          Horn.derivable horn
-            (g, List.map (fun a ->
-                 match List.assoc_opt a subst with
-                 | Some c -> c | None -> a) args))
-          guards
-      then Some subst
-      else None)
-    (product domains)
+  let leaf combo =
+    let subst = List.combine names combo in
+    if List.exists (fun (x, y) ->
+        List.assoc x subst = List.assoc y subst) distinct
+    then None
+    else if List.for_all (fun (g, args) ->
+        Horn.derivable horn
+          (g, List.map (fun a ->
+               match List.assoc_opt a subst with
+               | Some c -> c | None -> a) args))
+        guards
+    then Some subst
+    else None in
+  let is_var a = List.mem_assoc a vars in
+  (* per var: the guards naming it *)
+  let naming = List.map (fun v ->
+      List.filter (fun (_, args) -> List.mem v args) guards) names in
+  (* a var's candidates: its domain, narrowed by each fact guard naming
+     it (bound vars as constants, the others free), in domain order *)
+  let candidates v dom gs bound =
+    let pattern (g, args) =
+      (g, List.map (fun a ->
+           if not (is_var a) then a
+           else match List.assoc_opt a bound with
+             | Some c -> c
+             | None -> "?" ^ a) args) in
+    List.fold_left (fun dom g ->
+        match Horn.fact_values horn (pattern g) ("?" ^ v) with
+        | None -> dom
+        | Some vals ->
+          let ok = Hashtbl.create 16 in
+          List.iter (fun c -> Hashtbl.replace ok c ()) vals;
+          List.filter (fun c -> Hashtbl.mem ok c) dom)
+      dom gs in
+  let out = ref [] in
+  let rec go names domains naming bound rev_combo =
+    match names, domains, naming with
+    | [], _, _ ->
+      (match leaf (List.rev rev_combo) with
+       | Some s -> out := s :: !out
+       | None -> ())
+    | v :: names', dom :: domains', gs :: naming' ->
+      List.iter (fun c ->
+          go names' domains' naming' ((v, c) :: bound) (c :: rev_combo))
+        (if gs = [] then dom else candidates v dom gs bound)
+    | _ -> assert false in
+  go names domains naming [] [];
+  List.rev !out
 
 let tag subst =
   String.concat ","

@@ -208,6 +208,25 @@ and complete db g key =
 let derivable db goal =
   solve db [goal] [] depth_bound (fun _ -> true)
 
+(* the values the query variable v takes over the facts of a fact-only
+   predicate matching the pattern (its other ?-variables free), first-
+   seen; None when the predicate is not fact-indexed — the grounder's
+   guard-first binding (eval-perf step 2h) *)
+let fact_values db (pred, args) v =
+  match Hashtbl.find_opt db.facts pred with
+  | None -> None
+  | Some fx ->
+    let pos = ref (-1) in
+    List.iteri (fun i a -> if a = v && !pos < 0 then pos := i) args;
+    let seen = Hashtbl.create 16 and out = ref [] in
+    List.iter (fun ans ->
+        let c = List.nth ans !pos in
+        if not (Hashtbl.mem seen c) then begin
+          Hashtbl.add seen c (); out := c :: !out
+        end)
+      (fact_answers fx (pred, args) (variant args));
+    Some (List.rev !out)
+
 let solutions db goals =
   let vs = List.sort_uniq compare
       (List.concat_map (fun (_, args) -> List.filter is_qvar args)
