@@ -31,6 +31,13 @@ them; it adds three fields, each with its reason (§2.3).**
 
 The composer stays shelved; everything in §8 is stated for form S and maps onto form P.
 
+**Amendment 6, 2026-10-25 (metis, the beast case rulings: design v7 §12 on s-404d001f):**
+- §2.3: a composition declares its RESPONSE TIME ρ, `response:` in `composition.yaml`. A member whose trigger
+  reads a world horizon derives the horizon from ρ. Declaration only for now, no I-check; ρ is in the
+  package key.
+- §8.4: requests are idempotent by key. A member already handling a thing absorbs a second request for it and
+  still owes the requester's report; the director's forward to an already-active member pushes nothing.
+
 **Amendment 5, 2026-10-25 (metis, specialist-tree step 3b rulings):**
 - §8.4: the tree director's BASE is generic and lives in metispy's `iface/` beside the protocol module; a
   composition supplies only its instance.
@@ -264,6 +271,7 @@ nina's fields are per specialist. The composer also needs three things no specia
 capacity: capacity.llp
 specialists: [task, nav, access, grasp, place]   # also the stage order within a tick (§4.4)
 direct: director                                 # the direct domain (the tree, the path, the grants)
+response: 2                                      # ρ, ticks from tick__want to the latched grant (amendment 6)
 world:                                           # the host's ports, as a peer with directions
   out: [at, recat, openable, notopenable, opened, closed, inrecep, objat, absent, believed, lost, fetch]
   in:  [goto, open, take, put]                   # the commands the host executes
@@ -280,6 +288,15 @@ resources:
   decide a resource, but it still decides which specialist sees a signal first within a tick.
 - **`interfaces`** (optional, amendment 4): the family interface packages (`iface/<family>.llp`, §10.1)
   besides the protocol module (`protocol:`). Paths are relative to the composition file.
+- **`response`** (amendment 6): the composition's RESPONSE TIME ρ, the ticks from a member's `tick__want`
+  to the latched grant. Under the generic tree director (§8.4) ρ = 2: the want at t, the preemption at t+1,
+  the latch at t+2. A clock period (§8.5 rule 1) multiplies it in world turns. A member whose trigger reads a
+  world HORIZON (a reach, a safe distance) derives the horizon from ρ, because a trigger that looks ahead by
+  less gets the body after contact. (opus's beast case: with ρ = 1 the preemption landed after nav's
+  `in_way` had met the newt.) Declaration only for now: it is checked against the director's measured
+  latency later, with no I-check today. `metisc --interface` checks nothing on it, but the field is part of
+  the canonical composition, so ρ enters the package key (§8.1): a composition re-sealed with another ρ is
+  another package.
 - **`world`.** Check I3 ("every `in` produced by a peer or by the world's ports") needs the world's ports by
   name and direction. Today the host projects into any pred it likes; a composition must say which. The
   default derivation is from the domains' `input`/`output` port declarations (spec 00 `port`) where they
@@ -648,6 +665,10 @@ pred grant(resource, specialist) : proto.% grant side: the resource token's hold
   is declared in the protocol module too, with its argument types, and not by the specialists.
 - **A specialist reads its goals as copies of `goal(self, K)` plus the payload atom.** That is today's
   director relay (`forward(D, K)` with the atom carried by the host), made a declaration.
+- **Requests are idempotent by key (amendment 6).** A member that receives a request (a forwarded intent) for
+  a thing it is already handling absorbs it, and still owes the requester's report (act, alert on a beast,
+  absorbs `fight(P)` for that beast and answers `cleared(P)`); the director's forward to an already-active
+  member pushes nothing on the path. No check.
 
 **Dependencies:** specialist → protocol ← director, with capacity below all of them. This is a DAG, so each
 member is keyed and grounded alone (§8.1).
@@ -723,7 +744,7 @@ copies. Rule 4 is unchanged.
 
 ### 8.6 What changes in the manifest
 
-- **The composition file** gains `protocol: protocol.llp`.
+- **The composition file** gains `protocol: protocol.llp`, and `response: ρ` (amendment 6, §2.3).
 - **Each member's `domain.yaml` `clock`** (it exists) is rule 1's period.
 - **A port may carry `copies: k`** (§8.3).
 
