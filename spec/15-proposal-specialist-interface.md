@@ -20,6 +20,17 @@ them; it adds three fields, each with its reason (§2.3).**
 
   The checks I1–I7, the directions and the composition manifest are the same in both forms.
 
+**Amendment 2, 2026-10-25 (metis, from the user's questions: brief v4 §9 on s-404d001f): §8.**
+- A composition is ONE certifiable package. Its certificate is the package key, plus the I-checks, plus each
+  domain's own key.
+- The composite measure factorizes by the tick.
+- Copies per port replace `!` for readings and signals; `!` (bwd) is kept for statics.
+- A PROTOCOL module is a third kind of member: specialist → protocol ← director, a DAG checked by I8.
+- The tick rules: change-or-clock beats, Moore-latched outputs, no beat on one's own echo, and hysteresis in
+  the director's rules.
+
+The composer stays shelved; everything in §8 is stated for form S and maps onto form P.
+
 ## 0. Scope
 
 - **In:**
@@ -469,6 +480,179 @@ minimal YAML subset reader (the manifests here are flat maps of lists) or the `.
    with the sequential case's equivalence covering the per-stage cadence when only one specialist is active.
 4. **Statuses for worlds without goals** (RDDL, stories: objection C). Without `status`, they are `running` or
    `idle` only, and a BT over them sees no success. Recommendation: allowed, stated.
+
+## 8. Amendment 2: one certifiable package (brief v4 §9)
+
+### 8.1 The package and its certificate
+
+A composition Π is ONE catalog package. Its members are:
+- the n specialist domain files;
+- the director domain;
+- the protocol module (§8.4);
+- the composition manifest with each member's manifest (§2);
+- the capacity instance.
+
+Executing the members as separate contexts (form S, today's sessions) is an execution strategy, not a
+semantic choice. The semantics is fixed at the package level by the tick protocol (§8.5).
+
+**Its certificate** is the triple:
+
+    cert(Π) = ( package_key(Π),  iface(Π),  [ program_key(G_d) for each member d, in manifest order ] )
+
+- **`package_key(Π)`** is the lowercase hex SHA-256 of the canonical bytes `"metis-package 1\n"` followed by,
+  one line per member and in manifest order (protocol, capacity, director, then `specialists`):
+  - the member's role and name;
+  - the canonical key of its source unit (spec 03: AST identity, includes resolved, so a formatting change
+    leaves it unchanged);
+  - then the composition manifest's own canonical form (sorted keys, the lists in their order).
+
+  It is identity at the package level: two packages with the same key are the same composition.
+- **`iface(Π)`** is the I-check verdict (I1–I9) with the cut report (§3). It is part of the certificate: an
+  uncertified composition is one that fails a check, not one that merely failed to ground.
+- **`program_key(G_d)`** is each member's own grounded certificate (spec 03), grounded through the capacity.
+  Each member is grounded and keyed ALONE, which is possible because it depends only on the protocol module and
+  the capacity (§8.4).
+
+Nothing composite is grounded. The composite's measure is determined by the members' programs and the protocol
+(§8.2), so the per-member certificates plus the protocol ARE the composite's certificate.
+
+### 8.2 Why the composite measure factorizes (objection A3, for form S)
+
+The tick protocol (§8.5) gives four properties:
+- **(F1) Inputs are taken at the boundary.** Within tick t, a beating member d reads only its private state
+  and the copies taken for it at boundary t.
+- **(F2) Outputs are latched to the next boundary (Moore).** Nothing d emits at t is visible to any other
+  member before boundary t+1.
+- **(F3) The relay is deterministic.** The host's copy, relay and grant transfer at a boundary is a function
+  of the members' latched outputs and the world's readings, with no draw.
+- **(F4) The RNG streams are disjoint.** Each member samples from its own seeded stream (today: one RNG per
+  session).
+
+Under F1–F4, no member's choice within a tick can depend on another member's choice in the same tick. The
+probability of a composite trace τ (the per-member step sequences, tick by tick) is therefore the product:
+
+    P(τ) = Π_t  Π_{d beats at t}  P_d( steps of d at t  |  state_d(t) )
+
+Here state_d(t) is d's private state plus its boundary-t copies, which are fixed by τ's prefix through F3.
+Each factor is the member's own kernel measure, already certified by `program_key(G_d)`.
+
+**Arbitration** is the director's CHOICE at its own beat, inside its own measure. The grant it emits reaches
+the holder at the next boundary (F2), and the resource is a token in the director's program (I5).
+
+This is the session-form answer to A3. One measure per member, composed by a product that the protocol
+determines; not a joint measure over a shared multiset.
+
+**What the product does NOT give** is the flat program's measure: interleavings within a tick are not
+represented (F2 forbids them), as amendment 1's §4.6 already restricts. A chain A → B → C takes two
+boundaries (objection B) and shows as such in the status journal.
+
+### 8.3 Copies per port, not `!atom`
+
+In linear-logic terms, `!p` (unrestricted) is one live shared truth: every rule may read it, none can consume
+it, and every reader sees every change at once. In metis that is a `bwd` fact (the Horn world, guards only), or
+a `$`-read of an atom nobody retracts. Used for a reading or a signal, it breaks three things:
+- a trigger on it never latches and the domain never quiesces (A2);
+- a slow member sees a moving target;
+- contraction is implicit (A1).
+
+**Rule.** World readings and signals are COPIES PER PORT; statics are `!`, meaning `bwd` facts, types, and the
+capacity's tables.
+
+- **A copy is linear.** It is an atom in the subscribing member's own state (form S: its session; form P: its
+  stage), so the member's trigger consumes it, and that is the latch.
+- **A copy is a snapshot.** The value is the one AT THE MEMBER'S OWN BEAT: the host refreshes it at the
+  boundary where the member beats (§8.5), so a member that does not beat keeps its last snapshot.
+- **A copy's multiplicity is declared.** One per subscribing port, so the multiplicity of a signal is its
+  subscriber count, derived from the `in` directions (§2.1) and made explicit (contraction). A manifest may
+  state `copies: k` on a port that legitimately takes k units per boundary; the default is 1.
+- **`world-private` (amendment 1a) is exactly the per-port copy of a world reading.** amendment 1 left its
+  refresh time open; §8.5 fixes it at the member's own beat.
+
+New check **I9**:
+- a pred declared `bwd` (static) is never a `world.out` port, and never refreshed by the host;
+- a reading or signal port is never `bwd`;
+- a `copies: k` declaration agrees with the subscriber count, unless stated as a k-unit port
+  (`iface-copy-static`, `iface-copy-multiplicity`).
+
+### 8.4 The protocol module: no cycle between specialists and the director
+
+Specialists write reports and read grants and goals. The director reads reports and writes grants and goals.
+Declared inside either side, that is a dependency cycle, and neither side could be keyed or certified alone. So
+the reports and grants are declared in a THIRD module, a lifted domain file (spec 12) that every member
+includes:
+
+```
+% protocol — the interface between the specialists and the director (spec 15 §8.4)
+catalog protocol 1.
+types (specialist resource kind).        % S, R and the goal/report kinds: completed by the composition
+namespace proto produce (dyn).
+pred active(specialist) : proto.         % report  (specialist: out, director: in)
+pred done(specialist) : proto.           % report
+pred stuck(specialist) : proto.          % report
+pred status(specialist, tick__status) : proto.   % report, asserted by the host from the trace (amendment 1b)
+pred report(specialist, kind) : proto.   % a result or refusal of kind K (today's seen/result kinds)
+pred goal(specialist, kind) : proto.     % grant side (director: out, specialist: in): a goal of kind K
+pred grant(resource, specialist) : proto.% grant side: the resource token's holder
+```
+
+- **The composition manifest makes S and R concrete.** `specialists:` completes `specialist`, the director's
+  `resources:` completes `resource`, and the kinds are the goal and report kinds (today's director instance's
+  `kind` type, derived as in §5).
+- **The task-level vocabulary that crosses members** (alfworld `goto`, `reached`, `open`, `accessible`, …)
+  is declared in the protocol module too, with its argument types, and not by the specialists.
+- **A specialist reads its goals as copies of `goal(self, K)` plus the payload atom.** That is today's
+  director relay (`forward(D, K)` with the atom carried by the host), made a declaration.
+
+**Dependencies:** specialist → protocol ← director, with capacity below all of them. This is a DAG, so each
+member is keyed and grounded alone (§8.1).
+
+New check **I8**, over the static graph and the include graph:
+- (a) the member include graph is a DAG, with protocol and capacity as its only shared nodes;
+- (b) every pred that crosses members (the cut, §3) is declared by the protocol module or is a world port;
+- (c) no specialist rule names the director's name or another specialist's name as a constant of type
+  `specialist`. It may name only itself, through the `self` constant the composition binds
+  (`iface-direct-name`, `iface-cut-undeclared`).
+
+The consequence for §1.2's tables:
+- the peer-to-peer pairs (`goto`/`reached` between task and nav; `open`/`accessible`; …) become report → goal
+  routes through the protocol, which is what today's director already does;
+- the direct `in`/`out` peer edges of §5 remain as the cut's description, but under I8 their declarations move
+  to the protocol module.
+
+### 8.5 The tick rules (form S: the host's; form P: the stage guards)
+
+The base tick is only the boundary at which copies are taken and latched outputs released. Four rules:
+
+1. **Change-or-clock.** The blackboard keeps a change counter c_p per port. Member d keeps the counter value it
+   last saw, seen_d(p). d beats at boundary t iff some port p ∈ in(d) has c_p > seen_d(p) through a change
+   not tagged with source d (rule 3), or d's clock period (domain.yaml `clock`) has elapsed since its last
+   beat. Otherwise d does not beat. A non-beating member costs no draw and keeps its last snapshot (F1).
+2. **Moore latch.** d's reports, intents and grants produced at boundary t's beat are released at boundary
+   t+1 (F2). Within a tick there is no feedback path, so no loop can close inside one. Across ticks a loop
+   takes two boundaries per round and shows in the status journal.
+3. **No beat on one's own echo.** Each change on the blackboard is tagged with its source member (or `world`
+   for the host's sync of a world reading). A change whose source is d does not make d beat: c_p advances, but
+   rule 1 skips it for d. Effects that go through the world are not echoes: nav's own move changes `at`
+   through the world's sync, tagged `world`, and nav beats on it. That is the dialog's echo-loop lesson, as a
+   protocol rule.
+4. **Hysteresis is the director's.** These are director rules, not runtime policy:
+   - a grant is not revoked within k ticks of being given;
+   - a status must hold for m ticks before the tree acts on it.
+
+   They are written as countdown tokens in the director domain (`held(R, S, k)` decremented on the director's
+   own clock). k and m are the director's own constants, in its instance.
+
+In form P (deferred), rule 1 is a guard on each stage's link: the stage runs its rules only when its dirty or
+clock token is present. Rule 2 is the copies' release at the `direct` → S₁ link. Rule 3 is the source tag on
+copies. Rule 4 is unchanged.
+
+### 8.6 What changes in the manifest
+
+- **The composition file** gains `protocol: protocol.llp`.
+- **Each member's `domain.yaml` `clock`** (it exists) is rule 1's period.
+- **A port may carry `copies: k`** (§8.3).
+
+There are no renames. nina's fields and amendment 1's are unchanged.
 
 ## Acceptance (for the design step)
 
