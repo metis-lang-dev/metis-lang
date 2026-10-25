@@ -31,6 +31,14 @@ them; it adds three fields, each with its reason (§2.3).**
 
 The composer stays shelved; everything in §8 is stated for form S and maps onto form P.
 
+**Amendment 7, 2026-10-25 (metis, nina's step 3b rulings: design v8 §13 on s-404d001f):**
+- §8.4: a STOP is a CANCEL, distinct from a REVOKE. A revoke takes the body and keeps the goal; a cancel takes
+  the goal. The protocol gains `tick__cancel(D)`, a signal the director's deactivate sends on a stop with the
+  goal's withdrawal. Every member carries a generated protocol stub, a begin and a cancel rule per goal kind:
+  the member gives back `idle` and drops the goal itself, and no host writes a member's internals.
+- §10.4: a case binds the program's weight ports to constants, `ports: {look: 1.0}`: numeric only, an unknown
+  port name refused by name.
+
 **Amendment 6, 2026-10-25 (metis, the beast case rulings: design v7 §12 on s-404d001f):**
 - §2.3: a composition declares its RESPONSE TIME ρ, `response:` in `composition.yaml`. A member whose trigger
   reads a world horizon derives the horizon from ρ. Declaration only for now, no I-check; ρ is in the
@@ -656,6 +664,7 @@ pred status(specialist, tick__status) : proto.   % report, asserted by the host 
 pred report(specialist, kind) : proto.   % a result or refusal of kind K (today's seen/result kinds)
 pred goal(specialist, kind) : proto.     % grant side (director: out, specialist: in): a goal of kind K
 pred grant(resource, specialist) : proto.% grant side: the resource token's holder
+pred cancel(specialist) : proto.         % grant side: a STOP, the goal withdrawn (amendment 7)
 ```
 
 - **The composition manifest makes S and R concrete.** `specialists:` completes `specialist`, the director's
@@ -669,6 +678,20 @@ pred grant(resource, specialist) : proto.% grant side: the resource token's hold
   a thing it is already handling absorbs it, and still owes the requester's report (act, alert on a beast,
   absorbs `fight(P)` for that beast and answers `cleared(P)`); the director's forward to an already-active
   member pushes nothing on the path. No check.
+- **A STOP is a CANCEL, not a REVOKE (amendment 7).**
+  - A REVOKE (`tick__revoke(D, R)`, §8.5 rule 4 and §9.3) takes the BODY and keeps the goal: a preempted
+    member keeps its goal, waits queued, and resumes on it when the resource comes back.
+  - A CANCEL (`tick__cancel(D)`, nature `signal`, director `out`, member `in`) takes the GOAL. The director's
+    deactivate emits it on a stop, together with the goal's withdrawal.
+  - Every member carries a GENERATED PROTOCOL STUB, two rules per goal kind K:
+
+    ```
+    begin_K  [dyn] : idle * $K(G) -o busy * tick__active(D).     % reads the goal, idle → busy, reports active
+    cancel_K [dyn] : busy * tick__cancel(D) * K(G) -o idle.      % the cancel: the goal dropped, idle given back
+    ```
+
+    The member gives back `idle` and drops the goal itself: no host writes a member's internals. A revoke
+    touches neither rule, so a preempted member stays `busy` on its goal.
 
 **Dependencies:** specialist → protocol ← director, with capacity below all of them. This is a DAG, so each
 member is keyed and grounded alone (§8.1).
@@ -936,6 +959,11 @@ specialist, and drift from the real director.
   - It knows what to collect: the `out` set.
   - It knows how to score: the status atoms.
   - It knows what to grant: a `grant`/`lease` fact asserted when the script says so.
+  - It binds the program's weight ports (amendment 7). A program with a weight port does not load unbound
+    (the alfworld task's `weight look(O, R)`), so the case binds each one to a constant for the whole case,
+    `ports: {look: 1.0}`. The value must be a number (finite, not negative: a weight). A name the program does
+    not declare is refused by name, and a declared port left unbound refuses the case. A table or a fitted
+    binding is a plugin's job, never a case's.
 
   One stub for all packages, and no package-specific harness code.
 - **Certificates.** A specialist's certificate is its program_key plus its cases passing against the stub.
