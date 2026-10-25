@@ -85,6 +85,63 @@ inline double transition_count(const Event& e, const Counts& counts) {
     return w;
 }
 
+// the same weight over a dense count vector (dense[a] = the count of atom
+// a, 0 past the end): Live's indexed state. Same arithmetic, same early
+// exits, same order as above — the doubles are bit-identical
+inline int dense_count(const std::vector<int>& dense, Atom a) {
+    return a < dense.size() ? dense[a] : 0;
+}
+
+inline double transition_count(const Event& e, const std::vector<int>& dense) {
+    double w = 1;
+    for (const auto& [a, n] : e.consume) {
+        w *= falling_factorial(dense_count(dense, a), n);
+        if (w == 0) return 0;
+    }
+    for (const auto& [a, n] : e.persist) {
+        w *= std::pow(static_cast<double>(dense_count(dense, a)), n);
+        if (w == 0) return 0;
+    }
+    return w;
+}
+
+// -- the rarest-atom tier index (filter.py / lolli lineage) ---------------
+// per (stage, kind) — index stage * 2 + kind, kind 1 = links — events
+// keyed by their least-common consume atom, so a state only inspects
+// possibly-enabled candidates: pure pruning of zero-weight candidates (an
+// event whose consume atoms are absent weighs 0 in the scan too).
+// ForwardProjection and Live share it.
+
+struct TierIndex {
+    std::unordered_map<Atom, std::vector<int>> by_atom;
+    std::vector<int> keyless;
+};
+
+inline std::vector<TierIndex> build_tiers(const Program& p) {
+    int nstages = static_cast<int>(p.stage_names.size());
+    std::vector<TierIndex> tiers(static_cast<size_t>(nstages) * 2);
+    for (int kind = 0; kind < 2; ++kind) {
+        std::unordered_map<Atom, int> freq;
+        for (const auto& e : p.events)
+            if ((e.post >= 0) == (kind == 1))
+                for (const auto& [a, n] : e.consume) freq[a] += 1;
+        for (size_t i = 0; i < p.events.size(); ++i) {
+            const Event& e = p.events[i];
+            if ((e.post >= 0) != (kind == 1)) continue;
+            TierIndex& t = tiers[e.stage * 2 + kind];
+            if (e.consume.empty()) {
+                t.keyless.push_back(static_cast<int>(i));
+                continue;
+            }
+            Atom key = e.consume.front().first;
+            for (const auto& [a, n] : e.consume)
+                if (freq[a] < freq[key]) key = a;
+            t.by_atom[key].push_back(static_cast<int>(i));
+        }
+    }
+    return tiers;
+}
+
 // -- states --------------------------------------------------------------
 
 constexpr int kDone = -1;
@@ -145,33 +202,7 @@ class ForwardProjection {
                       Policy policy = nullptr,
                       Observer observe = nullptr,
                       size_t max_states = 0)
-        : prog_(p), policy_(std::move(policy)) {
-        // rarest-atom tier index (filter.py / lolli lineage): per
-        // (stage, kind), events keyed by their least-common consume
-        // atom so a state only inspects possibly-enabled candidates
-        // — pure pruning of zero-weight candidates (an event whose
-        // consume atoms are absent weighs 0 in the scan too).
-        int nstages = static_cast<int>(p.stage_names.size());
-        tiers_.assign(static_cast<size_t>(nstages) * 2, Tier{});
-        for (int kind = 0; kind < 2; ++kind) {
-            std::unordered_map<Atom, int> freq;
-            for (const auto& e : p.events)
-                if ((e.post >= 0) == (kind == 1))
-                    for (const auto& [a, n] : e.consume) freq[a] += 1;
-            for (size_t i = 0; i < p.events.size(); ++i) {
-                const Event& e = p.events[i];
-                if ((e.post >= 0) != (kind == 1)) continue;
-                Tier& t = tiers_[e.stage * 2 + kind];
-                if (e.consume.empty()) {
-                    t.keyless.push_back(static_cast<int>(i));
-                    continue;
-                }
-                Atom key = e.consume.front().first;
-                for (const auto& [a, n] : e.consume)
-                    if (freq[a] < freq[key]) key = a;
-                t.by_atom[key].push_back(static_cast<int>(i));
-            }
-        }
+        : prog_(p), policy_(std::move(policy)), tiers_(build_tiers(p)) {
         Dist dist;
         dist.emplace(std::move(from), 1.0);
         for (int t = 0; t < steps; ++t) {
@@ -216,7 +247,7 @@ class ForwardProjection {
         if (stage == kDone) return {{-1, 1.0}};
         for (int tier = 0; tier < 2; ++tier) {
             std::vector<std::pair<int, double>> ws;
-            const Tier& t = tiers_[stage * 2 + tier];
+            const TierIndex& t = tiers_[stage * 2 + tier];
             auto consider = [&](int i) {
                 const Event& e = prog_.events[i];
                 double w = e.weight * transition_count(e, counts);
@@ -276,11 +307,7 @@ class ForwardProjection {
     Program prog_;
     Policy policy_;
     bool overflowed_ = false;
-    struct Tier {
-        std::unordered_map<Atom, std::vector<int>> by_atom;
-        std::vector<int> keyless;
-    };
-    std::vector<Tier> tiers_;
+    std::vector<TierIndex> tiers_;
     Dist final_;
 };
 

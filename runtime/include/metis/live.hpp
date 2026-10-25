@@ -66,7 +66,7 @@ class Live {
     // canon[i] = wire event i's normative index (sidecar events[i].canon);
     // empty = the wire's order is the normative one
     explicit Live(LoadedProgram lp, std::vector<int> canon = {})
-        : lp_(std::move(lp)) {
+        : lp_(std::move(lp)), tiers_(build_tiers(lp_.program)) {
         const size_t n = lp_.program.events.size();
         if (canon.empty())
             for (size_t i = 0; i < n; ++i) canon.push_back(static_cast<int>(i));
@@ -97,28 +97,40 @@ class Live {
 
     // back to the artifact's init (the rng is left as it is)
     void reset() {
-        counts_.clear();
+        std::map<Atom, int> counts;
         for (const auto& [a, n] : lp_.program.init)
-            if (n > 0) counts_[a] = n;
+            if (n > 0) counts[a] = n;
+        set_counts_(std::move(counts));
         stage_ = lp_.program.init_stage;
         quiet_stage_ = -2;
         fired_ = 0;
     }
 
-    // the firing tier, (wire index, weight) in the normative order
+    // the firing tier, (wire index, weight) in the normative order. The
+    // candidates are the tier index's (keyless + those keyed by a present
+    // atom), sorted by canon index: an event left out has a consume atom at
+    // count 0, so the full scan weighs it 0 and drops it too — the same
+    // list, element for element (eval-perf step 2g)
     std::vector<std::pair<int, double>> enabled() const {
         std::vector<std::pair<int, double>> ws;
         if (stage_ == kDone) return ws;
-        const Counts c = counts();
         for (int tier = 0; tier < 2; ++tier) {
-            for (int i : order_) {
+            const TierIndex& t = tiers_[stage_ * 2 + tier];
+            std::vector<int> cand(t.keyless);
+            for (const auto& [a, n] : counts_) {
+                auto it = t.by_atom.find(a);
+                if (it != t.by_atom.end())
+                    cand.insert(cand.end(), it->second.begin(), it->second.end());
+            }
+            std::sort(cand.begin(), cand.end(),
+                      [this](int x, int y) { return canon_[x] < canon_[y]; });
+            for (int i : cand) {
                 const Event& e = lp_.program.events[i];
-                if ((e.post >= 0) != (tier == 1) || e.stage != stage_) continue;
-                const double n = transition_count(e, c);
+                const double n = transition_count(e, dense_);
                 const double w = n ? e.weight * n : 0.0;
                 if (w > 0) ws.emplace_back(i, w);
             }
-            if (!ws.empty() && policy_ && tier == 0) policy_(stage_, c, ws);
+            if (!ws.empty() && policy_ && tier == 0) policy_(stage_, counts(), ws);
             if (!ws.empty()) return ws;
         }
         return ws;
@@ -170,9 +182,10 @@ class Live {
         for (const auto& op : ev.ops) ev.name += " " + op;
         if (stage_ == kDone)                 // a tick revives (G6)
             stage_ = quiet_stage_ != -2 ? quiet_stage_ : lp_.program.init_stage;
-        counts_.clear();
+        std::map<Atom, int> counts;
         for (const auto& [a, n] : after)
-            if (n > 0) counts_[lp_.atoms.get(a)] = n;
+            if (n > 0) counts[lp_.atoms.get(a)] = n;
+        set_counts_(std::move(counts));
         ev.stage = stage_;
         ++fired_;
         return ev;
@@ -222,7 +235,7 @@ class Live {
         std::map<Atom, int> counts;
         for (const auto& [a, n] : p.counts)
             if (n > 0) counts[lp_.atoms.get(a)] = n;
-        counts_ = std::move(counts);
+        set_counts_(std::move(counts));
         stage_ = p.stage;
         quiet_stage_ = p.quiet;
         rng_.state = p.rng;
@@ -383,8 +396,28 @@ class Live {
         for (const auto& [a, n] : e.produce) counts_[a] += n;
         for (auto it = counts_.begin(); it != counts_.end();)
             it = it->second > 0 ? std::next(it) : counts_.erase(it);
+        for (const auto& [a, n] : e.consume) sync_dense_(a);
+        for (const auto& [a, n] : e.produce) sync_dense_(a);
         if (e.post >= 0) stage_ = e.post;
         ++fired_;
+    }
+
+    // the dense mirror of counts_ (index = atom id; 0 = absent), kept in
+    // step at every change: the indexed weights read it
+    void sync_dense_(Atom a) {
+        auto it = counts_.find(a);
+        const int n = it == counts_.end() ? 0 : it->second;
+        if (a >= dense_.size()) {
+            if (n == 0) return;
+            dense_.resize(static_cast<size_t>(a) + 1, 0);
+        }
+        dense_[a] = n;
+    }
+    void set_counts_(std::map<Atom, int> counts) {
+        for (const auto& [a, n] : counts_)
+            if (a < dense_.size()) dense_[a] = 0;
+        counts_ = std::move(counts);
+        for (const auto& [a, n] : counts_) sync_dense_(a);
     }
 
     std::vector<std::pair<std::string, int>> named(
@@ -398,7 +431,9 @@ class Live {
     std::vector<int> canon_, order_;   // wire→canon, canon→wire
     Policy policy_;
     SplitMix64 rng_{0};
+    std::vector<TierIndex> tiers_;     // the rarest-atom index (kernel.hpp)
     std::map<Atom, int> counts_;
+    std::vector<int> dense_;           // counts_ by atom id
     int stage_ = 0;
     int quiet_stage_ = -2;             // -2: never latched
     size_t fired_ = 0;
