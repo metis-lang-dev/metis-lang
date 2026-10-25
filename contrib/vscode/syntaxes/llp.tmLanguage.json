@@ -38,7 +38,7 @@
       "match": "\"[^\"]*\""
     },
     "header": {
-      "match": "^\\s*(catalog|provenance|extends|include|layers|stages)\\b\\s*([A-Za-z][A-Za-z0-9_-]*)?",
+      "match": "^\\s*(catalog|provenance|extends|include|layers|stages|types)\\b\\s*([A-Za-z][A-Za-z0-9_-]*)?",
       "captures": {
         "1": { "name": "keyword.control.llp" },
         "2": { "name": "entity.name.namespace.llp" }
