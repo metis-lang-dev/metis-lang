@@ -2,4 +2,4 @@
 program: a.llp
 shared: {seen: in, ask: out, answer: in, hand: resource}
 status: {success: [ask], failure: []}
-gating: program
+gating: program   # a trailing comment: the reader drops it

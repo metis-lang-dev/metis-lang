@@ -142,7 +142,7 @@ write("i4_multiwriter", a_shared=BASE["a_shared"] + ", tally: out", b_shared=BAS
 # I5: d leaks the token
 write("i5_resource", d=D.replace("  back [dyn] : holder(S, R) -o free(R).", "  back [dyn] : holder(S, R) -o ()."))
 # I5 gating: a gates itself (program) but never reads its grant
-write("i5_gating_program", a_man="gating: program\n")
+write("i5_gating_program", a_man="gating: program   # a trailing comment: the reader drops it\n")
 # I5 gating: a is host-gated (the default) yet reads its own grant
 write("i5_gating_host", a_shared=BASE["a_shared"] + ", tick__grant: in",
       a_rules=A_RULES.replace("take [dyn] : answer(T) -o ().", "take [dyn] : answer(T) * $tick__grant(a, hand) -o ()."))

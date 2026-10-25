@@ -83,7 +83,18 @@ let read_yaml file =
         | None -> raise (Yaml_error (Printf.sprintf "%s:%d: expected key: value" file lno))
         | Some i ->
           let key = String.trim (String.sub l 0 i) in
-          let rest = String.trim (String.sub l (i + 1) (String.length l - i - 1)) in
+          let rest = String.sub l (i + 1) (String.length l - i - 1) in
+          (* a `#` after whitespace, outside quotes, starts a comment *)
+          let rest =
+            let n = String.length rest in
+            let rec cut j q =
+              if j >= n then rest
+              else if rest.[j] = '"' then cut (j + 1) (not q)
+              else if (not q) && rest.[j] = '#'
+                      && (j = 0 || rest.[j - 1] = ' ' || rest.[j - 1] = '\t')
+              then String.sub rest 0 j
+              else cut (j + 1) q in
+            String.trim (cut 0 false) in
           if rest = "" then
             raise (Yaml_error (Printf.sprintf "%s:%d: %s: an empty value (block \
                                                YAML is not read here)" file lno key));
