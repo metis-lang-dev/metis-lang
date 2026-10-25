@@ -30,7 +30,7 @@ stage act {
   %% Stopped as I finished: nothing left to drop.
   cancel_none [dyn] : idle * tick__cancel(access) -o idle.   % the race: its done and the stop in one director beat (path_pop, stop_cancel: the sampled order)
   %% I open {R}.
-  open_closed [dyn] : open(R) * $at(L) * $recat(R, L) * $openable(R) * closed(R) * busy -o opened(R) * checked(R) * accessible(R) * idle * tick__done(access).
+  open_closed [dyn] : open(R) * $at(L) * $recat(R, L) * $openable(R) * closed(R) * busy * $tick__grant(access, motion) -o opened(R) * checked(R) * accessible(R) * idle * tick__done(access).
   %% {R} is already open.
   already_open [dyn] : open(R) * $at(L) * $recat(R, L) * $openable(R) * $opened(R) * busy -o accessible(R) * idle * tick__done(access).
   %% {R} has nothing to open.

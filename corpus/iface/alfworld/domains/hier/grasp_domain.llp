@@ -33,9 +33,9 @@ stage act {
   %% Stopped as I finished: nothing left to drop.
   cancel_none [dyn] : idle * tick__cancel(grasp) -o idle.   % the race: its done and the stop in one director beat (path_pop, stop_cancel: the sampled order)
   %% I take {O} from {R}.
-  take_open [dyn] : take(O) * $at(L) * $recat(R, L) * inrecep(O, R) * objat(O, L) * handsfree * $openable(R) * $opened(R) * busy -o holds(O) * holding * taken(O) * idle * tick__done(grasp).
+  take_open [dyn] : take(O) * $at(L) * $recat(R, L) * inrecep(O, R) * objat(O, L) * handsfree * $openable(R) * $opened(R) * busy * $tick__grant(grasp, motion) -o holds(O) * holding * taken(O) * idle * tick__done(grasp).
   %% I take {O} from {R}.
-  take_plain [dyn] : take(O) * $at(L) * $recat(R, L) * inrecep(O, R) * objat(O, L) * handsfree * $notopenable(R) * busy -o holds(O) * holding * taken(O) * idle * tick__done(grasp).
+  take_plain [dyn] : take(O) * $at(L) * $recat(R, L) * inrecep(O, R) * objat(O, L) * handsfree * $notopenable(R) * busy * $tick__grant(grasp, motion) -o holds(O) * holding * taken(O) * idle * tick__done(grasp).
   %% I am not where {O} is.
   not_here [dyn] : take(O) * $at(L) * $inrecep(O, R) * $recat(R, L2) * L <> L2 * busy -o elsewhere(R) * idle.
   %% {R} is shut: I cannot reach {O}.

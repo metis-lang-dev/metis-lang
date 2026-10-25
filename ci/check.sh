@@ -199,7 +199,7 @@ echo "PRODUCT WIRES $n_wires/$n_gold"
 
 echo "== 13. interface check (spec 15 §6): metisc --interface == goldens, every composition"
 # corpus/iface/<case>/…/composition.yaml: the alfworld and minihack tree
-# installs (metis-worlds main bda52e4, nina's gen_hier / mh_hier, each
+# installs (metis-worlds main bccfa7b, nina's gen_hier / mh_hier, each
 # with its family interface package iface/<family>.llp; alfworld's task
 # with its world model eval/*.llp, spec 16 §3), kitchen_pot
 # (metis-catalog master 8f2bc93) and one deliberately broken composition

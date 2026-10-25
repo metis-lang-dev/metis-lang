@@ -33,9 +33,9 @@ stage act {
   %% Stopped as I finished: nothing left to drop.
   cancel_none [dyn] : idle * tick__cancel(place) -o idle.   % the race: its done and the stop in one director beat (path_pop, stop_cancel: the sampled order)
   %% I put {O} in {R}.
-  put_open [dyn] : put(O, R) * holds(O) * holding * $at(L) * $recat(R, L) * $openable(R) * $opened(R) * busy -o inrecep(O, R) * objat(O, L) * handsfree * placed(O, R) * idle * tick__done(place).
+  put_open [dyn] : put(O, R) * holds(O) * holding * $at(L) * $recat(R, L) * $openable(R) * $opened(R) * busy * $tick__grant(place, motion) -o inrecep(O, R) * objat(O, L) * handsfree * placed(O, R) * idle * tick__done(place).
   %% I put {O} on {R}.
-  put_plain [dyn] : put(O, R) * holds(O) * holding * $at(L) * $recat(R, L) * $notopenable(R) * busy -o inrecep(O, R) * objat(O, L) * handsfree * placed(O, R) * idle * tick__done(place).
+  put_plain [dyn] : put(O, R) * holds(O) * holding * $at(L) * $recat(R, L) * $notopenable(R) * busy * $tick__grant(place, motion) -o inrecep(O, R) * objat(O, L) * handsfree * placed(O, R) * idle * tick__done(place).
   %% I am not at {R}.
   not_here [dyn] : put(O, R) * $at(L) * $recat(R, L2) * L <> L2 * busy -o elsewhere(R) * idle.
   %% {R} is shut.

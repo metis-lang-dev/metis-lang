@@ -26,7 +26,7 @@ stage act {
   %% Stopped as I finished: nothing left to drop.
   cancel_none [dyn] : idle * tick__cancel(nav) -o idle.   % the race: its done and the stop in one director beat (path_pop, stop_cancel: the sampled order)
   %% I go to {R}.
-  go [dyn] : goto(R) * at(L) * $recat(R, L2) * L <> L2 * busy -o at(L2) * reached(R) * idle * tick__done(nav).
+  go [dyn] : goto(R) * at(L) * $recat(R, L2) * L <> L2 * busy * $tick__grant(nav, motion) -o at(L2) * reached(R) * idle * tick__done(nav).
   %% {R} is right here.
   here [dyn] : goto(R) * $at(L) * $recat(R, L) * busy -o reached(R) * idle * tick__done(nav).
 }

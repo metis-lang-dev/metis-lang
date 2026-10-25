@@ -46,6 +46,10 @@ The composer stays shelved; everything in §8 is stated for form S and maps onto
   in-copies apply in stamp order. A cancel reaches a member before its next beat, so no report is made from a
   cancelled engagement: the agent guarantees the order, and the base assumes it. The stop's tick is
   director-first (the one exception to the Moore latch): a stop's response is one tick for the members.
+- §8.4's relay order, as metis-agent implements it: a cancel, and only a cancel, waits for the member's next
+  tick when the member has not beaten since its goal's take. I5: a held command must not move the model, so a
+  tree member's command-bearing rules read their grant (`gating: program`); host gating applies to host-gated
+  members only.
 - §10.4: a case binds the program's weight ports to constants, `ports: {look: 1.0}`: numeric only, an unknown
   port name refused by name.
 
@@ -344,7 +348,7 @@ of severity error unless marked. The codes are the `iface-*` family, added to th
 | **I2** direction agrees with the roles | `in` ⇒ no `o` except self-continuation; `out` ⇒ `o` ∈ roles; `resource` ⇒ the pred is absent from the specialist's rules (`iface-direction`). | alfworld access lists `refused: out` but no rule produces it (`refused: -`): finding; minihack act's `refused` is the same. minihack task declares `opened`, `cleared` (`-`): an `in` nobody reads, a warning (`iface-in-unread`) |
 | **I3** every `in` has a producer | `world-private` preds are exempt (their producer is the host's sync). For each (S, p: in), some peer has p: `out`, or p ∈ `world.out`, or D produces p (`iface-in-unproduced`). **Transitional producers (amendment 4):** the direct member's relay facts (today's director: `detour(K1, K2)` sends K2, `rename(K1, K2, G)` sends G) count until §8.4's `goal(S, K)` replaces them; the host's `tick__status` (amendment 1b) counts as host-produced. The listing marks both `transitional`. **Amendment 5:** an unproduced `in` whose nature is `report` (a protocol report no member sends) is a warning, "a report nobody sends"; signals and resources keep the error. | alfworld `fetch`: task's `in`, produced by the world (the person's goal, `world.out`); minihack `reach` alike |
 | **I4** one writer of a state pred | `world-private` preds are exempt: one copy per member, one writer per copy (the host's sync). A shared pred consumed by more than one member (specialist, D, or the world as writer) is a contention point. It must be a `resource` (I5) or a broadcast signal, one copy per consumer (§4.3) (`iface-multi-writer`). An `out` consumed by its producer must be conserved per rule (`c` and `o` in the same rule). **Amendment 4:** a director's grants and goals are LEVELS it may withdraw (as §9.3's revoke and expire do), so the direct member's self-withdrawal is a warning, not an error; specialists keep the rule. | alfworld `holds`/`holding`/`handsfree` (grasp writes, place writes) and `inrecep`/`objat` (grasp consumes, place produces): two writers of the body's state, the hands. Either a `hands` resource with grants, or world-owned readings (`world.out`) with grasp/place's writes turned into requests. alfworld `at` / minihack `agent_at`: nav consumes and re-produces (`cor`), and the host also asserts it. One writer must be chosen: the world (nav's `go`/`move` become requests for `motion`) or nav (the host stops asserting it). Under `world-private` (today's per-session reading, amendment 1a) neither set is contention; the finding fires only for a composition that SHARES these preds |
-| **I5** every resource owned once | **Gating (amendment 5):** a member's manifest declares `gating: host` (the default: the agent holds a command until its grant, and the member never reads `tick__grant`) or `gating: program` (the member gates itself: its rules read `tick__grant` for every resource it declares). Each is checked against the member's rules. For each resource p with `count` n and `held_by` H: every rule of the composition that mentions p or an atom of H has Δ(p) + Σ_{h∈H} Δ(h) = 0 (a P-invariant of the net), and the direct domain's init holds exactly n of p and none of H. Only D's rules consume p (`iface-resource-*`). | `motion`, count 1: `grant: want_move(D) * motion -o moving(D)`, `release: moved(D) * moving(D) -o motion`; nav and act both list `motion: resource` (the beast case) |
+| **I5** every resource owned once | **Gating (amendment 5):** a member's manifest declares `gating: host` (the default: the agent holds a command until its grant, and the member never reads `tick__grant`) or `gating: program` (the member gates itself: its rules read `tick__grant` for every resource it declares). Each is checked against the member's rules. **A held command must not move the model (amendment 7):** a host-gated member whose command the host holds has already advanced its own state, so a tree member's command-bearing rules read their grant (`gating: program`); host gating applies to host-gated members only. For each resource p with `count` n and `held_by` H: every rule of the composition that mentions p or an atom of H has Δ(p) + Σ_{h∈H} Δ(h) = 0 (a P-invariant of the net), and the direct domain's init holds exactly n of p and none of H. Only D's rules consume p (`iface-resource-*`). | `motion`, count 1: `grant: want_move(D) * motion -o moving(D)`, `release: moved(D) * moving(D) -o motion`; nav and act both list `motion: resource` (the beast case) |
 | **I6** types agree | Same abstract name ⇒ same type, completed once by the capacity. A concrete type used by a shared pred is declared identically everywhere (`iface-type`). | minihack nav and act both declare `type dir {n e s w ne se sw nw}` for `next(cell, dir, cell)`: identical, OK |
 | **I7** reserved names | No domain pred contains `__`. Status atoms are `out` preds of their specialist (`iface-reserved`, `iface-status-not-out`). | none today |
 
@@ -759,6 +763,16 @@ pred cancel(specialist) : proto.         % grant side: a STOP, the goal withdraw
       cancels on the next (`cancel_K`), and nothing is withdrawn from outside. Without the rule, a member
       that missed a beat would hold the goal and the cancel together, and the sampler could pick
       `cancel_none` before `begin_K`, leaving the goal alive.
+      - **The implementation (metis-agent).** The agent defers a cancel, and only a cancel, to the member's
+        next tick when the member has not beaten since its goal's take. An unbegun goal begins on its beat
+        and cancels on the next.
+      - While the cancel is deferred, the member's beat runs, but its products and reports are dropped: they
+        are not handed to the director, and they are journaled as the cancelled engagement's (`dlg-dropped`),
+        since the cancel's stamp precedes the beat.
+      - It is agent bookkeeping only (the member's last beat, the goal's take): no member state is read and
+        nothing is withdrawn.
+      - This was exercised by the director-first stop: a member was forwarded a goal with its grant, had not
+        yet beaten, and met goal and cancel in one beat; `cancel_none` won the sample.
     - `cancel_none` is for the ONE real race: the member's done and the stop land in one director beat, with
       `path_pop` and `stop_cancel` both enabled. It is not a licence for cancels to idle members in
       general; `stop_cancel` sends none.
