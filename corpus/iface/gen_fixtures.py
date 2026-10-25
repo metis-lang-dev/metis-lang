@@ -1,4 +1,6 @@
 """Write metis-lang corpus/iface/<case>/: a clean composition `mini` and one variant per interface check (spec/15 §6).
+The capacity, the protocol module and the interface package (with their nature sidecars) are written once, to
+_common/; a case carries only its composition, its members and what it changes.
 Usage: gen_fixtures.py CORPUS_IFACE_DIR"""
 import os
 import shutil
@@ -31,9 +33,9 @@ pred tally(thing) : mini.
 """
 IFACE_YAML = "nature: {seen: signal, ask: signal, answer: signal, cmd: signal, tally: signal}\n"
 COMP = """# composition — the spec/15 §6 fixture `{name}`
-capacity: capacity.llp
-protocol: proto.llp
-interfaces: [iface_mini.llp]
+capacity: {cap}
+protocol: ../_common/proto.llp
+interfaces: [{iface}]
 specialists: [a, b]
 direct: d
 world: {{out: [{wout}], in: [cmd]}}
@@ -41,10 +43,11 @@ world: {{out: [{wout}], in: [cmd]}}
 HEAD = """catalog {n} 1.
 layers (dyn).
 stages (act).
-include "../capacity.llp".
-include "../proto.llp".
-include "../iface_mini.llp".
+include "../../_common/capacity.llp".
+include "../../_common/proto.llp".
+include "{iface}".
 """
+IFACE_INC = "../../_common/iface_mini.llp"
 A_RULES = """stage act {
   %% a sees a thing and asks about it.
   look [dyn] : seen(T) -o ask(T).
@@ -60,8 +63,8 @@ B_RULES = """stage act {
 D = """catalog d 1.
 layers (dyn).
 stages (act).
-include "../capacity.llp".
-include "../proto.llp".
+include "../../_common/capacity.llp".
+include "../../_common/proto.llp".
 namespace dir produce (dyn).
 pred free(resource) : dir.
 pred holder(domain, resource) : dir.
@@ -80,32 +83,47 @@ D_MAN = "# d\nprogram: d.llp\nshared: {tick__grant: out}\nresources: {hand: {cou
 
 BASE = dict(wout="seen", a_shared="seen: in, ask: out, answer: in, hand: resource", b_shared="ask: in, answer: out, cmd: out",
             a_extra="", a_rules=A_RULES, b_extra="", b_rules=B_RULES, d=D, iface_yaml=IFACE_YAML,
-            b_head=None, comp=None, extra_files={})
+            b_head=None, comp=None, extra_files={}, local_iface=False, cap="../_common/capacity.llp")
+
+
+def common():
+    d = os.path.join(OUT, "_common")
+    shutil.rmtree(d, ignore_errors=True)
+    os.makedirs(d)
+    for p, t in (("capacity.llp", CAP), ("proto.llp", PROTO), ("proto.yaml", PROTO_YAML),
+                 ("iface_mini.llp", IFACE), ("iface_mini.yaml", IFACE_YAML)):
+        open(os.path.join(d, p), "w").write(t)
 
 
 def write(name, **kw):
     c = dict(BASE, **kw)
     d = os.path.join(OUT, name)
     shutil.rmtree(d, ignore_errors=True)
+    w = lambda p, t: open(os.path.join(d, p), "w").write(t)
+    os.makedirs(d)
+    if c["comp"]:                                   # the reader's refusal: nothing past the composition is read
+        w("composition.yaml", c["comp"])
+        return
     for sub in ("a", "b", "d"):
         os.makedirs(os.path.join(d, sub))
-    w = lambda p, t: open(os.path.join(d, p), "w").write(t)
-    w("capacity.llp", CAP)
-    w("proto.llp", PROTO)
-    w("proto.yaml", PROTO_YAML)
-    w("iface_mini.llp", IFACE)
-    w("iface_mini.yaml", c["iface_yaml"])
-    w("composition.yaml", c["comp"] or COMP.format(name=name, wout=c["wout"]))
+    # a case that changes the interface package carries its own copy (and sidecar)
+    iface_inc = "../iface_mini.llp" if c["local_iface"] else IFACE_INC
+    if c["local_iface"]:
+        w("iface_mini.llp", IFACE)
+        w("iface_mini.yaml", c["iface_yaml"])
+    w("composition.yaml", COMP.format(name=name, wout=c["wout"], cap=c["cap"],
+                                      iface="iface_mini.llp" if c["local_iface"] else "../_common/iface_mini.llp"))
     w("a/domain.yaml", A_MAN.format(shared=c["a_shared"]))
-    w("a/a.llp", HEAD.format(n="a") + c["a_extra"] + c["a_rules"])
+    w("a/a.llp", HEAD.format(n="a", iface=iface_inc) + c["a_extra"] + c["a_rules"])
     w("b/domain.yaml", B_MAN.format(shared=c["b_shared"]))
-    w("b/b.llp", (c["b_head"] or HEAD.format(n="b")) + c["b_extra"] + c["b_rules"])
+    w("b/b.llp", (c["b_head"] or HEAD.format(n="b", iface=iface_inc)) + c["b_extra"] + c["b_rules"])
     w("d/domain.yaml", D_MAN)
     w("d/d.llp", c["d"])
     for p, t in c["extra_files"].items():
         w(p, t)
 
 
+common()
 write("mini")
 # I1: a pred both a and b declare themselves; a shares it, b does not
 write("i1_unlisted", a_extra="namespace na produce (dyn).\npred note(thing) : na.\n",
@@ -124,7 +142,7 @@ write("i4_multiwriter", a_shared=BASE["a_shared"] + ", tally: out", b_shared=BAS
 # I5: d leaks the token
 write("i5_resource", d=D.replace("  back [dyn] : holder(S, R) -o free(R).", "  back [dyn] : holder(S, R) -o ()."))
 # I6: b is built over another capacity: the type thing differs
-write("i6_types", b_head=HEAD.format(n="b").replace('include "../capacity.llp".', 'include "../capacity2.llp".'),
+write("i6_types", b_head=HEAD.format(n="b", iface=IFACE_INC).replace('include "../../_common/capacity.llp".', 'include "../capacity2.llp".'),
       extra_files={"capacity2.llp": CAP.replace("type thing {t1 t2}.", "type thing {t1 t3}.")})
 # I7: a declares a pred with the reserved `__`
 write("i7_reserved", a_extra="namespace na produce (dyn).\npred my__x(thing) : na.\n",
@@ -141,9 +159,9 @@ write("i10_local", a_extra="namespace na produce (dyn).\npred extra(thing) : na.
       a_shared=BASE["a_shared"] + ", extra: out",
       a_rules=A_RULES.replace("take [dyn] : answer(T) -o ().", "take [dyn] : answer(T) -o extra(T)."))
 # I11: `seen` is a report, a takes it in
-write("i11_nature", iface_yaml=IFACE_YAML.replace("seen: signal", "seen: report"))
+write("i11_nature", local_iface=True, iface_yaml=IFACE_YAML.replace("seen: signal", "seen: report"))
 # I12: b includes another copy of the interface package, with a different key
-write("i12_keys", b_head=HEAD.format(n="b").replace('include "../iface_mini.llp".', 'include "iface_mini.llp".'),
+write("i12_keys", b_head=HEAD.format(n="b", iface="iface_mini.llp"),
       extra_files={"b/iface_mini.llp": IFACE + "pred more(thing) : mini.\n"})
 # the reader: block YAML is refused with its line
 write("yaml_block", comp="# composition — the reader's refusal\ncapacity: capacity.llp\nspecialists:\n  - a\n  - b\ndirect: d\n")

@@ -1,9 +1,9 @@
 catalog a 1.
 layers (dyn).
 stages (act).
-include "../capacity.llp".
-include "../proto.llp".
-include "../iface_mini.llp".
+include "../../_common/capacity.llp".
+include "../../_common/proto.llp".
+include "../../_common/iface_mini.llp".
 namespace na produce (dyn).
 pred my__x(thing) : na.
 stage act {

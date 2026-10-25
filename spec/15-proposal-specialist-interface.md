@@ -31,6 +31,14 @@ them; it adds three fields, each with its reason (§2.3).**
 
 The composer stays shelved; everything in §8 is stated for form S and maps onto form P.
 
+**Amendment 4, 2026-10-25 (metis, the architect's rulings on step 1c, `metisc --interface`):**
+- I3 counts two transitional producers: the director's relay facts, and the host's `tick__status`. Both are
+  marked in the listing.
+- I4 lets the direct member withdraw its own grants and goals, as a warning.
+- `composition.yaml` gains an optional `interfaces: [...]`.
+- Natures come from a sidecar `<package>.yaml`.
+- §6's check is implemented.
+
 **Amendment 3, 2026-10-25 (metis, from the user's deployment and modularity points: brief v5 §10, v6 §11):**
 - **§9, the deployment view.** The BUNDLE is a composition package selected and sealed for a device, plus a
   runtime manifest, with OTA compatibility by interface keys. Further: the WAKE SET (form S only); actors with
@@ -253,6 +261,8 @@ resources:
 - **`specialists`.** The composition has to list its members and their order somewhere, and a specialist
   cannot list its peers. The order is the stage order of the tick (§4.4). Ruling A3 makes the order unable to
   decide a resource, but it still decides which specialist sees a signal first within a tick.
+- **`interfaces`** (optional, amendment 4): the family interface packages (`iface/<family>.llp`, §10.1)
+  besides the protocol module (`protocol:`). Paths are relative to the composition file.
 - **`world`.** Check I3 ("every `in` produced by a peer or by the world's ports") needs the world's ports by
   name and direction. Today the host projects into any pred it likes; a composition must say which. The
   default derivation is from the domains' `input`/`output` port declarations (spec 00 `port`) where they
@@ -280,8 +290,8 @@ of severity error unless marked. The codes are the `iface-*` family, added to th
 |---|---|---|
 | **I1** private stays private | A pred NOT in a specialist's `shared` map is renamed `S__p` (§4.2) and so cannot appear in another stage. The check refuses a pred that one specialist lists as shared and another declares without listing, because it is ambiguous whether they mean the same atom (`iface-shared-unlisted`). | `refused`: grasp, place and task must all list it; access declares it too, so access lists it or drops the declaration |
 | **I2** direction agrees with the roles | `in` ⇒ no `o` except self-continuation; `out` ⇒ `o` ∈ roles; `resource` ⇒ the pred is absent from the specialist's rules (`iface-direction`). | alfworld access lists `refused: out` but no rule produces it (`refused: -`): finding; minihack act's `refused` is the same. minihack task declares `opened`, `cleared` (`-`): an `in` nobody reads, a warning (`iface-in-unread`) |
-| **I3** every `in` has a producer | `world-private` preds are exempt (their producer is the host's sync). For each (S, p: in), some peer has p: `out`, or p ∈ `world.out`, or D produces p (`iface-in-unproduced`). | alfworld `fetch`: task's `in`, produced by the world (the person's goal, `world.out`); minihack `reach` alike |
-| **I4** one writer of a state pred | `world-private` preds are exempt: one copy per member, one writer per copy (the host's sync). A shared pred consumed by more than one member (specialist, D, or the world as writer) is a contention point. It must be a `resource` (I5) or a broadcast signal, one copy per consumer (§4.3) (`iface-multi-writer`). An `out` consumed by its producer must be conserved per rule (`c` and `o` in the same rule). | alfworld `holds`/`holding`/`handsfree` (grasp writes, place writes) and `inrecep`/`objat` (grasp consumes, place produces): two writers of the body's state, the hands. Either a `hands` resource with grants, or world-owned readings (`world.out`) with grasp/place's writes turned into requests. alfworld `at` / minihack `agent_at`: nav consumes and re-produces (`cor`), and the host also asserts it. One writer must be chosen: the world (nav's `go`/`move` become requests for `motion`) or nav (the host stops asserting it). Under `world-private` (today's per-session reading, amendment 1a) neither set is contention; the finding fires only for a composition that SHARES these preds |
+| **I3** every `in` has a producer | `world-private` preds are exempt (their producer is the host's sync). For each (S, p: in), some peer has p: `out`, or p ∈ `world.out`, or D produces p (`iface-in-unproduced`). **Transitional producers (amendment 4):** the direct member's relay facts (today's director: `detour(K1, K2)` sends K2, `rename(K1, K2, G)` sends G) count until §8.4's `goal(S, K)` replaces them; the host's `tick__status` (amendment 1b) counts as host-produced. The listing marks both `transitional`. | alfworld `fetch`: task's `in`, produced by the world (the person's goal, `world.out`); minihack `reach` alike |
+| **I4** one writer of a state pred | `world-private` preds are exempt: one copy per member, one writer per copy (the host's sync). A shared pred consumed by more than one member (specialist, D, or the world as writer) is a contention point. It must be a `resource` (I5) or a broadcast signal, one copy per consumer (§4.3) (`iface-multi-writer`). An `out` consumed by its producer must be conserved per rule (`c` and `o` in the same rule). **Amendment 4:** a director's grants and goals are LEVELS it may withdraw (as §9.3's revoke and expire do), so the direct member's self-withdrawal is a warning, not an error; specialists keep the rule. | alfworld `holds`/`holding`/`handsfree` (grasp writes, place writes) and `inrecep`/`objat` (grasp consumes, place produces): two writers of the body's state, the hands. Either a `hands` resource with grants, or world-owned readings (`world.out`) with grasp/place's writes turned into requests. alfworld `at` / minihack `agent_at`: nav consumes and re-produces (`cor`), and the host also asserts it. One writer must be chosen: the world (nav's `go`/`move` become requests for `motion`) or nav (the host stops asserting it). Under `world-private` (today's per-session reading, amendment 1a) neither set is contention; the finding fires only for a composition that SHARES these preds |
 | **I5** every resource owned once | For each resource p with `count` n and `held_by` H: every rule of the composition that mentions p or an atom of H has Δ(p) + Σ_{h∈H} Δ(h) = 0 (a P-invariant of the net), and the direct domain's init holds exactly n of p and none of H. Only D's rules consume p (`iface-resource-*`). | `motion`, count 1: `grant: want_move(D) * motion -o moving(D)`, `release: moved(D) * moving(D) -o motion`; nav and act both list `motion: resource` (the beast case) |
 | **I6** types agree | Same abstract name ⇒ same type, completed once by the capacity. A concrete type used by a shared pred is declared identically everywhere (`iface-type`). | minihack nav and act both declare `type dir {n e s w ne se sw nw}` for `next(cell, dir, cell)`: identical, OK |
 | **I7** reserved names | No domain pred contains `__`. Status atoms are `out` preds of their specialist (`iface-reserved`, `iface-status-not-out`). | none today |
@@ -459,10 +469,20 @@ What the check reports on today's sources, before anyone writes a manifest:
   - minihack task's unread `opened`/`cleared`;
   - minihack's `goto`/`reached` call/return pair.
 
-## 6. Toolchain (on approval; nothing here is built)
+## 6. Toolchain
 
-- **`metisc --interface COMPOSITION.yaml`**: G(Π), checks I1–I7, and the cut report, as text and as spec 08
-  JSON. The new `iface-*` codes are added to the D2 registry, with one fixture row each.
+- **`metisc --interface COMPOSITION.yaml`** is IMPLEMENTED (specialist-tree step 1c, 99f9e77; amendment 4).
+  - It reads `composition.yaml` and each member's `domain.yaml` as a strict YAML subset: `key: value` per line,
+    flow lists and maps; block YAML is refused with its line.
+  - It computes G(Π) per member (which file declares each pred), checks I1–I12, the cut report (the class of
+    each shared pred, the private remainder, the call/return smell as a note), EI(S) and ei_key per member, and
+    the package key.
+  - The output is a listing on stdout ending `result N error(s), M warning(s), K note(s)`. The exit code is 1
+    when N > 0.
+  - Spec 08 rows (`iface-*` codes in the D2 registry, one fixture row each) follow in a two-repo step with
+    metispy.
+  - `ci/check.sh` gate 13 diffs the listings of `corpus/iface/*` against `corpus/goldens/iface/`: the alfworld
+    and minihack tree installs, one broken composition per check, a clean one, and the reader's refusal.
 - **`metisc --compose COMPOSITION.yaml`** (form P, deferred by ruling v3): writes the composed `.llp` and its
   port map. A composition that fails the check is not written. The check (`--interface`) serves both forms.
 - **metispy at byte parity**, as for every compile surface. nina's composer (step 2) can call either, or
@@ -793,7 +813,9 @@ declarations stay for TYPES (spec 12); shared PREDS come from the include. This 
 declared by the protocol module" becomes "by an interface package", and the protocol module is one of them.
 
 **Each interface pred has a NATURE.** Following the YAML-first ruling (§7 Q1), it is declared in the interface
-package's own manifest, `nature: {pred: signal | resource | report}`:
+package's own manifest. That is a sidecar named after the package, `<package>.yaml` beside `<package>.llp`
+(for example `protocol_domain.yaml`), with one flow line `nature: {pred: signal | resource | report}`
+(amendment 4). Without a sidecar, I11 is skipped with a note:
 
 | nature | a specialist may declare | the director may declare |
 |---|---|---|

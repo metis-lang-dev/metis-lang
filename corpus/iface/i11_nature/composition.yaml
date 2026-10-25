@@ -1,6 +1,6 @@
 # composition — the spec/15 §6 fixture `i11_nature`
-capacity: capacity.llp
-protocol: proto.llp
+capacity: ../_common/capacity.llp
+protocol: ../_common/proto.llp
 interfaces: [iface_mini.llp]
 specialists: [a, b]
 direct: d

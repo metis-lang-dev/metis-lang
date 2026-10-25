@@ -344,13 +344,15 @@ let run comp_path =
   (* what the direct member produces: its rule heads, and the kinds its
      relay table sends (today's director: detour(K1, K2) sends K2,
      rename(K1, K2, G) sends G — the host forwards an atom by its kind) *)
-  let d_heads =
-    List.concat_map (fun r -> List.map (fun (a : atom) -> a.pred) r.r_head) dm.m_rules
-    @ List.filter_map (fun (a : atom) ->
-        match a.pred, a.terms with
-        | "detour", [_; TConst k] -> Some k
-        | "rename", [_; _; TConst g] -> Some g
-        | _ -> None) dm.m_facts in
+  let d_rule_heads =
+    List.concat_map (fun r -> List.map (fun (a : atom) -> a.pred) r.r_head) dm.m_rules in
+  (* TRANSITIONAL (ruled, step 1c): until §8.4's goal(S, K) replaces them *)
+  let d_relay = List.filter_map (fun (a : atom) ->
+      match a.pred, a.terms with
+      | "detour", [_; TConst k] -> Some k
+      | "rename", [_; _; TConst g] -> Some g
+      | _ -> None) dm.m_facts in
+  let d_heads = d_rule_heads @ d_relay in
   (* the host asserts the status report (spec/15 amendment 1b) *)
   let host_out = List.filter (fun p -> p = "tick__status")
       (List.concat_map (fun i -> i.i_preds) ipkgs) in
@@ -362,6 +364,10 @@ let run comp_path =
             if not (peer || List.mem p world_out || List.mem p d_heads || List.mem p host_out) then
               add "error" "I3" "%s: in %s has no producer (no member's out, not world.out, not produced by %s)"
                 m.m_name p dm.m_name
+            else if not (peer || List.mem p world_out || List.mem p d_rule_heads) then
+              add "note" "I3" "%s: in %s is produced only by %s (transitional)" m.m_name p
+                (if List.mem p host_out then "the host's status assertion (amendment 1b)"
+                 else Printf.sprintf "%s's relay facts, until goal(S, K) (§8.4)" dm.m_name)
           end)
         m.m_shared)
     members;
@@ -373,10 +379,16 @@ let run comp_path =
           List.iter (fun r ->
               let c = List.exists (fun ((a : atom), k) -> a.pred = p && k = 'c') r.r_body in
               let o = List.exists (fun (a : atom) -> a.pred = p) r.r_head in
-              if c && not o then
-                add (if m.m_role = "direct" then "warning" else "error") "I4"
-                  "%s: rule %s consumes its out %s without producing it (a state pred is conserved per rule)"
-                  m.m_name r.r_name p)
+              if c && not o then begin
+                if m.m_role = "direct" then
+                  (* ruled (step 1c): a director's grants and goals are
+                     levels it may withdraw *)
+                  add "warning" "I4" "%s: rule %s withdraws its own out %s (a level the direct member may withdraw)"
+                    m.m_name r.r_name p
+                else
+                  add "error" "I4" "%s: rule %s consumes its out %s without producing it (a state pred is conserved per rule)"
+                    m.m_name r.r_name p
+              end)
             m.m_rules)
         state;
       if List.length state > 1 then
@@ -615,7 +627,9 @@ let run comp_path =
             Some (m.m_name ^ (let r = roles m p in if r = "" then "" else "(" ^ r ^ ")"))
           | _ -> None) members in
       let outs = who "out" @ (if List.mem p world_out then ["world"] else [])
-                 @ (if List.mem p d_heads && List.assoc_opt p dm.m_shared = None then [dm.m_name ^ "(o)"] else []) in
+                 @ (if List.mem p d_rule_heads && List.assoc_opt p dm.m_shared = None then [dm.m_name ^ "(o)"] else [])
+                 @ (if List.mem p d_relay then [dm.m_name ^ "(relay, transitional)"] else [])
+                 @ (if List.mem p host_out then ["host(transitional)"] else []) in
       let ins = who "in" @ (if List.mem p world_in then ["world"] else []) in
       let res = who "resource" in
       let cls =

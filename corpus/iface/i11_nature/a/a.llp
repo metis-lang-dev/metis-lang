@@ -1,8 +1,8 @@
 catalog a 1.
 layers (dyn).
 stages (act).
-include "../capacity.llp".
-include "../proto.llp".
+include "../../_common/capacity.llp".
+include "../../_common/proto.llp".
 include "../iface_mini.llp".
 stage act {
   %% a sees a thing and asks about it.

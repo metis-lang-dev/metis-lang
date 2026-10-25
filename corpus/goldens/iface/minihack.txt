@@ -10,22 +10,22 @@ cut 20
   cleared reading: out [act(o)] in [task]
   closed reading: out [nav(o)] in []
   done reading: out [task(o)] in []
-  fight signal: out [director(o)] in [act(co) world]
+  fight signal: out [director(relay, transitional)] in [act(co) world]
   goto signal: out [task(o)] in [nav(c) world]
   guarded reading: out [nav(o)] in []
   motion resource: out [] in [] resource [nav act]
-  open signal: out [director(o)] in [act(c) world]
+  open signal: out [director(relay, transitional)] in [act(c) world]
   opened reading: out [act(o)] in [task]
   reach signal: out [world] in [task(c)]
   reached signal: out [nav(o)] in [task(c)]
-  refused signal: out [act director(o)] in [task(c)]
+  refused signal: out [act director(relay, transitional)] in [task(c)]
   stuck reading: out [task(o)] in []
   tick__active reading: out [] in [director]
   tick__done reading: out [] in [director]
   tick__goal state: out [director(co)] in []
   tick__grant reading: out [director(o)] in []
   tick__revoke reading: out [director(o)] in []
-  tick__status reading: out [] in [director]
+  tick__status reading: out [host(transitional)] in [director]
   tick__stuck reading: out [] in [director]
 private director=27 task=1 nav=7 act=9
 error I2 act: out refused is produced by no rule (roles -)
@@ -55,7 +55,10 @@ warning I2 director: in tick__status is read by no rule (in-unread)
 warning I2 director: in tick__active is read by no rule (in-unread)
 warning I2 director: in tick__done is read by no rule (in-unread)
 warning I2 director: in tick__stuck is read by no rule (in-unread)
-warning I4 director: rule path_off consumes its out tick__goal without producing it (a state pred is conserved per rule)
+warning I4 director: rule path_off withdraws its own out tick__goal (a level the direct member may withdraw)
+note I3 act: in open is produced only by director's relay facts, until goal(S, K) (§8.4) (transitional)
+note I3 act: in fight is produced only by director's relay facts, until goal(S, K) (§8.4) (transitional)
+note I3 director: in tick__status is produced only by the host's status assertion (amendment 1b) (transitional)
 note I11 interface package protocol_domain declares no natures: I11 not run
-result 21 error(s), 7 warning(s), 1 note(s)
+result 21 error(s), 7 warning(s), 4 note(s)
 rc 1

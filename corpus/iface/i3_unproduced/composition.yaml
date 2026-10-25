@@ -1,7 +1,7 @@
 # composition — the spec/15 §6 fixture `i3_unproduced`
-capacity: capacity.llp
-protocol: proto.llp
-interfaces: [iface_mini.llp]
+capacity: ../_common/capacity.llp
+protocol: ../_common/proto.llp
+interfaces: [../_common/iface_mini.llp]
 specialists: [a, b]
 direct: d
 world: {out: [], in: [cmd]}

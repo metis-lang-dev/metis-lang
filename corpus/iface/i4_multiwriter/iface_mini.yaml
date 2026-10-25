@@ -1,1 +1,0 @@
-nature: {seen: signal, ask: signal, answer: signal, cmd: signal, tally: signal}

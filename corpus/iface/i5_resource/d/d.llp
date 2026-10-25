@@ -1,8 +1,8 @@
 catalog d 1.
 layers (dyn).
 stages (act).
-include "../capacity.llp".
-include "../proto.llp".
+include "../../_common/capacity.llp".
+include "../../_common/proto.llp".
 namespace dir produce (dyn).
 pred free(resource) : dir.
 pred holder(domain, resource) : dir.

@@ -1,4 +1,0 @@
-# d
-program: d.llp
-shared: {tick__grant: out}
-resources: {hand: {count: 1, free: free, held_by: [holder]}}

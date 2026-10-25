@@ -1,11 +1,11 @@
 interface composition.yaml
-iface proto proto.llp 82aad75043727483f2a4a83f45ab5c07308bd79fbe2075f2cbc01e1115e0b08f
-iface iface_mini iface_mini.llp c1dba3f1197074506efba29cb738dad914a90db4d6a1545a7e482c5f283284e1
-capacity capacity.llp 07d8728f526cb5fe0952e3b98e4eeea3d7508bd75f9bd79d22e2ec8b583bdd85
+iface proto ../_common/proto.llp 82aad75043727483f2a4a83f45ab5c07308bd79fbe2075f2cbc01e1115e0b08f
+iface iface_mini ../_common/iface_mini.llp c1dba3f1197074506efba29cb738dad914a90db4d6a1545a7e482c5f283284e1
+capacity ../_common/capacity.llp 07d8728f526cb5fe0952e3b98e4eeea3d7508bd75f9bd79d22e2ec8b583bdd85
 member d direct d/d.llp key aa35502edd193ca11a3eba397fe5c8ce4e5550e1ef5f0c30a8c2f289cc60295a ei 131a2ac24d1f733e76e8da766b497038835ae14480cc8c6056bcc61ea21c8200
 member a specialist a/a.llp key e4b386f1b143077baeb3ec3b15083e0e76a26e242befb97d928c1e5e412bf9d1 ei 5c8e38d276f1115f2ce3aa7dd348032cc0fa052f1363784b6e945efbb72a8e64
 member b specialist b/b.llp key 60791caafbc1ef4e516f6a39079bae7af2d92eda12fcf9bd67a79152597a9952 ei 2cb1cf99e969bd59fd2bc42e3c6902a046f03749c330996da0b8ec9c74a2184d
-package 4acce05d19b209cf14bd0eedba62075bf9c415a8a975d1ca94eb0631c6e73dec
+package 64c159fd8233766d52d2df897406c01ae4e12e42833ccc41cd0879b481dd8972
 cut 6
   answer state: out [a(c) b(o)] in []
   ask signal: out [a(o)] in [b(c)]
