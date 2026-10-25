@@ -256,8 +256,15 @@ let load_ipkg path =
       Option.map (fun v -> List.map (fun (k, d) -> (k, str d)) (pairs v))
         (List.assoc_opt "nature" (read_yaml side))
     else None in
+  (* the key covers the declarations AND the natures (ruled): a nature
+     change is visible to I12 and to OTA compatibility *)
+  let nature_line = match nature with
+    | None -> ""
+    | Some n ->
+      "nature: {" ^ String.concat ", "
+        (List.map (fun (k, d) -> k ^ ": " ^ d) (List.sort compare n)) ^ "}\n" in
   { i_path = path; i_name = ast.cname;
-    i_key = Sha256.hex (Ast.pretty (Ast.strip_locs ast));
+    i_key = Sha256.hex (Ast.pretty (Ast.strip_locs ast) ^ nature_line);
     i_preds = preds; i_rules = rules; i_nature = nature }
 
 (* -- the check -------------------------------------------------------- *)

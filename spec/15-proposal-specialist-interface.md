@@ -815,7 +815,9 @@ declared by the protocol module" becomes "by an interface package", and the prot
 **Each interface pred has a NATURE.** Following the YAML-first ruling (§7 Q1), it is declared in the interface
 package's own manifest. That is a sidecar named after the package, `<package>.yaml` beside `<package>.llp`
 (for example `protocol_domain.yaml`), with one flow line `nature: {pred: signal | resource | report}`
-(amendment 4). Without a sidecar, I11 is skipped with a note:
+(amendment 4). Without a sidecar, I11 is skipped with a note. The interface package's key covers its
+declarations AND its natures (the sidecar's canonical line, keys sorted), so a nature change is visible to I12
+and to OTA compatibility:
 
 | nature | a specialist may declare | the director may declare |
 |---|---|---|
