@@ -73,7 +73,16 @@ let run_case dir c =
 
 let key_case dir c =
   let (_, _, prog) = build dir c in
-  Printf.printf "K %s %s\n" c.c_name (Nets.program_key prog)
+  Printf.printf "K %s %s\n" c.c_name (Nets.program_key prog);
+  (* each include: where it resolved (dir | root | home) and the key of
+     what it resolved to — a key never rests on an unprinted environment *)
+  List.iter (fun p ->
+      let path = Filename.concat dir p in
+      List.iter (fun (spec, place, file) ->
+          Printf.printf "I %s %s %s %s\n" c.c_name place spec
+            (Sha256.hex (Ast.pretty (Ast.strip_locs (Parser.parse_file file)))))
+        (Compile.include_list (Parser.parse_file path) (Filename.dirname path)))
+    (c.c_llp :: (match c.c_pack with Some p -> [p] | None -> []))
 
 let roundtrip_case dir c =
   (* the interpretability contract: parse (pretty a) = a, checked on

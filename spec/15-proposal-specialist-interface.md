@@ -31,6 +31,17 @@ them; it adds three fields, each with its reason (§2.3).**
 
 The composer stays shelved; everything in §8 is stated for form S and maps onto form P.
 
+**Amendment 5, 2026-10-25 (metis, specialist-tree step 3b rulings):**
+- §8.4: the tree director's BASE is generic and lives in metispy's `iface/` beside the protocol module; a
+  composition supplies only its instance.
+- §8.5 rule 1: a member whose world changes without the ego is a CLOCK SOURCE and must declare a clock period;
+  rule 1 binds composition members only.
+- §8.5 rule 4: its one exception, preemption by a declared `priority(P, Q)`, and the ticket queue the
+  generic base keeps.
+- I5: the manifest's `gating: host | program`, checked against the member's reads of `tick__grant`.
+- Includes resolve in three places (spec 00 §4); `protocol:` names `iface/protocol_domain.llp` under
+  `METIS_HOME`.
+
 **Amendment 4, 2026-10-25 (metis, the architect's rulings on step 1c, `metisc --interface`):**
 - I3 counts two transitional producers: the director's relay facts, and the host's `tick__status`. Both are
   marked in the listing.
@@ -292,7 +303,7 @@ of severity error unless marked. The codes are the `iface-*` family, added to th
 | **I2** direction agrees with the roles | `in` ⇒ no `o` except self-continuation; `out` ⇒ `o` ∈ roles; `resource` ⇒ the pred is absent from the specialist's rules (`iface-direction`). | alfworld access lists `refused: out` but no rule produces it (`refused: -`): finding; minihack act's `refused` is the same. minihack task declares `opened`, `cleared` (`-`): an `in` nobody reads, a warning (`iface-in-unread`) |
 | **I3** every `in` has a producer | `world-private` preds are exempt (their producer is the host's sync). For each (S, p: in), some peer has p: `out`, or p ∈ `world.out`, or D produces p (`iface-in-unproduced`). **Transitional producers (amendment 4):** the direct member's relay facts (today's director: `detour(K1, K2)` sends K2, `rename(K1, K2, G)` sends G) count until §8.4's `goal(S, K)` replaces them; the host's `tick__status` (amendment 1b) counts as host-produced. The listing marks both `transitional`. | alfworld `fetch`: task's `in`, produced by the world (the person's goal, `world.out`); minihack `reach` alike |
 | **I4** one writer of a state pred | `world-private` preds are exempt: one copy per member, one writer per copy (the host's sync). A shared pred consumed by more than one member (specialist, D, or the world as writer) is a contention point. It must be a `resource` (I5) or a broadcast signal, one copy per consumer (§4.3) (`iface-multi-writer`). An `out` consumed by its producer must be conserved per rule (`c` and `o` in the same rule). **Amendment 4:** a director's grants and goals are LEVELS it may withdraw (as §9.3's revoke and expire do), so the direct member's self-withdrawal is a warning, not an error; specialists keep the rule. | alfworld `holds`/`holding`/`handsfree` (grasp writes, place writes) and `inrecep`/`objat` (grasp consumes, place produces): two writers of the body's state, the hands. Either a `hands` resource with grants, or world-owned readings (`world.out`) with grasp/place's writes turned into requests. alfworld `at` / minihack `agent_at`: nav consumes and re-produces (`cor`), and the host also asserts it. One writer must be chosen: the world (nav's `go`/`move` become requests for `motion`) or nav (the host stops asserting it). Under `world-private` (today's per-session reading, amendment 1a) neither set is contention; the finding fires only for a composition that SHARES these preds |
-| **I5** every resource owned once | For each resource p with `count` n and `held_by` H: every rule of the composition that mentions p or an atom of H has Δ(p) + Σ_{h∈H} Δ(h) = 0 (a P-invariant of the net), and the direct domain's init holds exactly n of p and none of H. Only D's rules consume p (`iface-resource-*`). | `motion`, count 1: `grant: want_move(D) * motion -o moving(D)`, `release: moved(D) * moving(D) -o motion`; nav and act both list `motion: resource` (the beast case) |
+| **I5** every resource owned once | **Gating (amendment 5):** a member's manifest declares `gating: host` (the default: the agent holds a command until its grant, and the member never reads `tick__grant`) or `gating: program` (the member gates itself: its rules read `tick__grant` for every resource it declares). Each is checked against the member's rules. For each resource p with `count` n and `held_by` H: every rule of the composition that mentions p or an atom of H has Δ(p) + Σ_{h∈H} Δ(h) = 0 (a P-invariant of the net), and the direct domain's init holds exactly n of p and none of H. Only D's rules consume p (`iface-resource-*`). | `motion`, count 1: `grant: want_move(D) * motion -o moving(D)`, `release: moved(D) * moving(D) -o motion`; nav and act both list `motion: resource` (the beast case) |
 | **I6** types agree | Same abstract name ⇒ same type, completed once by the capacity. A concrete type used by a shared pred is declared identically everywhere (`iface-type`). | minihack nav and act both declare `type dir {n e s w ne se sw nw}` for `next(cell, dir, cell)`: identical, OK |
 | **I7** reserved names | No domain pred contains `__`. Status atoms are `out` preds of their specialist (`iface-reserved`, `iface-status-not-out`). | none today |
 
@@ -635,6 +646,14 @@ pred grant(resource, specialist) : proto.% grant side: the resource token's hold
 **Dependencies:** specialist → protocol ← director, with capacity below all of them. This is a DAG, so each
 member is keyed and grounded alone (§8.1).
 
+**The tree director's base is generic (amendment 5).** `iface/director_tree_domain.llp` lives in metispy's
+`metis/catalog/iface/`, beside the protocol module, and is included by plain path through `METIS_HOME` (spec
+00 §4). It holds the resources' tokens, the requests and their ticket queue, preemption by priority, the
+hysteresis ages and the path. A composition supplies only its instance: the resources and their counts, the
+priorities, k and m, and its members (the `domain` and `resource` types). `iface/director_tree_wake.llp`
+bridges a routing director's wake and sleep onto the tree; it declares nothing and adds rules to the
+director's stage.
+
 New check **I8**, over the static graph and the include graph:
 - (a) the member include graph is a DAG, with protocol and capacity as its only shared nodes;
 - (b) every pred that crosses members (the cut, §3) is declared by the protocol module or is a world port;
@@ -656,6 +675,11 @@ The base tick is only the boundary at which copies are taken and latched outputs
    last saw, seen_d(p). d beats at boundary t iff some port p ∈ in(d) has c_p > seen_d(p) through a change
    not tagged with source d (rule 3), or d's clock period (domain.yaml `clock`) has elapsed since its last
    beat. Otherwise d does not beat. A non-beating member costs no draw and keeps its last snapshot (F1).
+   **A CLOCK SOURCE must declare a clock period (amendment 5).** A member whose world changes without the
+   ego (a drying plant, a scripted visitor, beasts moving unseen) sees no change on its ports, so under this
+   rule it would never wake: its `domain.yaml` must declare `clock`. Rule 1 binds composition members only;
+   a domain outside any composition is clocked every tick, as today. (Found by opus's dog/plant control test
+   under the tick.)
 2. **Moore latch.** d's reports, intents and grants produced at boundary t's beat are released at boundary
    t+1 (F2). Within a tick there is no feedback path, so no loop can close inside one. Across ticks a loop
    takes two boundaries per round and shows in the status journal.
@@ -670,6 +694,19 @@ The base tick is only the boundary at which copies are taken and latched outputs
 
    They are written as countdown tokens in the director domain (`held(R, S, k)` decremented on the director's
    own clock). k and m are the director's own constants, in its instance.
+
+   **The one exception is preemption (amendment 5).**
+   - It is allowed only by a declared instance fact `priority(P, Q)`: P may preempt Q, a strict order.
+   - The preempted request is queued, never dropped.
+   - The preemptor then holds the hysteresis itself: no preempt-back within k.
+
+   **The ticket queue** (the generic base, a bakery):
+   - each resource keeps `issue(R, t)`, the next ticket to hand out, and `serving(R, t)`, the ticket whose turn
+     it is;
+   - a request (`tick__want(S, R)`) takes the next ticket and waits as `queued(S, R, t)`;
+   - the resource goes to the ticket being served: first asked, first served;
+   - a preemption serves its preemptor out of turn and marks the preemptor's own ticket `skipped(R, t)`, so its
+     turn is passed over when it comes up and nobody is served twice.
 
 In form P (deferred), rule 1 is a guard on each stage's link: the stage runs its rules only when its dirty or
 clock token is present. Rule 2 is the copies' release at the `direct` → S₁ link. Rule 3 is the source tag on

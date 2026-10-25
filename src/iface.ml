@@ -145,7 +145,9 @@ type member = {
   m_status : (string * string list) list;
   m_extra : (string * y) list;          (* the rest of domain.yaml *)
   m_key : string;                       (* the resolved AST's sha256 *)
-  m_compile : string option }           (* None: compiles *)
+  m_compile : string option;            (* None: compiles *)
+  m_inc : (string * string * string) list; (* include string, place, file *)
+  m_inc_err : string list }             (* includes that resolve nowhere *)
 
 let init_of path =
   let ic = open_in_bin path in
@@ -167,6 +169,7 @@ let load_member dir name role =
   let files = ref [] and edges = ref [] and decl_file = ref [] in
   let sigs = ref [] and bwd = ref [] and types = ref [] and abstract = ref [] in
   let rules = ref [] and facts = ref [] in
+  let incs = ref [] and inc_err = ref [] in
   let rec visit f =
     if not (List.mem f !files) then begin
       files := !files @ [f];
@@ -174,8 +177,13 @@ let load_member dir name role =
       List.iter (fun d ->
           match d with
           | DInclude p ->
-            let g = norm (Filename.concat (Filename.dirname f) p) in
-            edges := !edges @ [(f, g)]; visit g
+            (match Compile.include_place p (Filename.dirname f) with
+             | (place, g) ->
+               let g = norm g in
+               if not (List.exists (fun (_, _, q) -> q = g) !incs) then
+                 incs := !incs @ [(p, place, g)];
+               edges := !edges @ [(f, g)]; visit g
+             | exception Compile.Lang_error ms -> inc_err := !inc_err @ ms)
           | DPred (n, a, _) ->
             if not (List.mem_assoc n !decl_file) then decl_file := !decl_file @ [(n, f)];
             sigs := !sigs @ [(n, a)]
@@ -223,7 +231,7 @@ let load_member dir name role =
     m_shared = field "shared" (fun v -> List.map (fun (k, d) -> (k, str d)) (pairs v));
     m_status = field "status" (fun v -> List.map (fun (k, l) -> (k, strs l)) (pairs v));
     m_extra = List.filter (fun (k, _) -> not (List.mem k ["shared"; "status"])) man;
-    m_key = key; m_compile = compile }
+    m_key = key; m_compile = compile; m_inc = !incs; m_inc_err = !inc_err }
 
 (* a pred's roles in a member: the labels of its edges *)
 let roles m p =
@@ -283,11 +291,15 @@ let run comp_path =
   let world = match opt "world" with Some v -> pairs v | None -> [] in
   let world_out = match List.assoc_opt "out" world with Some v -> strs v | None -> [] in
   let world_in = match List.assoc_opt "in" world with Some v -> strs v | None -> [] in
-  let capacity = norm (Filename.concat dir (str (get "capacity"))) in
+  let resolve p =
+    match Compile.include_place p dir with
+    | (place, f) -> (place, norm f)
+    | exception Compile.Lang_error ms -> raise (Yaml_error (String.concat "; " ms)) in
+  let capacity = snd (resolve (str (get "capacity"))) in
   let ipaths =
     (match opt "protocol" with Some v -> [str v] | None -> [])
     @ (match opt "interfaces" with Some v -> strs v | None -> []) in
-  let ipkgs = List.map (fun p -> load_ipkg (norm (Filename.concat dir p))) ipaths in
+  let ipkgs = List.map (fun p -> load_ipkg (snd (resolve p))) ipaths in
   let members = List.map (fun n -> load_member dir n "specialist") specialists
                 @ [load_member dir direct "direct"] in
   let specs = List.filter (fun m -> m.m_role = "specialist") members in
@@ -305,6 +317,17 @@ let run comp_path =
     match List.assoc_opt p m.m_decl_file with
     | Some f -> ipath_of_file f = None
     | None -> false in
+  (* a path as the listing shows it: under METIS_HOME as home:<path>,
+     else relative to the composition's directory *)
+  let home = match Sys.getenv_opt "METIS_HOME" with
+    | Some h when h <> "" -> Some (norm h) | _ -> None in
+  let show f = match home with
+    | Some h when String.length f > String.length h
+                  && String.sub f 0 (String.length h + 1) = h ^ "/" -> "home:" ^ rel h f
+    | _ -> rel dir f in
+  (* includes that resolve nowhere *)
+  List.iter (fun m ->
+      List.iter (fun e -> add "error" "include" "%s: %s" m.m_name e) m.m_inc_err) members;
   (* compile *)
   List.iter (fun m -> match m.m_compile with
       | Some e -> add "error" "compile" "%s: does not compile: %s" m.m_name e
@@ -405,6 +428,33 @@ let run comp_path =
         add "error" "I4" "%s: written by %s and by the world (world.out): world-private, or one writer"
           p (String.concat ", " (List.map (fun m -> m.m_name) outs)))
     all_shared;
+  (* I5 gating (ruled, step 3b): `gating: program` — the member gates itself,
+     so its rules read tick__grant for every resource it declares; `gating:
+     host` (the default) — the agent holds its commands, so it never reads it *)
+  List.iter (fun m ->
+      let gating = match List.assoc_opt "gating" m.m_extra with
+        | Some v -> str v | None -> "host" in
+      let reads_grant r =
+        List.exists (fun ru -> List.exists (fun ((a : atom), _) ->
+            a.pred = "tick__grant"
+            && (match List.rev a.terms with
+                | TConst c :: _ -> c = r
+                | TVar _ :: _ -> true
+                | [] -> false)) ru.r_body) m.m_rules in
+      let any_grant = List.exists (fun ru -> List.exists (fun ((a : atom), _) ->
+          a.pred = "tick__grant") ru.r_body) m.m_rules in
+      let resources = List.filter_map (fun (p, d) -> if d = "resource" then Some p else None) m.m_shared in
+      match gating with
+      | "program" ->
+        List.iter (fun r ->
+            if not (reads_grant r) then
+              add "error" "I5" "%s: gating program, but no rule reads tick__grant for %s" m.m_name r)
+          resources
+      | "host" ->
+        if m.m_role = "specialist" && any_grant then
+          add "error" "I5" "%s: gating host, but its rules read tick__grant (the agent gates it)" m.m_name
+      | g -> add "error" "I5" "%s: gating is host or program, not %s" m.m_name g)
+    members;
   (* I5 every resource owned once *)
   (match List.assoc_opt "resources" dm.m_extra with
    | None -> add "note" "I5" "%s declares no resources: I5 not run" dm.m_name
@@ -468,7 +518,7 @@ let run comp_path =
           let n = String.length p in
           let rec dunder i = i + 1 < n && ((p.[i] = '_' && p.[i + 1] = '_') || dunder (i + 1)) in
           if dunder 0 && ipath_of_file f = None then
-            add "error" "I7" "%s: pred %s carries the reserved `__` (declared in %s)" m.m_name p (rel dir f))
+            add "error" "I7" "%s: pred %s carries the reserved `__` (declared in %s)" m.m_name p (show f))
         m.m_decl_file;
       List.iter (fun (k, atoms) ->
           List.iter (fun a ->
@@ -483,7 +533,7 @@ let run comp_path =
       List.iter (fun (_, g) ->
           List.iter (fun m' ->
               if m'.m_name <> m.m_name && Filename.dirname g = Filename.dirname m'.m_program then
-                add "error" "I8" "%s: includes %s, a file of member %s" m.m_name (rel dir g) m'.m_name)
+                add "error" "I8" "%s: includes %s, a file of member %s" m.m_name (show g) m'.m_name)
             members)
         m.m_includes)
     members;
@@ -495,7 +545,7 @@ let run comp_path =
         let has_rules = List.exists (fun m -> List.exists (fun r -> r.r_file = f) m.m_rules) users in
         if has_rules then
           add "error" "I8" "%s is included by %s and has rules: only declaration files are shared"
-            (rel dir f) (String.concat ", " (List.map (fun m -> m.m_name) users))
+            (show f) (String.concat ", " (List.map (fun m -> m.m_name) users))
       end)
     shared_files;
   let names = List.map (fun m -> m.m_name) members in
@@ -529,7 +579,7 @@ let run comp_path =
           | [] ->
             if own_decl m p then
               add "error" "I10" "%s: shared %s is declared by %s itself (%s), not by an interface package"
-                m.m_name p m.m_name (rel dir (List.assoc p m.m_decl_file))
+                m.m_name p m.m_name (show (List.assoc p m.m_decl_file))
           | [i] ->
             if not (List.mem i.i_path m.m_files) then
               add "error" "I10" "%s: shared %s belongs to %s, which %s does not include" m.m_name p i.i_name m.m_name
@@ -619,13 +669,30 @@ let run comp_path =
   let lines = ref [] in
   let line fmt = Printf.ksprintf (fun s -> lines := s :: !lines) fmt in
   line "interface %s" (Filename.basename comp_path);
-  List.iter (fun i -> line "iface %s %s %s" i.i_name (rel dir i.i_path) i.i_key) ipkgs;
-  line "capacity %s %s" (rel dir capacity) cap_key;
+  List.iter (fun i -> line "iface %s %s %s" i.i_name (show i.i_path) i.i_key) ipkgs;
+  line "capacity %s %s" (show capacity) cap_key;
   List.iter (fun m ->
-      line "member %s %s %s key %s ei %s" m.m_name m.m_role (rel dir m.m_program)
+      line "member %s %s %s key %s ei %s" m.m_name m.m_role (show m.m_program)
         m.m_key (Sha256.hex (ei m)))
     (dm :: specs);
   line "package %s" package_key;
+  (* every include, where it resolved and the key of what it resolved to:
+     a key never rests on an unprinted environment *)
+  (* one line per resolved FILE (two include strings may reach it), the
+     first string and place that did, and every member that includes it *)
+  let incs = List.fold_left (fun acc m ->
+      List.fold_left (fun acc (spec, place, f) ->
+          if List.exists (fun ((_, _, f'), _) -> f' = f) acc then
+            List.map (fun (((_, _, f') as k), users) ->
+                if f' = f && not (List.mem m.m_name users) then (k, users @ [m.m_name])
+                else (k, users)) acc
+          else acc @ [((place, spec, f), [m.m_name])])
+        acc m.m_inc) [] (dm :: specs) in
+  List.iter (fun ((place, spec, f), users) ->
+      line "include %s %s %s key %s by %s" place spec (show f)
+        (Sha256.hex (Ast.pretty (Ast.strip_locs (Parser.parse_file f))))
+        (String.concat " " users))
+    incs;
   line "cut %d" (List.length cut);
   List.iter (fun p ->
       let who d = List.filter_map (fun m ->

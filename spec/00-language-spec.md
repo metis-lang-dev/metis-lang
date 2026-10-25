@@ -113,7 +113,18 @@ comments drop).
 ## 4. Includes (RDDL-style lifting)
 
 `include "path".` splices the included file's DECLS in place,
-recursively, relative to the includer's directory; cycles are errors.
+recursively; cycles are errors. The path resolves to the first of
+(the user's ruling, specialist-tree s-404d001f; both toolchains):
+(1) the including file's directory; (2) the catalog root the session
+runs in (the cwd-root rule: $METIS_CATALOG, else the cwd); (3)
+$METIS_HOME, the one directory of the shared packages (iface/
+protocol_domain.llp, iface/director_tree_domain.llp, …). A miss is
+an error naming the three places searched. metispy defaults
+METIS_HOME to its own metis/catalog; metisc has no default (a
+certifier reads no interpreter). `metisc --keys` and `--interface`
+print each include's place (dir | root | home), its path and the key
+of what it resolved to, so a key never rests on an unprinted
+environment.
 The includer keeps its own name/version/provenance. `layers` and
 `stages` are ADOPTED from an included file iff the includer omits
 them (domain file included by a generated instance file).

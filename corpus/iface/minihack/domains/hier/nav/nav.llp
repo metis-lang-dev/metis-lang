@@ -3,5 +3,5 @@ catalog nav 1.
 provenance text "the nav specialist over roles" "2026-10-25".
 include "../nav_domain.llp".
 include "../capacity.llp".
-include "../../protocol_domain.llp".
+include "iface/protocol_domain.llp".
 include "../tick_types.llp".

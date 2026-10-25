@@ -1,7 +1,9 @@
 % director — the director over MiniHack's hierarchy, installed for the agent (world/mh_hier.py).
 catalog director 1.
 provenance text "generated: the director over nav/act/task" "2026-10-25".
-include "../../director_tree_domain.llp".
+include "../../director_domain.llp".
+include "iface/director_tree_domain.llp".
+include "iface/director_tree_wake.llp".
 type domain {nav act task}.
 type kind {cleared closed done fight goto guarded open opened reach reached refused stuck}.
 
@@ -45,6 +47,8 @@ mature_status(a3).
 #init inactive(nav) 1
 #init inactive(act) 1
 #init free(motion) 1
+#init issue(motion,t0) 1
+#init serving(motion,t0) 1
 #init path(task) 1
 #init offpath(nav) 1
 #init offpath(act) 1

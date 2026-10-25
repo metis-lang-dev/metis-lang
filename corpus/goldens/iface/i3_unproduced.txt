@@ -6,6 +6,9 @@ member d direct d/d.llp key aa35502edd193ca11a3eba397fe5c8ce4e5550e1ef5f0c30a8c2
 member a specialist a/a.llp key e4b386f1b143077baeb3ec3b15083e0e76a26e242befb97d928c1e5e412bf9d1 ei b6567a21131229a9dbfe327e7418f89892ce4aedd042a93f3f35c1adca6b86be
 member b specialist b/b.llp key 60791caafbc1ef4e516f6a39079bae7af2d92eda12fcf9bd67a79152597a9952 ei 7e83f44aec6f2f9271a0ead397551340981537ce6fb51a76138b95368f6e2dc3
 package 5e2bdc5d28c44284c8fbcef16e1a4f612674c711a7141f72632e2a5c6de9510b
+include dir ../../_common/capacity.llp ../_common/capacity.llp key 07d8728f526cb5fe0952e3b98e4eeea3d7508bd75f9bd79d22e2ec8b583bdd85 by d a b
+include dir ../../_common/proto.llp ../_common/proto.llp key 82aad75043727483f2a4a83f45ab5c07308bd79fbe2075f2cbc01e1115e0b08f by d a b
+include dir ../../_common/iface_mini.llp ../_common/iface_mini.llp key c1dba3f1197074506efba29cb738dad914a90db4d6a1545a7e482c5f283284e1 by a b
 cut 6
   answer signal: out [b(o)] in [a(c)]
   ask signal: out [a(o)] in [b(c)]

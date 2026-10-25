@@ -6,6 +6,10 @@ member d direct d/d.llp key aa35502edd193ca11a3eba397fe5c8ce4e5550e1ef5f0c30a8c2
 member a specialist a/a.llp key e4b386f1b143077baeb3ec3b15083e0e76a26e242befb97d928c1e5e412bf9d1 ei b6567a21131229a9dbfe327e7418f89892ce4aedd042a93f3f35c1adca6b86be
 member b specialist b/b.llp key 4c3ce85d7aa3651c1ccc117c044401c40c9756e52a4607d8473cbd4d7b5fc9fc ei 7e83f44aec6f2f9271a0ead397551340981537ce6fb51a76138b95368f6e2dc3
 package 9756351d2fd8d4d0482e705d40501fb3f1bf6a631bea64b7e684ae38a5b1859c
+include dir ../../_common/capacity.llp ../_common/capacity.llp key 07d8728f526cb5fe0952e3b98e4eeea3d7508bd75f9bd79d22e2ec8b583bdd85 by d a
+include dir ../../_common/proto.llp ../_common/proto.llp key 82aad75043727483f2a4a83f45ab5c07308bd79fbe2075f2cbc01e1115e0b08f by d a b
+include dir ../../_common/iface_mini.llp ../_common/iface_mini.llp key c1dba3f1197074506efba29cb738dad914a90db4d6a1545a7e482c5f283284e1 by a b
+include dir ../capacity2.llp capacity2.llp key d9a7567e4020c9eae07e36e98897cf7c7b35086ac65158c98049bcb642e08dd1 by b
 cut 6
   answer signal: out [b(o)] in [a(c)]
   ask signal: out [a(o)] in [b(c)]

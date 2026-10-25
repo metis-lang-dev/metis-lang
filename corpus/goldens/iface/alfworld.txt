@@ -1,13 +1,24 @@
 interface composition.yaml
-iface protocol_domain ../protocol_domain.llp 486b9f44d131572e14fcbba5f4e71118d16888c57641f6bc97d67dd290513580
+iface protocol_domain home:iface/protocol_domain.llp 747bdb0d87929296645e17e42ca8378d9086de56a26070e6fdf964f3683f298d
 capacity capacity.llp f07d764186e208ce11e3ea7febf40d00b43883bd59e7b27cd1d85fe78ec77f08
-member director direct director/director.llp key c8c6f8b6b1b1e50e304f182ced60934d4aa14a64b4c8c22059b6b73d0affeaeb ei 841966b4f6a0359528e8cbb94e45fc7f21ebbc4709d37d1e5ca2c74497e579a6
-member task specialist task/task.llp key 6575d0361e859eaeb6cef860c873d5fca3100c63ed55a4d5f7fe9c2f9a5cd570 ei 926da5f1f29b2f4b5428755e85c147ddcea5f56191d5c1b74da26f3855cbf759
-member nav specialist nav/nav.llp key 3751d9dda0bbef080c3d01ce22ccf6e4ada34ab3a450fc77fd99ad5dc4258e51 ei 249099d3b76aefcaafb11c55b4f3dcec6c4ce4fe4711413f14d1f4811b79ba12
-member access specialist access/access.llp key 19e76c6404e1c51bb6a7c25100abfb6b21892c4777575b7294211b40f8b0e32c ei 4dab7fb924aee2fd4858b47fe82e9400b032d57b522eabefd26137337742c622
-member grasp specialist grasp/grasp.llp key 83520ee0be9986495aa995e283f1249d30d1236c788812284eb074d2de7a321c ei 26b9d9e63103d8210c725ebe9c68a46951c3fede931ac3ea8850ae6715b4ecc0
-member place specialist place/place.llp key d30896ac8d50fcd971a2108078e2f5c32893ae539c79a0321cffcf802af19d71 ei 187f26f696390776bbd0982c837bfddf190d337ca2c721d5941b54b43bfda307
-package 7b42c44f2d8c78c8db6abed2352dcf62888c44b32206aa71188993391aaca93c
+member director direct director/director.llp key bf90115dfd274da8f0fd8625f08026452accf5a55bc0554999b27076b45ce512 ei 2cb7d88803759b5ec87d55dfe7bdeda1b3da84bc82409fcca19ea1a349c1e9a6
+member task specialist task/task.llp key f0ce5664ea253355ae3f2d133f96f0d5e5b1939914d62b8c88facaead5757458 ei a773757d76c46ebafebdc684e5f46d0a683ec31a754544c6cde14f32ef0a5e6a
+member nav specialist nav/nav.llp key a53cc7172f00c92cd29fba8ebade1dc3d7f44152e5d9af62329cbdf09cc431b1 ei a6661577476b026ce4e528881c25826b1a127cb4fff93c0aca08f96db70632a3
+member access specialist access/access.llp key 1b00aa906a35642c77c2c1df45fe8fc86da06ff7477557b7ae5976376ce8036f ei 01598698e82f0ab6dcac15a5f9b6f1f2f613acb534ff8feef7d6329038670f47
+member grasp specialist grasp/grasp.llp key 8657c46b0340292122deaeb0a5e33ef543a83a33ff10642e81f504d9079e18d1 ei 0d2d64865247de79fdd493125ae57e9c2e914ffefaac11d275dc7e86d9d7b53c
+member place specialist place/place.llp key a8b425e8b19d9d560092bb1be1e797dcbe288a8e6c462889d5e45afab261e8fc ei 317b389b131686ff3fe84c10b140b7fe4a1a11c7c7fee2353400d25c2f07f196
+package 92b447f4dd054891706bcea6f419ebc1ecd3587fc19148cbd54e876858e69bc3
+include dir ../../director_domain.llp ../director_domain.llp key eae3a58005b47eba86ebcb7f5352bcbbf73e4a33bf26c2faba28eff453a6574e by director
+include home iface/director_tree_domain.llp home:iface/director_tree_domain.llp key f1e839e33378a54441b557a2645ddc91d4b4ad59c0b839a29bbd9eda81dac5cd by director
+include dir protocol_domain.llp home:iface/protocol_domain.llp key 43b383330c3bc353f22d6167d42e51e4a163425feea4a816f87e5ce02c053f5d by director task nav access grasp place
+include home iface/director_tree_wake.llp home:iface/director_tree_wake.llp key 252e1fe2ca61f9653e19a162df57493384b874a78170cbfd42f2594e04a5a440 by director
+include dir ../task_domain.llp task_domain.llp key eecfd0e1d34cadbb978471f85592d6961a6f4efe244633c7d586582561716272 by task
+include dir ../capacity.llp capacity.llp key f07d764186e208ce11e3ea7febf40d00b43883bd59e7b27cd1d85fe78ec77f08 by task nav access grasp place
+include dir ../tick_types.llp tick_types.llp key 8693624fad226e5fa67a0d723e85aea876408c41241cb82a8045d2bf9deccf91 by task nav access grasp place
+include dir ../nav_domain.llp nav_domain.llp key 552c201e640b147242064aa3d981735f03641ec535dc8878a3528c36d7276d36 by nav
+include dir ../access_domain.llp access_domain.llp key 90084cac67d1b7cd8e36904c2599bf42ef6e187f068e5fda3fa3ad19c89241ed by access
+include dir ../grasp_domain.llp grasp_domain.llp key 8f0023b41d6baa120f09f77f22685480e5664a4d7cab70ffaeb00261dde026a6 by grasp
+include dir ../place_domain.llp place_domain.llp key 9655587754da27364f41eaf9b43f768522e1739159ffdb0d298db3af0086ec61 by place
 cut 23
   accessible signal: out [access(o)] in [task(c)]
   done reading: out [task(o)] in []
@@ -23,16 +34,16 @@ cut 23
   stuck reading: out [task(o)] in []
   take signal: out [task(o)] in [grasp(c) world]
   taken signal: out [grasp(o)] in [task(c)]
-  tick__active reading: out [] in [director]
-  tick__done reading: out [] in [director]
+  tick__active signal: out [] in [director(c)]
+  tick__done signal: out [] in [director(c)]
   tick__goal state: out [director(co)] in []
   tick__grant reading: out [director(o)] in []
   tick__revoke reading: out [director(o)] in []
   tick__status reading: out [host(transitional)] in [director]
-  tick__stuck reading: out [] in [director]
+  tick__stuck signal: out [] in [director(c)]
   wrong_dest reading: out [task(o)] in []
   wrong_object reading: out [task(o)] in []
-private director=27 task=9 nav=2 access=7 grasp=11 place=11
+private director=32 task=9 nav=2 access=7 grasp=11 place=11
 error I2 access: out refused is produced by no rule (roles -)
 error I3 director: in tick__active has no producer (no member's out, not world.out, not produced by director)
 error I3 director: in tick__done has no producer (no member's out, not world.out, not produced by director)
@@ -67,10 +78,8 @@ error I10 place: shared placed is declared by place itself (place_domain.llp), n
 error I10 place: shared refused is declared by place itself (place_domain.llp), not by an interface package
 error I10 place: shared elsewhere is declared by place itself (place_domain.llp), not by an interface package
 warning I2 director: in tick__status is read by no rule (in-unread)
-warning I2 director: in tick__active is read by no rule (in-unread)
-warning I2 director: in tick__done is read by no rule (in-unread)
-warning I2 director: in tick__stuck is read by no rule (in-unread)
+warning I4 director: rule path_pop withdraws its own out tick__goal (a level the direct member may withdraw)
 warning I4 director: rule path_off withdraws its own out tick__goal (a level the direct member may withdraw)
 note I3 director: in tick__status is produced only by the host's status assertion (amendment 1b) (transitional)
-result 33 error(s), 5 warning(s), 1 note(s)
+result 33 error(s), 3 warning(s), 1 note(s)
 rc 1

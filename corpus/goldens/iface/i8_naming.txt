@@ -6,6 +6,9 @@ member d direct d/d.llp key aa35502edd193ca11a3eba397fe5c8ce4e5550e1ef5f0c30a8c2
 member a specialist a/a.llp key d12c1137d75ff37d7eee47962890e349241430637e37436b10fd0b58dc4f0a0b ei a2e93a2a66eaf1b29cb5f4abf8e53fe27debcc9b14625907716f24953a0b9e1c
 member b specialist b/b.llp key 60791caafbc1ef4e516f6a39079bae7af2d92eda12fcf9bd67a79152597a9952 ei 7e83f44aec6f2f9271a0ead397551340981537ce6fb51a76138b95368f6e2dc3
 package b30251fcf4c6fbb42e61a3d46f8b5670156557d7389fed7cd39337b286877cd2
+include dir ../../_common/capacity.llp ../_common/capacity.llp key 07d8728f526cb5fe0952e3b98e4eeea3d7508bd75f9bd79d22e2ec8b583bdd85 by d a b
+include dir ../../_common/proto.llp ../_common/proto.llp key 82aad75043727483f2a4a83f45ab5c07308bd79fbe2075f2cbc01e1115e0b08f by d a b
+include dir ../../_common/iface_mini.llp ../_common/iface_mini.llp key c1dba3f1197074506efba29cb738dad914a90db4d6a1545a7e482c5f283284e1 by a b
 cut 6
   answer signal: out [b(o)] in [a(c)]
   ask signal: out [a(o)] in [b(c)]
@@ -14,7 +17,8 @@ cut 6
   seen signal: out [world] in [a(c)]
   tick__grant reading: out [d(o)] in [a(r)]
 private d=3 a=0 b=0
+error I5 a: gating host, but its rules read tick__grant (the agent gates it)
 error I8 a: rule take names the member b ($tick__grant(b,hand)): only through the protocol
 note smell ask/answer between a and b: a call/return pair no world port or d reads
-result 1 error(s), 0 warning(s), 1 note(s)
+result 2 error(s), 0 warning(s), 1 note(s)
 rc 1

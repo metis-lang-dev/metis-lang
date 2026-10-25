@@ -34,8 +34,8 @@ echo "== 5. canonical keys: every case keyed; include-splitting is identity-inva
 n_cases=$(grep -c '^case ' "$ROOT/corpus/manifest.txt")
 n_keys=$(grep -c '^K ' "$WORK/keys.txt")
 [ "$n_cases" -eq "$n_keys" ] || { echo "keys: $n_keys/$n_cases"; exit 1; }
-k_inc=$(awk '$2=="cascade-inc"{print $3}' "$WORK/keys.txt")
-k_one=$(awk '$2=="cascade"{print $3}' "$WORK/keys.txt")
+k_inc=$(awk '$1=="K" && $2=="cascade-inc"{print $3}' "$WORK/keys.txt")
+k_one=$(awk '$1=="K" && $2=="cascade"{print $3}' "$WORK/keys.txt")
 [ -n "$k_inc" ] && [ "$k_inc" = "$k_one" ] \
     || { echo "include-invariance broken"; exit 1; }
 
@@ -202,12 +202,14 @@ echo "== 13. interface check (spec 15 §6): metisc --interface == goldens, every
 # installs (metis-worlds specialist-tree-2 8d172fe, nina's gen_hier /
 # mh_hier) and one deliberately broken composition per check; the
 # listing (stdout and stderr) and the exit code, from corpus/iface so
-# every path in it is relative
+# every path in it is relative; METIS_HOME is the corpus-local package
+# root (corpus/iface/_home: metispy f0db83b's iface/ packages)
 n_if=0
 for comp in $(cd "$ROOT/corpus/iface" && find . -name composition.yaml | sed 's#^\./##' | sort); do
   name=${comp%%/*}
   rc=0
-  ( cd "$ROOT/corpus/iface" && "$ROOT/src/metisc" --interface "$comp" ) \
+  ( cd "$ROOT/corpus/iface" && METIS_HOME="$ROOT/corpus/iface/_home" \
+      "$ROOT/src/metisc" --interface "$comp" ) \
       > "$WORK/iface_$name.txt" 2>&1 || rc=$?
   echo "rc $rc" >> "$WORK/iface_$name.txt"
   diff -u "$ROOT/corpus/goldens/iface/$name.txt" "$WORK/iface_$name.txt"

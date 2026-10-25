@@ -64,11 +64,64 @@ let infer_vars ?emit ?(conflict_code = "var-type-conflict") name atoms
 
 (* -- includes: literal splice, layers/stages adoption ----------------- *)
 
+(* an include's file, the first of (the user's ruling, specialist-tree
+   s-404d001f; metispy compiler.include_path): (1) relative to the
+   including file's directory; (2) relative to the catalog root the
+   session runs in (the cwd-root rule: $METIS_CATALOG, else the cwd);
+   (3) under $METIS_HOME, the one directory of the shared packages
+   (iface/protocol_domain.llp, ...). metisc has no default for
+   METIS_HOME (metispy defaults it to its own metis/catalog): a
+   certifier reads no interpreter. A miss names the three places
+   searched. include_place also returns the place: dir | root | home. *)
+let include_place spec base =
+  let env k = match Sys.getenv_opt k with
+    | Some v when v <> "" -> Some v
+    | _ -> None in
+  let root = match env "METIS_CATALOG" with
+    | Some r -> r
+    | None -> Sys.getcwd () in
+  let places = [ ("dir", Some base, "the including file's directory");
+                 ("root", Some root, "the catalog root");
+                 ("home", env "METIS_HOME", "METIS_HOME") ] in
+  let hit = List.find_map (fun (tag, d, _) -> match d with
+      | Some d when Sys.file_exists (Filename.concat d spec)
+                 && not (Sys.is_directory (Filename.concat d spec)) ->
+        Some (tag, Filename.concat d spec)
+      | _ -> None) places in
+  match hit with
+  | Some h -> h
+  | None ->
+    let where (_, d, why) = Printf.sprintf "%s (%s)"
+        (match d with Some d -> d | None -> "unset") why in
+    raise (Lang_error [ Printf.sprintf "include '%s': not under %s" spec
+                          (String.concat ", " (List.map where places)) ])
+
+let include_path spec base = snd (include_place spec base)
+
+(* every include of a source, transitively, in first-seen order: (the
+   include's string, its place, its file) — what --keys and --interface
+   print, so a key never rests on an unprinted environment *)
+let include_list (c : Ast.catalog) base_dir =
+  let out = ref [] in
+  let rec go (c : Ast.catalog) base seen =
+    List.iter (function
+        | DInclude p ->
+          let (tag, path) = include_place p base in
+          if not (List.mem path seen) then begin
+            if not (List.exists (fun (_, _, q) -> q = path) !out) then
+              out := (p, tag, path) :: !out;
+            go (Parser.parse_file path) (Filename.dirname path) (path :: seen)
+          end
+        | _ -> ())
+      c.cdecls in
+  go c base_dir [];
+  List.rev !out
+
 let rec resolve_in (c : Ast.catalog) base_dir seen =
   let layers = ref c.clayers and stages = ref c.cstages in
   let pairs = List.concat_map (fun (d, l) -> match d with
       | DInclude p ->
-        let path = Filename.concat base_dir p in
+        let path = include_path p base_dir in
         if List.mem path seen then begin
           let text = Printf.sprintf "include cycle at %s" p in
           Diag.emit (Diag.make "include-cycle" text

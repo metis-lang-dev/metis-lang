@@ -1,0 +1,5 @@
+# a
+program: a.llp
+shared: {seen: in, ask: out, answer: in, hand: resource}
+status: {success: [ask], failure: []}
+gating: program

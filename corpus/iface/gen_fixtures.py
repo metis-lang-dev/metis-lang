@@ -77,13 +77,13 @@ stage act {
 }
 #init free(hand) 1
 """
-A_MAN = "# a\nprogram: a.llp\nshared: {{{shared}}}\nstatus: {{success: [ask], failure: []}}\n"
+A_MAN = "# a\nprogram: a.llp\nshared: {{{shared}}}\nstatus: {{success: [ask], failure: []}}\n{extra}"
 B_MAN = "# b\nprogram: b.llp\nshared: {{{shared}}}\nstatus: {{success: [answer], failure: []}}\n"
 D_MAN = "# d\nprogram: d.llp\nshared: {tick__grant: out}\nresources: {hand: {count: 1, free: free, held_by: [holder]}}\n"
 
 BASE = dict(wout="seen", a_shared="seen: in, ask: out, answer: in, hand: resource", b_shared="ask: in, answer: out, cmd: out",
             a_extra="", a_rules=A_RULES, b_extra="", b_rules=B_RULES, d=D, iface_yaml=IFACE_YAML,
-            b_head=None, comp=None, extra_files={}, local_iface=False, cap="../_common/capacity.llp")
+            b_head=None, comp=None, extra_files={}, local_iface=False, cap="../_common/capacity.llp", a_man="")
 
 
 def common():
@@ -113,7 +113,7 @@ def write(name, **kw):
         w("iface_mini.yaml", c["iface_yaml"])
     w("composition.yaml", COMP.format(name=name, wout=c["wout"], cap=c["cap"],
                                       iface="iface_mini.llp" if c["local_iface"] else "../_common/iface_mini.llp"))
-    w("a/domain.yaml", A_MAN.format(shared=c["a_shared"]))
+    w("a/domain.yaml", A_MAN.format(shared=c["a_shared"], extra=c["a_man"]))
     w("a/a.llp", HEAD.format(n="a", iface=iface_inc) + c["a_extra"] + c["a_rules"])
     w("b/domain.yaml", B_MAN.format(shared=c["b_shared"]))
     w("b/b.llp", (c["b_head"] or HEAD.format(n="b", iface=iface_inc)) + c["b_extra"] + c["b_rules"])
@@ -141,6 +141,11 @@ write("i4_multiwriter", a_shared=BASE["a_shared"] + ", tally: out", b_shared=BAS
       b_rules=B_RULES.replace("}\n", "  %% b counts.\n  count [dyn] : tally(T) -o tally(T).\n}\n"))
 # I5: d leaks the token
 write("i5_resource", d=D.replace("  back [dyn] : holder(S, R) -o free(R).", "  back [dyn] : holder(S, R) -o ()."))
+# I5 gating: a gates itself (program) but never reads its grant
+write("i5_gating_program", a_man="gating: program\n")
+# I5 gating: a is host-gated (the default) yet reads its own grant
+write("i5_gating_host", a_shared=BASE["a_shared"] + ", tick__grant: in",
+      a_rules=A_RULES.replace("take [dyn] : answer(T) -o ().", "take [dyn] : answer(T) * $tick__grant(a, hand) -o ()."))
 # I6: b is built over another capacity: the type thing differs
 write("i6_types", b_head=HEAD.format(n="b", iface=IFACE_INC).replace('include "../../_common/capacity.llp".', 'include "../capacity2.llp".'),
       extra_files={"capacity2.llp": CAP.replace("type thing {t1 t2}.", "type thing {t1 t3}.")})

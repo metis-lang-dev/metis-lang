@@ -31,6 +31,16 @@ type ports = {
 
 val resolve_includes : Ast.catalog -> string -> Ast.catalog
 
+(* an include's file: the including file's directory, the catalog root
+   ($METIS_CATALOG, else the cwd), $METIS_HOME — the first that holds
+   it; a miss raises Lang_error naming the three. include_place also
+   returns the place's tag: dir | root | home *)
+val include_place : string -> string -> string * string
+val include_path : string -> string -> string
+
+(* a source's includes, transitively, first-seen: (string, place, file) *)
+val include_list : Ast.catalog -> string -> (string * string * string) list
+
 val compile : ?base:(Catalog.t * Ast.catalog) -> Ast.catalog
   -> Catalog.t * ports
 

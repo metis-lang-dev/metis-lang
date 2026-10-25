@@ -1,0 +1,16 @@
+catalog d 1.
+layers (dyn).
+stages (act).
+include "../../_common/capacity.llp".
+include "../../_common/proto.llp".
+namespace dir produce (dyn).
+pred free(resource) : dir.
+pred holder(domain, resource) : dir.
+pred want(domain) : dir.
+stage act {
+  %% d grants the hand to a wanting member.
+  grant [dyn] : want(S) * free(R) -o holder(S, R) * tick__grant(S, R).
+  %% d takes the hand back.
+  back [dyn] : holder(S, R) -o free(R).
+}
+#init free(hand) 1
