@@ -20,6 +20,7 @@ extends-no-base error compile
 decl-duplicate error compile
 type-unknown error compile
 type-abstract warning compile
+guard-cyclic warning compile
 containment-produce error kernel
 containment-consume error kernel
 pred-undeclared error kernel

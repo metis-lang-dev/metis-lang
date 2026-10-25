@@ -119,7 +119,16 @@ error weight-arg-not-var @ diag_compile.llp:48:3 (go/q)
   | namespace ns produce (story).
   | type nat: 3 constants
   -> pass rule variables to w: K is not a variable of this rule
-error link-post-bwd @ diag_compile.llp:52:5 (qui/back)
+warning guard-cyclic @ diag_compile.llp:50:3 (go/t)
+  %% row guard-cyclic (warning): edge's three guards close a triangle over X, Y, Z.
+  t [story] : tok(X) * $edge(X,Y) * $edge(Y,Z) * $edge(Z,X) -o hit(X).
+  | pred tok(nat) : ns.
+  | bwd edge(nat,nat).
+  | pred hit(nat) : ns.
+  | namespace ns produce (story).
+  | type nat: 3 constants
+  -> a guard over all of {X Y Z}, or a precomputed table, makes it acyclic; the program is still correct
+error link-post-bwd @ diag_compile.llp:54:5 (qui/back)
   %% row link-post-bwd: a link may not produce the Horn atom big.
   qui back [story] : go -o go * big(n0).
   | bwd big(nat).

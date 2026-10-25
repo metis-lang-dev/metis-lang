@@ -39,6 +39,7 @@ let registry = [
   ("decl-duplicate", ("error", "compile"));
   ("type-unknown", ("error", "compile"));
   ("type-abstract", ("warning", "compile"));
+  ("guard-cyclic", ("warning", "compile"));
   ("containment-produce", ("error", "kernel"));
   ("containment-consume", ("error", "kernel"));
   ("pred-undeclared", ("error", "kernel"));
@@ -122,6 +123,8 @@ let hint code data =
     String.concat "" [ "declare "; g "type"; ", or fix the signature of "; g "pred"; " that names it" ]
   | "type-abstract" ->
     String.concat "" [ "the instance that includes this file completes "; g "type"; " with `type "; g "type"; " "; "{"; "…"; "}"; ".`: ground that instance" ]
+  | "guard-cyclic" ->
+    String.concat "" [ "a guard over all of "; "{"; g "vars"; "}"; ", or a precomputed table, makes it acyclic; the program is still correct" ]
   | "pred-undeclared" ->
     String.concat "" [ "declare "; g "pred"; ": `pred "; g "pred"; "(...) : <namespace>.`" ]
   | "bwd-as-resource" ->

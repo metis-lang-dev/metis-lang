@@ -211,6 +211,43 @@ let check_consts ?emit where (atoms : atom list) sigs members findings =
       | _ -> ())
     atoms
 
+(* the guard hypergraph's GYO reduction (spec 14 §1.2, eval-perf P11):
+   one edge per guard atom, its variables; drop every variable in one
+   edge only, then every edge empty or inside another, until nothing
+   changes. Acyclic iff no edge remains; else the residual variables,
+   sorted — a cyclic guard body is AGM-bounded, not output-linear *)
+let guard_cycle (guards : atom list) =
+  let vars (a : atom) =
+    List.sort_uniq compare
+      (List.filter_map (function TVar v -> Some v | TConst _ -> None)
+         a.terms) in
+  let subset a b = List.for_all (fun v -> List.mem v b) a in
+  let rec reduce edges =
+    let occ v = List.length (List.filter (List.mem v) edges) in
+    let pruned = List.filter (fun e -> e <> [])
+        (List.map (List.filter (fun v -> occ v > 1)) edges) in
+    (* of two equal edges the later stays *)
+    let rec drop acc = function
+      | [] -> List.rev acc
+      | e :: rest ->
+        if List.exists (subset e) (acc @ rest) then drop acc rest
+        else drop (e :: acc) rest in
+    let next = drop [] pruned in
+    if next = edges then edges else reduce next in
+  match reduce (List.filter (fun e -> e <> []) (List.map vars guards)) with
+  | [] -> None
+  | es -> Some (List.sort_uniq compare (List.concat es))
+
+let emit_guard_cycle emit name guards =
+  match guard_cycle guards with
+  | None -> ()
+  | Some vs ->
+    emit "guard-cyclic"
+      (Printf.sprintf "%s: its guards form a cycle over %s: grounding it \
+                       is AGM-bounded, not output-linear"
+         name (String.concat ", " vs))
+      [ ("rule", name); ("vars", String.concat " " vs) ]
+
 (* advisory, never gating; reset by every compile (metispy:
    CatalogDoc.warnings) *)
 let last_warnings : string list ref = ref []
@@ -584,6 +621,10 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
                     persist := !persist @ [pattern a]
                   else consume := !consume @ [pattern a])
               r.rbody;
+            emit_guard_cycle emit r.rname
+              (List.filter_map (function
+                   | BAtom a when is_bwd a.pred -> Some a
+                   | _ -> None) r.rbody);
             let weight = ref 1.0 in
             (match r.rweight with
              | None -> ()
@@ -657,6 +698,8 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
             else if a.persist then persist := !persist @ [pattern a]
             else consume := !consume @ [pattern a])
           l.lpre_atoms;
+        emit_guard_cycle emit l.lname
+          (List.filter (fun (a : atom) -> is_bwd a.pred) l.lpre_atoms);
         List.iter (fun (a : atom) ->
             if is_bwd a.pred then
               emit "link-post-bwd"

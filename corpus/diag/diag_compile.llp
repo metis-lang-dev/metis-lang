@@ -46,7 +46,10 @@ stage go {
   p [story] : tok(N) -o hit(N) @w nope(N).
   %% row weight-arg-not-var: K is not a variable of this rule.
   q [story] : tok(N) -o hit(N) @w w(K).
+  %% row guard-cyclic (warning): edge's three guards close a triangle over X, Y, Z.
+  t [story] : tok(X) * $edge(X,Y) * $edge(Y,Z) * $edge(Z,X) -o hit(X).
 }
 % (row doc-missing: the rule r above carries no %% doc line.)
 %% row link-post-bwd: a link may not produce the Horn atom big.
 qui back [story] : go -o go * big(n0).
+bwd edge(nat,nat).
