@@ -1,0 +1,6 @@
+# the manifest of refuse_sum (spec16 step 2b): refuse_sum.llp's directives as fields
+program: refuse_sum.llp
+beliefs:
+  on: {port: where, one: A}
+evaluate:
+  lose: {risk: gone(_), within: 4}

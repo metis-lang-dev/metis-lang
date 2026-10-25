@@ -1,0 +1,6 @@
+# spec16 step 2b, a case-only refusal: port-function. A port bound to a name that computes (a host function)
+# is spec/16 §10's later extension; a case binds numbers or a table of them.
+manifest: ../wgc_bank.yaml
+init: [farmer(near), boat, tally]
+ports:
+  where: compute.py:where

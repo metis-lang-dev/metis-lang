@@ -1,0 +1,11 @@
+# the manifest of refuse_level (spec16 step 2b): refuse_level.llp's directives as fields
+program: refuse_level.llp
+beliefs:
+  on: {port: where, one: A}
+levels:
+  lose_level:
+    from: {evaluate: lose}
+    at: [0.1, 0.5, 0.9]
+    names: [none, low, mid, high]
+evaluate:
+  lose: {risk: gone(_), within: 4}

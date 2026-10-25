@@ -373,19 +373,29 @@ let run_file path =
       Printf.printf "Q %s %d/%d\n" q !r seeds)
     hits
 
-(* --evaluate FILE.llp [--brute] [--cost]: the one-tick instrument
-   (spec/16 §6, §7) on the file's embedded case — its #init, and its
-   #belief / #port / #evaluate / #expect / #level lines. V lines (and N
+(* --evaluate FILE.llp|CASE.yaml [--brute] [--cost]: the one-tick
+   instrument (spec/16 §6, §7) on the file's embedded case — its #init,
+   and its #belief / #port / #evaluate / #expect / #level lines — or on a
+   case YAML with its manifest. V lines (and N
    belief-read notes, L levels, X failed expectations) on stdout, the
    cost lines on stderr with --cost; exit 1 on a failed #expect, 2 on a
    refusal. --brute is the referee: every world, every path. *)
 let evaluate_file path ~brute ~cost =
-  let c = embedded_case path in
-  let dir = Filename.dirname path in
-  let src = parse_llp dir c.c_llp in
+  match
+    (* a case YAML and its manifest (spec/16 §5), or the embedded form *)
+    if Filename.check_suffix path ".yaml" then Evaluate.case_of_yaml path
+    else
+      let c = embedded_case path in
+      (Filename.concat (Filename.dirname path) c.c_llp, c.c_init, c.c_instrument)
+  with
+  | exception Iface.Yaml_error m -> prerr_endline ("error: " ^ m); exit 1
+  | exception Evaluate.Refused (code, m) ->
+    Printf.eprintf "refused %s: %s\n" code m; exit 2
+  | (llp, init, dirs) ->
+  let src = parse_llp (Filename.dirname llp) (Filename.basename llp) in
   let (cat, ports) = compile_warn src in
-  let prog = Ground.ground cat c.c_init in
-  match Evaluate.run src cat ports prog ~init:c.c_init c.c_instrument ~brute with
+  let prog = Ground.ground cat init in
+  match Evaluate.run src cat ports prog ~init dirs ~brute with
   | r ->
     List.iter print_endline r.Evaluate.lines;
     if cost then List.iter prerr_endline r.Evaluate.costs;
@@ -460,7 +470,7 @@ let () =
       "usage: metisc <manifest> | <file.llp> (compile only) | \
        --keys <manifest> | \
        --roundtrip <manifest> | --sample <manifest> | \
-       --run <file.llp> | --evaluate <file.llp> [--brute] [--cost] | --wire <program.llp> [--extension \
+       --run <file.llp> | --evaluate <file.llp|case.yaml> [--brute] [--cost] | --wire <program.llp> [--extension \
        <e.llp>]... | --diagnostics[-json] <file.llp> [--base \
        <base.llp>] | --diag-registry | --selftest\n\
        (--diagnostics* LIST diagnostics and exit 0 even when errors are \

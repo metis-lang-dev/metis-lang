@@ -1,0 +1,8 @@
+# spec16 step 2b: cook/cases/served — the manifest is ../domain.yaml by the cases/ convention
+init: [calm(cook_a), hand_free, pot_space 3]
+ports: {granted: 0.6, ordered: 0.8}
+evaluate:
+  asked: {reach: tick__want(cook_a, pot), within: 3}     # a case adds its own query after the manifest's
+expect:
+  served: 12/25
+  asked: 0.80000000000000004

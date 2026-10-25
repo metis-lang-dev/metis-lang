@@ -1,0 +1,20 @@
+# the manifest of wgc_bank (spec16 step 2b): wgc_bank.llp's directives as fields
+program: wgc_bank.llp
+beliefs:
+  on: {port: where, one: A}
+levels:
+  lose_level:
+    from: {evaluate: lose}
+    at: [0.1, 0.6]
+    names: [low, mid, high]
+  sure:
+    from: {belief: where}
+    at: [0.5, 0.9]
+    names: [unlikely, likely, certain]
+evaluate:
+  lose: {risk: gone(_), within: 8}
+  goat: {risk: gone(goat), within: 8}
+  win: {reach: solved, within: 14}
+  win_cut: {reach: solved, within: 14, budget: 60}
+  far_at: {reach: farmer(far), at: 5}
+  far_within: {reach: farmer(far), within: 5}

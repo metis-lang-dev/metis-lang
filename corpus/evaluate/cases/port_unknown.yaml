@@ -1,0 +1,6 @@
+# spec16 step 2b, a case-only refusal: port-unknown. The case binds a port the program does not declare.
+manifest: ../wgc_bank.yaml
+init: [farmer(near), boat, tally]
+ports:
+  where: 0.5
+  peek: 0.5

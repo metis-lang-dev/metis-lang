@@ -1,0 +1,7 @@
+# spec16 step 2b: a package's manifest, found by the `cases/` convention (no manifest: key in the case)
+program: ../cook_a_pot.llp
+beliefs:
+  tick__grant: {port: granted}       # independent: will this tick's world give cook_a the pot
+  order: {port: ordered}             # independent: does an order wait
+evaluate:
+  served: {reach: tick__done(cook_a), within: 12}

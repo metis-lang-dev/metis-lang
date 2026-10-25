@@ -1,0 +1,8 @@
+# the manifest of cook_a_pot (spec16 step 2b): cook_a_pot.llp's directives as fields
+program: cook_a_pot.llp
+beliefs:
+  tick__grant: {port: granted}
+  order: {port: ordered}
+evaluate:
+  served: {reach: tick__done(cook_a), within: 12}
+  asked: {reach: tick__want(cook_a,pot), within: 3}

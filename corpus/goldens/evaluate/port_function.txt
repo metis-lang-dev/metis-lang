@@ -1,0 +1,2 @@
+refused port-function: port where bound to compute.py:where: a binding that computes is the host's function form (spec/16 §10, later); a case binds numbers or a table of them
+rc 2

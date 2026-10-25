@@ -1,0 +1,15 @@
+# the case of wgc_bank (spec16 step 2b): wgc_bank.llp's directives as fields
+manifest: ../wgc_bank.yaml
+init: [farmer(near), boat, tally]
+ports:
+  where:
+    where(wolf,near): 1
+    where(wolf,far): 0
+    where(goat,near): 0.75
+    where(goat,far): 0.25
+    where(cabbage,near): 0.5
+    where(cabbage,far): 0.5
+expect:
+  win: 1/12
+  lose: 0.52256944444444442
+  win_cut: 0.083333333333333329

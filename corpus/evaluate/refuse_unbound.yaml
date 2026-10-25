@@ -1,0 +1,6 @@
+# the manifest of refuse_unbound (spec16 step 2b): refuse_unbound.llp's directives as fields
+program: refuse_unbound.llp
+beliefs:
+  on: {port: where, one: A}
+evaluate:
+  lose: {risk: gone(_), within: 4}

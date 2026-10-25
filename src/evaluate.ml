@@ -61,6 +61,12 @@ let parse dirs =
       | ["port"; spec; v] ->
         let (name, args) = split_atom spec in
         let key = if String.contains spec '(' then Some args else None in
+        (* a port bound to anything but a number is a binding that
+           computes: the host's function form, spec/16 §10 *)
+        if float_of_string_opt v = None then
+          refuse "port-function" "port %s bound to %s: a binding that computes is the host's \
+                                  function form (spec/16 §10, later); a case binds numbers or a \
+                                  table of them" spec v;
         tbl := (name, key, number ("port " ^ spec) v) :: !tbl
       | "evaluate" :: name :: kind :: rest when kind = "reach" || kind = "risk" ->
         if List.exists (fun q -> q.q_name = name) !queries then
@@ -160,6 +166,15 @@ let run src cat ports prog ~init dirs ~brute =
   let consts ty = match List.assoc_opt ty cat.Catalog.k_types with
     | Some cs -> cs | None -> [] in
   let horn = Ports.horn_db cat in
+  List.iter (fun (n, key, _) ->
+      match List.assoc_opt n ports.Compile.p_weights, key with
+      | None, _ -> refuse "port-unknown" "port %s: not a weight port of the program (%s)" n
+                     (String.concat ", " (List.map fst ports.Compile.p_weights))
+      | Some formals, Some args when List.length args <> List.length formals ->
+        refuse "port-unknown" "port %s: %d arguments, %s takes %d" (render n args)
+          (List.length args) n (List.length formals)
+      | _ -> ())
+    tbl;
   let port_value port args =
     match List.find_opt (fun (n, a, _) -> n = port && a = Some args) tbl with
     | Some (_, _, v) -> v
@@ -507,3 +522,110 @@ let run src cat ports prog ~init dirs ~brute =
       levels in
   { lines = List.rev !notes @ vlines @ llines @ xlines;
     costs = List.rev !costs; mismatches = !mism }
+
+(* -- the case and manifest YAML (spec/16 §5) ---------------------------- *)
+
+let squash a =
+  let b = Buffer.create (String.length a) and depth = ref 0 in
+  String.iter (fun c ->
+      if c = '(' then incr depth else if c = ')' then decr depth;
+      if not (!depth > 0 && (c = ' ' || c = '\t')) then Buffer.add_char b c) a;
+  Buffer.contents b
+
+let case_of_yaml path =
+  let open Iface in
+  let bad fmt = Printf.ksprintf (fun m -> raise (Yaml_error (path ^ ": " ^ m))) fmt in
+  let str what = function S s -> s | _ -> bad "%s: expected a scalar" what in
+  let lst what = function L l -> l | _ -> bad "%s: expected a flow list" what in
+  let map what = function M m -> m | _ -> bad "%s: expected a map" what in
+  let case = read_yaml_block path in
+  List.iter (fun (k, _) ->
+      if not (List.mem k ["case"; "manifest"; "init"; "ports"; "evaluate"; "expect"]) then
+        bad "unknown key %s (case, manifest, init, ports, evaluate, expect)" k)
+    case;
+  let dir = Filename.dirname path in
+  let mpath = match List.assoc_opt "manifest" case with
+    | Some v -> Filename.concat dir (str "manifest" v)
+    | None ->
+      if Filename.basename dir = "cases" then Filename.concat (Filename.dirname dir) "domain.yaml"
+      else Filename.concat dir "domain.yaml" in
+  let man = read_yaml_block mpath in
+  let program = match List.assoc_opt "program" man with
+    | Some v -> Filename.concat (Filename.dirname mpath) (str "program" v)
+    | None -> bad "%s: no program" mpath in
+  let init = match List.assoc_opt "init" case with
+    | None -> []
+    | Some v ->
+      List.map (fun x ->
+          let t = squash (str "init" x) in
+          match String.rindex_opt t ' ' with
+          | Some i when int_of_string_opt (String.sub t (i + 1) (String.length t - i - 1)) <> None ->
+            (String.sub t 0 i, int_of_string (String.sub t (i + 1) (String.length t - i - 1)))
+          | _ -> (t, 1))
+        (lst "init" v) in
+  let beliefs = match List.assoc_opt "beliefs" man with
+    | None -> []
+    | Some v ->
+      List.map (fun (pred, f) ->
+          let f = map ("beliefs " ^ pred) f in
+          let port = match List.assoc_opt "port" f with
+            | Some p -> str "port" p | None -> bad "beliefs %s: no port" pred in
+          match List.assoc_opt "one" f, List.assoc_opt "lone" f with
+          | Some v, None -> ["belief"; pred; "one"; str "one" v; "by"; port]
+          | None, Some v -> ["belief"; pred; "lone"; str "lone" v; "by"; port]
+          | None, None -> ["belief"; pred; "by"; port]
+          | _ -> bad "beliefs %s: one or lone, not both" pred)
+        (map "beliefs" v) in
+  let queries src = match List.assoc_opt "evaluate" src with
+    | None -> []
+    | Some v ->
+      List.map (fun (name, f) ->
+          let f = map ("evaluate " ^ name) f in
+          let (kind, pat) = match List.assoc_opt "reach" f, List.assoc_opt "risk" f with
+            | Some p, None -> ("reach", str "reach" p)
+            | None, Some p -> ("risk", str "risk" p)
+            | _ -> bad "evaluate %s: one of reach, risk" name in
+          let (q, h) = match List.assoc_opt "within" f, List.assoc_opt "at" f with
+            | Some h, None -> ("within", str "within" h)
+            | None, Some h -> ("at", str "at" h)
+            | _ -> bad "evaluate %s: one of within, at" name in
+          let budget = match List.assoc_opt "budget" f with
+            | Some b -> ["budget"; str "budget" b] | None -> [] in
+          let toks = List.filter (( <> ) "")
+              (String.split_on_char ' ' (squash pat)) in
+          ["evaluate"; name; kind] @ toks @ [q; h] @ budget)
+        (map "evaluate" v) in
+  let levels = match List.assoc_opt "levels" man with
+    | None -> []
+    | Some v ->
+      List.map (fun (pred, f) ->
+          let f = map ("levels " ^ pred) f in
+          let src = match List.assoc_opt "from" f with
+            | Some (M [("evaluate", q)]) -> [str "from" q]
+            | Some (M [("belief", p)]) -> ["belief"; str "from" p]
+            | _ -> bad "levels %s: from: {evaluate: Q} or {belief: PORT}" pred in
+          let get k = match List.assoc_opt k f with
+            | Some l -> List.map (str k) (lst k l) | None -> bad "levels %s: no %s" pred k in
+          ["level"; pred; "from"] @ src @ ["at"] @ get "at" @ ["names"] @ get "names")
+        (map "levels" v) in
+  let ports = match List.assoc_opt "ports" case with
+    | None -> []
+    | Some v ->
+      List.concat_map (fun (port, b) ->
+          match b with
+          | S x -> [["port"; port; x]]
+          | M tbl ->
+            List.map (fun (atom, x) ->
+                let a = squash atom in
+                if fst (split_atom a) <> port then
+                  bad "ports %s: the entry %s is not an argument tuple of %s" port atom port;
+                ["port"; a; str ("ports " ^ atom) x])
+              tbl
+          | L _ -> refuse "port-function" "port %s bound to a list: a binding that computes is \
+                                           the host's function form (spec/16 §10, later); a \
+                                           case binds numbers or a table of them" port)
+        (map "ports" v) in
+  let expects = match List.assoc_opt "expect" case with
+    | None -> []
+    | Some v -> List.map (fun (n, x) -> ["expect"; n; str "expect" x]) (map "expect" v) in
+  (program, init, beliefs @ ports @ queries man @ queries case @ expects @ levels)

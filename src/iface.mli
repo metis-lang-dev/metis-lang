@@ -7,3 +7,8 @@ exception Yaml_error of string
 
 (* the listing's lines, and the number of errors (exit 1 when > 0) *)
 val run : string -> string list * int
+
+(* the YAML subset (flow lists and maps, `key: value` lines), and the
+   instrument's reader of it with block mappings (spec/16 §5) *)
+type y = S of string | L of y list | M of (string * y) list
+val read_yaml_block : string -> (string * y) list

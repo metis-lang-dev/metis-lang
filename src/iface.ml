@@ -32,8 +32,14 @@ let flow file lno s =
         else (Buffer.add_char b s.[j]; go (j + 1)) in
       go (i + 1)
     end else begin
-      let j = ref i in
-      while !j < n && not (String.contains stops s.[!j]) do incr j done;
+      (* an atom's parentheses hold its commas: `look(target, p0)` is one
+         scalar *)
+      let j = ref i and depth = ref 0 in
+      while !j < n && (!depth > 0 || not (String.contains stops s.[!j])) do
+        (if s.[!j] = '(' then incr depth
+         else if s.[!j] = ')' && !depth > 0 then decr depth);
+        incr j
+      done;
       (String.trim (String.sub s i (!j - i)), !j)
     end in
   let rec value i =
@@ -64,6 +70,68 @@ let flow file lno s =
   let (v, j) = value 0 in
   if ws j <> n then err "trailing text after a flow value";
   v
+
+(* a `#` after whitespace, outside quotes, starts a comment *)
+let strip_comment rest =
+  let n = String.length rest in
+  let rec cut j q =
+    if j >= n then rest
+    else if rest.[j] = '"' then cut (j + 1) (not q)
+    else if (not q) && rest.[j] = '#'
+            && (j = 0 || rest.[j - 1] = ' ' || rest.[j - 1] = '\t')
+    then String.sub rest 0 j
+    else cut (j + 1) q in
+  String.trim (cut 0 false)
+
+let leaf file lno rest =
+  if rest.[0] = '[' || rest.[0] = '{' then flow file lno rest
+  else if String.length rest >= 2 && rest.[0] = '"' && rest.[String.length rest - 1] = '"'
+  then S (String.sub rest 1 (String.length rest - 2))
+  else S rest
+
+(* the instrument's case and manifest reader (spec/16 §5): the subset
+   above, plus block MAPPINGS — `key:` alone on its line opens a map
+   whose entries are indented below it, at one indentation; leaves are
+   scalars and flow values. Block lists (`- x`) stay refused. *)
+let read_yaml_block file =
+  let ic = open_in_bin file in
+  let raw = ref [] in
+  (try while true do raw := input_line ic :: !raw done
+   with End_of_file -> close_in ic);
+  let err lno fmt = Printf.ksprintf (fun m ->
+      raise (Yaml_error (Printf.sprintf "%s:%d: %s" file lno m))) fmt in
+  let lines = List.filter_map (fun (lno, l) ->
+      let t = String.trim l in
+      if t = "" || t.[0] = '#' then None
+      else begin
+        let ind = ref 0 in
+        while !ind < String.length l && l.[!ind] = ' ' do incr ind done;
+        if l.[!ind] = '\t' then err lno "a tab in the indentation";
+        if t.[0] = '-' then err lno "a block list is not read here (a flow list [a, b])";
+        match String.index_opt t ':' with
+        | None -> err lno "expected key: value"
+        | Some i ->
+          let key = String.trim (String.sub t 0 i) in
+          let key = if String.length key >= 2 && key.[0] = '"'
+                       && key.[String.length key - 1] = '"'
+            then String.sub key 1 (String.length key - 2) else key in
+          Some (lno, !ind, key,
+                strip_comment (String.sub t (i + 1) (String.length t - i - 1)))
+      end)
+      (List.mapi (fun k l -> (k + 1, l)) (List.rev !raw)) in
+  let rec map_at ind acc = function
+    | (lno, i, _, _) :: _ when i > ind -> err lno "unexpected indentation"
+    | (lno, i, key, rest) :: tl when i = ind ->
+      if rest <> "" then map_at ind ((key, leaf file lno rest) :: acc) tl
+      else (match tl with
+          | (_, j, _, _) :: _ when j > ind ->
+            let (child, tl') = map_at j [] tl in
+            map_at ind ((key, M child) :: acc) tl'
+          | _ -> err lno "%s: an empty value" key)
+    | tl -> (List.rev acc, tl) in
+  match map_at 0 [] lines with
+  | (m, []) -> m
+  | (_, (lno, _, _, _) :: _) -> err lno "unexpected indentation"
 
 let read_yaml file =
   let ic = open_in_bin file in

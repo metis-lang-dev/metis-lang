@@ -226,33 +226,46 @@ echo "== 14. the one-tick instrument (spec 16 §6, §7): metisc --evaluate == --
 # corpus/evaluate/*.llp with #evaluate lines: wgc and bridge-torch
 # (metis-catalog master 8f2bc93, copied) and kitchen_pot's cook_a
 # (corpus/iface) with beliefs, the wick sweep 15/14/13, one fixture per
-# refusal. The listing (stdout and stderr) and the exit code == the
-# golden; every exact V line (`= p/q`) == the brute-force referee's,
-# as rationals; a cut line's interval holds the referee's value through
-# the fixture's own #expect
+# refusal. Then every case YAML (…/cases/*.yaml, spec 16 §5, with its
+# manifest): the same fixtures as cases, whose listing must be the
+# embedded form's golden byte for byte, and the case-only ones (a lone
+# belief, the cases/ manifest convention, port-function, port-unknown,
+# a bad key). The listing (stdout and stderr) and the exit code == the
+# golden; every exact V line (`= p/q`) == the brute-force referee's, as
+# rationals; a cut line's interval holds the referee's value through the
+# fixture's own #expect
 n_ev=0
-for f in $(cd "$ROOT/corpus/evaluate" && grep -l '^#evaluate' *.llp | sort); do
-  name=${f%.llp}
+ev_check() {   # $1 the file, relative to corpus/evaluate; $2 its golden's name
   rc=0
   ( cd "$ROOT/corpus/evaluate" && METIS_HOME="$ROOT/corpus/iface/_home" \
-      "$ROOT/src/metisc" --evaluate "$f" ) > "$WORK/ev_$name.txt" 2>&1 || rc=$?
-  echo "rc $rc" >> "$WORK/ev_$name.txt"
-  diff -u "$ROOT/corpus/goldens/evaluate/$name.txt" "$WORK/ev_$name.txt"
+      "$ROOT/src/metisc" --evaluate "$1" ) > "$WORK/ev_$2.txt" 2>&1 || rc=$?
+  echo "rc $rc" >> "$WORK/ev_$2.txt"
+  diff -u "$ROOT/corpus/goldens/evaluate/$2.txt" "$WORK/ev_$2.txt"
   if [ "$rc" -eq 0 ]; then
     ( cd "$ROOT/corpus/evaluate" && METIS_HOME="$ROOT/corpus/iface/_home" \
-        "$ROOT/src/metisc" --evaluate "$f" --brute ) > "$WORK/br_$name.txt"
-    grep '^V .* = ' "$WORK/ev_$name.txt" | sed 's/ worlds .*//' > "$WORK/ev_$name.v"
-    sed 's/ worlds .*//' "$WORK/br_$name.txt" | grep -F -x -f "$WORK/ev_$name.v" \
-      > "$WORK/br_$name.v" || true
-    cmp -s "$WORK/ev_$name.v" "$WORK/br_$name.v" \
-      || { echo "evaluate: $name: --evaluate and --brute differ"; \
-           diff "$WORK/ev_$name.v" "$WORK/br_$name.v"; exit 1; }
+        "$ROOT/src/metisc" --evaluate "$1" --brute ) > "$WORK/br_$2.txt"
+    grep '^V .* = ' "$WORK/ev_$2.txt" | sed 's/ worlds .*//' > "$WORK/ev_$2.v"
+    sed 's/ worlds .*//' "$WORK/br_$2.txt" | grep -F -x -f "$WORK/ev_$2.v" \
+      > "$WORK/br_$2.v" || true
+    cmp -s "$WORK/ev_$2.v" "$WORK/br_$2.v" \
+      || { echo "evaluate: $1: --evaluate and --brute differ"; \
+           diff "$WORK/ev_$2.v" "$WORK/br_$2.v"; exit 1; }
   fi
   n_ev=$((n_ev + 1))
+}
+for f in $(cd "$ROOT/corpus/evaluate" && grep -l '^#evaluate' *.llp | sort); do
+  ev_check "$f" "${f%.llp}"
+done
+n_case=0
+for c in $(cd "$ROOT/corpus/evaluate" && find . -path '*/cases/*.yaml' | sed 's#^\./##' | sort); do
+  ev_check "$c" "$(basename "$c" .yaml)"
+  n_case=$((n_case + 1))
 done
 n_gold=$(ls "$ROOT/corpus/goldens/evaluate" | wc -l)
-[ "$n_ev" -gt 0 ] && [ "$n_ev" -eq "$n_gold" ] \
-    || { echo "evaluate: $n_ev fixtures, $n_gold goldens"; exit 1; }
-echo "EVALUATE $n_ev/$n_gold"
+n_names=$( (cd "$ROOT/corpus/evaluate" && grep -l '^#evaluate' *.llp | sed 's/\.llp$//'; \
+            find . -path '*/cases/*.yaml' -exec basename {} .yaml \;) | sort -u | wc -l)
+[ "$n_ev" -gt 0 ] && [ "$n_names" -eq "$n_gold" ] \
+    || { echo "evaluate: $n_names fixtures, $n_gold goldens"; exit 1; }
+echo "EVALUATE $n_ev/$n_ev ($n_case case YAMLs, $n_gold goldens)"
 
 echo "ALL GATES GREEN"

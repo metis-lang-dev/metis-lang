@@ -1,0 +1,6 @@
+N belief-read carry on
+N belief-read eat on
+N belief-read done on
+V lose risk gone(_) within 8 = 31/60 ~ 0.51666666666666672 worlds 3 states 70
+V win reach solved within 14 = 0/1 ~ 0 worlds 3 states 220
+rc 0

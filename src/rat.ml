@@ -268,11 +268,13 @@ let of_decimal s =
           else make digits (npow10 (- e)))
   | _ -> None
 
+(* spec/16 §6.4: the shortest of %.15g, %.16g, %.17g that round-trips to
+   the same binary64 — Python's repr *)
 let shortest x =
   let rec go p =
     let s = Printf.sprintf "%.*g" p x in
     if p >= 17 || float_of_string s = x then s else go (p + 1) in
-  go 1
+  go 15
 
 let of_float x =
   if not (Float.is_finite x) || x < 0.0 then None

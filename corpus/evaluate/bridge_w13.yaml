@@ -1,0 +1,6 @@
+# the manifest of bridge_w13 (spec16 step 2b): bridge_w13.llp's directives as fields
+program: bridge_w13.llp
+beliefs:
+  torch: {port: lamp, one: S}
+evaluate:
+  solved: {reach: solved, within: 20}

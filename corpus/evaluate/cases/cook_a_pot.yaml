@@ -1,0 +1,6 @@
+# the case of cook_a_pot (spec16 step 2b): cook_a_pot.llp's directives as fields
+manifest: ../cook_a_pot.yaml
+init: [calm(cook_a), hand_free, pot_space 3]
+ports:
+  granted: 0.6
+  ordered: 0.8

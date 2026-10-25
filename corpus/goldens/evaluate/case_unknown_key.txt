@@ -1,0 +1,2 @@
+error: cases/case_unknown_key.yaml: unknown key boundaries (case, manifest, init, ports, evaluate, expect)
+rc 1

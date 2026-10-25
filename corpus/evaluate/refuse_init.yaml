@@ -1,0 +1,6 @@
+# the manifest of refuse_init (spec16 step 2b): refuse_init.llp's directives as fields
+program: refuse_init.llp
+beliefs:
+  on: {port: where, one: A}
+evaluate:
+  lose: {risk: gone(_), within: 4}

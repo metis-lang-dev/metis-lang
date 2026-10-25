@@ -1,0 +1,7 @@
+# the case of bridge_w14 (spec16 step 2b): bridge_w14.llp's directives as fields
+manifest: ../bridge_w14.yaml
+init: [pos(a,near), pos(b,near), pos(c,near), pos(d,near), wick 14, tally]
+ports:
+  lamp:
+    lamp(near): 0.9
+    lamp(far): 0.1

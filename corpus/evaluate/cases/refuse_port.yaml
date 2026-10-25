@@ -1,0 +1,5 @@
+# the case of refuse_port (spec16 step 2b): refuse_port.llp's directives as fields
+manifest: ../refuse_port.yaml
+init: [farmer(near), boat, tally]
+ports:
+  seen: 0.5

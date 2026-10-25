@@ -1,0 +1,7 @@
+# spec16 step 2b: a LONE belief — the goat may be on neither bank (gone before the story starts): 0.1 left over
+program: wgc_bank.llp
+beliefs:
+  on: {port: where, lone: A}         # at most one bank per item; the residual is the world with none
+evaluate:
+  lose: {risk: gone(_), within: 8}
+  win: {reach: solved, within: 14}

@@ -186,6 +186,20 @@ evaluate:
   table form for a port with arguments, `ports: {look: {look(target, p0): 0.6, look(target, p1): 0.4}}`, plus
   `expect: {fetch: 0.37…}`. A constant (`look: 1.0`) binds every argument tuple, as today. Each value is a
   number, and an argument tuple the port cannot take is refused.
+- **The case YAML (step 2b).** A case file holds `init:`, `ports:`, `evaluate:` (queries added after the
+  manifest's) and `expect:`, plus `manifest:` and an optional `case:` name. Any other key is refused (the
+  stub's `boundaries:` included).
+  - **The manifest** holds `program:`, `beliefs:`, `levels:` and `evaluate:`, and the instrument ignores its
+    other fields. It is found as the case's `manifest:`, else `domain.yaml` in the parent of a `cases/`
+    directory (a package's own cases), else `domain.yaml` beside the case.
+  - **`init:`** is a flow list of atoms, `atom` or `atom n`.
+  - **`ports:`** maps a port to a number, or to a table `atom: number` whose atoms are that port's own
+    argument tuples. A list is a `port-function` refusal.
+  - Both files are read by metisc's YAML subset: `key: value` lines and flow lists and maps (spec 15's
+    reader), plus block MAPPINGS by indentation. Block lists (`- x`) are refused. An atom's parentheses hold
+    its commas in a flow value (`{look(target, p0): 0.6}`), and spaces inside an atom are formatting, as in a
+    directive.
+  - A case and its embedded form give the same directives, so the same listing, byte for byte (gate 14).
 
 ## 6. The instrument: one-tick semantics (normative)
 
@@ -244,8 +258,14 @@ The normative value is a RATIONAL:
   shortest round-trip representation: a rule weight as `strtod` parsed it (spec 00 §7), a host's float
   binding, a case's literal. So 0.7 enters as 7/10, and a distribution written 0.7, 0.3 sums to exactly 1.
   The binary64's own exact value (0.6999999999999999555…) would not, and no `one` group written in decimals
-  would pass §2's check. (Step 2's finding; the draft said "the exact value of its binary64".) metispy's
-  form is `Fraction(repr(x))`;
+  would pass §2's check. (Step 2's finding, ruled; the draft said "the exact value of its binary64".)
+  - **The algorithm, normative in both toolchains:** the first of `%.15g`, `%.16g`, `%.17g` whose string
+    parses back to the same binary64, read as an exact decimal. That is Python's `repr`, so metispy's form
+    is `Fraction(repr(x))`. (A decimal with fewer than 15 significant digits that round-trips prints the
+    same under `%.15g`: a binary64's error is below half a unit in the 15th digit.)
+  - **The evidence** (metisc `src/rat.ml`, step 2b): Rat.of_float equals `Fraction(repr(x))` on 20,012
+    random binary64 bit patterns, and Rat's add, sub, mul, div, compare and correctly rounded to_float
+    equal `Fraction`'s on 300 random decimal pairs of up to 61 digits;
 - φ is an integer, and every product, normalisation and sum is exact.
 
 So the result does not depend on summation order, and the brute-force referee (§7) agrees to the last digit
@@ -279,8 +299,13 @@ X <name> expected <v> got <value>                      a failed `expect`
 - **Exit codes.** 0 when every `expect:` holds (`p/q` equal to the rational; a decimal equal to its
   binary64, or within the interval). 1 on a mismatch. 2 on a refusal, `refused <code>: <text>` on stderr:
   `belief-bwd` (a bwd pred as a belief), `belief-port`, `belief-init`, `belief-sum`, `port-unbound` (a
-  weight port the case does not bind), `port-value` (not a number, or above 1 under `~`), `level-type`.
-  `port-function` is not reachable from a case, whose bindings are tables; it is the host's refusal.
+  weight port the case does not bind), `port-unknown` (a port the program does not declare, or an argument
+  tuple of the wrong arity), `port-value` (negative, or above 1 under `~`), `level-type`, and
+  `port-function`.
+- **`port-function` is the stated host refusal.** A binding that computes (a host function, a plugin name, a
+  list) is §10's later extension. A case binds numbers or a table of them, so any other value is refused
+  with this code: `refused port-function: port where bound to compute.py:where: a binding that computes is
+  the host's function form (spec/16 §10, later); a case binds numbers or a table of them`.
 - **`--evaluate --brute`** is the referee: it draws every world up front and enumerates every event path of
   length ≤ h, with no merging, no deferred draw and no budget. Its `V` lines end `paths <n>`. It shares the
   step (spec 06 §4) with the instrument, so it referees R1–R4 and the cut, not the step semantics; those
@@ -408,9 +433,19 @@ step 2; the belief-read notes and the bwd refusal are required outputs.
   - absorption (R3), merging (R4), the canonical-order cut;
   - `--brute`, the `N`/`L`/`X` lines and the refusals.
 
-  R5 (the cone) is not built. The case form built is the embedded one (`#belief`, `#port`, `#evaluate`,
-  `#expect`, `#level` in an `.llp`). The manifest and case-YAML reader is not built in step 2; it reads into
-  the same directives.
+  R5 (the cone) is not built (later, ruled). Step 2 built the embedded case form (`#belief`, `#port`,
+  `#evaluate`, `#expect`, `#level` in an `.llp`).
+- **Step 2b (branch spec16-reader)** adds the case-YAML reader. `Evaluate.case_of_yaml` reads a case and its
+  manifest into the same directives, through `Iface.read_yaml_block` (spec 15's subset plus block mappings;
+  the composition reader stays strict, and its `yaml_block` refusal is unchanged).
+  - Every embedded fixture is also a case (`corpus/evaluate/<name>.yaml` the manifest,
+    `corpus/evaluate/cases/<name>.yaml` the case). Its listing equals the embedded golden byte for byte.
+  - Five case-only fixtures:
+    - `wgc_lone`, a `lone` belief: the goat on neither bank with 0.1, 3 worlds, lose = 31/60, `--brute`
+      equal;
+    - `cook/cases/served`, the `cases/` → `../domain.yaml` convention, with a query the case adds;
+    - `port_function`, `port_unknown`, and a refused case key.
+  - Gate 14: `EVALUATE 27/27 (16 case YAMLs, 16 goldens)`.
 - **The gate:** ci/check.sh gate 14, `EVALUATE 11/11`. Five fixtures with beliefs (wgc_bank, bridge_w15/14/13,
   cook_a_pot) and six refusals (`belief-bwd`, `belief-init`, `belief-port`, `belief-sum`, `port-unbound`,
   `level-type`). Each listing and exit code equals its golden, and every exact `V` line equals `--brute`'s,

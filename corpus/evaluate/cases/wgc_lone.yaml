@@ -1,0 +1,11 @@
+# spec16 step 2b: wgc_lone's case. Spaces inside an atom are formatting, as in an .llp directive.
+manifest: ../wgc_lone.yaml
+init: [farmer(near), boat, tally]
+ports:
+  where:
+    where(wolf, near): 1
+    where(goat, near): 0.6
+    where(goat, far): 0.3          # 0.1 on neither bank
+    where(cabbage, near): 1
+    where(wolf, far): 0
+    where(cabbage, far): 0

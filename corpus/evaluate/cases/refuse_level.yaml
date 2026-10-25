@@ -1,0 +1,5 @@
+# the case of refuse_level (spec16 step 2b): refuse_level.llp's directives as fields
+manifest: ../refuse_level.yaml
+init: [farmer(near), boat, tally]
+ports:
+  where: 0.5

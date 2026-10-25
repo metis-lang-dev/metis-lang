@@ -1,0 +1,4 @@
+# spec16 step 2b, a case-only error: a key the instrument's case does not have (the stub's boundaries:)
+manifest: ../wgc_bank.yaml
+init: [farmer(near), boat, tally]
+boundaries: [x]

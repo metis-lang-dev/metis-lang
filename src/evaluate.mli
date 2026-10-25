@@ -19,3 +19,11 @@ type result = {
    evaluate, expect, level) *)
 val run : Ast.catalog -> Catalog.t -> Compile.ports -> Ground.program
   -> init:(string * int) list -> string list list -> brute:bool -> result
+
+(* a case YAML and its manifest (spec/16 §5, §7), read into the
+   program's path, the init and the SAME directives the embedded form
+   gives: the manifest's beliefs:, levels: and evaluate:, the case's
+   init:, ports: (a number, or a table atom -> number), evaluate: and
+   expect:. The manifest is the case's `manifest:`, else domain.yaml in
+   the parent of a `cases/` directory, else beside the case. *)
+val case_of_yaml : string -> string * (string * int) list * string list list
