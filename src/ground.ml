@@ -81,6 +81,9 @@ let ground cat init_atoms =
                     vars = h.h_vars }
            | _ -> None)
          cat.k_entries) in
+  (* events accumulate newest-first (O(1) per event) and are reversed
+     once below: the order stays the normative one, without the
+     O(E^2) list append (eval-perf step 1b) *)
   let stages = ref (List.map (fun s -> (s, ref [])) cat.k_stages) in
   let links = ref [] in
   List.iter (fun (e : Catalog.entry) ->
@@ -88,34 +91,36 @@ let ground cat init_atoms =
       | Catalog.PSchema sc ->
         let cell = List.assoc sc.cs_stage !stages in
         List.iter (fun subst ->
-            cell := !cell @
-              [{ ev_name = ground_name sc.cs_name subst;
-                 ev_consume = multiset sc.cs_consume subst;
-                 ev_produce = multiset sc.cs_produce subst;
-                 ev_persist = multiset sc.cs_persist subst;
-                 ev_weight = sc.cs_weight;
-                 ev_pre = None; ev_post = None }])
+            cell :=
+              { ev_name = ground_name sc.cs_name subst;
+                ev_consume = multiset sc.cs_consume subst;
+                ev_produce = multiset sc.cs_produce subst;
+                ev_persist = multiset sc.cs_persist subst;
+                ev_weight = sc.cs_weight;
+                ev_pre = None; ev_post = None } :: !cell)
           (substitutions sc.cs_vars sc.cs_distinct sc.cs_guards
              cat.k_types horn)
       | Catalog.PLink ls ->
         List.iter (fun subst ->
-            links := !links @
-              [{ ev_name = ground_name ls.ls_name subst;
-                 ev_consume = multiset ls.ls_consume subst;
-                 ev_produce = multiset ls.ls_produce subst;
-                 ev_persist = multiset ls.ls_persist subst;
-                 ev_weight = 1.0;
-                 ev_pre = Some ls.ls_pre;
-                 ev_post = Some ls.ls_post }])
+            links :=
+              { ev_name = ground_name ls.ls_name subst;
+                ev_consume = multiset ls.ls_consume subst;
+                ev_produce = multiset ls.ls_produce subst;
+                ev_persist = multiset ls.ls_persist subst;
+                ev_weight = 1.0;
+                ev_pre = Some ls.ls_pre;
+                ev_post = Some ls.ls_post } :: !links)
           (substitutions ls.ls_vars ls.ls_distinct ls.ls_guards
              cat.k_types horn)
       | Catalog.PHorn _ -> ())
     cat.k_entries;
-  { stages = List.map (fun (s, cell) -> (s, !cell)) !stages;
-    links = !links;
+  { stages = List.map (fun (s, cell) -> (s, List.rev !cell)) !stages;
+    links = List.rev !links;
     init_stage = (match cat.k_stages with
         | s :: _ -> s | [] -> failwith "no stages");
     init = List.filter (fun (_, n) -> n > 0) init_atoms }
 
+(* rev_append, not (@): the stdlib append is not tail-recursive and
+   overflows the 8 MB stack at ~1M events (eval-perf step 1b) *)
 let events p =
-  List.concat_map snd p.stages @ p.links
+  List.rev_append (List.rev (List.concat_map snd p.stages)) p.links
