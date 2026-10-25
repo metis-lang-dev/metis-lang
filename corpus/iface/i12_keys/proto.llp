@@ -1,0 +1,5 @@
+% proto — the fixture's protocol module: declarations only.
+catalog proto 1.
+types (domain resource).
+namespace proto produce (dyn).
+pred tick__grant(domain, resource) : proto.

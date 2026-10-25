@@ -1,0 +1,10 @@
+catalog b 1.
+layers (dyn).
+stages (act).
+include "../capacity2.llp".
+include "../proto.llp".
+include "../iface_mini.llp".
+stage act {
+  %% b answers and commands the world.
+  reply [dyn] : ask(T) -o answer(T) * cmd(T).
+}

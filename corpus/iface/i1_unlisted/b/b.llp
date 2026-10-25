@@ -1,0 +1,12 @@
+catalog b 1.
+layers (dyn).
+stages (act).
+include "../capacity.llp".
+include "../proto.llp".
+include "../iface_mini.llp".
+namespace nb produce (dyn).
+pred note(thing) : nb.
+stage act {
+  %% b answers and commands the world.
+  reply [dyn] : ask(T) * note(T) -o answer(T) * cmd(T).
+}

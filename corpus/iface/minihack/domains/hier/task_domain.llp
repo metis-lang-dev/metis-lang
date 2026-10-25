@@ -1,0 +1,24 @@
+% task_domain — MiniHack's task: walk onto the goal, the specialists asked one goal at a time (semantic-world s-227b8e1b step 2, world/mh_hier.py): over roles, the level the host's map.
+catalog task_domain 1.
+provenance text "MiniHack's task: walk onto the goal, the specialists asked one goal at a time" "2026-10-25".
+layers (dyn).
+stages (act).
+types (cell).
+namespace task produce (dyn).
+pred reach(cell) : task.                   % the one way in: the person's REACH
+pred want(cell) : task.
+pred goto(cell) : task.
+pred reached(cell) : task.
+pred opened(cell) : task.
+pred cleared(cell) : task.
+pred refused(cell) : task.
+pred done : task.
+pred stuck(cell) : task.
+stage act {
+  %% I'll walk onto {G}.
+  go [dyn] : reach(G) -o want(G) * goto(G).
+  %% I am on {G}: done.
+  arrived [dyn] : want(G) * reached(G) -o done.
+  %% {X} was refused and I have no rule for it: I stop and ask.
+  stuck_on [dyn] : want(G) * refused(X) -o stuck(X).
+}

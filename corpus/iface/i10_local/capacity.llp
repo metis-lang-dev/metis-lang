@@ -1,0 +1,5 @@
+% capacity — the mini composition's types (spec/15 §6 fixture).
+catalog cap 1.
+type thing {t1 t2}.
+type domain {a b}.
+type resource {hand}.

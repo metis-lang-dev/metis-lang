@@ -1,0 +1,10 @@
+% iface_mini — the fixture's crossing vocabulary: declarations only.
+catalog iface_mini 1.
+types (thing).
+namespace mini produce (dyn).
+pred seen(thing) : mini.
+pred ask(thing) : mini.
+pred answer(thing) : mini.
+pred cmd(thing) : mini.
+pred tally(thing) : mini.
+pred more(thing) : mini.

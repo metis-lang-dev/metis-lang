@@ -1,0 +1,21 @@
+interface composition.yaml
+iface proto proto.llp 82aad75043727483f2a4a83f45ab5c07308bd79fbe2075f2cbc01e1115e0b08f
+iface iface_mini iface_mini.llp c1dba3f1197074506efba29cb738dad914a90db4d6a1545a7e482c5f283284e1
+capacity capacity.llp 07d8728f526cb5fe0952e3b98e4eeea3d7508bd75f9bd79d22e2ec8b583bdd85
+member d direct d/d.llp key aa35502edd193ca11a3eba397fe5c8ce4e5550e1ef5f0c30a8c2f289cc60295a ei 131a2ac24d1f733e76e8da766b497038835ae14480cc8c6056bcc61ea21c8200
+member a specialist a/a.llp key 8aed8795b89140496775f24bdf3d6965d5150aef7eb644686d4b3c7d701524e0 ei 1d6ec75e5f9c597c2b3e477ae1eff476137f41090c14fe5b4584a0f27c814b79
+member b specialist b/b.llp key 60791caafbc1ef4e516f6a39079bae7af2d92eda12fcf9bd67a79152597a9952 ei 2cb1cf99e969bd59fd2bc42e3c6902a046f03749c330996da0b8ec9c74a2184d
+package 21c3acc2a991c6ba31a9bd44a0e6ed2b5130283cabe87986fd154b8d4802df20
+cut 7
+  answer signal: out [b(o)] in [a(c)]
+  ask signal: out [a(o)] in [b(c)]
+  cmd reading: out [b(o)] in [world]
+  extra reading: out [a(o)] in []
+  hand resource: out [] in [] resource [a]
+  seen signal: out [world] in [a(c)]
+  tick__grant reading: out [d(o)] in []
+private d=3 a=0 b=0
+error I10 a: shared extra is declared by a itself (a/a.llp), not by an interface package
+note smell ask/answer between a and b: a call/return pair no world port or d reads
+result 1 error(s), 0 warning(s), 1 note(s)
+rc 1

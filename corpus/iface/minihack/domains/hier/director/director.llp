@@ -1,0 +1,59 @@
+% director — the director over MiniHack's hierarchy, installed for the agent (world/mh_hier.py).
+catalog director 1.
+provenance text "generated: the director over nav/act/task" "2026-10-25".
+include "../../director_tree_domain.llp".
+type domain {nav act task}.
+type kind {cleared closed done fight goto guarded open opened reach reached refused stuck}.
+
+specialist(nav).
+specialist(act).
+planner(task).
+handles(nav, goto).
+handles(act, open).
+handles(act, fight).
+handles(task, reach).
+handles(task, reached).
+handles(task, opened).
+handles(task, cleared).
+handles(task, refused).
+result(reached).
+result(opened).
+result(cleared).
+end(stuck).
+finished(done).
+detour(closed, open).
+detour(guarded, fight).
+escalate(closed, refused).
+escalate(guarded, refused).
+rename(closed, open, open).
+rename(guarded, fight, fight).
+rename(closed, refused, refused).
+rename(guarded, refused, refused).
+
+type resource {motion}.
+mature_grant(a1).
+mature_grant(a2).
+mature_grant(a3).
+young_grant(a0).
+mature_status(a1).
+mature_status(a2).
+mature_status(a3).
+
+#init active(task) 1
+#init attention(task) 1
+#init fresh 1
+#init inactive(nav) 1
+#init inactive(act) 1
+#init free(motion) 1
+#init path(task) 1
+#init offpath(nav) 1
+#init offpath(act) 1
+#init nowant(nav) 1
+#init nowant(act) 1
+#init nolate(nav) 1
+#init nolate(act) 1
+#init age_of(nav,a0) 1
+#init age_of(act,a0) 1
+#init age_of(task,a0) 1
+#steps 6
+#seeds 1

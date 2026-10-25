@@ -197,4 +197,25 @@ n_gold=$(ls "$ROOT/corpus/goldens/catalog_wires" | wc -l)
     || { echo "product wires: $n_wires checked, $n_gold goldens"; exit 1; }
 echo "PRODUCT WIRES $n_wires/$n_gold"
 
+echo "== 13. interface check (spec 15 §6): metisc --interface == goldens, every composition"
+# corpus/iface/<case>/…/composition.yaml: the alfworld and minihack tree
+# installs (metis-worlds specialist-tree-2 8d172fe, nina's gen_hier /
+# mh_hier) and one deliberately broken composition per check; the
+# listing (stdout and stderr) and the exit code, from corpus/iface so
+# every path in it is relative
+n_if=0
+for comp in $(cd "$ROOT/corpus/iface" && find . -name composition.yaml | sed 's#^\./##' | sort); do
+  name=${comp%%/*}
+  rc=0
+  ( cd "$ROOT/corpus/iface" && "$ROOT/src/metisc" --interface "$comp" ) \
+      > "$WORK/iface_$name.txt" 2>&1 || rc=$?
+  echo "rc $rc" >> "$WORK/iface_$name.txt"
+  diff -u "$ROOT/corpus/goldens/iface/$name.txt" "$WORK/iface_$name.txt"
+  n_if=$((n_if + 1))
+done
+n_gold=$(ls "$ROOT/corpus/goldens/iface" | wc -l)
+[ "$n_if" -gt 0 ] && [ "$n_if" -eq "$n_gold" ] \
+    || { echo "interface: $n_if compositions, $n_gold goldens"; exit 1; }
+echo "INTERFACE $n_if/$n_gold"
+
 echo "ALL GATES GREEN"

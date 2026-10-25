@@ -393,6 +393,14 @@ let () =
   | [_; "--roundtrip"; manifest] -> drive manifest roundtrip_case
   | [_; "--sample"; manifest] -> drive manifest sample_case
   | [_; "--run"; llp] -> run_file llp
+  | [_; "--interface"; comp] ->
+    (* spec/15 §6: the listing on stdout; exit 0 clean, 1 on errors *)
+    (match Iface.run comp with
+     | (lines, errors) ->
+       List.iter print_endline lines;
+       exit (if errors > 0 then 1 else 0)
+     | exception Iface.Yaml_error m ->
+       prerr_endline ("error: " ^ m); exit 1)
   | [_; "--diag-registry"] ->
     (* code severity migrated|pending — diffed by metispy so the two
        registries cannot drift *)

@@ -1,0 +1,4 @@
+# a
+program: a.llp
+shared: {seen: in, ask: out, answer: in, hand: resource, extra: out}
+status: {success: [ask], failure: []}

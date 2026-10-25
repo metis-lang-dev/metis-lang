@@ -1,0 +1,76 @@
+interface composition.yaml
+iface protocol_domain ../protocol_domain.llp 08bb3a3a492a44d674e7303520a1fd592173dd03c341b2fb793ade9d1671a0ac
+capacity capacity.llp f07d764186e208ce11e3ea7febf40d00b43883bd59e7b27cd1d85fe78ec77f08
+member director direct director/director.llp key c8c6f8b6b1b1e50e304f182ced60934d4aa14a64b4c8c22059b6b73d0affeaeb ei 2ab7b898fa75175b136c7bb065f7c9ac95d8c7acf23f446c754e11f3d46c6d96
+member task specialist task/task.llp key 6575d0361e859eaeb6cef860c873d5fca3100c63ed55a4d5f7fe9c2f9a5cd570 ei 9f2d70d9fab8c24f2cfd1821508de4c597f1e6063fa11403cffdeb776580c3f3
+member nav specialist nav/nav.llp key 3751d9dda0bbef080c3d01ce22ccf6e4ada34ab3a450fc77fd99ad5dc4258e51 ei 3069ec5f2ed306a8b106795c7d502e525dd69739eb0b73033a7020348793e1ba
+member access specialist access/access.llp key 19e76c6404e1c51bb6a7c25100abfb6b21892c4777575b7294211b40f8b0e32c ei cce0ca4360ff9458656fa8c6f1ee31618c81e052fc4f4fafa55778259d01cdcd
+member grasp specialist grasp/grasp.llp key 83520ee0be9986495aa995e283f1249d30d1236c788812284eb074d2de7a321c ei 5ac80fec2fc0ac8bfee49fb37b972ce8e07043ffa41f1d32b3d745fd95b0f109
+member place specialist place/place.llp key d30896ac8d50fcd971a2108078e2f5c32893ae539c79a0321cffcf802af19d71 ei 5d322f2113a52bdddb630543593bc181313ab086c795d9a76d63a3f7877f1018
+package 9899eb30c6d420c34148f013c29eeb79e40bf57bc30d06ead679d81e2adf77ad
+cut 23
+  accessible signal: out [access(o)] in [task(c)]
+  done reading: out [task(o)] in []
+  elsewhere reading: out [access(o) grasp(o) place(o)] in []
+  fetch signal: out [world] in [task(c)]
+  goto signal: out [task(o) director(o)] in [nav(c) world]
+  motion resource: out [] in [] resource [nav access grasp place]
+  open signal: out [task(o)] in [access(c) world]
+  placed signal: out [place(o)] in [task(c)]
+  put signal: out [task(o)] in [place(c) world]
+  reached signal: out [nav(o)] in [task(c)]
+  refused signal: out [access grasp(o) place(o) director(o)] in [task(c)]
+  stuck reading: out [task(o)] in []
+  take signal: out [task(o)] in [grasp(c) world]
+  taken signal: out [grasp(o)] in [task(c)]
+  tick__active reading: out [] in [director]
+  tick__done reading: out [] in [director]
+  tick__goal state: out [director(co)] in []
+  tick__grant reading: out [director(o)] in []
+  tick__revoke reading: out [director(o)] in []
+  tick__status reading: out [] in [director]
+  tick__stuck reading: out [] in [director]
+  wrong_dest reading: out [task(o)] in []
+  wrong_object reading: out [task(o)] in []
+private director=27 task=9 nav=2 access=7 grasp=11 place=11
+error I2 access: out refused is produced by no rule (roles -)
+error I3 director: in tick__active has no producer (no member's out, not world.out, not produced by director)
+error I3 director: in tick__done has no producer (no member's out, not world.out, not produced by director)
+error I3 director: in tick__stuck has no producer (no member's out, not world.out, not produced by director)
+error I6 refused has several signatures: refused(receptacle) in access, refused(object) in grasp, refused(receptacle) in place, refused(thing) in task
+error I10 task: shared fetch is declared by task itself (task_domain.llp), not by an interface package
+error I10 task: shared reached is declared by task itself (task_domain.llp), not by an interface package
+error I10 task: shared accessible is declared by task itself (task_domain.llp), not by an interface package
+error I10 task: shared taken is declared by task itself (task_domain.llp), not by an interface package
+error I10 task: shared placed is declared by task itself (task_domain.llp), not by an interface package
+error I10 task: shared refused is declared by task itself (task_domain.llp), not by an interface package
+error I10 task: shared goto is declared by task itself (task_domain.llp), not by an interface package
+error I10 task: shared open is declared by task itself (task_domain.llp), not by an interface package
+error I10 task: shared take is declared by task itself (task_domain.llp), not by an interface package
+error I10 task: shared put is declared by task itself (task_domain.llp), not by an interface package
+error I10 task: shared done is declared by task itself (task_domain.llp), not by an interface package
+error I10 task: shared stuck is declared by task itself (task_domain.llp), not by an interface package
+error I10 task: shared wrong_dest is declared by task itself (task_domain.llp), not by an interface package
+error I10 task: shared wrong_object is declared by task itself (task_domain.llp), not by an interface package
+error I10 nav: shared goto is declared by nav itself (nav_domain.llp), not by an interface package
+error I10 nav: shared reached is declared by nav itself (nav_domain.llp), not by an interface package
+error I10 access: shared open is declared by access itself (access_domain.llp), not by an interface package
+error I10 access: shared accessible is declared by access itself (access_domain.llp), not by an interface package
+error I10 access: shared refused is declared by access itself (access_domain.llp), not by an interface package
+error I10 access: shared elsewhere is declared by access itself (access_domain.llp), not by an interface package
+error I10 grasp: shared take is declared by grasp itself (grasp_domain.llp), not by an interface package
+error I10 grasp: shared taken is declared by grasp itself (grasp_domain.llp), not by an interface package
+error I10 grasp: shared refused is declared by grasp itself (grasp_domain.llp), not by an interface package
+error I10 grasp: shared elsewhere is declared by grasp itself (grasp_domain.llp), not by an interface package
+error I10 place: shared put is declared by place itself (place_domain.llp), not by an interface package
+error I10 place: shared placed is declared by place itself (place_domain.llp), not by an interface package
+error I10 place: shared refused is declared by place itself (place_domain.llp), not by an interface package
+error I10 place: shared elsewhere is declared by place itself (place_domain.llp), not by an interface package
+warning I2 director: in tick__status is read by no rule (in-unread)
+warning I2 director: in tick__active is read by no rule (in-unread)
+warning I2 director: in tick__done is read by no rule (in-unread)
+warning I2 director: in tick__stuck is read by no rule (in-unread)
+warning I4 director: rule path_off consumes its out tick__goal without producing it (a state pred is conserved per rule)
+note I11 interface package protocol_domain declares no natures: I11 not run
+result 33 error(s), 5 warning(s), 1 note(s)
+rc 1

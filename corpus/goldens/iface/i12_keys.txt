@@ -1,0 +1,23 @@
+interface composition.yaml
+iface proto proto.llp 82aad75043727483f2a4a83f45ab5c07308bd79fbe2075f2cbc01e1115e0b08f
+iface iface_mini iface_mini.llp c1dba3f1197074506efba29cb738dad914a90db4d6a1545a7e482c5f283284e1
+capacity capacity.llp 07d8728f526cb5fe0952e3b98e4eeea3d7508bd75f9bd79d22e2ec8b583bdd85
+member d direct d/d.llp key aa35502edd193ca11a3eba397fe5c8ce4e5550e1ef5f0c30a8c2f289cc60295a ei 131a2ac24d1f733e76e8da766b497038835ae14480cc8c6056bcc61ea21c8200
+member a specialist a/a.llp key e4b386f1b143077baeb3ec3b15083e0e76a26e242befb97d928c1e5e412bf9d1 ei bb9d4ea55b038e2e7deec8e48dd939ab086bad06bd72c17d6ed93aaeb3399876
+member b specialist b/b.llp key 167d9e11efa093023ce8c9c220ab0412de271a6e8e5e8d93f4f95498e21060ac ei e3ec1bdcb98505df3ee2c0130ab4378f6444ca4735c006e5e9b18975262698e9
+package 113157db6c8eecb413680f7a55cc71a15bc9a885b11ad963bd8857042e355e1e
+cut 6
+  answer signal: out [b(o)] in [a(c)]
+  ask signal: out [a(o)] in [b(c)]
+  cmd reading: out [b(o)] in [world]
+  hand resource: out [] in [] resource [a]
+  seen signal: out [world] in [a(c)]
+  tick__grant reading: out [d(o)] in []
+private d=3 a=0 b=3
+error I10 b: shared ask belongs to iface_mini, which b does not include
+error I10 b: shared answer belongs to iface_mini, which b does not include
+error I10 b: shared cmd belongs to iface_mini, which b does not include
+error I12 b: its iface_mini has a key other than the bundle's
+note smell ask/answer between a and b: a call/return pair no world port or d reads
+result 4 error(s), 0 warning(s), 1 note(s)
+rc 1

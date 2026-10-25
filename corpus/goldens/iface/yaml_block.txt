@@ -1,0 +1,2 @@
+error: yaml_block/composition.yaml:3: specialists: an empty value (block YAML is not read here)
+rc 1

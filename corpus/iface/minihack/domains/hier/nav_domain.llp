@@ -1,0 +1,30 @@
+% nav_domain — MiniHack's navigator: the host's path, one step a beat (semantic-world s-227b8e1b step 2, world/mh_hier.py): over roles, the level the host's map.
+catalog nav_domain 1.
+provenance text "MiniHack's navigator: the host's path, one step a beat" "2026-10-25".
+layers (dyn).
+stages (act).
+types (cell beast).
+type dir {n e s w ne se sw nw}.
+type doorstate {open closed}.
+namespace nav produce (dyn).
+pred agent_at(cell) : nav.
+pred step(cell) : nav.                     % the host's: the cell can be stepped on now (floor or an open door, no beast)
+pred door(cell, doorstate) : nav.
+pred monster(beast, cell) : nav.
+pred stairs_down(cell) : nav.              % the host's map: the stairs, under the robot too
+pred next(cell, dir, cell) : nav.        % the host's: between bound cells, on the live session
+pred toward(cell) : nav.                   % the host's: the next cell of its path
+pred goto(cell) : nav.
+pred reached(cell) : nav.
+pred closed(cell) : nav.
+pred guarded(cell) : nav.
+stage act {
+  %% I am on {G}.
+  arrive [dyn] : goto(G) * $agent_at(G) * $stairs_down(G) -o reached(G).   % a frontier goal is no arrival: the host rebinds it
+  %% I step {D}, to {P}.
+  move [dyn] : agent_at(C) * $next(C, D, P) * $toward(P) * $step(P) -o agent_at(P).   % awake only with a goal (the director)
+  %% The door {D} is closed.
+  shut [dyn] : goto(goal) * $agent_at(C) * $next(C, D, P) * $toward(P) * $door(P, closed) -o closed(P).   % the host's goal: its route's end
+  %% {B} is in my way, {D}.
+  in_way [dyn] : goto(goal) * $agent_at(C) * $next(C, D, P) * $toward(P) * $monster(B, P) -o guarded(P).
+}

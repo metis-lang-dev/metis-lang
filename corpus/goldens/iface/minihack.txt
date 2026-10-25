@@ -1,0 +1,61 @@
+interface composition.yaml
+iface protocol_domain ../protocol_domain.llp 08bb3a3a492a44d674e7303520a1fd592173dd03c341b2fb793ade9d1671a0ac
+capacity capacity.llp 154af6234d85acb6901f7a8a7bbc108fd9132725007314b4aec9ccd90436c61c
+member director direct director/director.llp key f394b6f9e4df7fcf3cf213be87ccfe3d3cba751da9da543c21c0fd13543a1af6 ei 2ab7b898fa75175b136c7bb065f7c9ac95d8c7acf23f446c754e11f3d46c6d96
+member task specialist task/task.llp key deb4a32072a7e392e9eda8d093edf3b6af615f3562e5a39ca2a9116095fc83bf ei 4f1fd66d934eac8109cb9ea22df2ea40f2cb8d6182cc6087ad2227c23a981df5
+member nav specialist nav/nav.llp key 3876a7eaada8c620224607fe3ae5f148a65044383634faf413616d0d04d9c798 ei 90549f8d5ed9216a5823b8ab3490ea582803def2d2a049b2b38b8474a40b5b2c
+member act specialist act/act.llp key 268a52d665187907126f1643cba348ca33a9444947dd7d874dd4a67e0210e6ab ei ed26e356ccd1d3b6d981abdc63f7383ef449218a67b9aee4e42818bb872ea2ca
+package 1a5879a696215f757c0f386218feb17121bdaa1222350b344a4407ac8a4de054
+cut 20
+  cleared reading: out [act(o)] in [task]
+  closed reading: out [nav(o)] in []
+  done reading: out [task(o)] in []
+  fight signal: out [director(o)] in [act(co) world]
+  goto signal: out [task(o)] in [nav(c) world]
+  guarded reading: out [nav(o)] in []
+  motion resource: out [] in [] resource [nav act]
+  open signal: out [director(o)] in [act(c) world]
+  opened reading: out [act(o)] in [task]
+  reach signal: out [world] in [task(c)]
+  reached signal: out [nav(o)] in [task(c)]
+  refused signal: out [act director(o)] in [task(c)]
+  stuck reading: out [task(o)] in []
+  tick__active reading: out [] in [director]
+  tick__done reading: out [] in [director]
+  tick__goal state: out [director(co)] in []
+  tick__grant reading: out [director(o)] in []
+  tick__revoke reading: out [director(o)] in []
+  tick__status reading: out [] in [director]
+  tick__stuck reading: out [] in [director]
+private director=27 task=1 nav=7 act=9
+error I2 act: out refused is produced by no rule (roles -)
+error I3 director: in tick__active has no producer (no member's out, not world.out, not produced by director)
+error I3 director: in tick__done has no producer (no member's out, not world.out, not produced by director)
+error I3 director: in tick__stuck has no producer (no member's out, not world.out, not produced by director)
+error I10 task: shared reach is declared by task itself (task_domain.llp), not by an interface package
+error I10 task: shared reached is declared by task itself (task_domain.llp), not by an interface package
+error I10 task: shared opened is declared by task itself (task_domain.llp), not by an interface package
+error I10 task: shared cleared is declared by task itself (task_domain.llp), not by an interface package
+error I10 task: shared refused is declared by task itself (task_domain.llp), not by an interface package
+error I10 task: shared goto is declared by task itself (task_domain.llp), not by an interface package
+error I10 task: shared done is declared by task itself (task_domain.llp), not by an interface package
+error I10 task: shared stuck is declared by task itself (task_domain.llp), not by an interface package
+error I10 nav: shared goto is declared by nav itself (nav_domain.llp), not by an interface package
+error I10 nav: shared reached is declared by nav itself (nav_domain.llp), not by an interface package
+error I10 nav: shared closed is declared by nav itself (nav_domain.llp), not by an interface package
+error I10 nav: shared guarded is declared by nav itself (nav_domain.llp), not by an interface package
+error I10 act: shared open is declared by act itself (act_domain.llp), not by an interface package
+error I10 act: shared fight is declared by act itself (act_domain.llp), not by an interface package
+error I10 act: shared opened is declared by act itself (act_domain.llp), not by an interface package
+error I10 act: shared cleared is declared by act itself (act_domain.llp), not by an interface package
+error I10 act: shared refused is declared by act itself (act_domain.llp), not by an interface package
+warning I2 task: in opened is read by no rule (in-unread)
+warning I2 task: in cleared is read by no rule (in-unread)
+warning I2 director: in tick__status is read by no rule (in-unread)
+warning I2 director: in tick__active is read by no rule (in-unread)
+warning I2 director: in tick__done is read by no rule (in-unread)
+warning I2 director: in tick__stuck is read by no rule (in-unread)
+warning I4 director: rule path_off consumes its out tick__goal without producing it (a state pred is conserved per rule)
+note I11 interface package protocol_domain declares no natures: I11 not run
+result 21 error(s), 7 warning(s), 1 note(s)
+rc 1

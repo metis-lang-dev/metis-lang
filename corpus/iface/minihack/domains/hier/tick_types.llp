@@ -1,0 +1,4 @@
+% tick_types — the composition's specialists and resources (specialist-tree step 2; world/mh_hier.py).
+catalog tick_types 1.
+type domain {task nav act}.
+type resource {motion}.

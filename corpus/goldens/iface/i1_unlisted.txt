@@ -1,0 +1,22 @@
+interface composition.yaml
+iface proto proto.llp 82aad75043727483f2a4a83f45ab5c07308bd79fbe2075f2cbc01e1115e0b08f
+iface iface_mini iface_mini.llp c1dba3f1197074506efba29cb738dad914a90db4d6a1545a7e482c5f283284e1
+capacity capacity.llp 07d8728f526cb5fe0952e3b98e4eeea3d7508bd75f9bd79d22e2ec8b583bdd85
+member d direct d/d.llp key aa35502edd193ca11a3eba397fe5c8ce4e5550e1ef5f0c30a8c2f289cc60295a ei 131a2ac24d1f733e76e8da766b497038835ae14480cc8c6056bcc61ea21c8200
+member a specialist a/a.llp key dc7e6a8b4324af2bdf3a2918023bea61c18e10736011158efd225957b51206d7 ei 9d1a113588b9a459553195de838c35661be04af47ed40824393109349e634951
+member b specialist b/b.llp key 018873fdd2b84e210c63029eb3fb11498bf8bc467fb0880b062608704a7bb961 ei 2cb1cf99e969bd59fd2bc42e3c6902a046f03749c330996da0b8ec9c74a2184d
+package 6dc0c069a45fbec7fcc5926757356fca168eceb9ad93b4336b6c20a6b7335a80
+cut 7
+  answer signal: out [b(o)] in [a(c)]
+  ask signal: out [a(o)] in [b(c)]
+  cmd reading: out [b(o)] in [world]
+  hand resource: out [] in [] resource [a]
+  note reading: out [a(o)] in []
+  seen signal: out [world] in [a(c)]
+  tick__grant reading: out [d(o)] in []
+private d=3 a=0 b=1
+error I1 b: declares note without listing it; shared by a
+error I10 a: shared note is declared by a itself (a/a.llp), not by an interface package
+note smell ask/answer between a and b: a call/return pair no world port or d reads
+result 2 error(s), 0 warning(s), 1 note(s)
+rc 1

@@ -1,0 +1,14 @@
+catalog a 1.
+layers (dyn).
+stages (act).
+include "../capacity.llp".
+include "../proto.llp".
+include "../iface_mini.llp".
+namespace na produce (dyn).
+pred my__x(thing) : na.
+stage act {
+  %% a sees a thing and asks about it.
+  look [dyn] : seen(T) -o ask(T).
+  %% a takes the answer.
+  take [dyn] : answer(T) -o my__x(T).
+}
