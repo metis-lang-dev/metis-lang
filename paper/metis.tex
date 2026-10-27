@@ -340,6 +340,59 @@ runs; \textbf{measure} --- $\mu_K$, with filtering, smoothing, MAP,
 hypothesis posteriors and surprise as queries. Nothing is layered on top
 of anything: all three are readouts of $P$.
 
+\subsection{Interfaces, packages, compositions}\label{sec:packages}
+
+How is a large behavior written? Not as one program. A robot's
+navigation, grasping and task logic are separate \emph{specialists},
+each a program of its own, and a \emph{director} that hands goals down
+and reads reports up. The language keeps them separate and fixes, in
+declarations, exactly what crosses between them.
+
+\paragraph{The forward declaration is small.} An \textbf{interface
+package} is a lifted file with only declarations: abstract types and
+predicates over them, no rules, no facts, no stages, with its own name
+and canonical key. Every predicate two programs share is declared
+\emph{once}, there, and carries a \emph{nature}: a \emph{signal} (a
+world reading or a crossing vocabulary --- $\mathit{goto}$,
+$\mathit{reached}$), a \emph{resource} (the hands, the position: held
+by the director, granted as a lease), or a \emph{report} (status, done,
+stuck). A specialist includes the interface packages it speaks and
+states its \emph{direction} on each predicate --- in, out, resource, or
+world-private --- and a static check refuses a direction the nature does
+not allow, a shared predicate declared locally, or two interfaces
+declaring one name.
+
+\paragraph{The package is the certified unit.} A \textbf{package} is a
+program with its manifest, its cases (an initial multiset, a script of
+deliveries, the expected atoms) and its goldens. Its certificate is the
+program's canonical key plus its cases passing against one
+\emph{generic} interface stub that knows, from the manifest alone, what
+to feed (the in-set), what to collect (the out-set), what to grant and
+how to score. A specialist's certificate therefore never depends on the
+director it will meet: the protocol it speaks is a declaration package
+with no rules.
+
+\paragraph{The shared atoms are the runtime's.} A \textbf{composition}
+is a set of packages over interface packages under a \emph{tick
+protocol}: inputs are taken at a tick boundary, outputs are latched to
+the next boundary, the relay between members is deterministic, and
+each member samples its own stream. Shared state crosses as a
+\emph{copy per port} at the boundary, never as a live shared truth: a
+linear-logic $\bang p$ readable by every rule and consumed by none would
+make a trigger that never latches and a slow member that sees a moving
+target. The composition's certificate is its package key, the verdict
+of the interface checks, and each member's own key in manifest order
+--- nothing composite is grounded, because the composite measure is a
+product the protocol determines (Proposition~\ref{prop:composite}).
+
+A \textbf{bundle} is a composition sealed for one device with a runtime
+manifest: which runtime executes each member, where it is placed, and
+which host library binds each of its ports, each library with its own
+key. A library upgrade changes the bundle's runtime key and not the
+composition's; a member may be replaced over the air iff it was
+certified against the same interface keys and the composition passes
+its checks again, which is a static and cheap test.
+
 \section{Run-level preservation}\label{sec:preservation}
 
 The denoted \textbf{$k$-step DBN} has variables $X@t$ (the event chosen
@@ -663,6 +716,46 @@ under adjacent transposition of independent events, hence constant on
 Mazurkiewicz classes --- is \stmech{} in abstract form
 (\S\ref{sec:mech}); the site/scope instantiation for the concrete
 emission remains on paper.
+
+
+\paragraph{The composite measure factorizes by the tick.} The same
+descent holds one level up, for a composition of packages
+(\S\ref{sec:packages}).
+
+\begin{proposition}[the composite measure is a product; \stproved{}]
+\label{prop:composite}
+Let a composition run under the tick protocol: (F1) within tick $t$ a
+beating member $d$ reads only its private state and the copies taken for
+it at boundary $t$; (F2) nothing $d$ emits at $t$ is visible to another
+member before boundary $t{+}1$; (F3) the copy, relay and grant transfer
+at a boundary is a deterministic function of the members' latched
+outputs and the world's readings; (F4) the members' random streams are
+disjoint. Then for every composite trace $\tau$,
+\[
+  P(\tau) \;=\; \prod_t \ \prod_{d \text{ beats at } t}
+  P_d\big(\text{steps of } d \text{ at } t \;\big|\; \mathit{state}_d(t)\big),
+\]
+where $\mathit{state}_d(t)$ is $d$'s private state with its boundary-$t$
+copies, fixed by $\tau$'s prefix through (F3), and each $P_d$ is the
+member's own run measure $\mu_K$ of \S\ref{sec:choice}.
+\end{proposition}
+
+\begin{proof}
+By (F1) and (F2), no member's \textsc{choice} within a tick depends on
+another member's \textsc{choice} in the same tick; by (F4) the draws are
+independent; by (F3) the state each member starts a tick from is a
+function of the prefix. The probability of the tick's joint step is
+therefore the product over beating members of their own one-tick
+measures, and the product over ticks follows by the chain rule.
+\end{proof}
+
+What the product does \emph{not} give is the flat program's measure:
+interleavings within a tick are not represented --- (F2) forbids them
+--- and a chain of three members takes two boundaries and shows as such.
+That is the price of certifying members alone, and it is paid in
+latency, not in semantics. Arbitration is the director's
+\textsc{choice} at its own beat, inside its own measure; the grant it
+emits reaches the holder at the next boundary.
 
 \section{Why no logic \texorpdfstring{$\leftrightarrow$}{<->} PGM
 isomorphism, and what quiescence really is}\label{sec:obstructions}
@@ -1150,6 +1243,69 @@ semantics} (EFD's nets), not only a data structure. To our knowledge no
 prior system compiles a staged stochastic multiset-rewriting language
 into proof-net-shaped factor graphs; EFD's own pipeline starts from
 BNs.
+
+\subsection{Evaluation: where the cost is, and what bounds it}
+\label{sec:evaluation}
+
+Where does a program's evaluation spend its time? In two stages that
+obey two different bounds, and it pays to keep them apart because only
+one of them is covered by the proof-net theory.
+
+\paragraph{Grounding is a join, before any net exists.} A rule $r$ has
+typed variables $x_1 \ldots x_n$ and guards $g_1 \ldots g_m$ (Horn
+premises). Its ground events are the substitutions for which every
+guard is derivable:
+\[
+  |\mathrm{ground}(r)| \;=\; \big|\{\theta \in \textstyle\prod_i \tau_i
+  : \forall j.\ \Sigma \vdash g_j\theta\}\big| \;\le\; \prod_i |\tau_i|,
+\]
+with equality exactly when no guard prunes. The bound is the program's,
+not the grounder's: a room of $c$ cells whose adjacency is a predicate
+rather than a table emits $32\,c^2$ events for four rules ($1.3$
+million at $c = 200$), and no grounder can emit fewer. Any grounder must
+at least read the facts its guards name and write its output,
+$\Omega(|\text{facts read}| + |\mathrm{ground}(r)|)$. \emph{Guard-first
+binding} reaches that bound for acyclic guard bodies: each variable's
+domain is filtered by every fact-table guard that names it as soon as
+it is bound, a semi-join per variable, so a prefix no row can complete is
+never extended. The alternative that answers a guard at its last
+variable is join-before-filter twice over --- the type product before the
+guard, the whole fact list before the constants --- and costs $c^3$
+against an output of $8c$. A guard body with a cycle (a triangle
+$e(X,Y) \tensor e(Y,Z) \tensor e(Z,X)$) is bounded instead by the
+fractional edge cover of its hypergraph (the AGM bound), and the
+compiler reports it so that the cost is never a surprise.
+
+\begin{center}\small
+\begin{tabular}{lrrr}
+\toprule
+cells (static form) & 200 & 450 & 840 \\
+\midrule
+guard at its last variable & $22$ s & $248$ s & $29$ min \\
+guard-first binding & $37$ ms & $94$ ms & $0.19$ s \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{Emission and inference are EFD's object.} Once grounded,
+the program's net exists, and from here the proof-net reading of
+\cite{EFD26} applies verbatim: a site is a box, an occurrence edge is a
+cut, the elimination order is a sequence of cut expansions, and exact
+inference costs $O(n \cdot 2^{W})$ in the induced width $W$ of
+\S\ref{sec:certs}. The two stages do not trade against each other.
+Every room-shaped program, whatever its size, emits the same net at a
+given horizon (the agent reaches the same cells), with a width far past
+exact inference; a program written over \emph{roles} --- $k$ places the
+cells are bound to --- has width $8$ at the same horizon. The width is
+chosen by the program, as the event count is; what the compiler
+chooses is only the order in which the program's own cost is paid.
+
+Grounding cost is not inference cost, but the event count prices
+everything downstream once: the load and memory of every runtime (about
+a microsecond and a few hundred bytes per event), and the size of each
+\textsc{choice} site's table in the net. A turn of the interpreter, by
+contrast, is bounded by the candidates weighed at that state, and an
+index by atom makes it independent of the program's size.
 
 \subsection{The factored emission and the \texttt{reads} contract}
 \label{sec:emission}
