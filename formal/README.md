@@ -10,6 +10,7 @@ marks **[mechanized]**.
 | `Formal/Spn.lean` | **Theorem 3** (equivalence onto the image), in full | `denote_congr` (invariance on congruence classes), `denote_readBack` + `wellFormed_readBack` + `denote_surjective` (surjectivity via an explicit fresh-naming section), `congr_of_denote_eq` (injectivity up to structural congruence on well-formed programs), `denote_eq_iff_congr` (the bijection) |
 | `Formal/Counting.lean` | **Theorem 1**, counting kernel | `card_instance` (instances of a clause at a marking are equinumerous with the mass-action count φ — token individuation forces the falling factorials), `pushforward_weight` (the instance→clause pushforward carries weight w·φ = W_r(m)) |
 | `Formal/Filter.lean` | **Theorem 2** (exact filtering) | `filterStep_eq_marginalStep`, `filter_eq_marginal` (the forward filter over the reachable support equals the DBN slice marginal) |
+| `Formal/Belief.lean` | **Theorem 5** (a port is a mixture), the cut bound, the sheet | `marginal_sum` (the forward filter is linear in its initial distribution), `hit_mixture` (the instrument started from the world mixture returns the mixture of the single-world answers, for any kernel, outcome and horizon — with `absorb` the first-passage number), `hit_cut_bounds` (a filter that sets states aside returns `lo ≤ exact ≤ lo + CUT` under a nonnegative stochastic kernel: the dropped mass is moved, never created or destroyed — `dropped_nonneg`, `dropped_total`), `Sheet.ok` decidable (a belief table's side conditions — masses nonnegative summing to one, cut points increasing in (0, 1) — closed by `norm_num` on concrete data: the form the compiler emits per package) |
 | `Formal/Trace.lean` | **Theorem 4**, descent skeleton | `weight_exec_swap` (adjacent transposition of independent events changes neither run weight nor final state), `traceEquiv_weight_eq` / `traceEquiv_exec_eq` (invariance on Mazurkiewicz trace classes) |
 
 Design principle, mirroring the compiler's: formalize the *content* of
@@ -19,8 +20,9 @@ lives, and leave the bookkeeping the implementation already pins
 Concretely: Theorem 3 is formalized in full (programs as name-carrying
 lists, the SPN class as multiset-valued tuples, congruence as a
 renaming injective on the program's names plus list permutations);
-Theorems 1, 2 and 4 are formalized at their combinatorial /
-measure-recursion cores, with the routine surrounding inductions and
+Theorem 5 and the cut bound are formalized in full at the level of
+Filter.lean (finite state space, rational masses); Theorems 1, 2 and 4
+are formalized at their combinatorial / measure-recursion cores, with the routine surrounding inductions and
 the concrete site/scope instantiation remaining on paper (see paper
 §Mechanization for the exact split).
 

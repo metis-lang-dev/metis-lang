@@ -252,7 +252,8 @@ This paper contributes, on the theory side:
   well-formedness half of the Di~Guardia typing question, whose
   compositional half remains Conjecture~\ref{conj:typing}.
 \item \textbf{Belief through a finite port} (Theorem~\ref{thm:mixture},
-  Proposition~\ref{prop:cells}, Corollary~\ref{cor:cert}, \stproved{}):
+  \stproved{}, \stmech{}; Proposition~\ref{prop:cells},
+  Corollary~\ref{cor:cert}, \stproved{}):
   a categorical belief bound to a port makes the one-tick number a
   mixture over initial multisets; with the belief entering through the
   presence draw alone the number is multilinear, so a finite cell sheet
@@ -1055,8 +1056,9 @@ aside, and the answer is an interval
   \mathit{hi} = \mathit{HIT} + \mathit{CUT},
 \]
 sound for first passage because the cut mass may or may not reach $Q$
-and nothing else can. A query is answered in bounded work at any
-horizon, and the width $\mathit{hi} - \mathit{lo}$ says how much the
+and nothing else can (\stmech{}: the dropped mass is moved by a
+stochastic kernel, never created or destroyed). A query is answered in
+bounded work at any horizon, and the width $\mathit{hi} - \mathit{lo}$ says how much the
 budget hid. With no cut, $\mathit{lo} = \mathit{hi}$ is the exact
 number --- an exact rational: every weight, port value and threshold
 enters as the exact decimal of its shortest round-trip representation,
@@ -1067,7 +1069,7 @@ construction.
 
 \subsection{What is proved}\label{sec:beliefthm}
 
-\begin{theorem}[a port is a mixture; \stproved{}]\label{thm:mixture}
+\begin{theorem}[a port is a mixture; \stproved{}, \stmech{}]\label{thm:mixture}
 Let $P$ be a ground program with belief groups $B$ bound by $f$, and let
 $\mu_w$ be the first-passage measure of $P$ started from
 $(s_0, m_0 \uplus w)$ under the frozen table $f$. For every query $Q$,
@@ -1567,6 +1569,34 @@ sites and declared scopes satisfy the two hypotheses (the paper's
 footprint-stability lemma) --- is exactly the \texttt{reads}-contract
 argument of Theorem~\ref{thm:trace} and remains on paper, pinned
 operationally by the emission's rejection gates.
+
+\paragraph{Theorem~\ref{thm:mixture} and the cut bound
+(\texttt{Formal/Belief.lean}).} Over the same finite state space and
+rational masses as \texttt{Filter.lean}: \texttt{marginal\_sum} proves
+the forward filter linear in its initial distribution, and
+\texttt{hit\_mixture} that the instrument started from the world
+mixture returns the mixture of the single-world answers for any kernel,
+outcome set and horizon --- with the absorbing kernel \texttt{absorb},
+the first-passage number of \S\ref{sec:instrument}.
+\texttt{hit\_cut\_bounds} proves the interval of \S\ref{sec:instrument}:
+a filter that sets states aside at each step returns $\mathit{lo} \le
+\text{exact} \le \mathit{lo} + \mathit{CUT}$ under a nonnegative
+stochastic kernel, through two invariants of the dropped part of the
+distribution --- it stays nonnegative (\texttt{dropped\_nonneg}) and
+its total is exactly the mass set aside (\texttt{dropped\_total}).
+Proposition~\ref{prop:cells} (multilinearity) remains on paper.
+
+\paragraph{What ``automated'' means.} A belief table's side
+conditions --- every group's masses nonnegative and summing to one, a
+level port's cut points strictly increasing in $(0,1)$ --- are a
+decidable predicate \texttt{Sheet.ok} on concrete data, closed by
+normalization (\texttt{norm\_num}) in the development's examples. That
+is the form the compiler can emit per package, next to the goldens: a
+statement per table, checked by the kernel, with
+Theorem~\ref{thm:mixture} proved once above them. What cannot be
+emitted this way is a port as a function of the step
+(\S\ref{sec:bystep}): the language refuses it, so there is nothing to
+check.
 
 \paragraph{What is deliberately not mechanized.} Propositions
 \ref{prop:quiescence} and \ref{prop:bpn} are statements about the
