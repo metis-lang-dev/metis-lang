@@ -1,4 +1,4 @@
-% Behavior Programs as Measures over Proofs — draft 0.3
+% Behavior Programs as Measures over Proofs — draft 0.4
 % Build: tectonic metis.tex   (or pdflatex + bibtex-free; references are inline)
 \documentclass[11pt]{article}
 
@@ -54,7 +54,7 @@ an $\mllb$ proof-net intermediate representation, and an executable,
 certified, machine-checked compilation pipeline}
 \author{The metis project\thanks{Sources, corpus, goldens, and the Lean
 mechanization: \repourl. Correspondence: \texttt{info@robofortis.com}.}}
-\date{Draft 0.3 --- 2026-09-30}
+\date{Draft 0.4 --- 2026-10-27}
 
 \begin{document}
 \maketitle
@@ -67,25 +67,20 @@ test-pinned in the repository; \stsketch{} = proof sketch, mechanization
 open; \stopen{} = open problem.
 
 \medskip\noindent
-\textbf{Changes from 0.2.} The mission is made explicit
-(\S\ref{sec:intro}): a \emph{formally provable} pipeline from linear
-logic to probability graphs, with the proofs of this paper progressively
-machine-checked. New in this draft: the source converted to \LaTeX; a
-Lean~4 mechanization shipped in the language repository and reported in
-\S\ref{sec:mech} --- Theorem~\ref{thm:image} (equivalence onto the image)
-is now \stmech{}, closing the first half of open problem~1 of draft~0.2;
-the token-individuation counting kernel of Theorem~\ref{thm:preservation}
-is \stmech{} (instances-equals-$\varphi$ and the pushforward identity);
-Theorem~\ref{thm:filter} is \stmech{}; the descent skeleton of
-Theorem~\ref{thm:trace} (invariance of site-factored weights under
-adjacent transposition of independent events, hence under Mazurkiewicz
-equivalence) is \stmech{} in abstract form. A new \S\ref{sec:intro} passage
-(\emph{What the lollipop buys}) separates the Boolean half of the
-logic--probability correspondence from the directional half this paper
-compiles. The repository split is reflected throughout: the language
-product (compiler, runtime, corpus, specs, mechanization) is public at
-\repourl; the Python referee toolkit (\texttt{metispy}) and catalogs
-are sibling repositories.
+\textbf{Changes from 0.3.} A new section on belief
+(\S\ref{sec:belief}): epistemic probability enters a program only
+through a finite port, a belief is a mixture over initial multisets
+(Theorem~\ref{thm:mixture}), the program reads it as a level atom, and
+its certificate gains a finite sheet and loses nothing
+(Proposition~\ref{prop:cells}, Corollary~\ref{cor:cert}). Interfaces,
+packages and compositions are now part of the language
+(\S\ref{sec:packages}), with the composite measure a product that the
+tick protocol determines (Proposition~\ref{prop:composite}). The
+evaluation bound separates grounding, which is a join, from inference,
+which is the proof-net's (\S\ref{sec:evaluation}). The text has been
+rewritten for a reader seeking understanding: the history of the
+drafts and the engineering particulars are in the repository's record,
+not here.
 \endgroup
 
 \begin{abstract}
@@ -104,7 +99,11 @@ descends to the Mazurkiewicz trace quotient --- runs weigh their
 occurrence nets, not their interleavings --- connecting our compiled
 representation to the Bayesian proof-nets of Ehrhard, Faggian and
 Di~Guardia read in the opposite direction: they evaluate one net where we
-select among many. The correspondence is not only semantic but
+select among many. Uncertainty about the world --- epistemic, as
+opposed to the aleatoric weights inside a program --- enters only
+through a finite port: a belief is a mixture over initial multisets, the
+program reads it as a level atom, and its certificate gains a finite
+sheet and loses nothing. The correspondence is not only semantic but
 \emph{compiled}: programs lower through a typed ground normal form to a
 proof-net-shaped intermediate representation (\textsc{choice} sites as
 CPT boxes, SSA atom occurrences as wires) on which typing --- including
@@ -143,6 +142,20 @@ the ensemble: \emph{sum} over derivations is filtering and prediction;
 \emph{argmax} is most-probable explanation and planning;
 \emph{reweighting by evidence} is diagnosis and behavior identification.
 Probability selects among proofs; proof theory generates them.
+
+\paragraph{Two kinds of uncertainty.} The weights on \textsc{choice}
+are the dice inside a behavior: given the world, this is how the
+program acts. Call that part \emph{aleatoric}; it is fixed when the
+program is certified, and tuned, when it is tuned, by counts. A second
+kind of uncertainty is about the world itself --- where the cup is,
+whether the beast is hostile --- and it is \emph{epistemic}: it belongs
+to the agent's map and changes with every observation. A program with
+fixed weights is a certified Markov decision process. With the map's
+belief entering through a port, it is a belief MDP --- over a
+\emph{finite} quantisation, because the belief enters as a finite atom
+(\S\ref{sec:belief}). Keeping the two kinds apart, and letting the
+second cross into the first only through a finite port, is what lets
+every certificate of this paper survive the arrival of belief.
 
 \paragraph{What the lollipop buys.} For the experienced reader it
 pays to separate, at the door, the two halves of the logic--probability
@@ -195,8 +208,8 @@ probabilistic models is established by theorems, whose theorems are
 progressively machine-checked in a proof assistant, and whose compiled
 artifacts are certified by admission-time checkers so that what the
 deployed interpreter evaluates is exactly what the theorems govern.
-Draft~0.2 carried the theorems on paper and the artifact checks in CI;
-this draft begins discharging the metatheory itself in Lean~4
+The theorems are on paper, the artifact checks run at every build, and
+the metatheory is progressively discharged in Lean~4
 (\S\ref{sec:mech}). The three levels of assurance --- paper proof,
 mechanized proof, mechanically pinned artifact --- are marked
 per-statement throughout.
@@ -238,10 +251,20 @@ This paper contributes, on the theory side:
   (Proposition~\ref{prop:bpn}, \stproved{}, \stpinned{}) --- the static
   well-formedness half of the Di~Guardia typing question, whose
   compositional half remains Conjecture~\ref{conj:typing}.
+\item \textbf{Belief through a finite port} (Theorem~\ref{thm:mixture},
+  Proposition~\ref{prop:cells}, Corollary~\ref{cor:cert}, \stproved{}):
+  a categorical belief bound to a port makes the one-tick number a
+  mixture over initial multisets; with the belief entering through the
+  presence draw alone the number is multilinear, so a finite cell sheet
+  bounds it; the program's certificate is unchanged.
+\item \textbf{The composite measure is a product}
+  (Proposition~\ref{prop:composite}, \stproved{}): under the tick
+  protocol a composition of certified packages has the product of their
+  measures, so nothing composite need be grounded to certify it.
 \end{enumerate}
 
 And on the systems side:
-\begin{enumerate}[leftmargin=2em]\setcounter{enumi}{5}
+\begin{enumerate}[leftmargin=2em]\setcounter{enumi}{7}
 \item A \textbf{compilation pipeline} (\S\ref{sec:pipeline}) with the
   shape of knowledge compilation: \texttt{.llp} source $\to$ typed
   ground/unrolled normal form $\to$ $\mllb$-shaped IR (sites + SSA
@@ -611,17 +634,14 @@ collide) --- the class definition is chosen so that the denotation
 forgets \emph{exactly} presentation. \emph{Duplicate transitions}: $T$
 is a multiset for the same reason --- two identical-content clauses
 double the propensity of that content, which a set-valued $T$ would
-silently halve. The theorem is now \stmech{}: the Lean development
-(\S\ref{sec:mech}) formalizes programs as name-carrying lists, the class
-as multiset-valued tuples, congruence as
-renaming-injective-on-names plus permutation, and proves totality,
-invariance, surjectivity (via an explicit fresh-naming section of
-$\sem{\cdot}$) and injectivity-up-to-congruence --- discharging the
-first half of draft~0.2's open problem~1. The \stpinned{} evidence
-remains in force as a fuzz test of the same statement on the real
-implementation: \texttt{program\_key}'s discrimination suite ---
-invariance under 1000 presentation shuffles, discrimination of weight,
-multiplicity, stage-wiring, init and dropped-clause mutations.
+silently halve. The theorem is \stmech{} (\S\ref{sec:mech}): programs as
+name-carrying lists, the class as multiset-valued tuples, congruence as
+renaming plus permutation, with totality, invariance, surjectivity (an
+explicit fresh-naming section of $\sem{\cdot}$) and
+injectivity-up-to-congruence each a named Lean result. The \stpinned{}
+evidence is a fuzz test of the same statement on the implementation:
+the canonical key is invariant under presentation shuffles and
+discriminates every semantic mutation.
 
 Classical context: the $\tensor$-fragment $\leftrightarrow$ Petri
 reachability correspondence is Gunter--Gehlot \cite{GG89} and
@@ -1337,7 +1357,7 @@ approximation.
 from IR scopes alone --- no tables built, no binding called
 (\stpinned{}: a counting registry observes zero calls at admission).
 Budgets are platform-independent factor-ops, converted by one measured
-constant ($\sim 1.5 \times 10^8$ ops/s on our dev machine); over-budget
+constant per machine; over-budget
 queries fall down the evaluator ladder (exact-support $\to$ factored
 $\to$ fixed-$N$ sampling, whose cost is deterministic by construction).
 Measured tracking on Game of Life instances: certified ops $10^4$ /
@@ -1358,8 +1378,7 @@ bounded neighborhoods: $n = 24$ two-tick GoL in seconds), and
 \emph{certifiably refuses} where it does not (the certificate is the
 refusal). The sampler and THTS carry the rest with fixed budgets.
 
-Measured, one machine, pure Python, all \stpinned{} except the first
-block (measured once for the capability model):
+Measured on one machine, in the Python referee:
 
 \begin{center}\small
 \begin{tabular}{llll}
@@ -1414,19 +1433,14 @@ $\sim$300-line dependency-free table-ops loop; CPT rows are filled at
 run time by the registry bindings (they read the live world; that is
 the one thing that must be native). Admission happened on the authoring
 machine; the vehicle runs pre-certified artifacts with deterministic
-cost. Since draft 0.2 the authoritative compiler is \metisc{} (OCaml,
-stdlib only, one static binary --- lex/parse, typecheck, packs +
-containment admission, grounding, symbolic factorization, proof-net
-certification, elimination ordering, IR emission, canonical key,
-reference sampler), shipped in this repository; the Python toolkit
-(\texttt{metispy}, sibling repository) is the independent exact
-referee. Verification is a chain of custody: interpreter $\doteq$
+cost. The authoritative compiler is \metisc{} (OCaml, standard library
+only, one static binary, from lexing to the reference sampler); the
+Python toolkit is the independent exact referee. Verification is a chain of custody: interpreter $\doteq$
 filter (Thm~\ref{thm:preservation}--\ref{thm:filter} gates) $\doteq$
 factored/junction tree ($10^{-9}$ parity, whole-tick and mid-cycle)
 $\doteq$ exported artifact (independent brute-force reader) $\doteq$
-C++ interpreter (golden parity: \textsc{ir parity} 46/46,
-\textsc{sample parity} 43/43 in this repository's \texttt{make check};
-95/95 ground + 20/20 IR against the Python referee) --- with pgmpy
+C++ interpreter (golden parity on every corpus program, in both
+toolchains) --- with pgmpy
 belief propagation as an external referee on the exported net.
 
 \subsection{Export: the EFD direction as a back-end}\label{sec:export}
@@ -1471,18 +1485,21 @@ as next prior; planted-row identifiability $\ge 0.9$ recovery
 human-reviewable row sheet (\texttt{prior $\to$ posterior ($n$,
 $\alpha_0$)} per scope assignment); the vehicle never learns in flight.
 The batch interface to external estimators is (UAI net, traces) ---
-data, not an RL arena; the simulators (SUMO, Overcooked, IPPC
-environments) are trace generators for it.
+data, not an RL arena; the simulators are trace generators for it.
+
+\paragraph{The loop.} The loop that proposes packs --- a language model
+drafting rules from surprise records, a gate admitting or refusing them
+--- is the catalog paper's subject. Here two facts suffice: whatever
+the model proposes passes the same admission as a hand-written rule,
+and the world is driven by the admitted program, never by the model.
+Learning changes the program; it never retrains anything.
 
 \section{Mechanization}\label{sec:mech}
 
-Draft 0.2 closed with ``mechanize Theorem 3 and the routine parts of
-Theorem 1 in a proof assistant'' as open problem 1. This draft ships a
-Lean~4 development (over mathlib) in the public language repository,
-directory \texttt{formal/} (\texttt{lake build}; a \texttt{make
-formal} convenience target); this paper contains no proof-assistant
-code --- the development itself is the reference, and every statement
-below names its Lean identifier. The development is
+A Lean~4 development over mathlib ships in the public language
+repository, directory \texttt{formal/}. This paper contains no
+proof-assistant code: the development is the reference, and every
+statement below names its Lean identifier. The development is
 \texttt{sorry}-free, and the main theorems depend only on Lean's three
 standard axioms (\texttt{propext}, \texttt{Classical.choice},
 \texttt{Quot.sound}), checked with \texttt{\#print axioms}.
@@ -1586,16 +1603,22 @@ analogue sat unoccupied until the EFD line; planning-as-inference:
 \cite{TS06,Lev18}; mechanization: Lean 4 \cite{MU21} and mathlib
 \cite{mathlib20}. Behavior-tree engineering contrast: BT.cpp gives
 industry the component model but no measure; our framework keeps the
-component seams (registry, blackboard, ports) and adds semantics.
+component seams (registry, blackboard, ports) and adds semantics, and
+its interface packages are the contract half of that component model.
+
+\paragraph{The belief side.} A program with belief ports is a
+finite-horizon belief MDP \cite{KLC98} evaluated at one tick over a
+finite quantisation. What is particular here is that the quantisation is
+the program's \emph{input type} --- the level atom --- so the belief MDP
+is certified by a finite sheet over cells rather than by a bound over a
+continuous belief space, and the filter that moves the belief stays
+outside the certified object.
 
 \section{Open problems}\label{sec:open}
 
 \begin{enumerate}[leftmargin=2em]
-\item \emph{(was: mechanize Theorem~\ref{thm:image} and the routine
-  parts of Theorem~\ref{thm:preservation})} --- Theorem~\ref{thm:image}
-  and the counting kernel of Theorem~\ref{thm:preservation} are now
-  \stmech{} (\S\ref{sec:mech}). Remaining: the full trajectory-level
-  statement of Theorem~\ref{thm:preservation} (product induction with
+\item The full trajectory-level statement of
+  Theorem~\ref{thm:preservation} (the product induction with
   normalization over enabled sets) and the concrete site/scope
   instantiation of Theorem~\ref{thm:trace} over a formalized emission.
 \item Branching-cell measure beyond $\cclass$: import \cite{AB06} to
@@ -1603,20 +1626,21 @@ component seams (registry, blackboard, ports) and adds semantics.
   does the general staged language admit a canonical net measure?
 \item Conjecture~\ref{conj:typing}: mechanize the \cite{DEF26}
   well-behaved-composition typing derivations over the emitted
-  artifact --- the compositional half left open by
-  Proposition~\ref{prop:bpn}'s machine-checked Bayesian proof-net
-  well-formedness. Verify the verifier: re-prove the artifact checker
-  of Proposition~\ref{prop:bpn} in Lean against the formalized IR.
+  artifact, and verify the verifier: re-prove the artifact checker of
+  Proposition~\ref{prop:bpn} in Lean against the formalized IR.
 \item Proof theory of quiescence in the general class
   (subexponentials, fixpoints, or inhibitor-net semantics).
-\item Faithfulness/completeness directions (program reconstruction
-  from measure behavior; which DBN queries determine the program in
-  $\cclass$?).
-\item PROST-class comparison on large IPPC instances (sampling-based;
-  engineering-honest).
-\item Complementary-pair merging in the emission (width
-  $\approx$ halves on two-valued families); lifted emission
-  (schema-level sites before grounding).
+\item Ports as functions (\S\ref{sec:belief}): the instrument as a
+  filter over a hidden chain, updated by what each trace observes. What
+  replaces multilinearity, and over which parameters a certificate can
+  then be stated.
+\item The believed position of an unseen agent as a hazard: a
+  predicted position counts as a hazard in a safety record and should
+  not count as one in a verdict; a belief-aware form of the record.
+\item Faithfulness: which queries determine a program in $\cclass$?
+  And the engineering comparisons --- sampling-based planners on large
+  benchmark instances, complementary-pair merging and lifted emission
+  --- which this paper does not claim.
 \end{enumerate}
 
 \begin{thebibliography}{99}\small
@@ -1690,6 +1714,10 @@ tract. 2004.
 
 \bibitem[GSPN]{GSPN} M. Ajmone Marsan et al. Modelling with
 Generalized Stochastic Petri Nets. Wiley 1995.
+
+\bibitem[KLC98]{KLC98} L. P. Kaelbling, M. L. Littman, A. R.
+Cassandra. Planning and acting in partially observable stochastic
+domains. Artificial Intelligence 101, 1998.
 
 \bibitem[Kol33]{Kol33} A. N. Kolmogorov. Grundbegriffe der
 Wahrscheinlichkeitsrechnung. Springer 1933.
