@@ -41,6 +41,7 @@
 \newtheorem{theorem}{Theorem}
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{lemma}{Lemma}
 \theoremstyle{definition}
 \newtheorem*{definition}{Definition}
@@ -783,6 +784,326 @@ dynamic quiescence gate would have needed, so we conjecture every
 emitted net types). Mechanizing their typing rules over our artifact is
 the concrete next theory task. \stopen{}
 \end{conjecture}
+
+\section{Belief: epistemic probability through a finite port}
+\label{sec:belief}
+
+What does a program do when the world is not fully known? Everything so
+far prices \emph{what the program does}: the \textsc{choice} weights are
+the aleatoric part, the dice inside the behavior. A second kind of
+uncertainty lives outside the program --- \emph{what the world is} ---
+and it is epistemic: it changes as the agent observes. This section
+says how the second kind enters without touching the first, and why the
+certificates survive its arrival.
+
+\subsection{The example, and the two missing factors}
+
+A robot must fetch a cup. The cup is in one of three receptacles, and
+the agent's map gives a belief: $0.6$ in the drawer, $0.3$ on the shelf,
+$0.1$ in the bin. The program has a rule that sends the robot to a
+receptacle,
+\[
+  \mathit{go}:\ \ \mathit{want}(O) \tensor \mathit{start} \tensor
+  \bang\mathit{inrecep}(O,R) \lolli \mathit{want}(O) \tensor
+  \mathit{goto}(R) \qquad \texttt{@w look}(O,R),
+\]
+whose weight is a \textbf{port}: a named factor the host binds, here to
+the belief. With the map asserting $\mathit{inrecep}$ for every place
+the cup might be, the rule is enabled three times and the port prices
+the choice among them. This is the right program and the wrong
+probability. A \textsc{choice} weight is normalized over the enabled
+events of a state (\S\ref{sec:choice}); it answers \emph{where does the
+robot go first}, not \emph{where is the cup}. Two things a total
+probability needs are absent:
+\begin{itemize}[leftmargin=2em]
+\item \emph{The world factor.} ``Where is the cup'' is one distribution
+  over three mutually exclusive facts. Three independent weights describe
+  $2^3$ worlds, including the cup in two places and in none.
+\item \emph{The product.} $P(\text{fetched within } h) = \sum_R
+  P(\text{cup in } R)\cdot P(\text{fetched within } h \mid \text{cup in }
+  R)$. The first factor is the belief; the second is the program's own
+  measure. Nothing in \S\ref{sec:language}--\ref{sec:trace} multiplies
+  them: a run starts from one initial multiset.
+\end{itemize}
+The rest of the section supplies the two factors (\S\ref{sec:catport},
+\S\ref{sec:instrument}), brings the product back into the program as a
+finite atom (\S\ref{sec:levels}), and proves that the program's
+certificate is unchanged by the arrival (\S\ref{sec:beliefthm}).
+
+\subsection{The categorical port}\label{sec:catport}
+
+A \textbf{belief group} is declared over a port that already exists, by
+naming which of the port's arguments is the one that varies:
+\emph{for each object $O$, exactly one receptacle $R$ holds, and
+$\mathtt{look}(O,\cdot)$ is its distribution}. The group's key is the
+other arguments; its members are the values of the named one. Three
+forms cover what the maps produce: \texttt{one} (exactly one member
+holds; the masses sum to $1$), \texttt{lone} (at most one; the residual
+is the world where none holds --- the cup is lost), and an independent
+atom (present with its own probability). The host binds the port as
+before, one value per argument tuple; the only new obligation is the
+sum, and it is checked exactly, never silently renormalized. A
+distribution the host did not mean is refused, not repaired.
+
+The declaration lives beside the program, not in it. A belief is a fact
+\emph{about the program's inputs}; the tick --- the one step the
+interpreter samples --- never reads it, so the program and its canonical
+key (\S\ref{sec:canonical}) do not move. What moves is the certificate's
+key, which takes the canonical line of the belief declarations
+(\S\ref{sec:beliefthm}).
+
+In proof-net terms (\S\ref{sec:obstructions}, Proposition~\ref{prop:bpn})
+a group is \emph{one} categorical box $\vdash X^{+}$ whose variable has
+the group's $k$ members as values and the port as its CPT. Three
+Bernoulli boxes denote the same distribution only once an
+``exactly one'' factor couples all three; the categorical box is one
+variable of cardinality $k$. The correct total and the cheaper net are
+the same object.
+
+\subsection{Belief facts and the world mixture}\label{sec:worlds}
+
+In the instrument of \S\ref{sec:instrument} the presence of a belief
+pred's atoms is not read from the initial multiset: it is \emph{drawn}
+from the port. Each \texttt{one} group puts exactly one member present,
+with its probability; each \texttt{lone} group one or none; each
+independent atom is present or absent. A \textbf{world} $w$ is one
+outcome of all the draws, with probability $P(w)$ the product over
+groups, and the instrument starts from the mixture
+\[
+  \mu_0 \;=\; \sum_w P(w)\,\delta\big((s_0,\ m_0 \uplus w)\big).
+\]
+Two disciplines keep this honest. A case's initial multiset may not list
+a belief atom (the draw puts it there). And belief preds are resource
+preds, never Horn guards: a guard is eliminated at grounding
+(\S\ref{sec:evaluation}), and a world must not change the ground
+program --- every world shares one program and differs only in its
+initial multiset.
+
+A read of a belief fact is conditioned on the truth. In the world where
+the cup is on the shelf, a rule enabled by $\bang\mathit{inrecep}(O,
+\mathit{shelf})$ fires there and nowhere else. That is right for the
+\emph{world's} rules (the observation ``absent'', the find). It is
+omniscient for the \emph{agent's} decisions: a task whose $\mathit{go}$
+reads the belief fact walks straight to the true place in every world,
+and its success is overstated. The honest program keeps two preds ---
+the agent's \emph{support} (where the cup may be, read by the decision)
+and the belief fact (where it is, read by the world) --- and one port
+prices both: as a \textsc{choice} weight on the decision and as the
+presence of the truth. The instrument lists every rule that reads a
+belief pred, so the author sees which decisions are conditioned on the
+hidden truth.
+
+\subsection{Level ports: the only belief-derived input of the tick}
+\label{sec:levels}
+
+The program never reads a number. A \textbf{level port} turns a number
+--- a belief's value, or a query's answer --- into a finite atom by
+declared thresholds: with cut points $0 < a_1 < \dots < a_n < 1$ and
+names $\ell_0, \dots, \ell_n$, the value $p$ has level $\ell_i$ iff
+$a_i \le p < a_{i+1}$ (with $a_0 = 0$, $a_{n+1} = \infty$), compared
+exactly. The host asserts exactly one level atom per key and retracts
+the previous one; it is a world reading like any other. A tick program
+that reads only levels and static weights is a \emph{finite} program,
+and finiteness is what \S\ref{sec:beliefthm} certifies.
+
+This is the whole design in one sentence: the belief enters the
+program as a finite atom, so the program with belief is a program of the
+kind every theorem above already governs; the arithmetic that produced
+the atom lives in an instrument beside the program, where it can be
+exact.
+
+\subsection{The one-tick instrument}\label{sec:instrument}
+
+A \textbf{query} names an outcome and a horizon: the probability that
+$Q$ holds at some step $t \le h$ (first passage; $Q$ read as wanted or
+as a violation), or its presence at step $h$. The instrument answers for
+the beliefs \emph{as they stand at this tick}:
+\begin{itemize}[leftmargin=2em]
+\item \emph{Beliefs are constant over the horizon.} The port table is
+  evaluated once, before step $0$, and every weight port prices its
+  events by that frozen table at every step. The map's own dynamics ---
+  the cup carried away, the plant drying --- and its updates from what
+  was seen stay in the map; the next tick's table comes from there.
+\item \emph{Filtering stays in the map.} Within the horizon, what the
+  program observes is conditioned exactly by the enumeration itself: in
+  world $w$ every observation follows $w$'s truth.
+\end{itemize}
+The number is a sum-product over worlds and traces: products along a
+trace (the draws, then the normalized \textsc{choice}s of
+\S\ref{sec:choice}), sums where states meet; a state where $Q$ holds is
+absorbed, its mass added to the answer. It is the forward filter of
+Theorem~\ref{thm:filter} started from a mixture instead of a point.
+
+The state budget is the cut. The filter retains at most $N$ states,
+expanded in canonical order; the mass of what cannot be expanded is set
+aside, and the answer is an interval
+\[
+  \mathit{lo} = \mathit{HIT}, \qquad
+  \mathit{hi} = \mathit{HIT} + \mathit{CUT},
+\]
+sound for first passage because the cut mass may or may not reach $Q$
+and nothing else can. A query is answered in bounded work at any
+horizon, and the width $\mathit{hi} - \mathit{lo}$ says how much the
+budget hid. With no cut, $\mathit{lo} = \mathit{hi}$ is the exact
+number --- an exact rational: every weight, port value and threshold
+enters as the exact decimal of its shortest round-trip representation,
+so $0.7$ is $7/10$ and a distribution written $0.7,\,0.3$ sums to one,
+and the result does not depend on summation order. The brute-force
+referee that enumerates every path agrees to the last digit by
+construction.
+
+\subsection{What is proved}\label{sec:beliefthm}
+
+\begin{theorem}[a port is a mixture; \stproved{}]\label{thm:mixture}
+Let $P$ be a ground program with belief groups $B$ bound by $f$, and let
+$\mu_w$ be the first-passage measure of $P$ started from
+$(s_0, m_0 \uplus w)$ under the frozen table $f$. For every query $Q$,
+horizon $h$ and budget $N$,
+\[
+  \mathit{lo} \;\le\; \sum_w P_f(w)\,\mu_w(Q \text{ within } h) \;\le\;
+  \mathit{hi},
+\]
+with equality on both sides --- the instrument's number is the mixture
+--- when no state is cut.
+\end{theorem}
+
+\begin{proof}
+The instrument's recursion is Theorem~\ref{thm:filter}'s forward filter
+applied to the distribution $\mu_0 = \sum_w P_f(w)\,\delta(s_0, m_0
+\uplus w)$ with $Q$-states absorbing. The one-step kernel is the same
+for every world (the worlds share the ground program and the frozen
+table), so the filter is linear in its initial distribution:
+$F^h(\sum_w P_f(w)\,\delta_w) = \sum_w P_f(w)\,F^h(\delta_w)$, and
+absorption commutes with the sum because it is a per-state operation.
+Each summand is $\mu_w(Q \text{ within } h)$ by
+Theorem~\ref{thm:filter}. With a cut, the retained recursion is a
+sub-filter that drops nonnegative mass; the dropped mass is exactly
+$\mathit{CUT}$, and since the kernel is stochastic, what it would have
+contributed to $\mathit{HIT}$ lies in $[0, \mathit{CUT}]$.
+\end{proof}
+
+The theorem says that a quantised port adds nothing the static model
+could not already express: it names \emph{which} initial multisets a
+belief chooses and with what mass. Everything the earlier sections
+proved about one run from one initial multiset is inherited by the
+mixture, term by term.
+
+\begin{proposition}[multilinearity, and the cell table; \stproved{}]
+\label{prop:cells}
+Suppose the belief enters the number only through the presence draw
+(no \textsc{choice} weight reads a belief port). Then
+$\sum_w P_f(w)\,\mu_w(Q)$ is multilinear in the groups' distributions:
+linear in each $f(g, \cdot)$ separately. Consequently, over any product
+of polytopes --- one per group, cut out by the level thresholds of
+\S\ref{sec:levels} --- its minimum and maximum are attained at products
+of vertices.
+\end{proposition}
+
+\begin{proof}
+$P_f(w) = \prod_g f(g, w_g)$ is a product with one factor per group, and
+$\mu_w$ does not depend on $f$ by hypothesis. A function of the form
+$\sum_w \prod_g f(g, w_g)\,c_w$ is linear in each factor's distribution
+when the others are held fixed. A multilinear function on a product of
+polytopes is, in each coordinate block, linear, so an extremum over the
+product is attained at a point extremal in every block, i.e.\ at a
+product of vertices.
+\end{proof}
+
+A \textbf{cell} is one level per level port. For each cell, the
+certificate records the interval $[\mathit{lo}_c, \mathit{hi}_c]$ that
+the instrument gives for each query over every belief consistent with
+the cell: by Proposition~\ref{prop:cells} this is the minimum and maximum
+over the cell's vertex worlds, each one exact instrument run. With no
+belief level at all, the vertices are the \emph{pure} worlds and the
+bound is $\min_w$ and $\max_w$ of $\mu_w(Q)$ --- the numbers the brute
+referee already enumerates. The sheet is finite: a \texttt{one} group of
+$k$ members confined to a box contributes at most $k \cdot 2^{k-1}$
+vertices, an independent atom two.
+
+\begin{corollary}[certification is preserved]\label{cor:cert}
+The certificate of a program with belief ports is the program's own
+certificate (\S\ref{sec:certs}, keyed by \texttt{program\_key}) together
+with the finite cell sheet, keyed additionally by the canonical line of
+the belief and level declarations. The port selects rows of a table
+that was certified without it; it never adds a cell.
+\end{corollary}
+
+The honest boundary is where the hypothesis of
+Proposition~\ref{prop:cells} fails: a \textsc{choice} weight that reads
+a belief port (the fetch rule's \texttt{@w look}) makes the trace
+measure itself depend on the belief as a \emph{ratio} of port values.
+The function is then rational, not multilinear, and the vertex bound is
+not sound. Such a cell is listed \emph{uncertified (choice reads a
+belief)}. Both forms are legal; the certificate tells them apart, and
+the certified form gates the decision on a belief \emph{level} with
+static weights.
+
+\subsection{The rewrites: on the instrument's net, never on the tick}
+
+The tick has no net; it samples one step. The instrument's net is
+static --- the beliefs, the ground program, $h$ and $Q$ are fixed before
+it runs --- so the proof-net rewrites of EFD \cite{EFD26} apply to it,
+each keeping the exact rational and each checked against the brute
+referee: \emph{weakening} (a group no ground event touches sums to one
+and is dropped), \emph{deferred draws} (a group is drawn at the first
+state where its presence could matter, exact because the draw is
+independent of the trace so far), \emph{absorption} (a state where $Q$
+holds stops), \emph{merging} (equal states sum --- the frontier is the
+cut-net's interface), and \emph{the cone} (restriction to the outcome's
+influence cone when its closure holds). None of them is a semantic
+choice; each is Theorem~\ref{thm:mixture}'s sum evaluated in a cheaper
+order.
+
+\subsection{Ports by step: the map's forecast as rows}\label{sec:bystep}
+
+A belief that moves along the horizon --- a beast approaching, a car
+changing lane --- is a hidden chain, and tracking it inside the
+instrument would be filtering, which \S\ref{sec:instrument} leaves in
+the map. The cheap form that pays today: the host computes its forecast
+\emph{outside} the instrument, one row per step, and the instrument
+reads row $t$ at step $t$. A rule factor prices the event chosen at step
+$t$ by row $t$; a presence draw and a belief level read row $0$; a row
+past the table's end repeats the last, so the frozen table is the
+one-row case and nothing earlier changes meaning.
+
+Two points decide what a row may carry. A rule factor is a \emph{per-step
+hazard} --- the probability of the move at this step given where things
+are --- never a marginal: a marginal (``nearer than now at step $t$'')
+read as a factor at every step compounds. And a quantity constant over
+the horizon --- an intent: hostile, wandering, fleeing --- is better a
+categorical \emph{belief} drawn once per world than a by-step port: the
+intent then persists along each trace (a hostile beast closes at every
+step, not at the mixture's average rate), Proposition~\ref{prop:cells}
+holds for it, and only the hazards conditioned on the intent move by
+step:
+\[
+  \mathit{close}:\ \ \mathit{beast}(B,Q) \tensor \mathit{next}(P,Q)
+  \tensor \bang\mathit{intent}(B,I) \lolli \mathit{beast}(B,P)
+  \qquad \texttt{@w closing}(B,I).
+\]
+On a lane with a beast believed at three cells, the risk of meeting it
+within eight events under a frozen hazard, a rising hazard by step, and
+the last row held frozen are $0.207$, $0.294$ and $0.346$: the moving
+belief lies between its first and last rows, as it must.
+
+With a by-step port, multilinearity is lost: the rows multiply along
+every trace and are functions of the forecast. The certificate then
+holds \emph{over the initial levels} --- the cells are the tick's
+levels, as before --- and the forecast that turns the tick's belief into
+rows is part of the sealed bundle (\S\ref{sec:packages}), listed as
+\emph{certified over the initial levels, predict in the bundle}, never
+by the vertex bound.
+
+\subsection{The aim: ports as functions, and the horizon}
+
+The form this section stops short of is a port bound as a \emph{function}
+of the step and the state --- the belief as a hidden Markov chain inside
+the instrument, updated by what each trace observes. The exact rational
+semantics and the cut carry over to it; Proposition~\ref{prop:cells}
+does not, and the certificate would have to be stated over the
+forecast's own parameters. The language refuses it today, by name, so
+that every program that compiles is one the cell sheet covers. It is
+open problem~5 (\S\ref{sec:open}).
 
 \section{The compiled pipeline (systems)}\label{sec:pipeline}
 
