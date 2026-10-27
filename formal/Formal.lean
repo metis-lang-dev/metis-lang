@@ -1,4 +1,5 @@
 -- SPDX-License-Identifier: Apache-2.0
+import Formal.Belief
 import Formal.Counting
 import Formal.Filter
 import Formal.Spn
