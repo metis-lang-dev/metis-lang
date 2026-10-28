@@ -1,0 +1,8 @@
+# composition — the shared-pot kitchen as one package (specialist-tree s-404d001f step 3a; steps/step3-cases-brief.md)
+name: kitchen_pot_gen
+capacity: tick_types.llp
+protocol: iface/protocol_domain.llp
+specialists: [cook_a, cook_b]
+direct: tree_director
+world: {out: [hand_free, held_onion, held_dish, held_soup, pot_space, pot_onion, cooking, order, tick__stop], in: [fetch_onion, load, start, fetch_dish, plate, serve]}
+resources: {pot: 1}

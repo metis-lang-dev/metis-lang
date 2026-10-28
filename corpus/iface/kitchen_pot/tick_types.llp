@@ -2,5 +2,5 @@
 % concrete (specialist-tree s-404d001f step 3a).
 catalog tick_types 1.
 provenance text "the shared-pot kitchen's members and its one pot" "2026-10-25".
-type domain {cook_a cook_b pot_director}.
+type domain {cook_a cook_b}.
 type resource {pot}.

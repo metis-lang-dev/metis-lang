@@ -1,0 +1,16 @@
+link composition.yaml
+member road_director direct wire ce493b42e6216c6a0b654f48cadf2e92320208c313c95599a4efde6e3ddf5139 bundle 8b37a9df197a source dc6cea19cb87ad84eb06d4e9046178cde15cc36d5d2d0423222b7201c42702d4
+member responder specialist wire a71f6f978891e4b34f1fec4fe3ece57c143d1d567dbb9864170c6ff988617af0 bundle 8abd0898653a source fbd7f0d4fbc12879be0349c68d700cfdca8f39987a3b30fdb12ab0ff1455581e
+member planner specialist wire b5dbcf1e6040218f6f6b296dd6fe303a4cf9bdae9d901cb994d28b796dfc4a64 bundle b679d62bfdec source 853637a8183bdc34067460b0d6437c157863f1f8ce3afb6e5706f1007c87cfbc
+director road_director hand (transitional) planner - kinds none
+  specialist(responder).
+  specialist(planner).
+  priority(responder, planner).
+warning L17 a hand-written direct: road_director (transitional); the image runs it, generated: false
+warning L21 responder's host road_host.py:make: no file road_host.py beside it (the runtime that loads it must have it)
+warning L21 planner's host road_host.py:make: no file road_host.py beside it (the runtime that loads it must have it)
+warning L21 road_director's host pass_host.py:make: no file pass_host.py beside it (the runtime that loads it must have it)
+interface 0 error(s), 4 warning(s)
+image road v-54ecd5f182bb
+result 0 error(s), 8 warning(s)
+rc 0

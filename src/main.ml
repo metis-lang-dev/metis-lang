@@ -438,6 +438,27 @@ let wire_file program extensions =
   let prog = Ground.ground cat c.c_init in
   List.iter print_endline (Wire.artifact_lines cat ports prog c.c_steps)
 
+(* spec/17: a member's wire and program key, for the link (--wire's compile, the program alone) *)
+let member_wire program =
+  let c = embedded_case program in
+  let ast = Compile.resolve_includes (Parser.parse_file program) (Filename.dirname program) in
+  let (cat, ports) = compile_warn ast in
+  let prog = Ground.ground cat c.c_init in
+  (Wire.artifact_lines cat ports prog c.c_steps, Nets.program_key prog)
+
+let rec link_args comp (o : Link.opts) = function
+  | [] ->
+    (match Link.run ~wire:member_wire o comp with
+     | (lines, errors) ->
+       List.iter print_endline lines;
+       exit (if errors > 0 then 1 else 0)
+     | exception Iface.Yaml_error m -> prerr_endline ("error: " ^ m); exit 1)
+  | "-o" :: d :: rest -> link_args comp { o with out = Some d } rest
+  | "--check" :: rest -> link_args comp { o with check = true } rest
+  | "--tar" :: rest -> link_args comp { o with tar = true } rest
+  | "--bundles" :: d :: rest -> link_args comp { o with bundles = Some d } rest
+  | a :: _ -> failwith ("--link: unknown argument " ^ a)
+
 let rec wire_args program exts = function
   | [] -> wire_file program (List.rev exts)
   | "--extension" :: e :: rest -> wire_args program (e :: exts) rest
@@ -446,6 +467,8 @@ let rec wire_args program exts = function
 let () =
   (try match Array.to_list Sys.argv with
   | _ :: "--wire" :: program :: rest -> wire_args program [] rest
+  | _ :: "--link" :: comp :: rest ->
+    link_args comp { Link.out = None; check = false; tar = false; bundles = None } rest
   | _ :: "--evaluate" :: llp :: rest -> evaluate_args llp false false rest
   | [_; "--selftest"] -> selftest ()
   | [_; "--keys"; manifest] -> drive manifest key_case

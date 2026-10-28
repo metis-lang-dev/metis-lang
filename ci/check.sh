@@ -273,4 +273,35 @@ n_names=$( (cd "$ROOT/corpus/evaluate" && grep -l '^#evaluate' *.llp | sed 's/\.
     || { echo "evaluate: $n_names fixtures, $n_gold goldens"; exit 1; }
 echo "EVALUATE $n_ev/$n_ev ($n_case case YAMLs, $n_gold goldens)"
 
+echo "== 15. the link (spec 17 §4): metisc --link --check == goldens, the image hash; one image written, its tar round trip"
+# corpus/iface: kitchen_pot (its capacity's type domain = the specialists, spec 17 L13), road (metis-worlds main
+# e7bc8ba road/domains, the programs and manifests), the alfworld and minihack trees (their composition.yaml gains
+# planner:, routing: and priority:, the facts their hand directors held), each with its HAND director (transitional,
+# L17: the derived facts compared); kitchen_pot and alfworld again with a GENERATED director (composition_gen.yaml:
+# a direct: with no package). The listing (stdout and stderr) and the exit code == the golden.
+n_ln=0
+for case in kitchen_pot:kitchen_pot/composition.yaml kitchen_pot_gen:kitchen_pot/composition_gen.yaml \
+            road:road/composition.yaml alfworld:alfworld/domains/hier/composition.yaml \
+            alfworld_gen:alfworld/domains/hier/composition_gen.yaml minihack:minihack/domains/hier/composition.yaml; do
+  name=${case%%:*}; comp=${case#*:}
+  rc=0
+  ( cd "$ROOT/corpus/iface" && METIS_HOME="$ROOT/corpus/iface/_home" \
+      "$ROOT/src/metisc" --link "$comp" --check ) > "$WORK/link_$name.txt" 2>&1 || rc=$?
+  echo "rc $rc" >> "$WORK/link_$name.txt"
+  diff -u "$ROOT/corpus/goldens/link/$name.txt" "$WORK/link_$name.txt"
+  n_ln=$((n_ln + 1))
+done
+n_gold=$(ls "$ROOT/corpus/goldens/link" | wc -l)
+[ "$n_ln" -eq "$n_gold" ] || { echo "link: $n_ln cases, $n_gold goldens"; exit 1; }
+# written: the directory named by the golden's hash, its tar the same files
+h=$(sed -n 's/^image kitchen_pot_gen v-\([0-9a-f]*\)$/\1/p' "$ROOT/corpus/goldens/link/kitchen_pot_gen.txt")
+( cd "$ROOT/corpus/iface" && METIS_HOME="$ROOT/corpus/iface/_home" \
+    "$ROOT/src/metisc" --link kitchen_pot/composition_gen.yaml -o "$WORK/img" --tar ) > /dev/null 2>&1
+img="$WORK/img/kitchen_pot_gen.image.v-$h"
+[ -f "$img/image.json" ] && [ -f "$img/image.lock" ] && [ -f "$img/members/tree_director/ground.wire" ] \
+    || { echo "link: no image at $img"; exit 1; }
+mkdir -p "$WORK/untar" && tar -xf "$img.tar" -C "$WORK/untar"
+diff -r "$img" "$WORK/untar/kitchen_pot_gen.image.v-$h"
+echo "LINK $n_ln/$n_gold (image v-$h written, tar identical)"
+
 echo "ALL GATES GREEN"
