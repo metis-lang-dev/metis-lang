@@ -1,7 +1,8 @@
 # PROPOSAL 17 — the image and the link step: one deployable object per composition
 
-**Status: DRAFT 2026-10-28 (image-spec s-ae3cee35 step 2, the architect; from metis's link-time inventory,
-steps/step1-inventory.md). Nothing here changes the grammar: a package compiles as before to its wire and
+**Status: RULED 2026-10-28 (image-spec s-ae3cee35 step 2, the architect; from metis's link-time inventory,
+steps/step1-inventory.md, revised on metis's review steps/step2-review-metis.md: L23–L25, the planner and the
+routing block, the transport line form, per-runtime host bindings). Step 3 = the implementation brief (A2). Nothing here changes the grammar: a package compiles as before to its wire and
 bundle; the composition and its manifests are the same files. What is new is the object the link step makes
 from them, the IMAGE, and the rule that a runtime reads that object and nothing else. The linker is
 `metisc --link`, in the OCaml toolchain, the only implementation (the user, 2026-10-28); metispy's
@@ -93,10 +94,12 @@ member's `ground.wire` in `members` order. The sidecars and tools are inside the
   "toolchain": {"metisc": "<version>", "spec": [15, 16, 17]},
   "capacity": {"domain": ["cook_a", "cook_b", "pot_director"], "resource": ["pot"], "key": "<h>"},
   "protocol": {"file": "iface/protocol_domain.llp", "key": "<h>",
-               "tokens": {"tick__want": "signal", "tick__grant": "level", ... }},          # the natures
+               "tokens": {"tick__want": "signal", "tick__grant": "level", ..., "tick": "injected", "tick_s": "injected", "changed": "injected"}},  # the natures; the injected three named
+  "planner": "cook_a",                           # the member whose results the director routes (§3.3)
   "members": [
     {"name": "cook_a", "role": "specialist", "bundle": "members/cook_a", "bundle_key": "<h12>",
-     "wire_key": "<program_key>", "program": "cook_a.llp", "host": "cook_host.py:make",
+     "wire_key": "<program_key>", "program": "cook_a.llp",
+     "host": {"py": "cook_host.py:make", "go": "cook"},            # one binding per runtime that can host it
      "clock": {"beats": 1, "period": null},
      "shared": {"tick__want": "out", "tick__grant": "in", "pot": "resource", "hand_free": "world-private", ...},
      "status": {"success": ["tick__done"], "failure": []}, "gating": "program",
@@ -130,13 +133,21 @@ The direct member is GENERATED at link from the toolchain's lifted base (`iface/
 `director_tree_wake.llp`, and the routing base `iface/director_domain.llp` of policy-tuning-2's ruling) plus
 the composition's facts, written as a generated `.llp` and compiled like any member:
 
-- `specialist(S)` for every specialist; `handles(S, K)` for every `K: in` of S that a peer or the world
-  produces; `result(K)` for every `K: out` the planner consumes (the compose rule of policy-tuning-2 2a);
+- `specialist(S)` for every specialist; `planner(P)` for the member `planner:` names in `composition.yaml`
+  (or, absent, the one member that consumes every `result` kind; two candidates or none is `link-planner`);
+  `handles(S, K)` ONLY for a `K` the planner produces and S consumes (planner `out` → S `in`); `result(K)` for
+  every `K` a specialist produces and the planner consumes — results are the planner's alone, never routed to
+  another specialist (the DIRECT defect metis found: `handles(place, carrying)` sent grasp's result to place);
+  `end(P)` / `finished` from the planner's `status`; `nohandler(K)` for a goal kind no specialist handles;
 - `priority(P, Q)` from `composition.yaml`'s `priority:` list (today they sit in a hand-written director
   file; the link accepts a hand file only as a transitional `direct:` with a warning, and compares its facts
   with the derived ones);
 - `#init free(R)` for every resource, with its count;
-- `type kind {...}` from the handled goal kinds, `{none}` when no cross-member port exists (road).
+- `type kind {...}` from the handled goal kinds, `{none}` when no cross-member port exists (road);
+- the POLICY facts the Live's director reads and no rule can derive — `detour(K1, K2)`, `escalate(K, S)`,
+  `rename(K1, K2, G)` — from a `routing:` block in `composition.yaml` (`routing: {detour: [[K1, K2]],
+  escalate: [[K, S]], rename: [[K1, K2, G]]}`), generated as facts; a hand-written `direct:` file stays a
+  transitional form, accepted with a warning and compared fact by fact (L17).
 
 ### 3.4 image.lock
 
@@ -177,7 +188,7 @@ For every pred named in any member's `shared`, in `world`, or by the protocol:
 
 | check | rule | error |
 |---|---|---|
-| L13 members | the composition's `specialists` + `direct` = the set of members with bundles; `type domain` of the capacity = that set; `type resource` = the resources the direct member owns | `link-members`, `link-types` (gaps 1, 2) |
+| L13 members | the composition's `specialists` + `direct` = the set of members with bundles; `type domain` of the capacity = the SPECIALISTS exactly (the director is not a domain: road's `{responder planner}` is right, kitchen_pot's listing of its director is a corpus fix in A2); `type resource` = the resources the direct member owns | `link-members`, `link-types` (gaps 1, 2) |
 | L14 capacity | every member's resolved AST includes the capacity file (by the lock's source hash) | `link-capacity` (gap 6) |
 | L15 priority | `priority` is a strict partial order over the specialists: no self pair, no cycle, both ends declared | `link-priority` (gap 4) |
 | L16 world.in | every `world.in` pred is produced by some member (a command) and consumed by no member | `link-world-in` (gap 5) |
@@ -187,6 +198,9 @@ For every pred named in any member's `shared`, in `world`, or by the protocol:
 | L20 places | an include name resolves to one file across all members; `METIS_HOME` is recorded, and a link with the home unset while a member needs it is an error, not a silent miss | `link-places` (gap 11) |
 | L21 host | `host:` names a `file:symbol`; recorded; the runtime's registry must match it or refuse (§6) | `link-host` (gap 9, the half the link can do) |
 | L22 beliefs | a belief (continuous) pred is never `in`/`out`/`resource`; only its level atoms may be shared | `link-belief-shared` (spec 16 §8 preserved across members) |
+| L23 levels | for each `levels:` / `beliefs:` / `evaluate:` entry: the weight port is declared in the member's wire (`B`), the level pred is level-first over `type level`, no belief pred appears in a count — LevelHook's refusals, moved to the link | `link-levels` (gap 12) |
+| L24 protocol | every member's resolved AST includes the composition's `protocol:` file, by the lock's key; the injected `tick`, `tick_s`, `changed` are recorded in `protocol.tokens` as `injected` | `link-protocol` (gap 7, the other half) |
+| L25 planner | exactly one planner (§3.3) | `link-planner` |
 
 Warnings as today (listed, not judged): `iface-report-unsent`, a hand director's self-withdrawal, a
 transitional producer.
@@ -231,13 +245,16 @@ A message is one tick's worth of atoms from one process to one port set:
 
 ```
 M image=<h12> plan=<h12> from=runtime tick=<n>
-+ tick__grant cook_a pot
-- tick__want cook_a pot
++ tick__grant(cook_a,pot) 1
+- tick__want(cook_a,pot) 1
 .
 ```
 
-One `M` header, then one line per atom in the wire's `I` syntax with a `+`/`-` sign, then `.`. The receiver
-parses lines into atoms (the message-to-atom parser is the wire's atom reader, which both toolchains have),
+One `M` header, then one line per atom: a `+`/`-` sign, the atom exactly as the wire's `I` line writes it
+(`p(x,y)` with its multiplicity), then `.`. The receiver parses the atom lines with the wire's atom reader,
+which both toolchains have; only the `M` header and the `.` are new (about twenty lines per toolchain). The
+trace records the sender's tick and the receiver's latch beat for every message, so an interleaving replays.
+The receiver
 latches them at its beat, and refuses a message whose `image` or `plan` hash is not its own (§5.4). Ordering:
 a process commits tick n, then sends tick n's atoms; a receiver applies tick n's message only after its own
 tick n−1 is committed; a missing message past the transport budget is a `stuck` report to the director (spec
@@ -308,17 +325,25 @@ What a split does NOT preserve is the global tick order across processes beyond 
 that needs lockstep across the boundary must be stated against the message order of §5.3, which is what the
 Lean lemma of track B2 (ordered commit on a logical clock) is for.
 
-## 9. Open for review (metis, step 2)
+## 9. Rulings on the review's questions (metis, step 2; the architect)
 
-1. Directory vs a single archive for the image: the directory mirrors the bundle convention and keeps
-   `git diff` readable; an archive is one file to ship. Proposal: the directory is the image; `metis build
-   --tar` writes an archive of it, hash unchanged.
-2. The derived director at link (here) vs at load: at link keeps every runtime identical and the director's
-   wire in the hash. A hand-written `direct:` stays as a transitional form with L17.
-3. L18 with no plan: `period ≤ ρ`; is a composition with `response:` absent linked with ρ = ∞ and a warning?
-4. One key: the sidecar's `key` (program_key), the interface's member key (sha256 of the resolved AST) and
-   the bundle hash are three names; the lock records all three. Should `--interface` adopt the program_key?
-5. `METIS_HOME` unset at link: error (L20, as written) or default to the toolchain's own `iface/` as py and Go
-   do? I propose the error, because the lock must say where the protocol came from.
-6. Whether `tools.json` belongs in the image at all: it is global and identical in every bundle; the image
-   could carry one copy at its root.
+1. The DIRECTORY is the image, hashed over a canonical file list (image.json, then members in order, each
+   file by name), so `metis build --tar` writes an archive whose hash is the directory's.
+2. The director is derived AT LINK; its wire is in the hash; a hand-written `direct:` is transitional (L17).
+3. With no plan, an absent `response:` links with ρ = ∞ and a warning; a plan that derives a transport port
+   REQUIRES `response:` (`link-response-required`).
+4. TWO keys stay: the interface's member key hashes the resolved SOURCE AST (iface.ml:325), the sidecar's
+   `key` hashes the GROUND program (nets.py:120; Go's `Wire.Key` recomputes it). The lock maps source key →
+   program key per member; that pair is the build cache key of §7.
+5. `METIS_HOME` unset at link is an ERROR (L20): the lock must say where the protocol came from.
+6. `tools.json` once at the image root (`tools.json`), not per member; Go's orchestrator reads it from there.
+
+## 10. Plan rules the runtimes impose today (from the review's §5)
+
+- A member with `levels:` / `beliefs:` / `evaluate:` sits in a process whose runtime builds the hook (py
+  today); its level atoms cross as transport ports. `plan-levels-runtime` otherwise.
+- A process that holds the direct member AND specialists needs a tick layer; Go has none, so until track B
+  (the Rust runtime) lands, such a process is py. The wheelchair's runtime process depends on B.
+- Go's registry beats (process.go:173) vs the image's `clock.beats`: `load-beats-mismatch`, refuse.
+- The py Live's config → image move (svc:291, 293, 328, 383, the token literals at svc:580–952) touches every
+  Live config: A2 carries it with the config files of the catalog's cases.
