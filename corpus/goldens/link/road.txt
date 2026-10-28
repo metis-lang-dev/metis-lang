@@ -11,6 +11,6 @@ warning L21 responder's host road_host.py:make: no file road_host.py beside it (
 warning L21 planner's host road_host.py:make: no file road_host.py beside it (the runtime that loads it must have it)
 warning L21 road_director's host pass_host.py:make: no file pass_host.py beside it (the runtime that loads it must have it)
 interface 0 error(s), 4 warning(s)
-image road v-54ecd5f182bb
+image road v-322f60137b29
 result 0 error(s), 8 warning(s)
 rc 0

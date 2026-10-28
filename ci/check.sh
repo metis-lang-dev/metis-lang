@@ -304,4 +304,22 @@ mkdir -p "$WORK/untar" && tar -xf "$img.tar" -C "$WORK/untar"
 diff -r "$img" "$WORK/untar/kitchen_pot_gen.image.v-$h"
 echo "LINK $n_ln/$n_gold (image v-$h written, tar identical)"
 
+echo "== 16. metisc build (spec 17 §7): stale members compiled, the rest reused; the hash the link's; metisc check"
+# a copy of corpus/iface/kitchen_pot: built twice (all compiled, then all reused, one hash), then one member's
+# #init edited (compiler-invisible, yet in its wire): only that member recompiled, a new hash
+cp -r "$ROOT/corpus/iface/kitchen_pot" "$WORK/bk"
+bk() { ( cd "$WORK" && METIS_HOME="$ROOT/corpus/iface/_home" "$ROOT/src/metisc" build bk 2>/dev/null ) | grep -E '^(image|build)'; }
+b1=$(bk); b2=$(bk)
+echo "$b1" | grep -q 'build reused 0 \[\] compiled 3' || { echo "build 1: $b1"; exit 1; }
+echo "$b2" | grep -q 'build reused 3 .* compiled 0 \[\]' || { echo "build 2: $b2"; exit 1; }
+[ "$(echo "$b1" | head -1)" = "$(echo "$b2" | head -1)" ] || { echo "build: two hashes for one source"; exit 1; }
+echo "#init idle 1" >> "$WORK/bk/cook_a/cook_a.llp"
+b3=$(bk)
+echo "$b3" | grep -q 'build reused 2 \[pot_director cook_b\] compiled 1 \[cook_a\]' || { echo "build 3: $b3"; exit 1; }
+[ "$(echo "$b3" | head -1)" != "$(echo "$b1" | head -1)" ] || { echo "build: an edited member, the same hash"; exit 1; }
+( cd "$ROOT/corpus/iface" && METIS_HOME="$ROOT/corpus/iface/_home" "$ROOT/src/metisc" check kitchen_pot ) > "$WORK/chk.txt" 2>&1 \
+    || { tail -3 "$WORK/chk.txt"; exit 1; }
+grep -q '^image kitchen_pot v-' "$WORK/chk.txt" || { echo "check: no image line"; exit 1; }
+echo "BUILD 3/3 (compiled 3, reused 3, recompiled 1 of 3) + check"
+
 echo "ALL GATES GREEN"

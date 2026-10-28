@@ -3,7 +3,7 @@
 
 open Iface
 
-type opts = { out : string option; check : bool; tar : bool; bundles : string option }
+type opts = { out : string option; check : bool; tar : bool; bundles : string option; build : bool }
 
 (* the tree director's hysteresis (the road's: k = 2 grant ages young, m = 1
    status age; policy-tuning-2 2a's compose.py, spec 15 §9 rule 4) *)
@@ -327,6 +327,14 @@ let run ~wire o comp_path =
     | Some (S s) -> Some ([("py", s)], "composition")
     | Some (M kv) -> Some (List.map (fun (k, v) -> (k, str v)) kv, "composition")
     | _ -> (match manifest_s m "host" with Some s -> Some ([("py", s)], "manifest") | None -> None) in
+  let host_missing m = match host_of m with
+    | Some (b, origin) -> (match List.assoc_opt "py" b with
+        | Some s -> (match String.index_opt s ':' with
+            | Some i -> let base = if origin = "composition" then comp_dir else Filename.dirname m.m_program in
+              not (Sys.file_exists (Filename.concat base (String.sub s 0 i)))
+            | None -> false)
+        | None -> false)
+    | None -> false in
   List.iter (fun m ->
       match host_of m with
       | Some (b, origin) ->
@@ -348,9 +356,34 @@ let run ~wire o comp_path =
             add "error" "L22" "link-belief-shared: %s shares its belief pred %s" m.m_name b
           | _ -> ()) (yfield m "beliefs")) members;
   (* the wires (each member's, the generated director's from the stage) *)
-  let wires = List.map (fun m -> (m.m_name, (try Ok (wire m.m_program) with
-      | Catalog.Catalog_error ms | Compile.Lang_error ms -> Error (String.concat "; " ms)
-      | e -> Error (Printexc.to_string e)))) members in
+  (* `metisc build`: the last build's record, OUT/<name>.build ("image DIR", "member NAME SOURCE PROGRAM") *)
+  let name = match List.assoc_opt "name" comp with Some v -> str v | None -> Filename.basename comp_dir in
+  let record = Filename.concat build (name ^ ".build") in
+  let last = if o.build && Sys.file_exists record then
+      List.filter_map (fun l -> match String.split_on_char ' ' l with
+          | ["image"; dir] -> Some ("", (dir, ""))
+          | ["member"; m; src; pk] -> Some (m, (src, pk)) | _ -> None)
+        (String.split_on_char '\n' (Image.read_file record))
+    else [] in
+  let last_dir = Option.map fst (List.assoc_opt "" last) in
+  let reused = ref [] in
+  (* the build key: the source key AND the program's '#' directives (#init, #steps: compiler-invisible, yet in the wire) *)
+  let build_key m =
+    let dirs = List.filter (fun l -> String.length l > 0 && l.[0] = '#')
+        (List.map String.trim (String.split_on_char '\n' (Image.read_file m.m_program))) in
+    Sha256.hex (m.m_key ^ "\n" ^ String.concat "\n" dirs) in
+  let cached m = match last_dir, List.assoc_opt m.m_name last with
+    | Some dir, Some (src, pk) when src = build_key m ->
+      let f = Filename.concat build (Filename.concat dir ("members/" ^ m.m_name ^ "/ground.wire")) in
+      if Sys.file_exists f then begin
+        reused := m.m_name :: !reused;
+        Some (List.filter (( <> ) "") (String.split_on_char '\n' (Image.read_file f)), pk)
+      end else None
+    | _ -> None in
+  let compile m = try Ok (wire m.m_program) with
+    | Catalog.Catalog_error ms | Compile.Lang_error ms -> Error (String.concat "; " ms)
+    | e -> Error (Printexc.to_string e) in
+  let wires = List.map (fun m -> (m.m_name, match cached m with Some w -> Ok w | None -> compile m)) members in
   List.iter (fun (n, w) -> match w with
       | Error e -> add "error" "wire" "%s: no wire: %s" n e | Ok _ -> ()) wires;
   let wire_of n = match List.assoc n wires with Ok (l, k) -> (l, k) | Error _ -> ([], "-") in
@@ -404,7 +437,6 @@ let run ~wire o comp_path =
   (* L25 planner *)
   (match d.planner_err with Some e -> add "error" "L25" "link-planner: %s" e | None -> ());
   (* the image *)
-  let name = match List.assoc_opt "name" comp with Some v -> str v | None -> Filename.basename comp_dir in
   let natures = match List.find_opt (fun i -> Some i.i_path = Option.map norm proto_path) a.a_ipkgs with
     | Some { i_nature = Some n; _ } -> n | _ -> [] in
   let shared_j m = Image.JO (List.map (fun (p, d) -> (p, Image.JS d)) m.m_shared) in
@@ -425,6 +457,7 @@ let run ~wire o comp_path =
                ("program", Image.JS (Filename.basename m.m_program))]
               @ (if m.m_role = "direct" then [("generated", Image.JB gen)] else [])
               @ [("host", match host_of m with
+                   | Some _ when host_missing m -> Image.JN     (* the loader refuses the member: load-host-missing *)
                    | Some (b, origin) -> Image.JO (List.map (fun (k, v) -> (k, Image.JS v)) b @ [("origin", Image.JS origin)])
                    | None -> Image.JN);
                  ("clock", match List.assoc_opt "clock" m.m_extra with Some v -> y_j v | None -> Image.JO [("beats", Image.JS "1")]);
@@ -525,7 +558,15 @@ let run ~wire o comp_path =
       if o.tar then Image.write_file (dir ^ ".tar")      (* the lock rides along, outside the hash *)
           (Image.tar (List.map (fun (p, c) -> (Printf.sprintf "%s.image.v-%s/%s" name h12 p, c))
                         (files @ [("image.lock", lock_s)])));
-      line "wrote %s.image.v-%s%s" name h12 (if o.tar then " (+ .tar)" else "")
+      line "wrote %s.image.v-%s%s" name h12 (if o.tar then " (+ .tar)" else "");
+      if o.build then begin
+        Image.write_file record (String.concat "\n"
+          ((Printf.sprintf "image %s.image.v-%s" name h12)
+           :: List.map (fun m -> Printf.sprintf "member %s %s %s" m.m_name (build_key m) (snd (wire_of m.m_name))) (dm :: specs)) ^ "\n");
+        let names = List.map (fun m -> m.m_name) (dm :: specs) in
+        let r = List.filter (fun n -> List.mem n !reused) names and c = List.filter (fun n -> not (List.mem n !reused)) names in
+        line "build reused %d [%s] compiled %d [%s]" (List.length r) (String.concat " " r) (List.length c) (String.concat " " c)
+      end
     end
   end;
   List.iter (fun f -> let f = Filename.concat stage_dir f in if Sys.file_exists f then Sys.remove f)

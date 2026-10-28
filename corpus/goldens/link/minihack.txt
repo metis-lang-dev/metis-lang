@@ -36,6 +36,6 @@ warning L21 nav's host mh_host.py:make: no file mh_host.py beside it (the runtim
 warning L21 act's host mh_host.py:make: no file mh_host.py beside it (the runtime that loads it must have it)
 warning L21 director's host director_host.py:make: no file director_host.py beside it (the runtime that loads it must have it)
 interface 0 error(s), 7 warning(s)
-image minihack_hier v-894bd453df66
+image minihack_hier v-e02c9a91bcac
 result 0 error(s), 13 warning(s)
 rc 0

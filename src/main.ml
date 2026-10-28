@@ -468,7 +468,22 @@ let () =
   (try match Array.to_list Sys.argv with
   | _ :: "--wire" :: program :: rest -> wire_args program [] rest
   | _ :: "--link" :: comp :: rest ->
-    link_args comp { Link.out = None; check = false; tar = false; bundles = None } rest
+    link_args comp { Link.out = None; check = false; tar = false; bundles = None; build = false } rest
+  | _ :: "build" :: rest ->
+    (* spec/17 §7: metisc build [DIR] [-o OUT] [--tar]: the stale members compiled, the rest reused, linked *)
+    let (dir, rest) = match rest with d :: r when d <> "" && d.[0] <> '-' -> (d, r) | r -> (".", r) in
+    link_args (Filename.concat dir "composition.yaml")
+      { Link.out = None; check = false; tar = false; bundles = None; build = true } rest
+  | _ :: "check" :: rest ->
+    (* spec/17 §7: metisc check [DIR] = --interface, then --link --check *)
+    let dir = match rest with d :: _ -> d | [] -> "." in
+    let comp = Filename.concat dir "composition.yaml" in
+    (match Iface.run comp with
+     | (lines, errors) ->
+       List.iter print_endline lines;
+       if errors > 0 then exit 1;
+       link_args comp { Link.out = None; check = true; tar = false; bundles = None; build = false } []
+     | exception Iface.Yaml_error m -> prerr_endline ("error: " ^ m); exit 1)
   | _ :: "--evaluate" :: llp :: rest -> evaluate_args llp false false rest
   | [_; "--selftest"] -> selftest ()
   | [_; "--keys"; manifest] -> drive manifest key_case

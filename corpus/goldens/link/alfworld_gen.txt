@@ -42,6 +42,6 @@ warning L21 access's host alf_host.py:make: no file alf_host.py beside it (the r
 warning L21 grasp's host alf_host.py:make: no file alf_host.py beside it (the runtime that loads it must have it)
 warning L21 place's host alf_host.py:make: no file alf_host.py beside it (the runtime that loads it must have it)
 interface 0 error(s), 7 warning(s)
-image alfworld_hier_gen v-3811deef8bb1
+image alfworld_hier_gen v-01c418509547
 result 0 error(s), 13 warning(s)
 rc 0

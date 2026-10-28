@@ -11,6 +11,6 @@ warning L21 cook_a's host cook_host.py:make: no file cook_host.py beside it (the
 warning L21 cook_b's host cook_host.py:make: no file cook_host.py beside it (the runtime that loads it must have it)
 warning L21 pot_director's host pass_host.py:make: no file pass_host.py beside it (the runtime that loads it must have it)
 interface 0 error(s), 4 warning(s)
-image kitchen_pot v-80945fccb9ba
+image kitchen_pot v-bc01dc617c28
 result 0 error(s), 9 warning(s)
 rc 0
