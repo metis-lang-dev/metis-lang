@@ -11,7 +11,7 @@ warning L21 cook_b's host cook_host.py:make: no file cook_host.py beside it (the
 warning L21 pot_director's host pass_host.py:make: no file pass_host.py beside it (the runtime that loads it must have it)
 interface 0 error(s), 4 warning(s)
 image kitchen_pot_split v-61cb6c954e1d
-plan split v-de1078f94c5d (image v-61cb6c954e1d)
+plan split v-b2e6c2c8232d (image v-61cb6c954e1d)
   process a py [cook_a] world []
   process b py [cook_b pot_director] world [hand_free held_onion held_dish held_soup pot_space pot_onion cooking order tick__stop fetch_onion load start fetch_dish plate serve]
   transport cooking state b -> a latch beat
@@ -33,6 +33,8 @@ plan split v-de1078f94c5d (image v-61cb6c954e1d)
   transport tick__done report a -> b latch beat
   transport tick__grant signal b -> a latch beat
   transport tick__release report a -> b latch beat
+  transport tick__status report a -> b latch beat
+  transport tick__stuck report a -> b latch beat
   transport tick__want report a -> b latch beat
 result 0 error(s), 8 warning(s)
 rc 0

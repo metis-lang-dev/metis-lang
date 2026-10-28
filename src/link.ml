@@ -578,7 +578,15 @@ let run ~wire o comp_path =
                             @ (if List.mem p a.a_world_out then Option.to_list (named p) else [])
                             (* a hosted world.in command: from the processes of the members that send it *)
                             @ (if List.mem p a.a_world_in && named p <> None then
-                                 List.filter_map (fun m -> if sends m p then proc_of m.m_name else None) (dm :: specs) else [])) in
+                                 List.filter_map (fun m -> if sends m p then proc_of m.m_name else None) (dm :: specs) else [])
+                            (* a HOST-produced report (spec 15 amendment 1b: tick__status, asserted by each specialist's
+                               host from its trace): a report no member sends and no world reading gives, produced
+                               where every member that does not read it runs: member-keyed, as tick__done *)
+                            @ (if List.assoc_opt p natures = Some "report"
+                                  && not (List.exists (fun m -> List.assoc_opt p m.m_shared = Some "out") (dm :: specs))
+                                  && not (List.mem p a.a_world_out) then
+                                 List.filter_map (fun m -> if List.mem_assoc p m.m_shared then None else proc_of m.m_name) (dm :: specs)
+                               else [])) in
           let cons = uniq (List.filter_map (fun m -> if reads m then proc_of m.m_name else None) (dm :: specs)
                            @ (if List.mem p a.a_world_in then Option.to_list (named p) else [])) in
           (* a world.in command is each sender's own act on the world, never a state two processes write *)
