@@ -26,6 +26,7 @@ pred held_soup : cook.
 pred pot_space : cook.                    % room in the pot (one atom per onion it takes)
 pred pot_onion : cook.                    % onions in the pot
 pred cooking : cook.                      % a soup cooks in the pot
+%% The order this cook is working to: the dish it serves.
 pred order : cook.                        % one of this cook's orders waiting
 
 % ── the cook's own ──

@@ -125,9 +125,8 @@ let side_atoms = function
 (* cards.script_of: one card's clauses and atoms; a sibling or an extension lists only what its moves use *)
 let script_of ~name ~file ~relation ~text ~moves =
   let c = resolved file in
-  (* a pred's doc: the OCaml AST keeps none (DPred's third field is its namespace); metispy's take_docs reads the
-     %% lines before it. Empty here: every corpus golden's atom docs are empty (to raise if a catalog bundle's are not) *)
-  let preds = List.filter_map (function DPred (n, _, _) -> Some (n, "") | _ -> None) c.cdecls in
+  (* a pred's doc: its %% lines, as metispy's take_docs gives them (Parser.pred_doc: kept beside the AST) *)
+  let preds = List.filter_map (function DPred (n, _, _) -> Some (n, Parser.pred_doc n) | _ -> None) c.cdecls in
   let clauses = List.concat_map (function
       | DStage st -> List.filter_map (fun r ->
           if relation <> "served" && not (List.exists (fun m ->

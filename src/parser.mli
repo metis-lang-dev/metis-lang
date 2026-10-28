@@ -7,3 +7,6 @@ exception Parse_error of string
 val parse : ?file:string -> string -> Ast.catalog
 (* ?file names the source in every decl location (default "") *)
 val parse_file : string -> Ast.catalog
+
+(* a pred's %% doc, as metispy's PredDecl.doc: the docs before its declaration ("" when none) *)
+val pred_doc : string -> string

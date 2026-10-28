@@ -595,7 +595,7 @@
     },
     {
      "name": "order",
-     "doc": ""
+     "doc": "The order this cook is working to: the dish it serves."
     },
     {
      "name": "calm",
@@ -631,7 +631,6 @@
      "pot_space",
      "pot_onion",
      "cooking",
-     "order",
      "calm",
      "asked",
      "mine"

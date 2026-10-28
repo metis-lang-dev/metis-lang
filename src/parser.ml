@@ -52,6 +52,11 @@ let expect_kw p kw =
   let v = expect_ident p in
   if v <> kw then fail "expected %s, got %s" kw v
 
+(* a pred's %% docs (metispy's PredDecl.doc, take_docs): kept beside the AST, by pred name, so they are never handed
+   to the next rule (the sidecar's atom docs, its rules' lines) *)
+let pred_docs : (string, string) Hashtbl.t = Hashtbl.create 64
+let pred_doc name = Option.value (Hashtbl.find_opt pred_docs name) ~default:""
+
 let take_docs p =
   let d = String.concat "\n" (List.rev p.docs) in p.docs <- []; d
 
@@ -353,7 +358,7 @@ let parse ?(file = "") text =
          let args = sig_args p in
          punct p ':';
          let space = expect_ident p in
-         punct p '.'; add (DPred (pname, args, space))
+         punct p '.'; Hashtbl.replace pred_docs pname (take_docs p); add (DPred (pname, args, space))
        | "bwd" -> named ();
          let bname = expect_ident p in
          let args = sig_args p in
