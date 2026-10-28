@@ -366,4 +366,17 @@ done < "$ROOT/corpus/goldens/sidecar/sidecars.sha256"
 cmp "$(ls -d "$WORK"/sc/kitchen_pot.image.v-*/tools.json | head -1)" "$ROOT/corpus/goldens/sidecar/tools.json"
 echo "SIDECARS $n_sc/16 byte-equal + tools.json"
 
+echo "== 19. the one-member image (spec 17 §2): metisc --link PKGDIR == golden; its sidecar the composition's"
+# corpus/iface/kitchen_pot/cook_a linked alone (a package that runs alone is the one-member composition of itself):
+# the listing == the golden, and its sidecar.json == the corpus golden's for kitchen_pot/cook_a (the same program)
+rc=0
+( cd "$ROOT/corpus/iface" && METIS_HOME="$ROOT/corpus/iface/_home" "$ROOT/src/metisc" --link kitchen_pot/cook_a -o "$WORK/pk" ) \
+    > "$WORK/pk.txt" 2>&1 || rc=$?
+echo "rc $rc" >> "$WORK/pk.txt"
+grep -v '^wrote ' "$WORK/pk.txt" | diff -u "$ROOT/corpus/goldens/package/cook_a.txt" -
+want=$(awk '$3 == "kitchen_pot/cook_a" {print $1}' "$ROOT/corpus/goldens/sidecar/sidecars.sha256")
+got=$(sha256sum "$(ls -d "$WORK"/pk/cook_a.image.v-*/members/cook_a/sidecar.json | head -1)" | cut -d' ' -f1)
+[ "$got" = "$want" ] || { echo "package cook_a: sidecar $got, the golden $want"; exit 1; }
+echo "PACKAGE 1/1 (cook_a alone: one member, its sidecar byte-equal)"
+
 echo "ALL GATES GREEN"

@@ -451,17 +451,41 @@ let member_wire program =
   (Wire.artifact_lines cat ports prog c.c_steps, Nets.program_key prog,
    Sidecar.emit ~program ~extensions:[] ~cat ~prog ~init:c.c_init ~steps:c.c_steps ~queries:(source_queries c))
 
-let rec link_args comp (o : Link.opts) = function
+(* a served file and its extensions: the wire lines, the program key, the sidecar (the link's one-member image) *)
+let package_bundle program extensions =
+  let c = embedded_case program in
+  let load p = Compile.resolve_includes (Parser.parse_file p) (Filename.dirname p) in
+  let past = load program in
+  let (cat, ports) = compile_warn past in
+  let (cat, ports, _) = List.fold_left (fun (cat, ports, (bast : Ast.catalog)) e ->
+      let east = load e in
+      let (ecat, eports) = compile_warn ~base:(cat, bast) east in
+      (Catalog.admit cat ecat, Wire.merge_ports ports eports,
+       { bast with Ast.cdecls = bast.Ast.cdecls @ east.Ast.cdecls;
+                   cdecl_locs = bast.Ast.cdecl_locs @ east.Ast.cdecl_locs }))
+      (cat, ports, past) extensions in
+  let prog = Ground.ground cat c.c_init in
+  (Wire.artifact_lines cat ports prog c.c_steps, Nets.program_key prog,
+   Sidecar.emit ~program ~extensions ~cat ~prog ~init:c.c_init ~steps:c.c_steps ~queries:(source_queries c))
+
+let rec link_args ?serve ?(exts = []) comp (o : Link.opts) = function
+  | [] when Sys.is_directory comp && not (Sys.file_exists (Filename.concat comp "composition.yaml")) ->
+    (* a package directory: its one-member image (spec/17 §2) *)
+    (match Link.run_package ~bundle:package_bundle o ?serve ~extensions:(List.rev exts) comp with
+     | (lines, errors) -> List.iter print_endline lines; exit (if errors > 0 then 1 else 0)
+     | exception Iface.Yaml_error m -> prerr_endline ("error: " ^ m); exit 1)
   | [] ->
     (match Link.run ~wire:member_wire o comp with
      | (lines, errors) ->
        List.iter print_endline lines;
        exit (if errors > 0 then 1 else 0)
      | exception Iface.Yaml_error m -> prerr_endline ("error: " ^ m); exit 1)
-  | "-o" :: d :: rest -> link_args comp { o with out = Some d } rest
-  | "--check" :: rest -> link_args comp { o with check = true } rest
-  | "--tar" :: rest -> link_args comp { o with tar = true } rest
-  | "--plan" :: f :: rest -> link_args comp { o with plans = o.plans @ [f] } rest
+  | "-o" :: d :: rest -> link_args ?serve ~exts comp { o with out = Some d } rest
+  | "--check" :: rest -> link_args ?serve ~exts comp { o with check = true } rest
+  | "--tar" :: rest -> link_args ?serve ~exts comp { o with tar = true } rest
+  | "--plan" :: f :: rest -> link_args ?serve ~exts comp { o with plans = o.plans @ [f] } rest
+  | "--serve" :: f :: rest -> link_args ~serve:f ~exts comp o rest
+  | "--extension" :: e :: rest -> link_args ?serve ~exts:(e :: exts) comp o rest
   | a :: _ -> failwith ("--link: unknown argument " ^ a)
 
 (* spec/17 ruling 6: one package's sidecar.json, as the link writes it (the program and its extensions) *)

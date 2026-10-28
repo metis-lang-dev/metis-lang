@@ -689,3 +689,91 @@ let run ~wire o comp_path =
   line "result %d error(s), %d warning(s)" n_err
     (List.length (List.filter (fun f -> f.sev = "warning") (a.a_findings @ !fs)));
   (List.rev !lines, n_err)
+
+(* -- the one-member image (spec/17 §2: a package that runs alone is the one-member composition of itself) ---- *)
+
+let run_package ~(bundle : string -> string list -> string list * string * string) o ?serve ?(extensions = []) pkg_dir =
+  let pkg_dir = norm pkg_dir in
+  let name = Filename.basename pkg_dir in
+  let man = read_yaml (Filename.concat pkg_dir "domain.yaml") in
+  let field k = List.assoc_opt k man in
+  let served = match serve with
+    | Some f -> norm f
+    | None -> (match field "program" with
+        | Some v -> norm (Filename.concat pkg_dir (str v))
+        | None -> raise (Yaml_error (name ^ "/domain.yaml: no program, and no --serve FILE"))) in
+  let lines = ref [] in
+  let line fmt = Printf.ksprintf (fun s -> lines := s :: !lines) fmt in
+  let errs = ref [] and warns = ref 0 in
+  let (wl, wkey, side) = try bundle served extensions with
+    | Catalog.Catalog_error ms | Compile.Lang_error ms -> errs := String.concat "; " ms :: !errs; ([], "-", "")
+    | e -> errs := Printexc.to_string e :: !errs; ([], "-", "") in
+  let ast = Compile.resolve_includes (Parser.parse_file served) (Filename.dirname served) in
+  let source_key = Sha256.hex (Ast.pretty (Ast.strip_locs ast)) in
+  (* the host: a manifest's `host:` (a file:symbol beside the package, or a dotted module:symbol); null when its
+     file is missing (the loader refuses the member: load-host-missing) or when it declares none *)
+  let host, origin = match field "host" with
+    | Some v ->
+      let s = str v in
+      (match String.index_opt s ':' with
+       | Some i when Filename.check_suffix (String.sub s 0 i) ".py"
+                     && not (Sys.file_exists (Filename.concat pkg_dir (String.sub s 0 i))) ->
+         incr warns; line "warning L21 %s's host %s: no file beside it (the runtime that loads it must have it)" name s;
+         (Image.JN, "manifest")
+       | Some _ -> (Image.JO [("py", Image.JS s); ("origin", Image.JS "manifest")], "manifest")
+       | None -> errs := Printf.sprintf "link-host: %s's host %s is not file:symbol" name s :: !errs; (Image.JN, "manifest"))
+    | None -> (Image.JN, "none") in
+  let rec y_j = function
+    | S s -> Image.JS s | L l -> Image.JL (List.map y_j l) | M kv -> Image.JO (List.map (fun (k, v) -> (k, y_j v)) kv) in
+  let bfiles = [("ground.wire", String.concat "\n" wl ^ "\n"); ("sidecar.json", side)] in
+  let bkey = String.sub (Image.hash bfiles) 0 12 in
+  let member = Image.JO ([
+      ("name", Image.JS name); ("role", Image.JS "package"); ("bundle", Image.JS ("members/" ^ name));
+      ("bundle_key", Image.JS bkey); ("wire_key", Image.JS wkey); ("source_key", Image.JS source_key);
+      ("program", Image.JS (Filename.basename served));
+      ("extensions", Image.JL (List.map (fun e -> Image.JS (Filename.basename e)) extensions));
+      ("host", host);
+      ("clock", match field "clock" with Some v -> y_j v | None -> Image.JO [("beats", Image.JS "1")])]
+      @ List.filter_map (fun k -> Option.map (fun v -> (k, y_j v)) (field k))
+        ["shared"; "status"; "gating"; "levels"; "beliefs"; "evaluate"; "display"; "line"; "voice"]) in
+  let image = Image.JO [
+      ("format", Image.JS "metis-image/1"); ("name", Image.JS name); ("composition_key", Image.JN);
+      ("toolchain", Image.JO [("metisc", Image.JS "metisc"); ("spec", Image.JL [Image.JI 15; Image.JI 16; Image.JI 17])]);
+      ("one_member", Image.JB true); ("planner", Image.JN); ("director", Image.JN);
+      ("members", Image.JL [member]); ("ports", Image.JL []);
+      ("world", Image.JO [("out", Image.JL []); ("in", Image.JL [])]); ("response", Image.JN); ("priority", Image.JL [])] in
+  let files = [("image.json", Image.to_string image)]
+              @ List.map (fun (f, c) -> ("members/" ^ name ^ "/" ^ f, c)) bfiles
+              @ [("tools.json", Tools_json.text)] in
+  let h = Image.hash files in
+  let h12 = String.sub h 0 12 in
+  line "link %s (one member)" name;
+  line "member %s package wire %s bundle %s source %s" name wkey bkey source_key;
+  List.iter (fun e -> line "error link %s" e) (List.rev !errs);
+  if !errs = [] then begin
+    line "image %s v-%s" name h12;
+    if not o.check then begin
+      let build = match o.out with Some b -> b | None -> Filename.concat pkg_dir "build" in
+      let dir = Filename.concat build (Printf.sprintf "%s.image.v-%s" name h12) in
+      List.iter (fun (p, c) -> let f = Filename.concat dir p in Image.mkdir_p (Filename.dirname f); Image.write_file f c) files;
+      let lock = Image.JO [
+          ("members", Image.JO [(name, Image.JO [
+               ("bundle", Image.JS bkey); ("source", Image.JS source_key); ("program", Image.JS wkey);
+               ("host", Image.JS origin);
+               ("dir", Image.JO [("place", Image.JS "dir"); ("path", Image.JS pkg_dir)]);
+               ("served", Image.JS served);
+               ("includes", Image.JL (List.map (fun (s, place, f) ->
+                    Image.JO [("name", Image.JS s); ("place", Image.JS place); ("path", Image.JS f)])
+                    (Compile.include_list (Parser.parse_file served) (Filename.dirname served))))])]);
+          ("places", Image.JO [("root", Image.JS pkg_dir);
+                               ("home", match Sys.getenv_opt "METIS_HOME" with Some h -> Image.JS h | None -> Image.JN)]);
+          ("image", Image.JS h)] in
+      let lock_s = Image.to_string lock in
+      Image.write_file (Filename.concat dir "image.lock") lock_s;
+      if o.tar then Image.write_file (dir ^ ".tar")
+          (Image.tar (List.map (fun (p, c) -> (Printf.sprintf "%s.image.v-%s/%s" name h12 p, c)) (files @ [("image.lock", lock_s)])));
+      line "wrote %s.image.v-%s%s" name h12 (if o.tar then " (+ .tar)" else "")
+    end
+  end;
+  line "result %d error(s), %d warning(s)" (List.length !errs) !warns;
+  (List.rev !lines, List.length !errs)
