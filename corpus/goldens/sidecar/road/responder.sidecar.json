@@ -1,0 +1,675 @@
+{
+ "format": "metis-sidecar/1",
+ "catalog": "responder",
+ "key": "a71f6f978891e4b34f1fec4fe3ece57c143d1d567dbb9864170c6ff988617af0",
+ "extensions": [],
+ "init": {
+  "idle": 1
+ },
+ "steps": 6,
+ "stages": [
+  "act"
+ ],
+ "events": [
+  {
+   "i": 0,
+   "canon": 7,
+   "name": "guard[R=brake_min_correct]",
+   "rule": "guard",
+   "kind": "clause",
+   "stage": "act",
+   "line": "A response is due ({R}): I take the controls."
+  },
+  {
+   "i": 1,
+   "canon": 6,
+   "name": "guard[R=brake_min]",
+   "rule": "guard",
+   "kind": "clause",
+   "stage": "act",
+   "line": "A response is due ({R}): I take the controls."
+  },
+  {
+   "i": 2,
+   "canon": 3,
+   "name": "guard_left[R=brake_min_correct]",
+   "rule": "guard_left",
+   "kind": "clause",
+   "stage": "act",
+   "line": "My lane change to the left is no longer safe: I take the controls."
+  },
+  {
+   "i": 3,
+   "canon": 2,
+   "name": "guard_left[R=brake_min]",
+   "rule": "guard_left",
+   "kind": "clause",
+   "stage": "act",
+   "line": "My lane change to the left is no longer safe: I take the controls."
+  },
+  {
+   "i": 4,
+   "canon": 5,
+   "name": "guard_right[R=brake_min_correct]",
+   "rule": "guard_right",
+   "kind": "clause",
+   "stage": "act",
+   "line": "My lane change to the right is no longer safe: I take the controls."
+  },
+  {
+   "i": 5,
+   "canon": 4,
+   "name": "guard_right[R=brake_min]",
+   "rule": "guard_right",
+   "kind": "clause",
+   "stage": "act",
+   "line": "My lane change to the right is no longer safe: I take the controls."
+  },
+  {
+   "i": 6,
+   "canon": 1,
+   "name": "cancel",
+   "rule": "cancel",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: I drop my goal."
+  },
+  {
+   "i": 7,
+   "canon": 8,
+   "name": "cancel_none",
+   "rule": "cancel_none",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped as I finished: nothing left to drop."
+  },
+  {
+   "i": 8,
+   "canon": 14,
+   "name": "brake_lon[R=brake_min_correct]",
+   "rule": "brake_lon",
+   "kind": "clause",
+   "stage": "act",
+   "line": "I brake: the proper response, {R}."
+  },
+  {
+   "i": 9,
+   "canon": 13,
+   "name": "brake_lon[R=brake_min]",
+   "rule": "brake_lon",
+   "kind": "clause",
+   "stage": "act",
+   "line": "I brake: the proper response, {R}."
+  },
+  {
+   "i": 10,
+   "canon": 10,
+   "name": "stop_lat_left[R=brake_min_correct]",
+   "rule": "stop_lat_left",
+   "kind": "clause",
+   "stage": "act",
+   "line": "I stop moving left: the lateral response."
+  },
+  {
+   "i": 11,
+   "canon": 9,
+   "name": "stop_lat_left[R=brake_min]",
+   "rule": "stop_lat_left",
+   "kind": "clause",
+   "stage": "act",
+   "line": "I stop moving left: the lateral response."
+  },
+  {
+   "i": 12,
+   "canon": 12,
+   "name": "stop_lat_right[R=brake_min_correct]",
+   "rule": "stop_lat_right",
+   "kind": "clause",
+   "stage": "act",
+   "line": "I stop moving right: the lateral response."
+  },
+  {
+   "i": 13,
+   "canon": 11,
+   "name": "stop_lat_right[R=brake_min]",
+   "rule": "stop_lat_right",
+   "kind": "clause",
+   "stage": "act",
+   "line": "I stop moving right: the lateral response."
+  },
+  {
+   "i": 14,
+   "canon": 0,
+   "name": "stand_down",
+   "rule": "stand_down",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Nothing asks a response: the plan has the controls again."
+  }
+ ],
+ "cards": [
+  {
+   "name": "responder",
+   "text": "the road's responder over roles: the host binds the world onto them each tick",
+   "relation": "served",
+   "moves": [],
+   "effects": [],
+   "slots": []
+  }
+ ],
+ "queries": [],
+ "script": [
+  {
+   "name": "responder",
+   "relation": "served",
+   "text": "the road's responder over roles: the host binds the world onto them each tick",
+   "clauses": [
+    {
+     "name": "guard",
+     "stage": "act",
+     "doc": "A response is due ({R}): I take the controls.",
+     "premises": [
+      {
+       "atom": "resp_lon(R)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "brakes(R)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "idle",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [
+      {
+       "atom": "busy",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__active(responder)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__want(responder,controls)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "guard_left",
+     "stage": "act",
+     "doc": "My lane change to the left is no longer safe: I take the controls.",
+     "premises": [
+      {
+       "atom": "changing(left)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "resp_lat_left(R)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "brakes(R)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "idle",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [
+      {
+       "atom": "busy",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__active(responder)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__want(responder,controls)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "guard_right",
+     "stage": "act",
+     "doc": "My lane change to the right is no longer safe: I take the controls.",
+     "premises": [
+      {
+       "atom": "changing(right)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "resp_lat_right(R)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "brakes(R)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "idle",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [
+      {
+       "atom": "busy",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__active(responder)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__want(responder,controls)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "cancel",
+     "stage": "act",
+     "doc": "Stopped: I drop my goal.",
+     "premises": [
+      {
+       "atom": "tick__cancel(responder)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "busy",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [
+      {
+       "atom": "idle",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "cancel_none",
+     "stage": "act",
+     "doc": "Stopped as I finished: nothing left to drop.",
+     "premises": [
+      {
+       "atom": "idle",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__cancel(responder)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [
+      {
+       "atom": "idle",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "brake_lon",
+     "stage": "act",
+     "doc": "I brake: the proper response, {R}.",
+     "premises": [
+      {
+       "atom": "busy",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "tick__grant(responder,controls)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "resp_lon(R)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "brakes(R)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "now",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [],
+     "target": null
+    },
+    {
+     "name": "stop_lat_left",
+     "stage": "act",
+     "doc": "I stop moving left: the lateral response.",
+     "premises": [
+      {
+       "atom": "busy",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "tick__grant(responder,controls)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "changing(left)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "resp_lat_left(R)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "brakes(R)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "now",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [],
+     "target": null
+    },
+    {
+     "name": "stop_lat_right",
+     "stage": "act",
+     "doc": "I stop moving right: the lateral response.",
+     "premises": [
+      {
+       "atom": "busy",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "tick__grant(responder,controls)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "changing(right)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "resp_lat_right(R)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "brakes(R)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "now",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [],
+     "target": null
+    },
+    {
+     "name": "stand_down",
+     "stage": "act",
+     "doc": "Nothing asks a response: the plan has the controls again.",
+     "premises": [
+      {
+       "atom": "busy",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "resp_lon(none)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "resp_lat_left(none)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "resp_lat_right(none)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [
+      {
+       "atom": "idle",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__done(responder)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__release(responder,controls)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    }
+   ],
+   "atoms": [
+    {
+     "name": "tick__status",
+     "doc": ""
+    },
+    {
+     "name": "tick__active",
+     "doc": ""
+    },
+    {
+     "name": "tick__done",
+     "doc": ""
+    },
+    {
+     "name": "tick__stuck",
+     "doc": ""
+    },
+    {
+     "name": "tick__want",
+     "doc": ""
+    },
+    {
+     "name": "tick__release",
+     "doc": ""
+    },
+    {
+     "name": "tick__grant",
+     "doc": ""
+    },
+    {
+     "name": "tick__goal",
+     "doc": ""
+    },
+    {
+     "name": "tick__revoke",
+     "doc": ""
+    },
+    {
+     "name": "tick__stop",
+     "doc": ""
+    },
+    {
+     "name": "tick__cancel",
+     "doc": ""
+    },
+    {
+     "name": "type",
+     "doc": ""
+    },
+    {
+     "name": "safe_long",
+     "doc": ""
+    },
+    {
+     "name": "safe_lat",
+     "doc": ""
+    },
+    {
+     "name": "dangerous",
+     "doc": ""
+    },
+    {
+     "name": "safe_before",
+     "doc": ""
+    },
+    {
+     "name": "resp",
+     "doc": ""
+    },
+    {
+     "name": "safe_lat_left",
+     "doc": ""
+    },
+    {
+     "name": "safe_lat_right",
+     "doc": ""
+    },
+    {
+     "name": "resp_side",
+     "doc": ""
+    },
+    {
+     "name": "xing_case",
+     "doc": ""
+    },
+    {
+     "name": "xing_before",
+     "doc": ""
+    },
+    {
+     "name": "resp_lon",
+     "doc": ""
+    },
+    {
+     "name": "resp_lat",
+     "doc": ""
+    },
+    {
+     "name": "resp_lat_left",
+     "doc": ""
+    },
+    {
+     "name": "resp_lat_right",
+     "doc": ""
+    },
+    {
+     "name": "changing",
+     "doc": ""
+    },
+    {
+     "name": "signalled",
+     "doc": ""
+    },
+    {
+     "name": "settled_to",
+     "doc": ""
+    },
+    {
+     "name": "now",
+     "doc": ""
+    },
+    {
+     "name": "idle",
+     "doc": ""
+    },
+    {
+     "name": "busy",
+     "doc": ""
+    }
+   ],
+   "missing": {
+    "clause_doc": [],
+    "atom_doc": [
+     "tick__status",
+     "tick__active",
+     "tick__done",
+     "tick__stuck",
+     "tick__want",
+     "tick__release",
+     "tick__grant",
+     "tick__goal",
+     "tick__revoke",
+     "tick__stop",
+     "tick__cancel",
+     "type",
+     "safe_long",
+     "safe_lat",
+     "dangerous",
+     "safe_before",
+     "resp",
+     "safe_lat_left",
+     "safe_lat_right",
+     "resp_side",
+     "xing_case",
+     "xing_before",
+     "resp_lon",
+     "resp_lat",
+     "resp_lat_left",
+     "resp_lat_right",
+     "changing",
+     "signalled",
+     "settled_to",
+     "now",
+     "idle",
+     "busy"
+    ]
+   }
+  }
+ ],
+ "ir": null
+}

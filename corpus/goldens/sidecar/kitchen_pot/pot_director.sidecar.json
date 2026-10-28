@@ -1,0 +1,1956 @@
+{
+ "format": "metis-sidecar/1",
+ "catalog": "pot_director",
+ "key": "31bbb583478cd2fe9b971b8fd6dff5107d420b555ba82fd99f2d5d4ab0110ee3",
+ "extensions": [],
+ "init": {
+  "free(pot)": 1,
+  "offpath(cook_a)": 1,
+  "offpath(cook_b)": 1,
+  "nowant(cook_a)": 1,
+  "nowant(cook_b)": 1,
+  "nolate(cook_a)": 1,
+  "nolate(cook_b)": 1,
+  "age_of(cook_a,a0)": 1,
+  "age_of(cook_b,a0)": 1,
+  "issue(pot,t0)": 1,
+  "serving(pot,t0)": 1
+ },
+ "steps": 0,
+ "stages": [
+  "act"
+ ],
+ "events": [
+  {
+   "i": 0,
+   "canon": 60,
+   "name": "want_queue[D=cook_a,R=pot,T=t0,T2=t1]",
+   "rule": "want_queue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} asks for {R}: it takes a ticket."
+  },
+  {
+   "i": 1,
+   "canon": 62,
+   "name": "want_queue[D=cook_a,R=pot,T=t1,T2=t2]",
+   "rule": "want_queue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} asks for {R}: it takes a ticket."
+  },
+  {
+   "i": 2,
+   "canon": 64,
+   "name": "want_queue[D=cook_a,R=pot,T=t2,T2=t3]",
+   "rule": "want_queue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} asks for {R}: it takes a ticket."
+  },
+  {
+   "i": 3,
+   "canon": 66,
+   "name": "want_queue[D=cook_a,R=pot,T=t3,T2=t4]",
+   "rule": "want_queue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} asks for {R}: it takes a ticket."
+  },
+  {
+   "i": 4,
+   "canon": 68,
+   "name": "want_queue[D=cook_a,R=pot,T=t4,T2=t5]",
+   "rule": "want_queue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} asks for {R}: it takes a ticket."
+  },
+  {
+   "i": 5,
+   "canon": 70,
+   "name": "want_queue[D=cook_a,R=pot,T=t5,T2=t6]",
+   "rule": "want_queue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} asks for {R}: it takes a ticket."
+  },
+  {
+   "i": 6,
+   "canon": 72,
+   "name": "want_queue[D=cook_a,R=pot,T=t6,T2=t7]",
+   "rule": "want_queue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} asks for {R}: it takes a ticket."
+  },
+  {
+   "i": 7,
+   "canon": 74,
+   "name": "want_queue[D=cook_a,R=pot,T=t7,T2=t0]",
+   "rule": "want_queue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} asks for {R}: it takes a ticket."
+  },
+  {
+   "i": 8,
+   "canon": 61,
+   "name": "want_queue[D=cook_b,R=pot,T=t0,T2=t1]",
+   "rule": "want_queue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} asks for {R}: it takes a ticket."
+  },
+  {
+   "i": 9,
+   "canon": 63,
+   "name": "want_queue[D=cook_b,R=pot,T=t1,T2=t2]",
+   "rule": "want_queue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} asks for {R}: it takes a ticket."
+  },
+  {
+   "i": 10,
+   "canon": 65,
+   "name": "want_queue[D=cook_b,R=pot,T=t2,T2=t3]",
+   "rule": "want_queue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} asks for {R}: it takes a ticket."
+  },
+  {
+   "i": 11,
+   "canon": 67,
+   "name": "want_queue[D=cook_b,R=pot,T=t3,T2=t4]",
+   "rule": "want_queue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} asks for {R}: it takes a ticket."
+  },
+  {
+   "i": 12,
+   "canon": 69,
+   "name": "want_queue[D=cook_b,R=pot,T=t4,T2=t5]",
+   "rule": "want_queue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} asks for {R}: it takes a ticket."
+  },
+  {
+   "i": 13,
+   "canon": 71,
+   "name": "want_queue[D=cook_b,R=pot,T=t5,T2=t6]",
+   "rule": "want_queue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} asks for {R}: it takes a ticket."
+  },
+  {
+   "i": 14,
+   "canon": 73,
+   "name": "want_queue[D=cook_b,R=pot,T=t6,T2=t7]",
+   "rule": "want_queue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} asks for {R}: it takes a ticket."
+  },
+  {
+   "i": 15,
+   "canon": 75,
+   "name": "want_queue[D=cook_b,R=pot,T=t7,T2=t0]",
+   "rule": "want_queue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} asks for {R}: it takes a ticket."
+  },
+  {
+   "i": 16,
+   "canon": 14,
+   "name": "grant_on_want[D=cook_a,R=pot,T=t0,T2=t1]",
+   "rule": "grant_on_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{R} is free and it is {D}'s turn: {D} holds it."
+  },
+  {
+   "i": 17,
+   "canon": 15,
+   "name": "grant_on_want[D=cook_a,R=pot,T=t1,T2=t2]",
+   "rule": "grant_on_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{R} is free and it is {D}'s turn: {D} holds it."
+  },
+  {
+   "i": 18,
+   "canon": 16,
+   "name": "grant_on_want[D=cook_a,R=pot,T=t2,T2=t3]",
+   "rule": "grant_on_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{R} is free and it is {D}'s turn: {D} holds it."
+  },
+  {
+   "i": 19,
+   "canon": 17,
+   "name": "grant_on_want[D=cook_a,R=pot,T=t3,T2=t4]",
+   "rule": "grant_on_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{R} is free and it is {D}'s turn: {D} holds it."
+  },
+  {
+   "i": 20,
+   "canon": 18,
+   "name": "grant_on_want[D=cook_a,R=pot,T=t4,T2=t5]",
+   "rule": "grant_on_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{R} is free and it is {D}'s turn: {D} holds it."
+  },
+  {
+   "i": 21,
+   "canon": 19,
+   "name": "grant_on_want[D=cook_a,R=pot,T=t5,T2=t6]",
+   "rule": "grant_on_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{R} is free and it is {D}'s turn: {D} holds it."
+  },
+  {
+   "i": 22,
+   "canon": 20,
+   "name": "grant_on_want[D=cook_a,R=pot,T=t6,T2=t7]",
+   "rule": "grant_on_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{R} is free and it is {D}'s turn: {D} holds it."
+  },
+  {
+   "i": 23,
+   "canon": 21,
+   "name": "grant_on_want[D=cook_a,R=pot,T=t7,T2=t0]",
+   "rule": "grant_on_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{R} is free and it is {D}'s turn: {D} holds it."
+  },
+  {
+   "i": 24,
+   "canon": 22,
+   "name": "grant_on_want[D=cook_b,R=pot,T=t0,T2=t1]",
+   "rule": "grant_on_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{R} is free and it is {D}'s turn: {D} holds it."
+  },
+  {
+   "i": 25,
+   "canon": 23,
+   "name": "grant_on_want[D=cook_b,R=pot,T=t1,T2=t2]",
+   "rule": "grant_on_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{R} is free and it is {D}'s turn: {D} holds it."
+  },
+  {
+   "i": 26,
+   "canon": 24,
+   "name": "grant_on_want[D=cook_b,R=pot,T=t2,T2=t3]",
+   "rule": "grant_on_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{R} is free and it is {D}'s turn: {D} holds it."
+  },
+  {
+   "i": 27,
+   "canon": 25,
+   "name": "grant_on_want[D=cook_b,R=pot,T=t3,T2=t4]",
+   "rule": "grant_on_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{R} is free and it is {D}'s turn: {D} holds it."
+  },
+  {
+   "i": 28,
+   "canon": 26,
+   "name": "grant_on_want[D=cook_b,R=pot,T=t4,T2=t5]",
+   "rule": "grant_on_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{R} is free and it is {D}'s turn: {D} holds it."
+  },
+  {
+   "i": 29,
+   "canon": 27,
+   "name": "grant_on_want[D=cook_b,R=pot,T=t5,T2=t6]",
+   "rule": "grant_on_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{R} is free and it is {D}'s turn: {D} holds it."
+  },
+  {
+   "i": 30,
+   "canon": 28,
+   "name": "grant_on_want[D=cook_b,R=pot,T=t6,T2=t7]",
+   "rule": "grant_on_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{R} is free and it is {D}'s turn: {D} holds it."
+  },
+  {
+   "i": 31,
+   "canon": 29,
+   "name": "grant_on_want[D=cook_b,R=pot,T=t7,T2=t0]",
+   "rule": "grant_on_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{R} is free and it is {D}'s turn: {D} holds it."
+  },
+  {
+   "i": 32,
+   "canon": 98,
+   "name": "skip_ticket[R=pot,T=t0,T2=t1]",
+   "rule": "skip_ticket",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s turn was taken by priority: the next ticket's turn."
+  },
+  {
+   "i": 33,
+   "canon": 99,
+   "name": "skip_ticket[R=pot,T=t1,T2=t2]",
+   "rule": "skip_ticket",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s turn was taken by priority: the next ticket's turn."
+  },
+  {
+   "i": 34,
+   "canon": 100,
+   "name": "skip_ticket[R=pot,T=t2,T2=t3]",
+   "rule": "skip_ticket",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s turn was taken by priority: the next ticket's turn."
+  },
+  {
+   "i": 35,
+   "canon": 101,
+   "name": "skip_ticket[R=pot,T=t3,T2=t4]",
+   "rule": "skip_ticket",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s turn was taken by priority: the next ticket's turn."
+  },
+  {
+   "i": 36,
+   "canon": 102,
+   "name": "skip_ticket[R=pot,T=t4,T2=t5]",
+   "rule": "skip_ticket",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s turn was taken by priority: the next ticket's turn."
+  },
+  {
+   "i": 37,
+   "canon": 103,
+   "name": "skip_ticket[R=pot,T=t5,T2=t6]",
+   "rule": "skip_ticket",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s turn was taken by priority: the next ticket's turn."
+  },
+  {
+   "i": 38,
+   "canon": 104,
+   "name": "skip_ticket[R=pot,T=t6,T2=t7]",
+   "rule": "skip_ticket",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s turn was taken by priority: the next ticket's turn."
+  },
+  {
+   "i": 39,
+   "canon": 105,
+   "name": "skip_ticket[R=pot,T=t7,T2=t0]",
+   "rule": "skip_ticket",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s turn was taken by priority: the next ticket's turn."
+  },
+  {
+   "i": 40,
+   "canon": 38,
+   "name": "release_on_report[D=cook_a,R=pot,A=a2]",
+   "rule": "release_on_report",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} gives {R} back."
+  },
+  {
+   "i": 41,
+   "canon": 43,
+   "name": "release_on_report[D=cook_a,R=pot,A=a3]",
+   "rule": "release_on_report",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} gives {R} back."
+  },
+  {
+   "i": 42,
+   "canon": 53,
+   "name": "release_on_report[D=cook_b,R=pot,A=a2]",
+   "rule": "release_on_report",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} gives {R} back."
+  },
+  {
+   "i": 43,
+   "canon": 58,
+   "name": "release_on_report[D=cook_b,R=pot,A=a3]",
+   "rule": "release_on_report",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} gives {R} back."
+  },
+  {
+   "i": 44,
+   "canon": 113,
+   "name": "release_report_wait[D=cook_a,R=pot,A=a0]",
+   "rule": "release_report_wait",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} gives {R} back while its grant is young: the release waits."
+  },
+  {
+   "i": 45,
+   "canon": 114,
+   "name": "release_report_wait[D=cook_a,R=pot,A=a1]",
+   "rule": "release_report_wait",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} gives {R} back while its grant is young: the release waits."
+  },
+  {
+   "i": 46,
+   "canon": 115,
+   "name": "release_report_wait[D=cook_b,R=pot,A=a0]",
+   "rule": "release_report_wait",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} gives {R} back while its grant is young: the release waits."
+  },
+  {
+   "i": 47,
+   "canon": 116,
+   "name": "release_report_wait[D=cook_b,R=pot,A=a1]",
+   "rule": "release_report_wait",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} gives {R} back while its grant is young: the release waits."
+  },
+  {
+   "i": 48,
+   "canon": 37,
+   "name": "release_report_late[D=cook_a,R=pot,A=a2]",
+   "rule": "release_report_late",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s grant is old enough: {R} is free."
+  },
+  {
+   "i": 49,
+   "canon": 42,
+   "name": "release_report_late[D=cook_a,R=pot,A=a3]",
+   "rule": "release_report_late",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s grant is old enough: {R} is free."
+  },
+  {
+   "i": 50,
+   "canon": 52,
+   "name": "release_report_late[D=cook_b,R=pot,A=a2]",
+   "rule": "release_report_late",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s grant is old enough: {R} is free."
+  },
+  {
+   "i": 51,
+   "canon": 57,
+   "name": "release_report_late[D=cook_b,R=pot,A=a3]",
+   "rule": "release_report_late",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s grant is old enough: {R} is free."
+  },
+  {
+   "i": 52,
+   "canon": 31,
+   "name": "release_stuck[D=cook_a,R=pot,A=a0]",
+   "rule": "release_stuck",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} is stuck: {R} is free."
+  },
+  {
+   "i": 53,
+   "canon": 34,
+   "name": "release_stuck[D=cook_a,R=pot,A=a1]",
+   "rule": "release_stuck",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} is stuck: {R} is free."
+  },
+  {
+   "i": 54,
+   "canon": 39,
+   "name": "release_stuck[D=cook_a,R=pot,A=a2]",
+   "rule": "release_stuck",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} is stuck: {R} is free."
+  },
+  {
+   "i": 55,
+   "canon": 44,
+   "name": "release_stuck[D=cook_a,R=pot,A=a3]",
+   "rule": "release_stuck",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} is stuck: {R} is free."
+  },
+  {
+   "i": 56,
+   "canon": 46,
+   "name": "release_stuck[D=cook_b,R=pot,A=a0]",
+   "rule": "release_stuck",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} is stuck: {R} is free."
+  },
+  {
+   "i": 57,
+   "canon": 49,
+   "name": "release_stuck[D=cook_b,R=pot,A=a1]",
+   "rule": "release_stuck",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} is stuck: {R} is free."
+  },
+  {
+   "i": 58,
+   "canon": 54,
+   "name": "release_stuck[D=cook_b,R=pot,A=a2]",
+   "rule": "release_stuck",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} is stuck: {R} is free."
+  },
+  {
+   "i": 59,
+   "canon": 59,
+   "name": "release_stuck[D=cook_b,R=pot,A=a3]",
+   "rule": "release_stuck",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} is stuck: {R} is free."
+  },
+  {
+   "i": 60,
+   "canon": 79,
+   "name": "stop_cancel[D=cook_a]",
+   "rule": "stop_cancel",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {D}'s goal is cancelled."
+  },
+  {
+   "i": 61,
+   "canon": 81,
+   "name": "stop_cancel[D=cook_b]",
+   "rule": "stop_cancel",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {D}'s goal is cancelled."
+  },
+  {
+   "i": 62,
+   "canon": 30,
+   "name": "stop_release[D=cook_a,R=pot,A=a0]",
+   "rule": "stop_release",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {R} is free."
+  },
+  {
+   "i": 63,
+   "canon": 33,
+   "name": "stop_release[D=cook_a,R=pot,A=a1]",
+   "rule": "stop_release",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {R} is free."
+  },
+  {
+   "i": 64,
+   "canon": 36,
+   "name": "stop_release[D=cook_a,R=pot,A=a2]",
+   "rule": "stop_release",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {R} is free."
+  },
+  {
+   "i": 65,
+   "canon": 41,
+   "name": "stop_release[D=cook_a,R=pot,A=a3]",
+   "rule": "stop_release",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {R} is free."
+  },
+  {
+   "i": 66,
+   "canon": 45,
+   "name": "stop_release[D=cook_b,R=pot,A=a0]",
+   "rule": "stop_release",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {R} is free."
+  },
+  {
+   "i": 67,
+   "canon": 48,
+   "name": "stop_release[D=cook_b,R=pot,A=a1]",
+   "rule": "stop_release",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {R} is free."
+  },
+  {
+   "i": 68,
+   "canon": 51,
+   "name": "stop_release[D=cook_b,R=pot,A=a2]",
+   "rule": "stop_release",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {R} is free."
+  },
+  {
+   "i": 69,
+   "canon": 56,
+   "name": "stop_release[D=cook_b,R=pot,A=a3]",
+   "rule": "stop_release",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {R} is free."
+  },
+  {
+   "i": 70,
+   "canon": 82,
+   "name": "stop_dequeue[D=cook_a,R=pot,T=t0]",
+   "rule": "stop_dequeue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {D}'s ticket for {R} is passed over."
+  },
+  {
+   "i": 71,
+   "canon": 83,
+   "name": "stop_dequeue[D=cook_a,R=pot,T=t1]",
+   "rule": "stop_dequeue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {D}'s ticket for {R} is passed over."
+  },
+  {
+   "i": 72,
+   "canon": 84,
+   "name": "stop_dequeue[D=cook_a,R=pot,T=t2]",
+   "rule": "stop_dequeue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {D}'s ticket for {R} is passed over."
+  },
+  {
+   "i": 73,
+   "canon": 85,
+   "name": "stop_dequeue[D=cook_a,R=pot,T=t3]",
+   "rule": "stop_dequeue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {D}'s ticket for {R} is passed over."
+  },
+  {
+   "i": 74,
+   "canon": 86,
+   "name": "stop_dequeue[D=cook_a,R=pot,T=t4]",
+   "rule": "stop_dequeue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {D}'s ticket for {R} is passed over."
+  },
+  {
+   "i": 75,
+   "canon": 87,
+   "name": "stop_dequeue[D=cook_a,R=pot,T=t5]",
+   "rule": "stop_dequeue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {D}'s ticket for {R} is passed over."
+  },
+  {
+   "i": 76,
+   "canon": 88,
+   "name": "stop_dequeue[D=cook_a,R=pot,T=t6]",
+   "rule": "stop_dequeue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {D}'s ticket for {R} is passed over."
+  },
+  {
+   "i": 77,
+   "canon": 89,
+   "name": "stop_dequeue[D=cook_a,R=pot,T=t7]",
+   "rule": "stop_dequeue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {D}'s ticket for {R} is passed over."
+  },
+  {
+   "i": 78,
+   "canon": 90,
+   "name": "stop_dequeue[D=cook_b,R=pot,T=t0]",
+   "rule": "stop_dequeue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {D}'s ticket for {R} is passed over."
+  },
+  {
+   "i": 79,
+   "canon": 91,
+   "name": "stop_dequeue[D=cook_b,R=pot,T=t1]",
+   "rule": "stop_dequeue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {D}'s ticket for {R} is passed over."
+  },
+  {
+   "i": 80,
+   "canon": 92,
+   "name": "stop_dequeue[D=cook_b,R=pot,T=t2]",
+   "rule": "stop_dequeue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {D}'s ticket for {R} is passed over."
+  },
+  {
+   "i": 81,
+   "canon": 93,
+   "name": "stop_dequeue[D=cook_b,R=pot,T=t3]",
+   "rule": "stop_dequeue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {D}'s ticket for {R} is passed over."
+  },
+  {
+   "i": 82,
+   "canon": 94,
+   "name": "stop_dequeue[D=cook_b,R=pot,T=t4]",
+   "rule": "stop_dequeue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {D}'s ticket for {R} is passed over."
+  },
+  {
+   "i": 83,
+   "canon": 95,
+   "name": "stop_dequeue[D=cook_b,R=pot,T=t5]",
+   "rule": "stop_dequeue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {D}'s ticket for {R} is passed over."
+  },
+  {
+   "i": 84,
+   "canon": 96,
+   "name": "stop_dequeue[D=cook_b,R=pot,T=t6]",
+   "rule": "stop_dequeue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {D}'s ticket for {R} is passed over."
+  },
+  {
+   "i": 85,
+   "canon": 97,
+   "name": "stop_dequeue[D=cook_b,R=pot,T=t7]",
+   "rule": "stop_dequeue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {D}'s ticket for {R} is passed over."
+  },
+  {
+   "i": 86,
+   "canon": 32,
+   "name": "age_grant[D=cook_a,A=a0,B=a1]",
+   "rule": "age_grant",
+   "kind": "clause",
+   "stage": "act",
+   "line": "A tick: {D}'s grant is older."
+  },
+  {
+   "i": 87,
+   "canon": 35,
+   "name": "age_grant[D=cook_a,A=a1,B=a2]",
+   "rule": "age_grant",
+   "kind": "clause",
+   "stage": "act",
+   "line": "A tick: {D}'s grant is older."
+  },
+  {
+   "i": 88,
+   "canon": 40,
+   "name": "age_grant[D=cook_a,A=a2,B=a3]",
+   "rule": "age_grant",
+   "kind": "clause",
+   "stage": "act",
+   "line": "A tick: {D}'s grant is older."
+  },
+  {
+   "i": 89,
+   "canon": 47,
+   "name": "age_grant[D=cook_b,A=a0,B=a1]",
+   "rule": "age_grant",
+   "kind": "clause",
+   "stage": "act",
+   "line": "A tick: {D}'s grant is older."
+  },
+  {
+   "i": 90,
+   "canon": 50,
+   "name": "age_grant[D=cook_b,A=a1,B=a2]",
+   "rule": "age_grant",
+   "kind": "clause",
+   "stage": "act",
+   "line": "A tick: {D}'s grant is older."
+  },
+  {
+   "i": 91,
+   "canon": 55,
+   "name": "age_grant[D=cook_b,A=a2,B=a3]",
+   "rule": "age_grant",
+   "kind": "clause",
+   "stage": "act",
+   "line": "A tick: {D}'s grant is older."
+  },
+  {
+   "i": 92,
+   "canon": 107,
+   "name": "age_grant_top[D=cook_a,A=a3]",
+   "rule": "age_grant_top",
+   "kind": "clause",
+   "stage": "act",
+   "line": "A tick: {D}'s grant is as old as it counts."
+  },
+  {
+   "i": 93,
+   "canon": 108,
+   "name": "age_grant_top[D=cook_b,A=a3]",
+   "rule": "age_grant_top",
+   "kind": "clause",
+   "stage": "act",
+   "line": "A tick: {D}'s grant is as old as it counts."
+  },
+  {
+   "i": 94,
+   "canon": 106,
+   "name": "tick_free[R=pot]",
+   "rule": "tick_free",
+   "kind": "clause",
+   "stage": "act",
+   "line": "A tick: {R} is free."
+  },
+  {
+   "i": 95,
+   "canon": 0,
+   "name": "status_reset[D=cook_a,A=a0]",
+   "rule": "status_reset",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s status changed: its age starts again."
+  },
+  {
+   "i": 96,
+   "canon": 2,
+   "name": "status_reset[D=cook_a,A=a1]",
+   "rule": "status_reset",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s status changed: its age starts again."
+  },
+  {
+   "i": 97,
+   "canon": 4,
+   "name": "status_reset[D=cook_a,A=a2]",
+   "rule": "status_reset",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s status changed: its age starts again."
+  },
+  {
+   "i": 98,
+   "canon": 6,
+   "name": "status_reset[D=cook_a,A=a3]",
+   "rule": "status_reset",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s status changed: its age starts again."
+  },
+  {
+   "i": 99,
+   "canon": 7,
+   "name": "status_reset[D=cook_b,A=a0]",
+   "rule": "status_reset",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s status changed: its age starts again."
+  },
+  {
+   "i": 100,
+   "canon": 9,
+   "name": "status_reset[D=cook_b,A=a1]",
+   "rule": "status_reset",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s status changed: its age starts again."
+  },
+  {
+   "i": 101,
+   "canon": 11,
+   "name": "status_reset[D=cook_b,A=a2]",
+   "rule": "status_reset",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s status changed: its age starts again."
+  },
+  {
+   "i": 102,
+   "canon": 13,
+   "name": "status_reset[D=cook_b,A=a3]",
+   "rule": "status_reset",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s status changed: its age starts again."
+  },
+  {
+   "i": 103,
+   "canon": 1,
+   "name": "status_age[D=cook_a,A=a0,B=a1]",
+   "rule": "status_age",
+   "kind": "clause",
+   "stage": "act",
+   "line": "A tick: {D}'s status is older."
+  },
+  {
+   "i": 104,
+   "canon": 3,
+   "name": "status_age[D=cook_a,A=a1,B=a2]",
+   "rule": "status_age",
+   "kind": "clause",
+   "stage": "act",
+   "line": "A tick: {D}'s status is older."
+  },
+  {
+   "i": 105,
+   "canon": 5,
+   "name": "status_age[D=cook_a,A=a2,B=a3]",
+   "rule": "status_age",
+   "kind": "clause",
+   "stage": "act",
+   "line": "A tick: {D}'s status is older."
+  },
+  {
+   "i": 106,
+   "canon": 8,
+   "name": "status_age[D=cook_b,A=a0,B=a1]",
+   "rule": "status_age",
+   "kind": "clause",
+   "stage": "act",
+   "line": "A tick: {D}'s status is older."
+  },
+  {
+   "i": 107,
+   "canon": 10,
+   "name": "status_age[D=cook_b,A=a1,B=a2]",
+   "rule": "status_age",
+   "kind": "clause",
+   "stage": "act",
+   "line": "A tick: {D}'s status is older."
+  },
+  {
+   "i": 108,
+   "canon": 12,
+   "name": "status_age[D=cook_b,A=a2,B=a3]",
+   "rule": "status_age",
+   "kind": "clause",
+   "stage": "act",
+   "line": "A tick: {D}'s status is older."
+  },
+  {
+   "i": 109,
+   "canon": 117,
+   "name": "status_top[D=cook_a,A=a3]",
+   "rule": "status_top",
+   "kind": "clause",
+   "stage": "act",
+   "line": "A tick: {D}'s status is as old as it counts."
+  },
+  {
+   "i": 110,
+   "canon": 118,
+   "name": "status_top[D=cook_b,A=a3]",
+   "rule": "status_top",
+   "kind": "clause",
+   "stage": "act",
+   "line": "A tick: {D}'s status is as old as it counts."
+  },
+  {
+   "i": 111,
+   "canon": 76,
+   "name": "path_push[D=cook_a]",
+   "rule": "path_push",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} is active: on the path."
+  },
+  {
+   "i": 112,
+   "canon": 77,
+   "name": "path_push[D=cook_b]",
+   "rule": "path_push",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} is active: on the path."
+  },
+  {
+   "i": 113,
+   "canon": 109,
+   "name": "active_more[D=cook_a]",
+   "rule": "active_more",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} is active, and on the path already."
+  },
+  {
+   "i": 114,
+   "canon": 110,
+   "name": "active_more[D=cook_b]",
+   "rule": "active_more",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} is active, and on the path already."
+  },
+  {
+   "i": 115,
+   "canon": 78,
+   "name": "path_pop[D=cook_a]",
+   "rule": "path_pop",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} is done: off the path."
+  },
+  {
+   "i": 116,
+   "canon": 80,
+   "name": "path_pop[D=cook_b]",
+   "rule": "path_pop",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} is done: off the path."
+  },
+  {
+   "i": 117,
+   "canon": 111,
+   "name": "done_off[D=cook_a]",
+   "rule": "done_off",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} is done, and off the path already."
+  },
+  {
+   "i": 118,
+   "canon": 112,
+   "name": "done_off[D=cook_b]",
+   "rule": "done_off",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} is done, and off the path already."
+  }
+ ],
+ "cards": [
+  {
+   "name": "pot_director",
+   "text": "the shared-pot kitchen's director: the one pot by request, grant and release",
+   "relation": "served",
+   "moves": [],
+   "effects": [],
+   "slots": [
+    "kind"
+   ]
+  }
+ ],
+ "queries": [],
+ "script": [
+  {
+   "name": "pot_director",
+   "relation": "served",
+   "text": "the shared-pot kitchen's director: the one pot by request, grant and release",
+   "clauses": [
+    {
+     "name": "want_queue",
+     "stage": "act",
+     "doc": "{D} asks for {R}: it takes a ticket.",
+     "premises": [
+      {
+       "atom": "tick__want(D,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "issue(R,T)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tnext(T,T2)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [
+      {
+       "atom": "queued(D,R,T)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "issue(R,T2)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "grant_on_want",
+     "stage": "act",
+     "doc": "{R} is free and it is {D}'s turn: {D} holds it.",
+     "premises": [
+      {
+       "atom": "queued(D,R,T)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "serving(R,T)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "free(R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tnext(T,T2)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [
+      {
+       "atom": "holder(D,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "held(D,a0)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__grant(D,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "serving(R,T2)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "preempt",
+     "stage": "act",
+     "doc": "{D} comes first: it takes {R} from {X}, who takes a new ticket.",
+     "premises": [
+      {
+       "atom": "queued(D,R,T)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "priority(D,X)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "holder(X,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "held(X,A)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "issue(R,T3)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tnext(T3,T4)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [
+      {
+       "atom": "holder(D,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "held(D,a0)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__revoke(X,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__grant(D,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "skipped(R,T)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "queued(X,R,T3)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "issue(R,T4)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "skip_ticket",
+     "stage": "act",
+     "doc": "{D}'s turn was taken by priority: the next ticket's turn.",
+     "premises": [
+      {
+       "atom": "skipped(R,T)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "serving(R,T)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tnext(T,T2)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [
+      {
+       "atom": "serving(R,T2)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "release_on_report",
+     "stage": "act",
+     "doc": "{D} gives {R} back.",
+     "premises": [
+      {
+       "atom": "tick__release(D,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "holder(D,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "held(D,A)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "mature_grant(A)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [
+      {
+       "atom": "free(R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__revoke(D,R)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "release_report_wait",
+     "stage": "act",
+     "doc": "{D} gives {R} back while its grant is young: the release waits.",
+     "premises": [
+      {
+       "atom": "tick__release(D,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "holder(D,R)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "held(D,A)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "young_grant(A)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [
+      {
+       "atom": "late_release(D,R)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "release_report_late",
+     "stage": "act",
+     "doc": "{D}'s grant is old enough: {R} is free.",
+     "premises": [
+      {
+       "atom": "late_release(D,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "holder(D,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "held(D,A)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "mature_grant(A)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [
+      {
+       "atom": "free(R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__revoke(D,R)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "release_stuck",
+     "stage": "act",
+     "doc": "{D} is stuck: {R} is free.",
+     "premises": [
+      {
+       "atom": "tick__stuck(D)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "holder(D,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "held(D,A)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [
+      {
+       "atom": "free(R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__revoke(D,R)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "stop_cancel",
+     "stage": "act",
+     "doc": "Stopped: {D}'s goal is cancelled.",
+     "premises": [
+      {
+       "atom": "tick__stop",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "path(D)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__goal(D)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [
+      {
+       "atom": "tick__cancel(D)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "offpath(D)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "stop_release",
+     "stage": "act",
+     "doc": "Stopped: {R} is free.",
+     "premises": [
+      {
+       "atom": "tick__stop",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "holder(D,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "held(D,A)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [
+      {
+       "atom": "free(R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__revoke(D,R)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "stop_dequeue",
+     "stage": "act",
+     "doc": "Stopped: {D}'s ticket for {R} is passed over.",
+     "premises": [
+      {
+       "atom": "tick__stop",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "queued(D,R,T)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [
+      {
+       "atom": "skipped(R,T)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "age_grant",
+     "stage": "act",
+     "doc": "A tick: {D}'s grant is older.",
+     "premises": [
+      {
+       "atom": "tick",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "held(D,A)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "older(A,B)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [
+      {
+       "atom": "held(D,B)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "age_grant_top",
+     "stage": "act",
+     "doc": "A tick: {D}'s grant is as old as it counts.",
+     "premises": [
+      {
+       "atom": "tick",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "held(D,A)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "top(A)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [],
+     "target": null
+    },
+    {
+     "name": "tick_free",
+     "stage": "act",
+     "doc": "A tick: {R} is free.",
+     "premises": [
+      {
+       "atom": "tick",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "free(R)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [],
+     "target": null
+    },
+    {
+     "name": "status_reset",
+     "stage": "act",
+     "doc": "{D}'s status changed: its age starts again.",
+     "premises": [
+      {
+       "atom": "changed(D)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "age_of(D,A)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [
+      {
+       "atom": "age_of(D,a0)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "status_age",
+     "stage": "act",
+     "doc": "A tick: {D}'s status is older.",
+     "premises": [
+      {
+       "atom": "tick_s(D)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "age_of(D,A)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "older(A,B)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [
+      {
+       "atom": "age_of(D,B)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "status_top",
+     "stage": "act",
+     "doc": "A tick: {D}'s status is as old as it counts.",
+     "premises": [
+      {
+       "atom": "tick_s(D)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "age_of(D,A)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "top(A)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [],
+     "target": null
+    },
+    {
+     "name": "path_push",
+     "stage": "act",
+     "doc": "{D} is active: on the path.",
+     "premises": [
+      {
+       "atom": "tick__active(D)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "offpath(D)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [
+      {
+       "atom": "path(D)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__goal(D)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "active_more",
+     "stage": "act",
+     "doc": "{D} is active, and on the path already.",
+     "premises": [
+      {
+       "atom": "tick__active(D)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "path(D)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [],
+     "target": null
+    },
+    {
+     "name": "path_pop",
+     "stage": "act",
+     "doc": "{D} is done: off the path.",
+     "premises": [
+      {
+       "atom": "tick__done(D)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "path(D)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__goal(D)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [
+      {
+       "atom": "offpath(D)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "done_off",
+     "stage": "act",
+     "doc": "{D} is done, and off the path already.",
+     "premises": [
+      {
+       "atom": "tick__done(D)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "offpath(D)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [],
+     "target": null
+    }
+   ],
+   "atoms": [
+    {
+     "name": "tick__status",
+     "doc": ""
+    },
+    {
+     "name": "tick__active",
+     "doc": ""
+    },
+    {
+     "name": "tick__done",
+     "doc": ""
+    },
+    {
+     "name": "tick__stuck",
+     "doc": ""
+    },
+    {
+     "name": "tick__want",
+     "doc": ""
+    },
+    {
+     "name": "tick__release",
+     "doc": ""
+    },
+    {
+     "name": "tick__grant",
+     "doc": ""
+    },
+    {
+     "name": "tick__goal",
+     "doc": ""
+    },
+    {
+     "name": "tick__revoke",
+     "doc": ""
+    },
+    {
+     "name": "tick__stop",
+     "doc": ""
+    },
+    {
+     "name": "tick__cancel",
+     "doc": ""
+    },
+    {
+     "name": "free",
+     "doc": ""
+    },
+    {
+     "name": "holder",
+     "doc": ""
+    },
+    {
+     "name": "held",
+     "doc": ""
+    },
+    {
+     "name": "issue",
+     "doc": ""
+    },
+    {
+     "name": "serving",
+     "doc": ""
+    },
+    {
+     "name": "queued",
+     "doc": ""
+    },
+    {
+     "name": "skipped",
+     "doc": ""
+    },
+    {
+     "name": "late",
+     "doc": ""
+    },
+    {
+     "name": "nolate",
+     "doc": ""
+    },
+    {
+     "name": "late_release",
+     "doc": ""
+    },
+    {
+     "name": "want",
+     "doc": ""
+    },
+    {
+     "name": "nowant",
+     "doc": ""
+    },
+    {
+     "name": "path",
+     "doc": ""
+    },
+    {
+     "name": "offpath",
+     "doc": ""
+    },
+    {
+     "name": "tick",
+     "doc": ""
+    },
+    {
+     "name": "tick_s",
+     "doc": ""
+    },
+    {
+     "name": "changed",
+     "doc": ""
+    },
+    {
+     "name": "age_of",
+     "doc": ""
+    }
+   ],
+   "missing": {
+    "clause_doc": [],
+    "atom_doc": [
+     "tick__status",
+     "tick__active",
+     "tick__done",
+     "tick__stuck",
+     "tick__want",
+     "tick__release",
+     "tick__grant",
+     "tick__goal",
+     "tick__revoke",
+     "tick__stop",
+     "tick__cancel",
+     "free",
+     "holder",
+     "held",
+     "issue",
+     "serving",
+     "queued",
+     "skipped",
+     "late",
+     "nolate",
+     "late_release",
+     "want",
+     "nowant",
+     "path",
+     "offpath",
+     "tick",
+     "tick_s",
+     "changed",
+     "age_of"
+    ]
+   }
+  }
+ ],
+ "ir": null
+}
