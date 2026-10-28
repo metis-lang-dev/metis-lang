@@ -1,0 +1,5 @@
+# kitchen_pot over two processes (linker s-5908724a step 5a): cook_a alone, cook_b with the director
+processes:
+  a: [cook_a]
+  b: [cook_b, pot_director]
+transport: {carrier: socket, budget: 1}

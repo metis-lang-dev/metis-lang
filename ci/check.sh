@@ -322,4 +322,30 @@ echo "$b3" | grep -q 'build reused 2 \[pot_director cook_b\] compiled 1 \[cook_a
 grep -q '^image kitchen_pot v-' "$WORK/chk.txt" || { echo "check: no image line"; exit 1; }
 echo "BUILD 3/3 (compiled 3, reused 3, recompiled 1 of 3) + check"
 
+echo "== 17. deployment plans (spec 17 §5): metisc --link --plan == goldens; the image's hash unchanged by a plan"
+# kitchen_pot with response: 3 (composition_split.yaml: a socket's budget 1 + the director's latency 2): split
+# {cook_a} | {cook_b, pot_director} (the protocol's reports one way, grants and cancels the other), the operator's
+# shape (every member in the runtime; the agent process hosts the world's order and stop, amendment 2), and one
+# plan of refusals (plan-member, plan-world, plan-tick-layer, L18 with the budget)
+n_pl=0
+for p in split operator bad; do
+  rc=0
+  ( cd "$ROOT/corpus/iface" && METIS_HOME="$ROOT/corpus/iface/_home" \
+      "$ROOT/src/metisc" --link kitchen_pot/composition_split.yaml --check --plan "kitchen_pot/plans/$p.yaml" ) \
+      > "$WORK/plan_$p.txt" 2>&1 || rc=$?
+  echo "rc $rc" >> "$WORK/plan_$p.txt"
+  diff -u "$ROOT/corpus/goldens/plans/$p.txt" "$WORK/plan_$p.txt"
+  n_pl=$((n_pl + 1))
+done
+n_gold=$(ls "$ROOT/corpus/goldens/plans" | wc -l)
+[ "$n_pl" -eq "$n_gold" ] || { echo "plans: $n_pl plans, $n_gold goldens"; exit 1; }
+( cd "$ROOT/corpus/iface" && METIS_HOME="$ROOT/corpus/iface/_home" "$ROOT/src/metisc" --link kitchen_pot/composition_split.yaml \
+    -o "$WORK/pimg" --plan kitchen_pot/plans/split.yaml --plan kitchen_pot/plans/operator.yaml ) > "$WORK/pimg.txt" 2>&1
+h0=$(sed -n 's/^image kitchen_pot_split v-//p' "$ROOT/corpus/goldens/plans/split.txt")
+h1=$(sed -n 's/^image kitchen_pot_split v-//p' "$WORK/pimg.txt")
+[ "$h0" = "$h1" ] && [ -f "$WORK/pimg/kitchen_pot_split.image.v-$h1/plans/split.json" ] \
+    && [ -f "$WORK/pimg/kitchen_pot_split.image.v-$h1/plans/operator.json" ] \
+    || { echo "plans: the image v-$h1 (the golden's v-$h0) or its plans/ missing"; exit 1; }
+echo "PLANS $n_pl/$n_gold (image v-$h1 with plans/split.json and plans/operator.json, its hash unchanged)"
+
 echo "ALL GATES GREEN"

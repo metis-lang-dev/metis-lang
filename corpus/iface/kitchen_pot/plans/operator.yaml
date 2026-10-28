@@ -1,0 +1,6 @@
+# the wheelchair's shape on kitchen_pot (spec 17 amendment 2): every member in the runtime; the operator's
+# process hosts the world's readings it gives (the order, the stop): the world is an endpoint in any process
+processes:
+  runtime: [cook_a, cook_b, pot_director]
+  agent: {world: [order, tick__stop]}
+transport: {carrier: socket, budget: 1}

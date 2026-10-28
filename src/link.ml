@@ -3,7 +3,8 @@
 
 open Iface
 
-type opts = { out : string option; check : bool; tar : bool; bundles : string option; build : bool }
+type opts = { out : string option; check : bool; tar : bool; bundles : string option; build : bool;
+              plans : string list }
 
 (* the tree director's hysteresis (the road's: k = 2 grant ages young, m = 1
    status age; policy-tuning-2 2a's compose.py, spec 15 §9 rule 4) *)
@@ -515,6 +516,94 @@ let run ~wire o comp_path =
               @ (match tools with Some t -> [("tools.json", t)] | None -> []) in
   let h = Image.hash files in
   let h12 = String.sub h 0 12 in
+  (* -- deployment plans (§5): members -> processes, the world's ports hosted, the transport ports derived ---- *)
+  let all_members = List.map (fun m -> m.m_name) (dm :: specs) in
+  let member n = List.find (fun m -> m.m_name = n) (dm :: specs) in
+  let beliefs_of m = List.map fst (yfield m "beliefs") in
+  let plan_out = List.map (fun pf ->
+      let pname = Filename.remove_extension (Filename.basename pf) in
+      let py = read_yaml_block pf in      (* block YAML, as spec 17 §5.1 writes a plan *)
+      let ps = List.map (fun (pn, v) -> match v with
+          | M kv -> (pn, (match List.assoc_opt "members" kv with Some x -> strs x | None -> []),
+                     (match List.assoc_opt "world" kv with Some x -> strs x | None -> []),
+                     (match List.assoc_opt "runtime" kv with Some x -> str x | None -> "py"))
+          | v -> (pn, strs v, [], "py"))
+          (match List.assoc_opt "processes" py with Some v -> pairs v
+                                                  | None -> add "error" "plan" "plan-shape: %s: no processes:" pname; []) in
+      let tr = match List.assoc_opt "transport" py with Some v -> pairs v | None -> [] in
+      let budget = match List.assoc_opt "budget" tr with Some b -> int_of_string (str b) | None -> 0 in
+      let carrier = match List.assoc_opt "carrier" tr with Some c -> str c | None -> "socket" in
+      (* every member in exactly one process; every name a member *)
+      List.iter (fun n -> match List.filter (fun (_, ms, _, _) -> List.mem n ms) ps with
+          | [_] -> ()
+          | [] -> add "error" "plan" "plan-member: %s: %s is in no process" pname n
+          | _ -> add "error" "plan" "plan-member: %s: %s is in more than one process" pname n) all_members;
+      List.iter (fun (pn, ms, ws, _) ->
+          List.iter (fun n -> if not (List.mem n all_members) then
+                        add "error" "plan" "plan-member: %s: %s (process %s) is no member" pname n pn) ms;
+          List.iter (fun w -> if not (List.mem w (a.a_world_out @ a.a_world_in)) then
+                        add "error" "plan" "plan-world: %s: %s (process %s) is no world port" pname w pn) ws) ps;
+      let proc_of n = List.find_map (fun (pn, ms, _, _) -> if List.mem n ms then Some pn else None) ps in
+      (* a world port NAMED under a process's world: is hosted there and crosses to the members that read it, a
+         world-private copy included (amendment 2: the operator's readings); a port named nowhere is hosted
+         wherever its members are, each member's own host syncing it: it never crosses *)
+      let named p = List.find_map (fun (pn, _, ws, _) -> if List.mem p ws then Some pn else None) ps in
+      (* the runtimes today (§10): levels need py's hook; go has no tick layer for a director with specialists *)
+      List.iter (fun (pn, ms, _, rt) ->
+          List.iter (fun n -> if List.mem n all_members then begin
+              let m = member n in
+              if rt <> "py" && (yfield m "levels" <> [] || yfield m "beliefs" <> [] || yfield m "evaluate" <> []) then
+                add "error" "plan" "plan-levels-runtime: %s: %s declares levels/beliefs/evaluate and process %s runs %s (the hook is py's)"
+                  pname n pn rt end) ms;
+          if rt = "go" && List.mem direct ms && List.exists (fun n -> n <> direct) ms then
+            add "error" "plan" "plan-tick-layer: %s: process %s (go) holds the director and specialists: go has no tick layer" pname pn)
+        ps;
+      (* the transport ports: per pred and producing process, the consumers in other processes. A report keyed by
+         its member (tick__want(S, R), tick__done(S)) has its producers' atoms disjoint: one port per producing
+         process; a STATE pred produced in two processes is I4 across the boundary *)
+      let tports = List.concat_map (fun p ->
+          let reads m = match List.assoc_opt p m.m_shared with
+            | Some "in" -> true | Some "world-private" -> named p <> None | _ -> false in
+          let prods = uniq (List.filter_map (fun m -> if List.assoc_opt p m.m_shared = Some "out" then proc_of m.m_name else None) (dm :: specs)
+                            @ (if List.mem p a.a_world_out then Option.to_list (named p) else [])) in
+          let cons = uniq (List.filter_map (fun m -> if reads m then proc_of m.m_name else None) (dm :: specs)
+                           @ (if List.mem p a.a_world_in then Option.to_list (named p) else [])) in
+          let nature = match List.assoc_opt p natures with Some n -> n | None -> "state" in
+          let ports = List.filter_map (fun from -> match minus cons [from] with
+              | [] -> None
+              | to_ -> Some (p, nature, from, to_, if p = "tick__stop" then "director-first" else "beat")) prods in
+          if ports <> [] then begin
+            if List.exists (fun m -> List.mem p (beliefs_of m)) (dm :: specs) then
+              add "error" "plan" "plan-belief: %s: %s is a belief: only its level atoms may cross" pname p;
+            if nature = "state" && List.length prods > 1 then
+              add "error" "plan" "plan-producers: %s: the state %s is produced in %s: one producing process (I4 across the boundary)"
+                pname p (String.concat ", " prods)
+          end;
+          ports) preds in
+      (* L18 with a plan: rho covers the director's latency and the transport's budget *)
+      if tports <> [] then (match rho with
+          | None -> add "error" "L18" "link-response-required: %s derives transport ports: the composition needs response:" pname
+          | Some r when r < 2 + budget ->
+            add "error" "L18" "link-response: %s: response %d is under the director's latency 2 + the transport budget %d" pname r budget
+          | _ -> ());
+      let body = Image.JO [
+          ("format", Image.JS "metis-plan/1"); ("name", Image.JS pname); ("image", Image.JS h12);
+          ("processes", Image.JO (List.map (fun (pn, ms, _, rt) ->
+               (pn, Image.JO [("runtime", Image.JS rt); ("members", Image.JL (List.map (fun x -> Image.JS x) ms));
+                              ("world", Image.JL (List.map (fun x -> Image.JS x)
+                                                    (List.filter (fun p -> named p = Some pn) (a.a_world_out @ a.a_world_in))))])) ps));
+          ("transport", Image.JO [("carrier", Image.JS carrier); ("budget", Image.JI budget)]);
+          ("ports", Image.JL (List.map (fun (p, nature, from, to_, latch) ->
+               Image.JO [("pred", Image.JS p); ("nature", Image.JS nature); ("from", Image.JS from);
+                         ("to", Image.JL (List.map (fun x -> Image.JS x) to_)); ("latch", Image.JS latch)]) tports))] in
+      let ph = String.sub (Sha256.hex (Image.to_string body)) 0 12 in
+      let json = Image.to_string (match body with Image.JO kv -> Image.JO (kv @ [("plan", Image.JS ph)]) | j -> j) in
+      let plines = (Printf.sprintf "plan %s v-%s (image v-%s)" pname ph h12)
+                   :: List.map (fun (pn, ms, _, rt) -> Printf.sprintf "  process %s %s [%s] world [%s]" pn rt (String.concat " " ms)
+                                   (String.concat " " (List.filter (fun p -> named p = Some pn) (a.a_world_out @ a.a_world_in)))) ps
+                   @ List.map (fun (p, nature, from, to_, latch) ->
+                       Printf.sprintf "  transport %s %s %s -> %s latch %s" p nature from (String.concat " " to_) latch) tports in
+      (pname, json, plines)) o.plans in
   (* the listing *)
   line "link %s" (Filename.basename comp_path);
   List.iter (fun m -> line "member %s %s wire %s bundle %s source %s" m.m_name m.m_role
@@ -532,6 +621,7 @@ let run ~wire o comp_path =
   let n_err = List.length errs in
   if n_err = 0 then begin
     line "image %s v-%s" name h12;
+    List.iter (fun (_, _, pl) -> List.iter (fun l -> line "%s" l) pl) plan_out;
     if not o.check then begin
       let dir = Filename.concat build (Printf.sprintf "%s.image.v-%s" name h12) in
       List.iter (fun (p, c) ->
@@ -544,6 +634,11 @@ let run ~wire o comp_path =
       let lock = Image.JO [
           ("members", Image.JO (List.map (fun m ->
                (m.m_name, Image.JO [("bundle", Image.JS (bkey m)); ("source", Image.JS m.m_key);
+                                    (* the package directory, in the includes' form: a loader that builds the member from
+                                       source finds it from the image alone (a generated director: inside the image) *)
+                                    ("dir", if m.m_role = "direct" && not hand
+                                      then Image.JO [("place", Image.JS "image"); ("path", Image.JS ("members/" ^ m.m_name))]
+                                      else Image.JO [("place", Image.JS "dir"); ("path", Image.JS (Filename.dirname m.m_program))]);
                                     ("program", Image.JS (snd (wire_of m.m_name)));
                                     ("includes", Image.JL (List.map (fun (s, place, f) ->
                                          Image.JO [("name", Image.JS s); ("place", Image.JS place); ("path", Image.JS (inside f))]) m.m_inc))]))
@@ -553,6 +648,8 @@ let run ~wire o comp_path =
           ("places", Image.JO [("root", Image.JS comp_dir);
                                ("home", match Sys.getenv_opt "METIS_HOME" with Some h -> Image.JS h | None -> Image.JN)]);
           ("image", Image.JS h)] in
+      List.iter (fun (pn, json, _) ->          (* outside the image's hash: one image, any number of plans *)
+          Image.mkdir_p (Filename.concat dir "plans"); Image.write_file (Filename.concat dir ("plans/" ^ pn ^ ".json")) json) plan_out;
       let lock_s = Image.to_string lock in
       Image.write_file (Filename.concat dir "image.lock") lock_s;
       if o.tar then Image.write_file (dir ^ ".tar")      (* the lock rides along, outside the hash *)

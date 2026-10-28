@@ -12,6 +12,7 @@ type opts = {
                                  transitional (the image is OCaml-only: step 3 decides whether metisc emits the sidecar) *)
   build : bool;               (* `metisc build` (§7): reuse the last image's wire of every member whose source key is
                                  unchanged (OUT/<name>.build), compile the stale ones, link, record *)
+  plans : string list;        (* --plan FILE (repeatable): a deployment plan (§5), its table written to plans/<p>.json *)
 }
 
 (* WIRE: a program's path -> its wire lines and its program key (metisc

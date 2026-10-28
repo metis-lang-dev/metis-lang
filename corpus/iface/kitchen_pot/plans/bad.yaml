@@ -1,0 +1,7 @@
+# refusals: a member in two processes, one in none, a name that is no member, a world port that is not one,
+# a go process holding the director with a specialist (no tick layer)
+processes:
+  a: {members: [cook_a, pot_director, cook_b], runtime: go}
+  b: [cook_a, ghost]
+  c: {world: [order, not_a_port]}
+transport: {carrier: socket, budget: 2}
