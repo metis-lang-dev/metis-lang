@@ -438,13 +438,18 @@ let wire_file program extensions =
   let prog = Ground.ground cat c.c_init in
   List.iter print_endline (Wire.artifact_lines cat ports prog c.c_steps)
 
+(* the case's #query atoms in source order, each once (c_queries is built by prepending) *)
+let source_queries c =
+  List.fold_left (fun acc q -> if List.mem q acc then acc else acc @ [q]) [] (List.rev c.c_queries)
+
 (* spec/17: a member's wire and program key, for the link (--wire's compile, the program alone) *)
 let member_wire program =
   let c = embedded_case program in
   let ast = Compile.resolve_includes (Parser.parse_file program) (Filename.dirname program) in
   let (cat, ports) = compile_warn ast in
   let prog = Ground.ground cat c.c_init in
-  (Wire.artifact_lines cat ports prog c.c_steps, Nets.program_key prog)
+  (Wire.artifact_lines cat ports prog c.c_steps, Nets.program_key prog,
+   Sidecar.emit ~program ~extensions:[] ~cat ~prog ~init:c.c_init ~steps:c.c_steps ~queries:(source_queries c))
 
 let rec link_args comp (o : Link.opts) = function
   | [] ->
@@ -460,6 +465,27 @@ let rec link_args comp (o : Link.opts) = function
   | "--plan" :: f :: rest -> link_args comp { o with plans = o.plans @ [f] } rest
   | a :: _ -> failwith ("--link: unknown argument " ^ a)
 
+(* spec/17 ruling 6: one package's sidecar.json, as the link writes it (the program and its extensions) *)
+let sidecar_file program extensions =
+  let c = embedded_case program in
+  let load p = Compile.resolve_includes (Parser.parse_file p) (Filename.dirname p) in
+  let past = load program in
+  let (cat, _) = compile_warn past in
+  let (cat, _) = List.fold_left (fun (cat, (bast : Ast.catalog)) e ->
+      let east = load e in
+      let (ecat, _) = compile_warn ~base:(cat, bast) east in
+      (Catalog.admit cat ecat,
+       { bast with Ast.cdecls = bast.Ast.cdecls @ east.Ast.cdecls;
+                   cdecl_locs = bast.Ast.cdecl_locs @ east.Ast.cdecl_locs }))
+      (cat, past) extensions in
+  let prog = Ground.ground cat c.c_init in
+  print_string (Sidecar.emit ~program ~extensions ~cat ~prog ~init:c.c_init ~steps:c.c_steps ~queries:(source_queries c))
+
+let rec sidecar_args program exts = function
+  | [] -> sidecar_file program (List.rev exts)
+  | "--extension" :: e :: rest -> sidecar_args program (e :: exts) rest
+  | a :: _ -> failwith ("--sidecar: unknown argument " ^ a)
+
 let rec wire_args program exts = function
   | [] -> wire_file program (List.rev exts)
   | "--extension" :: e :: rest -> wire_args program (e :: exts) rest
@@ -468,6 +494,7 @@ let rec wire_args program exts = function
 let () =
   (try match Array.to_list Sys.argv with
   | _ :: "--wire" :: program :: rest -> wire_args program [] rest
+  | _ :: "--sidecar" :: program :: rest -> sidecar_args program [] rest
   | _ :: "--link" :: comp :: rest ->
     link_args comp { Link.out = None; check = false; tar = false; bundles = None; build = false; plans = [] } rest
   | _ :: "build" :: rest ->

@@ -348,4 +348,22 @@ h1=$(sed -n 's/^image kitchen_pot_split v-//p' "$WORK/pimg.txt")
     || { echo "plans: the image v-$h1 (the golden's v-$h0) or its plans/ missing"; exit 1; }
 echo "PLANS $n_pl/$n_gold (image v-$h1 with plans/split.json and plans/operator.json, its hash unchanged)"
 
+echo "== 18. the sidecars (spec 17 ruling 6): metisc's sidecar.json == metispy's, byte for byte, every corpus member"
+# the four corpus images linked; each member's sidecar.json against corpus/goldens/sidecar/sidecars.sha256 (made by
+# metispy's artifact.build, linker step 3); tools.json at the image root against the golden constant
+n_sc=0
+for c in kitchen_pot/composition.yaml road/composition.yaml alfworld/domains/hier/composition.yaml minihack/domains/hier/composition.yaml; do
+  ( cd "$ROOT/corpus/iface" && METIS_HOME="$ROOT/corpus/iface/_home" "$ROOT/src/metisc" --link "$c" -o "$WORK/sc" ) > /dev/null 2>&1 \
+      || { echo "sidecars: $c does not link"; exit 1; }
+done
+while read -r h b name; do
+  img=${name%%/*}; m=${name#*/}
+  f=$(ls -d "$WORK"/sc/"$img".image.v-*/members/"$m"/sidecar.json | head -1)
+  got=$(sha256sum "$f" | cut -d' ' -f1)
+  [ "$got" = "$h" ] || { echo "sidecar $name: $got, the golden $h"; exit 1; }
+  n_sc=$((n_sc + 1))
+done < "$ROOT/corpus/goldens/sidecar/sidecars.sha256"
+cmp "$(ls -d "$WORK"/sc/kitchen_pot.image.v-*/tools.json | head -1)" "$ROOT/corpus/goldens/sidecar/tools.json"
+echo "SIDECARS $n_sc/16 byte-equal + tools.json"
+
 echo "ALL GATES GREEN"

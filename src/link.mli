@@ -15,6 +15,6 @@ type opts = {
   plans : string list;        (* --plan FILE (repeatable): a deployment plan (§5), its table written to plans/<p>.json *)
 }
 
-(* WIRE: a program's path -> its wire lines and its program key (metisc
-   --wire's compile, main.ml's). → the listing's lines, the error count. *)
-val run : wire:(string -> string list * string) -> opts -> string -> string list * int
+(* WIRE: a program's path -> its wire lines, its program key and its sidecar.json (metisc
+   --wire's compile and the emitter, main.ml's). → the listing's lines, the error count. *)
+val run : wire:(string -> string list * string * string) -> opts -> string -> string list * int

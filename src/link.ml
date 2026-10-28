@@ -376,9 +376,10 @@ let run ~wire o comp_path =
   let cached m = match last_dir, List.assoc_opt m.m_name last with
     | Some dir, Some (src, pk) when src = build_key m ->
       let f = Filename.concat build (Filename.concat dir ("members/" ^ m.m_name ^ "/ground.wire")) in
-      if Sys.file_exists f then begin
+      let sf = Filename.concat (Filename.dirname f) "sidecar.json" in
+      if Sys.file_exists f && Sys.file_exists sf then begin
         reused := m.m_name :: !reused;
-        Some (List.filter (( <> ) "") (String.split_on_char '\n' (Image.read_file f)), pk)
+        Some (List.filter (( <> ) "") (String.split_on_char '\n' (Image.read_file f)), pk, Image.read_file sf)
       end else None
     | _ -> None in
   let compile m = try Ok (wire m.m_program) with
@@ -387,7 +388,8 @@ let run ~wire o comp_path =
   let wires = List.map (fun m -> (m.m_name, match cached m with Some w -> Ok w | None -> compile m)) members in
   List.iter (fun (n, w) -> match w with
       | Error e -> add "error" "wire" "%s: no wire: %s" n e | Ok _ -> ()) wires;
-  let wire_of n = match List.assoc n wires with Ok (l, k) -> (l, k) | Error _ -> ([], "-") in
+  let wire_of n = match List.assoc n wires with Ok (l, k, _) -> (l, k) | Error _ -> ([], "-") in
+  let side_of n = match List.assoc n wires with Ok (_, _, sc) -> sc | Error _ -> "" in
   let ports_of n = List.filter_map (fun l -> match String.split_on_char ' ' l with
       | ["B"; k; p] -> Some (k, p) | _ -> None) (fst (wire_of n)) in
   (* L23 levels: the weight port declared, the level pred level-first over type level, no belief in a count *)
@@ -397,7 +399,7 @@ let run ~wire o comp_path =
           | _ -> None) (yfield m "evaluate") in
       let model_ports = List.concat_map (fun f ->
           try List.filter_map (fun l -> match String.split_on_char ' ' l with
-              | ["B"; k; p] -> Some (k, p) | _ -> None) (fst (wire f))
+              | ["B"; k; p] -> Some (k, p) | _ -> None) (let (l, _, _) = wire f in l)
           with _ -> []) models in
       let weight p = List.mem ("weight", p) (ports_of m.m_name @ model_ports) in
       List.iter (fun (b, spec) ->
@@ -446,9 +448,8 @@ let run ~wire o comp_path =
     | S s -> Image.JS s | L l -> Image.JL (List.map y_j l) | M kv -> Image.JO (List.map (fun (k, v) -> (k, y_j v)) kv) in
   let bundle_files m =
     let (wl, _) = wire_of m.m_name in
-    [("ground.wire", String.concat "\n" wl ^ "\n")]
-    @ (match bundle_file m.m_name "sidecar.json" with
-        | Some f when Sys.file_exists f -> [("sidecar.json", Image.read_file f)] | _ -> []) in
+    (* the sidecar is metisc's own (ruling 6: the image OCaml-only); --bundles only checks a given one's key (L19) *)
+    [("ground.wire", String.concat "\n" wl ^ "\n"); ("sidecar.json", side_of m.m_name)] in
   let bkey m = String.sub (Image.hash (bundle_files m)) 0 12 in
   let member_j m =
     let gen = m.m_role = "direct" && not hand in
@@ -504,8 +505,7 @@ let run ~wire o comp_path =
       ("response", match rho with Some r -> Image.JI r | None -> Image.JN);
       ("priority", Image.JL (List.map (fun (p, q) -> Image.JL [Image.JS p; Image.JS q]) closed))] in
   let image_s = Image.to_string image in
-  let tools = List.find_map (fun m -> match bundle_file m.m_name "tools.json" with
-      | Some f when Sys.file_exists f -> Some (Image.read_file f) | _ -> None) (dm :: specs) in
+  let tools = Some Tools_json.text in          (* one constant, once at the image root (ruling 6) *)
   let files = [("image.json", image_s)]
               @ List.concat_map (fun m -> List.map (fun (f, c) -> ("members/" ^ m.m_name ^ "/" ^ f, c)) (bundle_files m)) (dm :: specs)
               @ (if hand then [] else [("members/" ^ direct ^ "/" ^ direct ^ ".llp", gen_llp);
