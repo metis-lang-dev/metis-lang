@@ -346,6 +346,17 @@ wheelchair image) must be hosted by the composition's world. `hosts: {member: <b
 effective binding and its origin (`manifest` | `composition`); L21 checks the override as it checks a
 manifest binding. A member not named in `hosts:` keeps its own.
 
+## Amendment 2 (2026-10-28, wheelchair-design step 3 review)
+
+- **L15 closes `priority` transitively**: the strict order the link checks and records is the transitive
+  closure of the declared pairs; a cycle anywhere in the closure is `link-priority`.
+- **An endpoint is a member.** A process with no member derives no transport port, because only shared preds
+  between members cross (§5.2). A person, a console or a sensor bridge that must exchange atoms with the
+  members is therefore a thin MEMBER (a manifest with `shared:` and a host, no program rules needed beyond
+  its declarations), placed in its process by the plan. There is no world endpoint per process.
+- A composition may set a member's parameters the link records (the planner's vru role count j in road):
+  `params: {member: {name: value}}`, hashed into the image.
+
 ## 10. Plan rules the runtimes impose today (from the review's §5)
 
 - A member with `levels:` / `beliefs:` / `evaluate:` sits in a process whose runtime builds the hook (py
