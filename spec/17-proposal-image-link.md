@@ -286,6 +286,10 @@ A runtime loads an image and a plan (or the plan `all: [every member]`). It read
 | `levels` / `beliefs` / `evaluate` | the hooks a host builds, from the image's tables, not from the manifest file |
 | `image.lock` | the handshake |
 
+The BEAT ORDER inside a tick is a rule of this contract, not an image field: the specialists beat first,
+then the direct member (the Moore latch of spec 15: the director reads this tick's outputs and its grants
+land next tick); director-first only for a stop (spec 15's one exception). Every runtime the same.
+
 What it never reads: `composition.yaml`, `domain.yaml`, `tick_types.llp`, the protocol `.llp`, the catalog
 directory. A runtime that runs from source (the REPL, metispy's dev loop) builds the image in memory by the
 same link function (metispy calls `metisc --link --check`, then loads the written image from a scratch dir);
