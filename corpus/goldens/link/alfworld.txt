@@ -1,0 +1,49 @@
+link composition.yaml
+member director direct wire 69c22e9a376baba958413eaf625645103657d3a90fa4eaab53fdbcca6ca18c96 bundle bd27a2bcd747 source d3d3089eebf3f48abd2f7cdd154934f17fbbd1c4229952fd1d91d43aae4fce74
+member task specialist wire f50f43baa3251a6e7ef00296f2414916e6e31c6df943631d2c407c1a542668df bundle fa78f4f4fd58 source 8b3fc718e11de437bb56863d00e8fcc694871025ddf94810a18001835a39bbc0
+member nav specialist wire b701153fb5f85c771e4f012612964d0a96d7a4ad8ca109bf5ce982be6ea1ad25 bundle 647557c2a9bc source 340f5107a10587f08dee5660e04cc44784b86dc814eddc46e8ee3322cbf5e9fd
+member access specialist wire dcdd287fc221140c3d97959efd15b4f46bb4a7231a91f458e982952c272260a0 bundle 05531d134565 source 23eb9605ede1389d8df26fe9f261bf856c5d9dd6c97a7105093e129c900d600c
+member grasp specialist wire b3f97c36ac7e61a352ce41ba0bb1f60e1d7cba855a81b524fc9403d05383b9ec bundle 9c60c576e03d source e7b64d6b20ce76f39a58efa1bb63c38d1ca63507939bf9241da451f00ed89818
+member place specialist wire e0c70f04079d82752663b4088280bf372da5bccbcbe2d1438a07148557465acd bundle 4d9940a0b17e source 697508945b6127d6bf28a262a804e8047332a018b19bbb2a0e6b807b547b8169
+director director hand (transitional) planner task kinds accessible done elsewhere fetch goto open placed put reached refused refused_put refused_take stuck take taken wrong_dest wrong_object
+  specialist(nav).
+  specialist(access).
+  specialist(grasp).
+  specialist(place).
+  planner(task).
+  handles(nav, goto).
+  handles(access, open).
+  handles(grasp, take).
+  handles(place, put).
+  handles(task, accessible).
+  handles(task, fetch).
+  handles(task, placed).
+  handles(task, reached).
+  handles(task, refused).
+  handles(task, refused_put).
+  handles(task, refused_take).
+  handles(task, taken).
+  result(accessible).
+  result(placed).
+  result(reached).
+  result(taken).
+  end(stuck).
+  end(wrong_dest).
+  end(wrong_object).
+  finished(done).
+  detour(elsewhere, goto).
+  escalate(elsewhere, refused).
+  rename(elsewhere, goto, goto).
+  rename(elsewhere, refused, refused).
+warning L17 a hand-written direct: director (transitional); the image runs it, generated: false
+warning L18 no response: linked with rho = infinity
+warning L21 task's host alf_host.py:make: no file alf_host.py beside it (the runtime that loads it must have it)
+warning L21 nav's host alf_host.py:make: no file alf_host.py beside it (the runtime that loads it must have it)
+warning L21 access's host alf_host.py:make: no file alf_host.py beside it (the runtime that loads it must have it)
+warning L21 grasp's host alf_host.py:make: no file alf_host.py beside it (the runtime that loads it must have it)
+warning L21 place's host alf_host.py:make: no file alf_host.py beside it (the runtime that loads it must have it)
+warning L21 director's host director_host.py:make: no file director_host.py beside it (the runtime that loads it must have it)
+interface 0 error(s), 5 warning(s)
+image alfworld_hier v-a956558864d1
+result 0 error(s), 13 warning(s)
+rc 0

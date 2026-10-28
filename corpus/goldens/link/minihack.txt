@@ -1,0 +1,41 @@
+link composition.yaml
+member director direct wire cbc40dcc041792a2ff54bb2823274cc727c1bf8f83c8317a95fbc0622391fd1e bundle 7b8043422cb9 source 2f9ff75dfc6f9115ea80d6301fe3abcd7d1604a87ec82a8a5b79f2e9656f0bad
+member task specialist wire 4663844eb08d45372d5b773f718a6dfd065ce2c257b2f7bc6cabc4a04580c0a9 bundle 98e05964f27e source 4494a61e61189ae6622b43747662195881f26fe6aad1ec8a7e2055b5ec391683
+member nav specialist wire 6a79dd004372168c1c422e7700f094f37969ab8262c77501e3de20ed373cb69a bundle 16a04cf57463 source a264f5cd190e141e4c95a8e2d4646ed81aeaed3ec9b57a46dc5f04ac9e35a1c1
+member act specialist wire 044964d380377c77aab4b0b38980576235cb7587c4d679702f2d9abcf32964c5 bundle e1e15536340b source 33191b82649117871fd2c3f05b73df46a7b6fcdb4633489609a3f5d5d5628294
+director director hand (transitional) planner task kinds cleared closed done fight goto guarded open opened reach reached refused stuck
+  specialist(nav).
+  specialist(act).
+  planner(task).
+  handles(nav, goto).
+  handles(act, fight).
+  handles(act, open).
+  handles(task, cleared).
+  handles(task, opened).
+  handles(task, reach).
+  handles(task, reached).
+  handles(task, refused).
+  result(cleared).
+  result(opened).
+  result(reached).
+  end(stuck).
+  finished(done).
+  detour(closed, open).
+  detour(guarded, fight).
+  escalate(closed, refused).
+  escalate(guarded, refused).
+  rename(closed, open, open).
+  rename(closed, refused, refused).
+  rename(guarded, fight, fight).
+  rename(guarded, refused, refused).
+  priority(act, nav).
+warning L17 a hand-written direct: director (transitional); the image runs it, generated: false
+warning L18 no response: linked with rho = infinity
+warning L21 task's host mh_host.py:make: no file mh_host.py beside it (the runtime that loads it must have it)
+warning L21 nav's host mh_host.py:make: no file mh_host.py beside it (the runtime that loads it must have it)
+warning L21 act's host mh_host.py:make: no file mh_host.py beside it (the runtime that loads it must have it)
+warning L21 director's host director_host.py:make: no file director_host.py beside it (the runtime that loads it must have it)
+interface 0 error(s), 7 warning(s)
+image minihack_hier v-894bd453df66
+result 0 error(s), 13 warning(s)
+rc 0

@@ -383,7 +383,15 @@ let load_ipkg path =
 
 type finding = { sev : string; chk : string; text : string }
 
-let run comp_path =
+type analysis = {
+  a_path : string; a_dir : string; a_comp : (string * y) list;
+  a_specialists : string list; a_direct : string;
+  a_world_out : string list; a_world_in : string list;
+  a_capacity : string; a_cap_key : string; a_ipkgs : ipkg list;
+  a_members : member list; a_findings : finding list;
+  a_canon : string; a_package_key : string; a_lines : string list; a_errors : int }
+
+let analyse ?direct_dir comp_path =
   let dir = Filename.dirname (norm comp_path) in
   let comp = read_yaml comp_path in
   let get k = match List.assoc_opt k comp with
@@ -405,7 +413,7 @@ let run comp_path =
     @ (match opt "interfaces" with Some v -> strs v | None -> []) in
   let ipkgs = List.map (fun p -> load_ipkg (snd (resolve p))) ipaths in
   let members = List.map (fun n -> load_member dir n "specialist") specialists
-                @ [load_member dir direct "direct"] in
+                @ [load_member (Option.value direct_dir ~default:dir) direct "direct"] in
   let specs = List.filter (fun m -> m.m_role = "specialist") members in
   let dm = List.find (fun m -> m.m_role = "direct") members in
   let findings = ref [] in
@@ -876,4 +884,9 @@ let run comp_path =
   List.iter (fun f -> line "%s %s %s" f.sev f.chk f.text) fs;
   let n s = List.length (List.filter (fun f -> f.sev = s) fs) in
   line "result %d error(s), %d warning(s), %d note(s)" (n "error") (n "warning") (n "note");
-  (List.rev !lines, n "error")
+  { a_path = comp_path; a_dir = dir; a_comp = comp; a_specialists = specialists; a_direct = direct;
+    a_world_out = world_out; a_world_in = world_in; a_capacity = capacity; a_cap_key = cap_key;
+    a_ipkgs = ipkgs; a_members = members; a_findings = fs; a_canon = canon_comp;
+    a_package_key = package_key; a_lines = List.rev !lines; a_errors = n "error" }
+
+let run comp_path = let a = analyse comp_path in (a.a_lines, a.a_errors)
