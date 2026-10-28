@@ -380,6 +380,8 @@ manifest binding. A member not named in `hosts:` keeps its own.
   today); its level atoms cross as transport ports. `plan-levels-runtime` otherwise.
 - A process that holds the direct member AND specialists needs a tick layer; Go has none, so until track B
   (the Rust runtime) lands, such a process is py. The wheelchair's runtime process depends on B.
-- Go's registry beats (process.go:173) vs the image's `clock.beats`: `load-beats-mismatch`, refuse.
+- Go's registry `Beats` is the scripted session's LENGTH, not spec 15's beats per tick, so there is no
+  `load-beats-mismatch`: Go takes `clock.steps` (BeatSteps) from the image and its session length stays
+  host-local (linker step 4).
 - The py Live's config → image move (svc:291, 293, 328, 383, the token literals at svc:580–952) touches every
   Live config: A2 carries it with the config files of the catalog's cases.
