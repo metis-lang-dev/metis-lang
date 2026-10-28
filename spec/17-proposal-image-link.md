@@ -193,7 +193,7 @@ For every pred named in any member's `shared`, in `world`, or by the protocol:
 | L15 priority | `priority` is a strict partial order over the specialists: no self pair, no cycle, both ends declared | `link-priority` (gap 4) |
 | L16 world.in | every `world.in` pred is produced by some member (a command) and consumed by no member | `link-world-in` (gap 5) |
 | L17 roles | the derived `handles` / `result` / `specialist` facts agree with a hand-written director's, when one is given | `link-roles` (gap 8) |
-| L18 clocks | every `clock.period` ≤ ρ − the plan's transport budget (per plan; with no plan, ≤ ρ) | `link-response` (gap 3; the end-to-end bound, checked per plan) |
+| L18 response | ρ is in TICKS (spec 15 amendment 6: from a member's `tick__want` to the latched grant, the director's latency); a member's `period` is its own clock and no part of ρ. The check: ρ ≥ 2 (the tree director's latency) + the plan's transport budget (0 with no plan). ρ × period is recorded per member as `response_turns`, informational | `link-response` (gap 3; the first form mixed ticks and turns, corrected at step 1 of the linker) |
 | L19 keys | each member's `sidecar.key` = the wire's key (`Wire.Key` recomputed); the bundle hash = the directory's | `link-key` (gap 10) |
 | L20 places | an include name resolves to one file across all members; `METIS_HOME` is recorded, and a link with the home unset while a member needs it is an error, not a silent miss | `link-places` (gap 11) |
 | L21 host | `host:` names a `file:symbol`; recorded; the runtime's registry must match it or refuse (§6) | `link-host` (gap 9, the half the link can do) |
