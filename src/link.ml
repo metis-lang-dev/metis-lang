@@ -695,7 +695,7 @@ let run ~wire o comp_path =
 let run_package ~(bundle : string -> string list -> string list * string * string) o ?serve ?(extensions = []) pkg_dir =
   let pkg_dir = norm pkg_dir in
   let name = Filename.basename pkg_dir in
-  let man = read_yaml (Filename.concat pkg_dir "domain.yaml") in
+  let man = read_yaml_block (Filename.concat pkg_dir "domain.yaml") in     (* a manifest may be block YAML *)
   let field k = List.assoc_opt k man in
   let served = match serve with
     | Some f -> norm f
