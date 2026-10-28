@@ -1,0 +1,1016 @@
+{
+ "format": "metis-sidecar/1",
+ "catalog": "planner",
+ "key": "b5dbcf1e6040218f6f6b296dd6fe303a4cf9bdae9d901cb994d28b796dfc4a64",
+ "extensions": [],
+ "init": {
+  "idle": 1,
+  "trip": 1
+ },
+ "steps": 6,
+ "stages": [
+  "safety",
+  "progress"
+ ],
+ "events": [
+  {
+   "i": 0,
+   "canon": 2,
+   "name": "drive",
+   "rule": "drive",
+   "kind": "clause",
+   "stage": "safety",
+   "line": "I drive on to my destination: I ask for the controls."
+  },
+  {
+   "i": 1,
+   "canon": 0,
+   "name": "cancel",
+   "rule": "cancel",
+   "kind": "clause",
+   "stage": "safety",
+   "line": "Stopped: I drop my goal."
+  },
+  {
+   "i": 2,
+   "canon": 3,
+   "name": "cancel_none",
+   "rule": "cancel_none",
+   "kind": "clause",
+   "stage": "safety",
+   "line": "Stopped as I finished: nothing left to drop."
+  },
+  {
+   "i": 3,
+   "canon": 1,
+   "name": "arrive",
+   "rule": "arrive",
+   "kind": "clause",
+   "stage": "safety",
+   "line": "I am there."
+  },
+  {
+   "i": 4,
+   "canon": 6,
+   "name": "yield_zone[C=near,P=obj]",
+   "rule": "yield_zone",
+   "kind": "clause",
+   "stage": "safety",
+   "line": "The zone ahead is not mine to take and someone comes: I stop before its line."
+  },
+  {
+   "i": 5,
+   "canon": 7,
+   "name": "yield_zone[C=near,P=same]",
+   "rule": "yield_zone",
+   "kind": "clause",
+   "stage": "safety",
+   "line": "The zone ahead is not mine to take and someone comes: I stop before its line."
+  },
+  {
+   "i": 6,
+   "canon": 4,
+   "name": "yield_zone[C=at,P=obj]",
+   "rule": "yield_zone",
+   "kind": "clause",
+   "stage": "safety",
+   "line": "The zone ahead is not mine to take and someone comes: I stop before its line."
+  },
+  {
+   "i": 7,
+   "canon": 5,
+   "name": "yield_zone[C=at,P=same]",
+   "rule": "yield_zone",
+   "kind": "clause",
+   "stage": "safety",
+   "line": "The zone ahead is not mine to take and someone comes: I stop before its line."
+  },
+  {
+   "i": 8,
+   "canon": 9,
+   "name": "yield_walker[W=near,C=near]",
+   "rule": "yield_walker",
+   "kind": "clause",
+   "stage": "safety",
+   "line": "A walker is at the crossing ahead: I stop before it."
+  },
+  {
+   "i": 9,
+   "canon": 8,
+   "name": "yield_walker[W=near,C=at]",
+   "rule": "yield_walker",
+   "kind": "clause",
+   "stage": "safety",
+   "line": "A walker is at the crossing ahead: I stop before it."
+  },
+  {
+   "i": 10,
+   "canon": 11,
+   "name": "yield_walker[W=on,C=near]",
+   "rule": "yield_walker",
+   "kind": "clause",
+   "stage": "safety",
+   "line": "A walker is at the crossing ahead: I stop before it."
+  },
+  {
+   "i": 11,
+   "canon": 10,
+   "name": "yield_walker[W=on,C=at]",
+   "rule": "yield_walker",
+   "kind": "clause",
+   "stage": "safety",
+   "line": "A walker is at the crossing ahead: I stop before it."
+  },
+  {
+   "i": 12,
+   "canon": 13,
+   "name": "yield_merge[C=near]",
+   "rule": "yield_merge",
+   "kind": "clause",
+   "stage": "safety",
+   "line": "The merge ahead: not my turn, and the other lane comes: I let it in."
+  },
+  {
+   "i": 13,
+   "canon": 12,
+   "name": "yield_merge[C=at]",
+   "rule": "yield_merge",
+   "kind": "clause",
+   "stage": "safety",
+   "line": "The merge ahead: not my turn, and the other lane comes: I let it in."
+  },
+  {
+   "i": 14,
+   "canon": 17,
+   "name": "change[D=left,L=leadleft,F=followleft,C=none]",
+   "rule": "change",
+   "kind": "clause",
+   "stage": "progress",
+   "line": "The lead is slow and the {D} lane is safe ahead and behind, and I did not just leave it: I change to it."
+  },
+  {
+   "i": 15,
+   "canon": 16,
+   "name": "change[D=left,L=leadleft,F=followleft,C=far]",
+   "rule": "change",
+   "kind": "clause",
+   "stage": "progress",
+   "line": "The lead is slow and the {D} lane is safe ahead and behind, and I did not just leave it: I change to it."
+  },
+  {
+   "i": 16,
+   "canon": 19,
+   "name": "change[D=right,L=leadright,F=followright,C=none]",
+   "rule": "change",
+   "kind": "clause",
+   "stage": "progress",
+   "line": "The lead is slow and the {D} lane is safe ahead and behind, and I did not just leave it: I change to it."
+  },
+  {
+   "i": 17,
+   "canon": 18,
+   "name": "change[D=right,L=leadright,F=followright,C=far]",
+   "rule": "change",
+   "kind": "clause",
+   "stage": "progress",
+   "line": "The lead is slow and the {D} lane is safe ahead and behind, and I did not just leave it: I change to it."
+  },
+  {
+   "i": 18,
+   "canon": 15,
+   "name": "accel",
+   "rule": "accel",
+   "kind": "clause",
+   "stage": "progress",
+   "line": "Below the limit, nothing slow ahead, room before the lead: I speed up."
+  },
+  {
+   "i": 19,
+   "canon": 14,
+   "name": "keep_gap",
+   "rule": "keep_gap",
+   "kind": "clause",
+   "stage": "progress",
+   "line": "Below the limit, but no room to speed up before the lead: I keep my speed."
+  },
+  {
+   "i": 20,
+   "canon": 20,
+   "name": "keep_limit",
+   "rule": "keep_limit",
+   "kind": "clause",
+   "stage": "progress",
+   "line": "At the limit: I keep my speed."
+  },
+  {
+   "i": 21,
+   "canon": 22,
+   "name": "keep_lead",
+   "rule": "keep_lead",
+   "kind": "clause",
+   "stage": "progress",
+   "line": "The lead is slow and no lane is free: I follow it."
+  },
+  {
+   "i": 22,
+   "canon": 21,
+   "name": "brake_follow[R=brake_min_correct]",
+   "rule": "brake_follow",
+   "kind": "clause",
+   "stage": "progress",
+   "line": "The lead is closing in on me: I ease off, {R}."
+  },
+  {
+   "i": 23,
+   "canon": 24,
+   "name": "decide",
+   "rule": "decide",
+   "kind": "link",
+   "stage": "safety",
+   "line": ""
+  },
+  {
+   "i": 24,
+   "canon": 23,
+   "name": "back",
+   "rule": "back",
+   "kind": "link",
+   "stage": "progress",
+   "line": ""
+  }
+ ],
+ "cards": [
+  {
+   "name": "planner",
+   "text": "the road's planner over roles: the host binds the world onto them each tick",
+   "relation": "served",
+   "moves": [],
+   "effects": [],
+   "slots": []
+  }
+ ],
+ "queries": [],
+ "script": [
+  {
+   "name": "planner",
+   "relation": "served",
+   "text": "the road's planner over roles: the host binds the world onto them each tick",
+   "clauses": [
+    {
+     "name": "drive",
+     "stage": "safety",
+     "doc": "I drive on to my destination: I ask for the controls.",
+     "premises": [
+      {
+       "atom": "idle",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "trip",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [
+      {
+       "atom": "busy",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__active(planner)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__want(planner,controls)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "cancel",
+     "stage": "safety",
+     "doc": "Stopped: I drop my goal.",
+     "premises": [
+      {
+       "atom": "tick__cancel(planner)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "busy",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [
+      {
+       "atom": "idle",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "cancel_none",
+     "stage": "safety",
+     "doc": "Stopped as I finished: nothing left to drop.",
+     "premises": [
+      {
+       "atom": "idle",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__cancel(planner)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [
+      {
+       "atom": "idle",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "arrive",
+     "stage": "safety",
+     "doc": "I am there.",
+     "premises": [
+      {
+       "atom": "busy",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "trip",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "at_dest",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [
+      {
+       "atom": "idle",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__done(planner)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__release(planner,controls)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "yield_zone",
+     "stage": "safety",
+     "doc": "The zone ahead is not mine to take and someone comes: I stop before its line.",
+     "premises": [
+      {
+       "atom": "busy",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "tick__grant(planner,controls)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "zone_at(nextzone,C)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "closing_in(C)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "zprio(nextzone,P)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "yields_to(P)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "conflict(nextzone)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "zbusy(nextzone)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "now",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [],
+     "target": null
+    },
+    {
+     "name": "yield_walker",
+     "stage": "safety",
+     "doc": "A walker is at the crossing ahead: I stop before it.",
+     "premises": [
+      {
+       "atom": "busy",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "tick__grant(planner,controls)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "crossing(vru1,W)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "zone_at(nextzone,C)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "closing_in(C)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "now",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [],
+     "target": null
+    },
+    {
+     "name": "yield_merge",
+     "stage": "safety",
+     "doc": "The merge ahead: not my turn, and the other lane comes: I let it in.",
+     "premises": [
+      {
+       "atom": "busy",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "tick__grant(planner,controls)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "zone_at(nextzone,C)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "closing_in(C)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "share(nextzone)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "wait_turn(nextzone)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "zbusy(nextzone)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "now",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [],
+     "target": null
+    },
+    {
+     "name": "change",
+     "stage": "progress",
+     "doc": "The lead is slow and the {D} lane is safe ahead and behind, and I did not just leave it: I change to it.",
+     "premises": [
+      {
+       "atom": "busy",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "tick__grant(planner,controls)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "lead_slow",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "adjacent(D)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "settled(D)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "side_lead(D,L)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "safe_long(L)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "safe_lat(L)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "side_follow(D,F)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "safe_long(F)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "safe_lat(F)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "zone_at(nextzone,C)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "roomy(C)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "go",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [],
+     "target": null
+    },
+    {
+     "name": "accel",
+     "stage": "progress",
+     "doc": "Below the limit, nothing slow ahead, room before the lead: I speed up.",
+     "premises": [
+      {
+       "atom": "busy",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "tick__grant(planner,controls)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "below_limit",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "lead_ok",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "accel_ok",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "go",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [],
+     "target": null
+    },
+    {
+     "name": "keep_gap",
+     "stage": "progress",
+     "doc": "Below the limit, but no room to speed up before the lead: I keep my speed.",
+     "premises": [
+      {
+       "atom": "busy",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "tick__grant(planner,controls)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "below_limit",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "lead_ok",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "accel_no",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "keep_ok",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "go",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [],
+     "target": null
+    },
+    {
+     "name": "keep_limit",
+     "stage": "progress",
+     "doc": "At the limit: I keep my speed.",
+     "premises": [
+      {
+       "atom": "busy",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "tick__grant(planner,controls)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "at_limit",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "keep_ok",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "go",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [],
+     "target": null
+    },
+    {
+     "name": "keep_lead",
+     "stage": "progress",
+     "doc": "The lead is slow and no lane is free: I follow it.",
+     "premises": [
+      {
+       "atom": "busy",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "tick__grant(planner,controls)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "lead_slow",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "keep_ok",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "go",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [],
+     "target": null
+    },
+    {
+     "name": "brake_follow",
+     "stage": "progress",
+     "doc": "The lead is closing in on me: I ease off, {R}.",
+     "premises": [
+      {
+       "atom": "busy",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "tick__grant(planner,controls)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "keep_no",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "soft(R)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "go",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [],
+     "target": null
+    }
+   ],
+   "atoms": [
+    {
+     "name": "tick__status",
+     "doc": ""
+    },
+    {
+     "name": "tick__active",
+     "doc": ""
+    },
+    {
+     "name": "tick__done",
+     "doc": ""
+    },
+    {
+     "name": "tick__stuck",
+     "doc": ""
+    },
+    {
+     "name": "tick__want",
+     "doc": ""
+    },
+    {
+     "name": "tick__release",
+     "doc": ""
+    },
+    {
+     "name": "tick__grant",
+     "doc": ""
+    },
+    {
+     "name": "tick__goal",
+     "doc": ""
+    },
+    {
+     "name": "tick__revoke",
+     "doc": ""
+    },
+    {
+     "name": "tick__stop",
+     "doc": ""
+    },
+    {
+     "name": "tick__cancel",
+     "doc": ""
+    },
+    {
+     "name": "safe_long",
+     "doc": ""
+    },
+    {
+     "name": "safe_lat",
+     "doc": ""
+    },
+    {
+     "name": "adjacent",
+     "doc": ""
+    },
+    {
+     "name": "changing",
+     "doc": ""
+    },
+    {
+     "name": "settled",
+     "doc": ""
+    },
+    {
+     "name": "below_limit",
+     "doc": ""
+    },
+    {
+     "name": "at_limit",
+     "doc": ""
+    },
+    {
+     "name": "lead_slow",
+     "doc": ""
+    },
+    {
+     "name": "lead_ok",
+     "doc": ""
+    },
+    {
+     "name": "accel_ok",
+     "doc": ""
+    },
+    {
+     "name": "accel_no",
+     "doc": ""
+    },
+    {
+     "name": "keep_ok",
+     "doc": ""
+    },
+    {
+     "name": "keep_no",
+     "doc": ""
+    },
+    {
+     "name": "at_dest",
+     "doc": ""
+    },
+    {
+     "name": "zone_at",
+     "doc": ""
+    },
+    {
+     "name": "zprio",
+     "doc": ""
+    },
+    {
+     "name": "can_stop",
+     "doc": ""
+    },
+    {
+     "name": "late",
+     "doc": ""
+    },
+    {
+     "name": "zfree",
+     "doc": ""
+    },
+    {
+     "name": "zbusy",
+     "doc": ""
+    },
+    {
+     "name": "zclear",
+     "doc": ""
+    },
+    {
+     "name": "conflict",
+     "doc": ""
+    },
+    {
+     "name": "share",
+     "doc": ""
+    },
+    {
+     "name": "turn",
+     "doc": ""
+    },
+    {
+     "name": "wait_turn",
+     "doc": ""
+    },
+    {
+     "name": "holder",
+     "doc": ""
+    },
+    {
+     "name": "crossing",
+     "doc": ""
+    },
+    {
+     "name": "now",
+     "doc": ""
+    },
+    {
+     "name": "idle",
+     "doc": ""
+    },
+    {
+     "name": "busy",
+     "doc": ""
+    },
+    {
+     "name": "trip",
+     "doc": ""
+    },
+    {
+     "name": "go",
+     "doc": ""
+    }
+   ],
+   "missing": {
+    "clause_doc": [],
+    "atom_doc": [
+     "tick__status",
+     "tick__active",
+     "tick__done",
+     "tick__stuck",
+     "tick__want",
+     "tick__release",
+     "tick__grant",
+     "tick__goal",
+     "tick__revoke",
+     "tick__stop",
+     "tick__cancel",
+     "safe_long",
+     "safe_lat",
+     "adjacent",
+     "changing",
+     "settled",
+     "below_limit",
+     "at_limit",
+     "lead_slow",
+     "lead_ok",
+     "accel_ok",
+     "accel_no",
+     "keep_ok",
+     "keep_no",
+     "at_dest",
+     "zone_at",
+     "zprio",
+     "can_stop",
+     "late",
+     "zfree",
+     "zbusy",
+     "zclear",
+     "conflict",
+     "share",
+     "turn",
+     "wait_turn",
+     "holder",
+     "crossing",
+     "now",
+     "idle",
+     "busy",
+     "trip",
+     "go"
+    ]
+   }
+  }
+ ],
+ "ir": null
+}

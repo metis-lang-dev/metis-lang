@@ -1,0 +1,4260 @@
+{
+ "format": "metis-sidecar/1",
+ "catalog": "road_director",
+ "key": "ce493b42e6216c6a0b654f48cadf2e92320208c313c95599a4efde6e3ddf5139",
+ "extensions": [],
+ "init": {
+  "free(controls)": 1,
+  "offpath(responder)": 1,
+  "offpath(planner)": 1,
+  "nowant(responder)": 1,
+  "nowant(planner)": 1,
+  "nolate(responder)": 1,
+  "nolate(planner)": 1,
+  "age_of(responder,a0)": 1,
+  "age_of(planner,a0)": 1,
+  "issue(controls,t0)": 1,
+  "serving(controls,t0)": 1
+ },
+ "steps": 6,
+ "stages": [
+  "act"
+ ],
+ "events": [
+  {
+   "i": 0,
+   "canon": 317,
+   "name": "want_queue[D=responder,R=controls,T=t0,T2=t1]",
+   "rule": "want_queue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} asks for {R}: it takes a ticket."
+  },
+  {
+   "i": 1,
+   "canon": 319,
+   "name": "want_queue[D=responder,R=controls,T=t1,T2=t2]",
+   "rule": "want_queue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} asks for {R}: it takes a ticket."
+  },
+  {
+   "i": 2,
+   "canon": 321,
+   "name": "want_queue[D=responder,R=controls,T=t2,T2=t3]",
+   "rule": "want_queue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} asks for {R}: it takes a ticket."
+  },
+  {
+   "i": 3,
+   "canon": 323,
+   "name": "want_queue[D=responder,R=controls,T=t3,T2=t4]",
+   "rule": "want_queue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} asks for {R}: it takes a ticket."
+  },
+  {
+   "i": 4,
+   "canon": 325,
+   "name": "want_queue[D=responder,R=controls,T=t4,T2=t5]",
+   "rule": "want_queue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} asks for {R}: it takes a ticket."
+  },
+  {
+   "i": 5,
+   "canon": 327,
+   "name": "want_queue[D=responder,R=controls,T=t5,T2=t6]",
+   "rule": "want_queue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} asks for {R}: it takes a ticket."
+  },
+  {
+   "i": 6,
+   "canon": 329,
+   "name": "want_queue[D=responder,R=controls,T=t6,T2=t7]",
+   "rule": "want_queue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} asks for {R}: it takes a ticket."
+  },
+  {
+   "i": 7,
+   "canon": 331,
+   "name": "want_queue[D=responder,R=controls,T=t7,T2=t0]",
+   "rule": "want_queue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} asks for {R}: it takes a ticket."
+  },
+  {
+   "i": 8,
+   "canon": 316,
+   "name": "want_queue[D=planner,R=controls,T=t0,T2=t1]",
+   "rule": "want_queue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} asks for {R}: it takes a ticket."
+  },
+  {
+   "i": 9,
+   "canon": 318,
+   "name": "want_queue[D=planner,R=controls,T=t1,T2=t2]",
+   "rule": "want_queue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} asks for {R}: it takes a ticket."
+  },
+  {
+   "i": 10,
+   "canon": 320,
+   "name": "want_queue[D=planner,R=controls,T=t2,T2=t3]",
+   "rule": "want_queue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} asks for {R}: it takes a ticket."
+  },
+  {
+   "i": 11,
+   "canon": 322,
+   "name": "want_queue[D=planner,R=controls,T=t3,T2=t4]",
+   "rule": "want_queue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} asks for {R}: it takes a ticket."
+  },
+  {
+   "i": 12,
+   "canon": 324,
+   "name": "want_queue[D=planner,R=controls,T=t4,T2=t5]",
+   "rule": "want_queue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} asks for {R}: it takes a ticket."
+  },
+  {
+   "i": 13,
+   "canon": 326,
+   "name": "want_queue[D=planner,R=controls,T=t5,T2=t6]",
+   "rule": "want_queue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} asks for {R}: it takes a ticket."
+  },
+  {
+   "i": 14,
+   "canon": 328,
+   "name": "want_queue[D=planner,R=controls,T=t6,T2=t7]",
+   "rule": "want_queue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} asks for {R}: it takes a ticket."
+  },
+  {
+   "i": 15,
+   "canon": 330,
+   "name": "want_queue[D=planner,R=controls,T=t7,T2=t0]",
+   "rule": "want_queue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} asks for {R}: it takes a ticket."
+  },
+  {
+   "i": 16,
+   "canon": 22,
+   "name": "grant_on_want[D=responder,R=controls,T=t0,T2=t1]",
+   "rule": "grant_on_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{R} is free and it is {D}'s turn: {D} holds it."
+  },
+  {
+   "i": 17,
+   "canon": 23,
+   "name": "grant_on_want[D=responder,R=controls,T=t1,T2=t2]",
+   "rule": "grant_on_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{R} is free and it is {D}'s turn: {D} holds it."
+  },
+  {
+   "i": 18,
+   "canon": 24,
+   "name": "grant_on_want[D=responder,R=controls,T=t2,T2=t3]",
+   "rule": "grant_on_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{R} is free and it is {D}'s turn: {D} holds it."
+  },
+  {
+   "i": 19,
+   "canon": 25,
+   "name": "grant_on_want[D=responder,R=controls,T=t3,T2=t4]",
+   "rule": "grant_on_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{R} is free and it is {D}'s turn: {D} holds it."
+  },
+  {
+   "i": 20,
+   "canon": 26,
+   "name": "grant_on_want[D=responder,R=controls,T=t4,T2=t5]",
+   "rule": "grant_on_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{R} is free and it is {D}'s turn: {D} holds it."
+  },
+  {
+   "i": 21,
+   "canon": 27,
+   "name": "grant_on_want[D=responder,R=controls,T=t5,T2=t6]",
+   "rule": "grant_on_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{R} is free and it is {D}'s turn: {D} holds it."
+  },
+  {
+   "i": 22,
+   "canon": 28,
+   "name": "grant_on_want[D=responder,R=controls,T=t6,T2=t7]",
+   "rule": "grant_on_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{R} is free and it is {D}'s turn: {D} holds it."
+  },
+  {
+   "i": 23,
+   "canon": 29,
+   "name": "grant_on_want[D=responder,R=controls,T=t7,T2=t0]",
+   "rule": "grant_on_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{R} is free and it is {D}'s turn: {D} holds it."
+  },
+  {
+   "i": 24,
+   "canon": 14,
+   "name": "grant_on_want[D=planner,R=controls,T=t0,T2=t1]",
+   "rule": "grant_on_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{R} is free and it is {D}'s turn: {D} holds it."
+  },
+  {
+   "i": 25,
+   "canon": 15,
+   "name": "grant_on_want[D=planner,R=controls,T=t1,T2=t2]",
+   "rule": "grant_on_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{R} is free and it is {D}'s turn: {D} holds it."
+  },
+  {
+   "i": 26,
+   "canon": 16,
+   "name": "grant_on_want[D=planner,R=controls,T=t2,T2=t3]",
+   "rule": "grant_on_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{R} is free and it is {D}'s turn: {D} holds it."
+  },
+  {
+   "i": 27,
+   "canon": 17,
+   "name": "grant_on_want[D=planner,R=controls,T=t3,T2=t4]",
+   "rule": "grant_on_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{R} is free and it is {D}'s turn: {D} holds it."
+  },
+  {
+   "i": 28,
+   "canon": 18,
+   "name": "grant_on_want[D=planner,R=controls,T=t4,T2=t5]",
+   "rule": "grant_on_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{R} is free and it is {D}'s turn: {D} holds it."
+  },
+  {
+   "i": 29,
+   "canon": 19,
+   "name": "grant_on_want[D=planner,R=controls,T=t5,T2=t6]",
+   "rule": "grant_on_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{R} is free and it is {D}'s turn: {D} holds it."
+  },
+  {
+   "i": 30,
+   "canon": 20,
+   "name": "grant_on_want[D=planner,R=controls,T=t6,T2=t7]",
+   "rule": "grant_on_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{R} is free and it is {D}'s turn: {D} holds it."
+  },
+  {
+   "i": 31,
+   "canon": 21,
+   "name": "grant_on_want[D=planner,R=controls,T=t7,T2=t0]",
+   "rule": "grant_on_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{R} is free and it is {D}'s turn: {D} holds it."
+  },
+  {
+   "i": 32,
+   "canon": 31,
+   "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a0,T3=t0,T4=t1]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 33,
+   "canon": 39,
+   "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a0,T3=t1,T4=t2]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 34,
+   "canon": 47,
+   "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a0,T3=t2,T4=t3]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 35,
+   "canon": 55,
+   "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a0,T3=t3,T4=t4]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 36,
+   "canon": 63,
+   "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a0,T3=t4,T4=t5]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 37,
+   "canon": 71,
+   "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a0,T3=t5,T4=t6]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 38,
+   "canon": 79,
+   "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a0,T3=t6,T4=t7]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 39,
+   "canon": 87,
+   "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a0,T3=t7,T4=t0]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 40,
+   "canon": 98,
+   "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a1,T3=t0,T4=t1]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 41,
+   "canon": 106,
+   "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a1,T3=t1,T4=t2]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 42,
+   "canon": 114,
+   "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a1,T3=t2,T4=t3]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 43,
+   "canon": 122,
+   "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a1,T3=t3,T4=t4]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 44,
+   "canon": 130,
+   "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a1,T3=t4,T4=t5]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 45,
+   "canon": 138,
+   "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a1,T3=t5,T4=t6]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 46,
+   "canon": 146,
+   "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a1,T3=t6,T4=t7]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 47,
+   "canon": 154,
+   "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a1,T3=t7,T4=t0]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 48,
+   "canon": 165,
+   "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a2,T3=t0,T4=t1]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 49,
+   "canon": 173,
+   "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a2,T3=t1,T4=t2]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 50,
+   "canon": 181,
+   "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a2,T3=t2,T4=t3]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 51,
+   "canon": 189,
+   "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a2,T3=t3,T4=t4]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 52,
+   "canon": 197,
+   "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a2,T3=t4,T4=t5]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 53,
+   "canon": 205,
+   "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a2,T3=t5,T4=t6]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 54,
+   "canon": 213,
+   "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a2,T3=t6,T4=t7]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 55,
+   "canon": 221,
+   "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a2,T3=t7,T4=t0]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 56,
+   "canon": 234,
+   "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a3,T3=t0,T4=t1]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 57,
+   "canon": 242,
+   "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a3,T3=t1,T4=t2]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 58,
+   "canon": 250,
+   "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a3,T3=t2,T4=t3]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 59,
+   "canon": 258,
+   "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a3,T3=t3,T4=t4]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 60,
+   "canon": 266,
+   "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a3,T3=t4,T4=t5]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 61,
+   "canon": 274,
+   "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a3,T3=t5,T4=t6]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 62,
+   "canon": 282,
+   "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a3,T3=t6,T4=t7]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 63,
+   "canon": 290,
+   "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a3,T3=t7,T4=t0]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 64,
+   "canon": 32,
+   "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a0,T3=t0,T4=t1]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 65,
+   "canon": 40,
+   "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a0,T3=t1,T4=t2]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 66,
+   "canon": 48,
+   "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a0,T3=t2,T4=t3]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 67,
+   "canon": 56,
+   "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a0,T3=t3,T4=t4]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 68,
+   "canon": 64,
+   "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a0,T3=t4,T4=t5]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 69,
+   "canon": 72,
+   "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a0,T3=t5,T4=t6]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 70,
+   "canon": 80,
+   "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a0,T3=t6,T4=t7]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 71,
+   "canon": 88,
+   "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a0,T3=t7,T4=t0]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 72,
+   "canon": 99,
+   "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a1,T3=t0,T4=t1]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 73,
+   "canon": 107,
+   "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a1,T3=t1,T4=t2]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 74,
+   "canon": 115,
+   "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a1,T3=t2,T4=t3]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 75,
+   "canon": 123,
+   "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a1,T3=t3,T4=t4]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 76,
+   "canon": 131,
+   "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a1,T3=t4,T4=t5]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 77,
+   "canon": 139,
+   "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a1,T3=t5,T4=t6]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 78,
+   "canon": 147,
+   "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a1,T3=t6,T4=t7]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 79,
+   "canon": 155,
+   "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a1,T3=t7,T4=t0]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 80,
+   "canon": 166,
+   "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a2,T3=t0,T4=t1]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 81,
+   "canon": 174,
+   "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a2,T3=t1,T4=t2]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 82,
+   "canon": 182,
+   "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a2,T3=t2,T4=t3]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 83,
+   "canon": 190,
+   "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a2,T3=t3,T4=t4]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 84,
+   "canon": 198,
+   "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a2,T3=t4,T4=t5]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 85,
+   "canon": 206,
+   "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a2,T3=t5,T4=t6]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 86,
+   "canon": 214,
+   "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a2,T3=t6,T4=t7]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 87,
+   "canon": 222,
+   "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a2,T3=t7,T4=t0]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 88,
+   "canon": 235,
+   "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a3,T3=t0,T4=t1]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 89,
+   "canon": 243,
+   "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a3,T3=t1,T4=t2]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 90,
+   "canon": 251,
+   "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a3,T3=t2,T4=t3]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 91,
+   "canon": 259,
+   "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a3,T3=t3,T4=t4]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 92,
+   "canon": 267,
+   "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a3,T3=t4,T4=t5]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 93,
+   "canon": 275,
+   "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a3,T3=t5,T4=t6]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 94,
+   "canon": 283,
+   "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a3,T3=t6,T4=t7]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 95,
+   "canon": 291,
+   "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a3,T3=t7,T4=t0]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 96,
+   "canon": 33,
+   "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a0,T3=t0,T4=t1]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 97,
+   "canon": 41,
+   "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a0,T3=t1,T4=t2]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 98,
+   "canon": 49,
+   "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a0,T3=t2,T4=t3]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 99,
+   "canon": 57,
+   "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a0,T3=t3,T4=t4]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 100,
+   "canon": 65,
+   "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a0,T3=t4,T4=t5]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 101,
+   "canon": 73,
+   "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a0,T3=t5,T4=t6]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 102,
+   "canon": 81,
+   "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a0,T3=t6,T4=t7]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 103,
+   "canon": 89,
+   "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a0,T3=t7,T4=t0]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 104,
+   "canon": 100,
+   "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a1,T3=t0,T4=t1]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 105,
+   "canon": 108,
+   "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a1,T3=t1,T4=t2]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 106,
+   "canon": 116,
+   "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a1,T3=t2,T4=t3]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 107,
+   "canon": 124,
+   "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a1,T3=t3,T4=t4]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 108,
+   "canon": 132,
+   "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a1,T3=t4,T4=t5]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 109,
+   "canon": 140,
+   "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a1,T3=t5,T4=t6]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 110,
+   "canon": 148,
+   "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a1,T3=t6,T4=t7]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 111,
+   "canon": 156,
+   "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a1,T3=t7,T4=t0]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 112,
+   "canon": 167,
+   "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a2,T3=t0,T4=t1]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 113,
+   "canon": 175,
+   "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a2,T3=t1,T4=t2]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 114,
+   "canon": 183,
+   "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a2,T3=t2,T4=t3]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 115,
+   "canon": 191,
+   "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a2,T3=t3,T4=t4]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 116,
+   "canon": 199,
+   "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a2,T3=t4,T4=t5]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 117,
+   "canon": 207,
+   "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a2,T3=t5,T4=t6]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 118,
+   "canon": 215,
+   "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a2,T3=t6,T4=t7]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 119,
+   "canon": 223,
+   "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a2,T3=t7,T4=t0]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 120,
+   "canon": 236,
+   "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a3,T3=t0,T4=t1]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 121,
+   "canon": 244,
+   "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a3,T3=t1,T4=t2]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 122,
+   "canon": 252,
+   "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a3,T3=t2,T4=t3]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 123,
+   "canon": 260,
+   "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a3,T3=t3,T4=t4]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 124,
+   "canon": 268,
+   "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a3,T3=t4,T4=t5]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 125,
+   "canon": 276,
+   "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a3,T3=t5,T4=t6]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 126,
+   "canon": 284,
+   "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a3,T3=t6,T4=t7]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 127,
+   "canon": 292,
+   "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a3,T3=t7,T4=t0]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 128,
+   "canon": 34,
+   "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a0,T3=t0,T4=t1]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 129,
+   "canon": 42,
+   "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a0,T3=t1,T4=t2]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 130,
+   "canon": 50,
+   "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a0,T3=t2,T4=t3]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 131,
+   "canon": 58,
+   "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a0,T3=t3,T4=t4]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 132,
+   "canon": 66,
+   "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a0,T3=t4,T4=t5]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 133,
+   "canon": 74,
+   "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a0,T3=t5,T4=t6]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 134,
+   "canon": 82,
+   "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a0,T3=t6,T4=t7]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 135,
+   "canon": 90,
+   "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a0,T3=t7,T4=t0]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 136,
+   "canon": 101,
+   "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a1,T3=t0,T4=t1]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 137,
+   "canon": 109,
+   "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a1,T3=t1,T4=t2]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 138,
+   "canon": 117,
+   "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a1,T3=t2,T4=t3]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 139,
+   "canon": 125,
+   "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a1,T3=t3,T4=t4]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 140,
+   "canon": 133,
+   "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a1,T3=t4,T4=t5]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 141,
+   "canon": 141,
+   "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a1,T3=t5,T4=t6]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 142,
+   "canon": 149,
+   "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a1,T3=t6,T4=t7]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 143,
+   "canon": 157,
+   "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a1,T3=t7,T4=t0]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 144,
+   "canon": 168,
+   "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a2,T3=t0,T4=t1]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 145,
+   "canon": 176,
+   "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a2,T3=t1,T4=t2]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 146,
+   "canon": 184,
+   "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a2,T3=t2,T4=t3]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 147,
+   "canon": 192,
+   "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a2,T3=t3,T4=t4]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 148,
+   "canon": 200,
+   "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a2,T3=t4,T4=t5]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 149,
+   "canon": 208,
+   "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a2,T3=t5,T4=t6]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 150,
+   "canon": 216,
+   "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a2,T3=t6,T4=t7]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 151,
+   "canon": 224,
+   "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a2,T3=t7,T4=t0]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 152,
+   "canon": 237,
+   "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a3,T3=t0,T4=t1]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 153,
+   "canon": 245,
+   "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a3,T3=t1,T4=t2]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 154,
+   "canon": 253,
+   "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a3,T3=t2,T4=t3]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 155,
+   "canon": 261,
+   "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a3,T3=t3,T4=t4]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 156,
+   "canon": 269,
+   "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a3,T3=t4,T4=t5]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 157,
+   "canon": 277,
+   "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a3,T3=t5,T4=t6]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 158,
+   "canon": 285,
+   "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a3,T3=t6,T4=t7]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 159,
+   "canon": 293,
+   "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a3,T3=t7,T4=t0]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 160,
+   "canon": 35,
+   "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a0,T3=t0,T4=t1]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 161,
+   "canon": 43,
+   "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a0,T3=t1,T4=t2]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 162,
+   "canon": 51,
+   "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a0,T3=t2,T4=t3]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 163,
+   "canon": 59,
+   "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a0,T3=t3,T4=t4]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 164,
+   "canon": 67,
+   "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a0,T3=t4,T4=t5]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 165,
+   "canon": 75,
+   "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a0,T3=t5,T4=t6]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 166,
+   "canon": 83,
+   "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a0,T3=t6,T4=t7]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 167,
+   "canon": 91,
+   "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a0,T3=t7,T4=t0]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 168,
+   "canon": 102,
+   "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a1,T3=t0,T4=t1]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 169,
+   "canon": 110,
+   "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a1,T3=t1,T4=t2]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 170,
+   "canon": 118,
+   "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a1,T3=t2,T4=t3]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 171,
+   "canon": 126,
+   "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a1,T3=t3,T4=t4]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 172,
+   "canon": 134,
+   "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a1,T3=t4,T4=t5]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 173,
+   "canon": 142,
+   "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a1,T3=t5,T4=t6]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 174,
+   "canon": 150,
+   "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a1,T3=t6,T4=t7]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 175,
+   "canon": 158,
+   "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a1,T3=t7,T4=t0]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 176,
+   "canon": 169,
+   "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a2,T3=t0,T4=t1]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 177,
+   "canon": 177,
+   "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a2,T3=t1,T4=t2]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 178,
+   "canon": 185,
+   "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a2,T3=t2,T4=t3]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 179,
+   "canon": 193,
+   "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a2,T3=t3,T4=t4]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 180,
+   "canon": 201,
+   "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a2,T3=t4,T4=t5]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 181,
+   "canon": 209,
+   "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a2,T3=t5,T4=t6]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 182,
+   "canon": 217,
+   "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a2,T3=t6,T4=t7]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 183,
+   "canon": 225,
+   "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a2,T3=t7,T4=t0]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 184,
+   "canon": 238,
+   "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a3,T3=t0,T4=t1]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 185,
+   "canon": 246,
+   "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a3,T3=t1,T4=t2]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 186,
+   "canon": 254,
+   "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a3,T3=t2,T4=t3]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 187,
+   "canon": 262,
+   "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a3,T3=t3,T4=t4]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 188,
+   "canon": 270,
+   "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a3,T3=t4,T4=t5]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 189,
+   "canon": 278,
+   "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a3,T3=t5,T4=t6]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 190,
+   "canon": 286,
+   "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a3,T3=t6,T4=t7]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 191,
+   "canon": 294,
+   "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a3,T3=t7,T4=t0]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 192,
+   "canon": 36,
+   "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a0,T3=t0,T4=t1]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 193,
+   "canon": 44,
+   "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a0,T3=t1,T4=t2]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 194,
+   "canon": 52,
+   "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a0,T3=t2,T4=t3]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 195,
+   "canon": 60,
+   "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a0,T3=t3,T4=t4]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 196,
+   "canon": 68,
+   "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a0,T3=t4,T4=t5]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 197,
+   "canon": 76,
+   "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a0,T3=t5,T4=t6]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 198,
+   "canon": 84,
+   "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a0,T3=t6,T4=t7]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 199,
+   "canon": 92,
+   "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a0,T3=t7,T4=t0]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 200,
+   "canon": 103,
+   "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a1,T3=t0,T4=t1]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 201,
+   "canon": 111,
+   "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a1,T3=t1,T4=t2]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 202,
+   "canon": 119,
+   "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a1,T3=t2,T4=t3]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 203,
+   "canon": 127,
+   "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a1,T3=t3,T4=t4]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 204,
+   "canon": 135,
+   "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a1,T3=t4,T4=t5]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 205,
+   "canon": 143,
+   "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a1,T3=t5,T4=t6]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 206,
+   "canon": 151,
+   "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a1,T3=t6,T4=t7]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 207,
+   "canon": 159,
+   "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a1,T3=t7,T4=t0]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 208,
+   "canon": 170,
+   "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a2,T3=t0,T4=t1]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 209,
+   "canon": 178,
+   "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a2,T3=t1,T4=t2]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 210,
+   "canon": 186,
+   "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a2,T3=t2,T4=t3]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 211,
+   "canon": 194,
+   "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a2,T3=t3,T4=t4]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 212,
+   "canon": 202,
+   "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a2,T3=t4,T4=t5]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 213,
+   "canon": 210,
+   "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a2,T3=t5,T4=t6]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 214,
+   "canon": 218,
+   "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a2,T3=t6,T4=t7]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 215,
+   "canon": 226,
+   "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a2,T3=t7,T4=t0]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 216,
+   "canon": 239,
+   "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a3,T3=t0,T4=t1]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 217,
+   "canon": 247,
+   "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a3,T3=t1,T4=t2]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 218,
+   "canon": 255,
+   "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a3,T3=t2,T4=t3]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 219,
+   "canon": 263,
+   "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a3,T3=t3,T4=t4]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 220,
+   "canon": 271,
+   "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a3,T3=t4,T4=t5]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 221,
+   "canon": 279,
+   "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a3,T3=t5,T4=t6]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 222,
+   "canon": 287,
+   "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a3,T3=t6,T4=t7]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 223,
+   "canon": 295,
+   "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a3,T3=t7,T4=t0]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 224,
+   "canon": 37,
+   "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a0,T3=t0,T4=t1]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 225,
+   "canon": 45,
+   "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a0,T3=t1,T4=t2]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 226,
+   "canon": 53,
+   "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a0,T3=t2,T4=t3]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 227,
+   "canon": 61,
+   "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a0,T3=t3,T4=t4]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 228,
+   "canon": 69,
+   "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a0,T3=t4,T4=t5]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 229,
+   "canon": 77,
+   "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a0,T3=t5,T4=t6]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 230,
+   "canon": 85,
+   "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a0,T3=t6,T4=t7]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 231,
+   "canon": 93,
+   "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a0,T3=t7,T4=t0]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 232,
+   "canon": 104,
+   "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a1,T3=t0,T4=t1]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 233,
+   "canon": 112,
+   "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a1,T3=t1,T4=t2]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 234,
+   "canon": 120,
+   "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a1,T3=t2,T4=t3]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 235,
+   "canon": 128,
+   "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a1,T3=t3,T4=t4]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 236,
+   "canon": 136,
+   "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a1,T3=t4,T4=t5]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 237,
+   "canon": 144,
+   "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a1,T3=t5,T4=t6]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 238,
+   "canon": 152,
+   "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a1,T3=t6,T4=t7]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 239,
+   "canon": 160,
+   "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a1,T3=t7,T4=t0]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 240,
+   "canon": 171,
+   "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a2,T3=t0,T4=t1]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 241,
+   "canon": 179,
+   "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a2,T3=t1,T4=t2]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 242,
+   "canon": 187,
+   "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a2,T3=t2,T4=t3]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 243,
+   "canon": 195,
+   "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a2,T3=t3,T4=t4]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 244,
+   "canon": 203,
+   "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a2,T3=t4,T4=t5]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 245,
+   "canon": 211,
+   "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a2,T3=t5,T4=t6]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 246,
+   "canon": 219,
+   "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a2,T3=t6,T4=t7]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 247,
+   "canon": 227,
+   "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a2,T3=t7,T4=t0]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 248,
+   "canon": 240,
+   "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a3,T3=t0,T4=t1]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 249,
+   "canon": 248,
+   "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a3,T3=t1,T4=t2]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 250,
+   "canon": 256,
+   "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a3,T3=t2,T4=t3]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 251,
+   "canon": 264,
+   "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a3,T3=t3,T4=t4]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 252,
+   "canon": 272,
+   "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a3,T3=t4,T4=t5]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 253,
+   "canon": 280,
+   "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a3,T3=t5,T4=t6]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 254,
+   "canon": 288,
+   "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a3,T3=t6,T4=t7]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 255,
+   "canon": 296,
+   "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a3,T3=t7,T4=t0]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 256,
+   "canon": 38,
+   "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a0,T3=t0,T4=t1]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 257,
+   "canon": 46,
+   "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a0,T3=t1,T4=t2]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 258,
+   "canon": 54,
+   "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a0,T3=t2,T4=t3]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 259,
+   "canon": 62,
+   "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a0,T3=t3,T4=t4]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 260,
+   "canon": 70,
+   "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a0,T3=t4,T4=t5]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 261,
+   "canon": 78,
+   "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a0,T3=t5,T4=t6]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 262,
+   "canon": 86,
+   "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a0,T3=t6,T4=t7]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 263,
+   "canon": 94,
+   "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a0,T3=t7,T4=t0]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 264,
+   "canon": 105,
+   "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a1,T3=t0,T4=t1]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 265,
+   "canon": 113,
+   "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a1,T3=t1,T4=t2]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 266,
+   "canon": 121,
+   "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a1,T3=t2,T4=t3]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 267,
+   "canon": 129,
+   "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a1,T3=t3,T4=t4]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 268,
+   "canon": 137,
+   "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a1,T3=t4,T4=t5]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 269,
+   "canon": 145,
+   "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a1,T3=t5,T4=t6]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 270,
+   "canon": 153,
+   "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a1,T3=t6,T4=t7]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 271,
+   "canon": 161,
+   "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a1,T3=t7,T4=t0]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 272,
+   "canon": 172,
+   "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a2,T3=t0,T4=t1]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 273,
+   "canon": 180,
+   "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a2,T3=t1,T4=t2]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 274,
+   "canon": 188,
+   "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a2,T3=t2,T4=t3]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 275,
+   "canon": 196,
+   "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a2,T3=t3,T4=t4]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 276,
+   "canon": 204,
+   "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a2,T3=t4,T4=t5]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 277,
+   "canon": 212,
+   "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a2,T3=t5,T4=t6]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 278,
+   "canon": 220,
+   "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a2,T3=t6,T4=t7]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 279,
+   "canon": 228,
+   "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a2,T3=t7,T4=t0]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 280,
+   "canon": 241,
+   "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a3,T3=t0,T4=t1]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 281,
+   "canon": 249,
+   "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a3,T3=t1,T4=t2]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 282,
+   "canon": 257,
+   "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a3,T3=t2,T4=t3]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 283,
+   "canon": 265,
+   "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a3,T3=t3,T4=t4]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 284,
+   "canon": 273,
+   "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a3,T3=t4,T4=t5]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 285,
+   "canon": 281,
+   "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a3,T3=t5,T4=t6]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 286,
+   "canon": 289,
+   "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a3,T3=t6,T4=t7]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 287,
+   "canon": 297,
+   "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a3,T3=t7,T4=t0]",
+   "rule": "preempt",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} comes first: it takes {R} from {X}, who takes a new ticket."
+  },
+  {
+   "i": 288,
+   "canon": 354,
+   "name": "skip_ticket[R=controls,T=t0,T2=t1]",
+   "rule": "skip_ticket",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s turn was taken by priority: the next ticket's turn."
+  },
+  {
+   "i": 289,
+   "canon": 355,
+   "name": "skip_ticket[R=controls,T=t1,T2=t2]",
+   "rule": "skip_ticket",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s turn was taken by priority: the next ticket's turn."
+  },
+  {
+   "i": 290,
+   "canon": 356,
+   "name": "skip_ticket[R=controls,T=t2,T2=t3]",
+   "rule": "skip_ticket",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s turn was taken by priority: the next ticket's turn."
+  },
+  {
+   "i": 291,
+   "canon": 357,
+   "name": "skip_ticket[R=controls,T=t3,T2=t4]",
+   "rule": "skip_ticket",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s turn was taken by priority: the next ticket's turn."
+  },
+  {
+   "i": 292,
+   "canon": 358,
+   "name": "skip_ticket[R=controls,T=t4,T2=t5]",
+   "rule": "skip_ticket",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s turn was taken by priority: the next ticket's turn."
+  },
+  {
+   "i": 293,
+   "canon": 359,
+   "name": "skip_ticket[R=controls,T=t5,T2=t6]",
+   "rule": "skip_ticket",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s turn was taken by priority: the next ticket's turn."
+  },
+  {
+   "i": 294,
+   "canon": 360,
+   "name": "skip_ticket[R=controls,T=t6,T2=t7]",
+   "rule": "skip_ticket",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s turn was taken by priority: the next ticket's turn."
+  },
+  {
+   "i": 295,
+   "canon": 361,
+   "name": "skip_ticket[R=controls,T=t7,T2=t0]",
+   "rule": "skip_ticket",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s turn was taken by priority: the next ticket's turn."
+  },
+  {
+   "i": 296,
+   "canon": 309,
+   "name": "release_on_report[D=responder,R=controls,A=a2]",
+   "rule": "release_on_report",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} gives {R} back."
+  },
+  {
+   "i": 297,
+   "canon": 314,
+   "name": "release_on_report[D=responder,R=controls,A=a3]",
+   "rule": "release_on_report",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} gives {R} back."
+  },
+  {
+   "i": 298,
+   "canon": 230,
+   "name": "release_on_report[D=planner,R=controls,A=a2]",
+   "rule": "release_on_report",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} gives {R} back."
+  },
+  {
+   "i": 299,
+   "canon": 299,
+   "name": "release_on_report[D=planner,R=controls,A=a3]",
+   "rule": "release_on_report",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} gives {R} back."
+  },
+  {
+   "i": 300,
+   "canon": 371,
+   "name": "release_report_wait[D=responder,R=controls,A=a0]",
+   "rule": "release_report_wait",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} gives {R} back while its grant is young: the release waits."
+  },
+  {
+   "i": 301,
+   "canon": 372,
+   "name": "release_report_wait[D=responder,R=controls,A=a1]",
+   "rule": "release_report_wait",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} gives {R} back while its grant is young: the release waits."
+  },
+  {
+   "i": 302,
+   "canon": 369,
+   "name": "release_report_wait[D=planner,R=controls,A=a0]",
+   "rule": "release_report_wait",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} gives {R} back while its grant is young: the release waits."
+  },
+  {
+   "i": 303,
+   "canon": 370,
+   "name": "release_report_wait[D=planner,R=controls,A=a1]",
+   "rule": "release_report_wait",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} gives {R} back while its grant is young: the release waits."
+  },
+  {
+   "i": 304,
+   "canon": 308,
+   "name": "release_report_late[D=responder,R=controls,A=a2]",
+   "rule": "release_report_late",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s grant is old enough: {R} is free."
+  },
+  {
+   "i": 305,
+   "canon": 313,
+   "name": "release_report_late[D=responder,R=controls,A=a3]",
+   "rule": "release_report_late",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s grant is old enough: {R} is free."
+  },
+  {
+   "i": 306,
+   "canon": 229,
+   "name": "release_report_late[D=planner,R=controls,A=a2]",
+   "rule": "release_report_late",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s grant is old enough: {R} is free."
+  },
+  {
+   "i": 307,
+   "canon": 298,
+   "name": "release_report_late[D=planner,R=controls,A=a3]",
+   "rule": "release_report_late",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s grant is old enough: {R} is free."
+  },
+  {
+   "i": 308,
+   "canon": 302,
+   "name": "release_stuck[D=responder,R=controls,A=a0]",
+   "rule": "release_stuck",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} is stuck: {R} is free."
+  },
+  {
+   "i": 309,
+   "canon": 305,
+   "name": "release_stuck[D=responder,R=controls,A=a1]",
+   "rule": "release_stuck",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} is stuck: {R} is free."
+  },
+  {
+   "i": 310,
+   "canon": 310,
+   "name": "release_stuck[D=responder,R=controls,A=a2]",
+   "rule": "release_stuck",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} is stuck: {R} is free."
+  },
+  {
+   "i": 311,
+   "canon": 315,
+   "name": "release_stuck[D=responder,R=controls,A=a3]",
+   "rule": "release_stuck",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} is stuck: {R} is free."
+  },
+  {
+   "i": 312,
+   "canon": 95,
+   "name": "release_stuck[D=planner,R=controls,A=a0]",
+   "rule": "release_stuck",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} is stuck: {R} is free."
+  },
+  {
+   "i": 313,
+   "canon": 162,
+   "name": "release_stuck[D=planner,R=controls,A=a1]",
+   "rule": "release_stuck",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} is stuck: {R} is free."
+  },
+  {
+   "i": 314,
+   "canon": 231,
+   "name": "release_stuck[D=planner,R=controls,A=a2]",
+   "rule": "release_stuck",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} is stuck: {R} is free."
+  },
+  {
+   "i": 315,
+   "canon": 300,
+   "name": "release_stuck[D=planner,R=controls,A=a3]",
+   "rule": "release_stuck",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} is stuck: {R} is free."
+  },
+  {
+   "i": 316,
+   "canon": 337,
+   "name": "stop_cancel[D=responder]",
+   "rule": "stop_cancel",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {D}'s goal is cancelled."
+  },
+  {
+   "i": 317,
+   "canon": 335,
+   "name": "stop_cancel[D=planner]",
+   "rule": "stop_cancel",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {D}'s goal is cancelled."
+  },
+  {
+   "i": 318,
+   "canon": 301,
+   "name": "stop_release[D=responder,R=controls,A=a0]",
+   "rule": "stop_release",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {R} is free."
+  },
+  {
+   "i": 319,
+   "canon": 304,
+   "name": "stop_release[D=responder,R=controls,A=a1]",
+   "rule": "stop_release",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {R} is free."
+  },
+  {
+   "i": 320,
+   "canon": 307,
+   "name": "stop_release[D=responder,R=controls,A=a2]",
+   "rule": "stop_release",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {R} is free."
+  },
+  {
+   "i": 321,
+   "canon": 312,
+   "name": "stop_release[D=responder,R=controls,A=a3]",
+   "rule": "stop_release",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {R} is free."
+  },
+  {
+   "i": 322,
+   "canon": 30,
+   "name": "stop_release[D=planner,R=controls,A=a0]",
+   "rule": "stop_release",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {R} is free."
+  },
+  {
+   "i": 323,
+   "canon": 97,
+   "name": "stop_release[D=planner,R=controls,A=a1]",
+   "rule": "stop_release",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {R} is free."
+  },
+  {
+   "i": 324,
+   "canon": 164,
+   "name": "stop_release[D=planner,R=controls,A=a2]",
+   "rule": "stop_release",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {R} is free."
+  },
+  {
+   "i": 325,
+   "canon": 233,
+   "name": "stop_release[D=planner,R=controls,A=a3]",
+   "rule": "stop_release",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {R} is free."
+  },
+  {
+   "i": 326,
+   "canon": 346,
+   "name": "stop_dequeue[D=responder,R=controls,T=t0]",
+   "rule": "stop_dequeue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {D}'s ticket for {R} is passed over."
+  },
+  {
+   "i": 327,
+   "canon": 347,
+   "name": "stop_dequeue[D=responder,R=controls,T=t1]",
+   "rule": "stop_dequeue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {D}'s ticket for {R} is passed over."
+  },
+  {
+   "i": 328,
+   "canon": 348,
+   "name": "stop_dequeue[D=responder,R=controls,T=t2]",
+   "rule": "stop_dequeue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {D}'s ticket for {R} is passed over."
+  },
+  {
+   "i": 329,
+   "canon": 349,
+   "name": "stop_dequeue[D=responder,R=controls,T=t3]",
+   "rule": "stop_dequeue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {D}'s ticket for {R} is passed over."
+  },
+  {
+   "i": 330,
+   "canon": 350,
+   "name": "stop_dequeue[D=responder,R=controls,T=t4]",
+   "rule": "stop_dequeue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {D}'s ticket for {R} is passed over."
+  },
+  {
+   "i": 331,
+   "canon": 351,
+   "name": "stop_dequeue[D=responder,R=controls,T=t5]",
+   "rule": "stop_dequeue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {D}'s ticket for {R} is passed over."
+  },
+  {
+   "i": 332,
+   "canon": 352,
+   "name": "stop_dequeue[D=responder,R=controls,T=t6]",
+   "rule": "stop_dequeue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {D}'s ticket for {R} is passed over."
+  },
+  {
+   "i": 333,
+   "canon": 353,
+   "name": "stop_dequeue[D=responder,R=controls,T=t7]",
+   "rule": "stop_dequeue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {D}'s ticket for {R} is passed over."
+  },
+  {
+   "i": 334,
+   "canon": 338,
+   "name": "stop_dequeue[D=planner,R=controls,T=t0]",
+   "rule": "stop_dequeue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {D}'s ticket for {R} is passed over."
+  },
+  {
+   "i": 335,
+   "canon": 339,
+   "name": "stop_dequeue[D=planner,R=controls,T=t1]",
+   "rule": "stop_dequeue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {D}'s ticket for {R} is passed over."
+  },
+  {
+   "i": 336,
+   "canon": 340,
+   "name": "stop_dequeue[D=planner,R=controls,T=t2]",
+   "rule": "stop_dequeue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {D}'s ticket for {R} is passed over."
+  },
+  {
+   "i": 337,
+   "canon": 341,
+   "name": "stop_dequeue[D=planner,R=controls,T=t3]",
+   "rule": "stop_dequeue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {D}'s ticket for {R} is passed over."
+  },
+  {
+   "i": 338,
+   "canon": 342,
+   "name": "stop_dequeue[D=planner,R=controls,T=t4]",
+   "rule": "stop_dequeue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {D}'s ticket for {R} is passed over."
+  },
+  {
+   "i": 339,
+   "canon": 343,
+   "name": "stop_dequeue[D=planner,R=controls,T=t5]",
+   "rule": "stop_dequeue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {D}'s ticket for {R} is passed over."
+  },
+  {
+   "i": 340,
+   "canon": 344,
+   "name": "stop_dequeue[D=planner,R=controls,T=t6]",
+   "rule": "stop_dequeue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {D}'s ticket for {R} is passed over."
+  },
+  {
+   "i": 341,
+   "canon": 345,
+   "name": "stop_dequeue[D=planner,R=controls,T=t7]",
+   "rule": "stop_dequeue",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {D}'s ticket for {R} is passed over."
+  },
+  {
+   "i": 342,
+   "canon": 303,
+   "name": "age_grant[D=responder,A=a0,B=a1]",
+   "rule": "age_grant",
+   "kind": "clause",
+   "stage": "act",
+   "line": "A tick: {D}'s grant is older."
+  },
+  {
+   "i": 343,
+   "canon": 306,
+   "name": "age_grant[D=responder,A=a1,B=a2]",
+   "rule": "age_grant",
+   "kind": "clause",
+   "stage": "act",
+   "line": "A tick: {D}'s grant is older."
+  },
+  {
+   "i": 344,
+   "canon": 311,
+   "name": "age_grant[D=responder,A=a2,B=a3]",
+   "rule": "age_grant",
+   "kind": "clause",
+   "stage": "act",
+   "line": "A tick: {D}'s grant is older."
+  },
+  {
+   "i": 345,
+   "canon": 96,
+   "name": "age_grant[D=planner,A=a0,B=a1]",
+   "rule": "age_grant",
+   "kind": "clause",
+   "stage": "act",
+   "line": "A tick: {D}'s grant is older."
+  },
+  {
+   "i": 346,
+   "canon": 163,
+   "name": "age_grant[D=planner,A=a1,B=a2]",
+   "rule": "age_grant",
+   "kind": "clause",
+   "stage": "act",
+   "line": "A tick: {D}'s grant is older."
+  },
+  {
+   "i": 347,
+   "canon": 232,
+   "name": "age_grant[D=planner,A=a2,B=a3]",
+   "rule": "age_grant",
+   "kind": "clause",
+   "stage": "act",
+   "line": "A tick: {D}'s grant is older."
+  },
+  {
+   "i": 348,
+   "canon": 364,
+   "name": "age_grant_top[D=responder,A=a3]",
+   "rule": "age_grant_top",
+   "kind": "clause",
+   "stage": "act",
+   "line": "A tick: {D}'s grant is as old as it counts."
+  },
+  {
+   "i": 349,
+   "canon": 363,
+   "name": "age_grant_top[D=planner,A=a3]",
+   "rule": "age_grant_top",
+   "kind": "clause",
+   "stage": "act",
+   "line": "A tick: {D}'s grant is as old as it counts."
+  },
+  {
+   "i": 350,
+   "canon": 362,
+   "name": "tick_free[R=controls]",
+   "rule": "tick_free",
+   "kind": "clause",
+   "stage": "act",
+   "line": "A tick: {R} is free."
+  },
+  {
+   "i": 351,
+   "canon": 7,
+   "name": "status_reset[D=responder,A=a0]",
+   "rule": "status_reset",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s status changed: its age starts again."
+  },
+  {
+   "i": 352,
+   "canon": 9,
+   "name": "status_reset[D=responder,A=a1]",
+   "rule": "status_reset",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s status changed: its age starts again."
+  },
+  {
+   "i": 353,
+   "canon": 11,
+   "name": "status_reset[D=responder,A=a2]",
+   "rule": "status_reset",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s status changed: its age starts again."
+  },
+  {
+   "i": 354,
+   "canon": 13,
+   "name": "status_reset[D=responder,A=a3]",
+   "rule": "status_reset",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s status changed: its age starts again."
+  },
+  {
+   "i": 355,
+   "canon": 0,
+   "name": "status_reset[D=planner,A=a0]",
+   "rule": "status_reset",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s status changed: its age starts again."
+  },
+  {
+   "i": 356,
+   "canon": 2,
+   "name": "status_reset[D=planner,A=a1]",
+   "rule": "status_reset",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s status changed: its age starts again."
+  },
+  {
+   "i": 357,
+   "canon": 4,
+   "name": "status_reset[D=planner,A=a2]",
+   "rule": "status_reset",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s status changed: its age starts again."
+  },
+  {
+   "i": 358,
+   "canon": 6,
+   "name": "status_reset[D=planner,A=a3]",
+   "rule": "status_reset",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s status changed: its age starts again."
+  },
+  {
+   "i": 359,
+   "canon": 8,
+   "name": "status_age[D=responder,A=a0,B=a1]",
+   "rule": "status_age",
+   "kind": "clause",
+   "stage": "act",
+   "line": "A tick: {D}'s status is older."
+  },
+  {
+   "i": 360,
+   "canon": 10,
+   "name": "status_age[D=responder,A=a1,B=a2]",
+   "rule": "status_age",
+   "kind": "clause",
+   "stage": "act",
+   "line": "A tick: {D}'s status is older."
+  },
+  {
+   "i": 361,
+   "canon": 12,
+   "name": "status_age[D=responder,A=a2,B=a3]",
+   "rule": "status_age",
+   "kind": "clause",
+   "stage": "act",
+   "line": "A tick: {D}'s status is older."
+  },
+  {
+   "i": 362,
+   "canon": 1,
+   "name": "status_age[D=planner,A=a0,B=a1]",
+   "rule": "status_age",
+   "kind": "clause",
+   "stage": "act",
+   "line": "A tick: {D}'s status is older."
+  },
+  {
+   "i": 363,
+   "canon": 3,
+   "name": "status_age[D=planner,A=a1,B=a2]",
+   "rule": "status_age",
+   "kind": "clause",
+   "stage": "act",
+   "line": "A tick: {D}'s status is older."
+  },
+  {
+   "i": 364,
+   "canon": 5,
+   "name": "status_age[D=planner,A=a2,B=a3]",
+   "rule": "status_age",
+   "kind": "clause",
+   "stage": "act",
+   "line": "A tick: {D}'s status is older."
+  },
+  {
+   "i": 365,
+   "canon": 374,
+   "name": "status_top[D=responder,A=a3]",
+   "rule": "status_top",
+   "kind": "clause",
+   "stage": "act",
+   "line": "A tick: {D}'s status is as old as it counts."
+  },
+  {
+   "i": 366,
+   "canon": 373,
+   "name": "status_top[D=planner,A=a3]",
+   "rule": "status_top",
+   "kind": "clause",
+   "stage": "act",
+   "line": "A tick: {D}'s status is as old as it counts."
+  },
+  {
+   "i": 367,
+   "canon": 333,
+   "name": "path_push[D=responder]",
+   "rule": "path_push",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} is active: on the path."
+  },
+  {
+   "i": 368,
+   "canon": 332,
+   "name": "path_push[D=planner]",
+   "rule": "path_push",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} is active: on the path."
+  },
+  {
+   "i": 369,
+   "canon": 366,
+   "name": "active_more[D=responder]",
+   "rule": "active_more",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} is active, and on the path already."
+  },
+  {
+   "i": 370,
+   "canon": 365,
+   "name": "active_more[D=planner]",
+   "rule": "active_more",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} is active, and on the path already."
+  },
+  {
+   "i": 371,
+   "canon": 336,
+   "name": "path_pop[D=responder]",
+   "rule": "path_pop",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} is done: off the path."
+  },
+  {
+   "i": 372,
+   "canon": 334,
+   "name": "path_pop[D=planner]",
+   "rule": "path_pop",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} is done: off the path."
+  },
+  {
+   "i": 373,
+   "canon": 368,
+   "name": "done_off[D=responder]",
+   "rule": "done_off",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} is done, and off the path already."
+  },
+  {
+   "i": 374,
+   "canon": 367,
+   "name": "done_off[D=planner]",
+   "rule": "done_off",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} is done, and off the path already."
+  }
+ ],
+ "cards": [
+  {
+   "name": "road_director",
+   "text": "the road's director: the controls by request, grant and release, the responder first",
+   "relation": "served",
+   "moves": [],
+   "effects": [],
+   "slots": [
+    "kind"
+   ]
+  }
+ ],
+ "queries": [],
+ "script": [
+  {
+   "name": "road_director",
+   "relation": "served",
+   "text": "the road's director: the controls by request, grant and release, the responder first",
+   "clauses": [
+    {
+     "name": "want_queue",
+     "stage": "act",
+     "doc": "{D} asks for {R}: it takes a ticket.",
+     "premises": [
+      {
+       "atom": "tick__want(D,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "issue(R,T)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tnext(T,T2)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [
+      {
+       "atom": "queued(D,R,T)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "issue(R,T2)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "grant_on_want",
+     "stage": "act",
+     "doc": "{R} is free and it is {D}'s turn: {D} holds it.",
+     "premises": [
+      {
+       "atom": "queued(D,R,T)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "serving(R,T)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "free(R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tnext(T,T2)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [
+      {
+       "atom": "holder(D,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "held(D,a0)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__grant(D,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "serving(R,T2)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "preempt",
+     "stage": "act",
+     "doc": "{D} comes first: it takes {R} from {X}, who takes a new ticket.",
+     "premises": [
+      {
+       "atom": "queued(D,R,T)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "priority(D,X)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "holder(X,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "held(X,A)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "issue(R,T3)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tnext(T3,T4)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [
+      {
+       "atom": "holder(D,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "held(D,a0)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__revoke(X,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__grant(D,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "skipped(R,T)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "queued(X,R,T3)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "issue(R,T4)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "skip_ticket",
+     "stage": "act",
+     "doc": "{D}'s turn was taken by priority: the next ticket's turn.",
+     "premises": [
+      {
+       "atom": "skipped(R,T)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "serving(R,T)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tnext(T,T2)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [
+      {
+       "atom": "serving(R,T2)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "release_on_report",
+     "stage": "act",
+     "doc": "{D} gives {R} back.",
+     "premises": [
+      {
+       "atom": "tick__release(D,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "holder(D,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "held(D,A)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "mature_grant(A)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [
+      {
+       "atom": "free(R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__revoke(D,R)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "release_report_wait",
+     "stage": "act",
+     "doc": "{D} gives {R} back while its grant is young: the release waits.",
+     "premises": [
+      {
+       "atom": "tick__release(D,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "holder(D,R)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "held(D,A)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "young_grant(A)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [
+      {
+       "atom": "late_release(D,R)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "release_report_late",
+     "stage": "act",
+     "doc": "{D}'s grant is old enough: {R} is free.",
+     "premises": [
+      {
+       "atom": "late_release(D,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "holder(D,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "held(D,A)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "mature_grant(A)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [
+      {
+       "atom": "free(R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__revoke(D,R)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "release_stuck",
+     "stage": "act",
+     "doc": "{D} is stuck: {R} is free.",
+     "premises": [
+      {
+       "atom": "tick__stuck(D)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "holder(D,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "held(D,A)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [
+      {
+       "atom": "free(R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__revoke(D,R)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "stop_cancel",
+     "stage": "act",
+     "doc": "Stopped: {D}'s goal is cancelled.",
+     "premises": [
+      {
+       "atom": "tick__stop",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "path(D)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__goal(D)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [
+      {
+       "atom": "tick__cancel(D)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "offpath(D)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "stop_release",
+     "stage": "act",
+     "doc": "Stopped: {R} is free.",
+     "premises": [
+      {
+       "atom": "tick__stop",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "holder(D,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "held(D,A)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [
+      {
+       "atom": "free(R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__revoke(D,R)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "stop_dequeue",
+     "stage": "act",
+     "doc": "Stopped: {D}'s ticket for {R} is passed over.",
+     "premises": [
+      {
+       "atom": "tick__stop",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "queued(D,R,T)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [
+      {
+       "atom": "skipped(R,T)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "age_grant",
+     "stage": "act",
+     "doc": "A tick: {D}'s grant is older.",
+     "premises": [
+      {
+       "atom": "tick",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "held(D,A)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "older(A,B)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [
+      {
+       "atom": "held(D,B)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "age_grant_top",
+     "stage": "act",
+     "doc": "A tick: {D}'s grant is as old as it counts.",
+     "premises": [
+      {
+       "atom": "tick",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "held(D,A)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "top(A)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [],
+     "target": null
+    },
+    {
+     "name": "tick_free",
+     "stage": "act",
+     "doc": "A tick: {R} is free.",
+     "premises": [
+      {
+       "atom": "tick",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "free(R)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [],
+     "target": null
+    },
+    {
+     "name": "status_reset",
+     "stage": "act",
+     "doc": "{D}'s status changed: its age starts again.",
+     "premises": [
+      {
+       "atom": "changed(D)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "age_of(D,A)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [
+      {
+       "atom": "age_of(D,a0)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "status_age",
+     "stage": "act",
+     "doc": "A tick: {D}'s status is older.",
+     "premises": [
+      {
+       "atom": "tick_s(D)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "age_of(D,A)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "older(A,B)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [
+      {
+       "atom": "age_of(D,B)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "status_top",
+     "stage": "act",
+     "doc": "A tick: {D}'s status is as old as it counts.",
+     "premises": [
+      {
+       "atom": "tick_s(D)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "age_of(D,A)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "top(A)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [],
+     "target": null
+    },
+    {
+     "name": "path_push",
+     "stage": "act",
+     "doc": "{D} is active: on the path.",
+     "premises": [
+      {
+       "atom": "tick__active(D)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "offpath(D)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [
+      {
+       "atom": "path(D)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__goal(D)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "active_more",
+     "stage": "act",
+     "doc": "{D} is active, and on the path already.",
+     "premises": [
+      {
+       "atom": "tick__active(D)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "path(D)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [],
+     "target": null
+    },
+    {
+     "name": "path_pop",
+     "stage": "act",
+     "doc": "{D} is done: off the path.",
+     "premises": [
+      {
+       "atom": "tick__done(D)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "path(D)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__goal(D)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [
+      {
+       "atom": "offpath(D)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "done_off",
+     "stage": "act",
+     "doc": "{D} is done, and off the path already.",
+     "premises": [
+      {
+       "atom": "tick__done(D)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "offpath(D)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [],
+     "target": null
+    }
+   ],
+   "atoms": [
+    {
+     "name": "tick__status",
+     "doc": ""
+    },
+    {
+     "name": "tick__active",
+     "doc": ""
+    },
+    {
+     "name": "tick__done",
+     "doc": ""
+    },
+    {
+     "name": "tick__stuck",
+     "doc": ""
+    },
+    {
+     "name": "tick__want",
+     "doc": ""
+    },
+    {
+     "name": "tick__release",
+     "doc": ""
+    },
+    {
+     "name": "tick__grant",
+     "doc": ""
+    },
+    {
+     "name": "tick__goal",
+     "doc": ""
+    },
+    {
+     "name": "tick__revoke",
+     "doc": ""
+    },
+    {
+     "name": "tick__stop",
+     "doc": ""
+    },
+    {
+     "name": "tick__cancel",
+     "doc": ""
+    },
+    {
+     "name": "free",
+     "doc": ""
+    },
+    {
+     "name": "holder",
+     "doc": ""
+    },
+    {
+     "name": "held",
+     "doc": ""
+    },
+    {
+     "name": "issue",
+     "doc": ""
+    },
+    {
+     "name": "serving",
+     "doc": ""
+    },
+    {
+     "name": "queued",
+     "doc": ""
+    },
+    {
+     "name": "skipped",
+     "doc": ""
+    },
+    {
+     "name": "late",
+     "doc": ""
+    },
+    {
+     "name": "nolate",
+     "doc": ""
+    },
+    {
+     "name": "late_release",
+     "doc": ""
+    },
+    {
+     "name": "want",
+     "doc": ""
+    },
+    {
+     "name": "nowant",
+     "doc": ""
+    },
+    {
+     "name": "path",
+     "doc": ""
+    },
+    {
+     "name": "offpath",
+     "doc": ""
+    },
+    {
+     "name": "tick",
+     "doc": ""
+    },
+    {
+     "name": "tick_s",
+     "doc": ""
+    },
+    {
+     "name": "changed",
+     "doc": ""
+    },
+    {
+     "name": "age_of",
+     "doc": ""
+    }
+   ],
+   "missing": {
+    "clause_doc": [],
+    "atom_doc": [
+     "tick__status",
+     "tick__active",
+     "tick__done",
+     "tick__stuck",
+     "tick__want",
+     "tick__release",
+     "tick__grant",
+     "tick__goal",
+     "tick__revoke",
+     "tick__stop",
+     "tick__cancel",
+     "free",
+     "holder",
+     "held",
+     "issue",
+     "serving",
+     "queued",
+     "skipped",
+     "late",
+     "nolate",
+     "late_release",
+     "want",
+     "nowant",
+     "path",
+     "offpath",
+     "tick",
+     "tick_s",
+     "changed",
+     "age_of"
+    ]
+   }
+  }
+ ],
+ "ir": null
+}

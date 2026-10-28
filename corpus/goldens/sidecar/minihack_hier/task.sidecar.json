@@ -1,0 +1,1242 @@
+{
+ "format": "metis-sidecar/1",
+ "catalog": "task",
+ "key": "4663844eb08d45372d5b773f718a6dfd065ce2c257b2f7bc6cabc4a04580c0a9",
+ "extensions": [],
+ "init": {},
+ "steps": 0,
+ "stages": [
+  "act"
+ ],
+ "events": [
+  {
+   "i": 0,
+   "canon": 99,
+   "name": "cancel_want[V0=goal]",
+   "rule": "cancel_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: I drop my goal."
+  },
+  {
+   "i": 1,
+   "canon": 100,
+   "name": "cancel_want[V0=p1]",
+   "rule": "cancel_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: I drop my goal."
+  },
+  {
+   "i": 2,
+   "canon": 101,
+   "name": "cancel_want[V0=p2]",
+   "rule": "cancel_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: I drop my goal."
+  },
+  {
+   "i": 3,
+   "canon": 102,
+   "name": "cancel_want[V0=p3]",
+   "rule": "cancel_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: I drop my goal."
+  },
+  {
+   "i": 4,
+   "canon": 103,
+   "name": "cancel_want[V0=p4]",
+   "rule": "cancel_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: I drop my goal."
+  },
+  {
+   "i": 5,
+   "canon": 104,
+   "name": "cancel_want[V0=p5]",
+   "rule": "cancel_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: I drop my goal."
+  },
+  {
+   "i": 6,
+   "canon": 105,
+   "name": "cancel_want[V0=p6]",
+   "rule": "cancel_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: I drop my goal."
+  },
+  {
+   "i": 7,
+   "canon": 106,
+   "name": "cancel_want[V0=p7]",
+   "rule": "cancel_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: I drop my goal."
+  },
+  {
+   "i": 8,
+   "canon": 107,
+   "name": "cancel_want[V0=p8]",
+   "rule": "cancel_want",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: I drop my goal."
+  },
+  {
+   "i": 9,
+   "canon": 0,
+   "name": "go[G=goal]",
+   "rule": "go",
+   "kind": "clause",
+   "stage": "act",
+   "line": "I'll walk onto {G}."
+  },
+  {
+   "i": 10,
+   "canon": 1,
+   "name": "go[G=p1]",
+   "rule": "go",
+   "kind": "clause",
+   "stage": "act",
+   "line": "I'll walk onto {G}."
+  },
+  {
+   "i": 11,
+   "canon": 2,
+   "name": "go[G=p2]",
+   "rule": "go",
+   "kind": "clause",
+   "stage": "act",
+   "line": "I'll walk onto {G}."
+  },
+  {
+   "i": 12,
+   "canon": 3,
+   "name": "go[G=p3]",
+   "rule": "go",
+   "kind": "clause",
+   "stage": "act",
+   "line": "I'll walk onto {G}."
+  },
+  {
+   "i": 13,
+   "canon": 4,
+   "name": "go[G=p4]",
+   "rule": "go",
+   "kind": "clause",
+   "stage": "act",
+   "line": "I'll walk onto {G}."
+  },
+  {
+   "i": 14,
+   "canon": 5,
+   "name": "go[G=p5]",
+   "rule": "go",
+   "kind": "clause",
+   "stage": "act",
+   "line": "I'll walk onto {G}."
+  },
+  {
+   "i": 15,
+   "canon": 6,
+   "name": "go[G=p6]",
+   "rule": "go",
+   "kind": "clause",
+   "stage": "act",
+   "line": "I'll walk onto {G}."
+  },
+  {
+   "i": 16,
+   "canon": 7,
+   "name": "go[G=p7]",
+   "rule": "go",
+   "kind": "clause",
+   "stage": "act",
+   "line": "I'll walk onto {G}."
+  },
+  {
+   "i": 17,
+   "canon": 8,
+   "name": "go[G=p8]",
+   "rule": "go",
+   "kind": "clause",
+   "stage": "act",
+   "line": "I'll walk onto {G}."
+  },
+  {
+   "i": 18,
+   "canon": 9,
+   "name": "arrived[G=goal]",
+   "rule": "arrived",
+   "kind": "clause",
+   "stage": "act",
+   "line": "I am on {G}: done."
+  },
+  {
+   "i": 19,
+   "canon": 10,
+   "name": "arrived[G=p1]",
+   "rule": "arrived",
+   "kind": "clause",
+   "stage": "act",
+   "line": "I am on {G}: done."
+  },
+  {
+   "i": 20,
+   "canon": 11,
+   "name": "arrived[G=p2]",
+   "rule": "arrived",
+   "kind": "clause",
+   "stage": "act",
+   "line": "I am on {G}: done."
+  },
+  {
+   "i": 21,
+   "canon": 12,
+   "name": "arrived[G=p3]",
+   "rule": "arrived",
+   "kind": "clause",
+   "stage": "act",
+   "line": "I am on {G}: done."
+  },
+  {
+   "i": 22,
+   "canon": 13,
+   "name": "arrived[G=p4]",
+   "rule": "arrived",
+   "kind": "clause",
+   "stage": "act",
+   "line": "I am on {G}: done."
+  },
+  {
+   "i": 23,
+   "canon": 14,
+   "name": "arrived[G=p5]",
+   "rule": "arrived",
+   "kind": "clause",
+   "stage": "act",
+   "line": "I am on {G}: done."
+  },
+  {
+   "i": 24,
+   "canon": 15,
+   "name": "arrived[G=p6]",
+   "rule": "arrived",
+   "kind": "clause",
+   "stage": "act",
+   "line": "I am on {G}: done."
+  },
+  {
+   "i": 25,
+   "canon": 16,
+   "name": "arrived[G=p7]",
+   "rule": "arrived",
+   "kind": "clause",
+   "stage": "act",
+   "line": "I am on {G}: done."
+  },
+  {
+   "i": 26,
+   "canon": 17,
+   "name": "arrived[G=p8]",
+   "rule": "arrived",
+   "kind": "clause",
+   "stage": "act",
+   "line": "I am on {G}: done."
+  },
+  {
+   "i": 27,
+   "canon": 18,
+   "name": "stuck_on[G=goal,X=goal]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 28,
+   "canon": 27,
+   "name": "stuck_on[G=goal,X=p1]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 29,
+   "canon": 36,
+   "name": "stuck_on[G=goal,X=p2]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 30,
+   "canon": 45,
+   "name": "stuck_on[G=goal,X=p3]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 31,
+   "canon": 54,
+   "name": "stuck_on[G=goal,X=p4]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 32,
+   "canon": 63,
+   "name": "stuck_on[G=goal,X=p5]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 33,
+   "canon": 72,
+   "name": "stuck_on[G=goal,X=p6]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 34,
+   "canon": 81,
+   "name": "stuck_on[G=goal,X=p7]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 35,
+   "canon": 90,
+   "name": "stuck_on[G=goal,X=p8]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 36,
+   "canon": 19,
+   "name": "stuck_on[G=p1,X=goal]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 37,
+   "canon": 28,
+   "name": "stuck_on[G=p1,X=p1]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 38,
+   "canon": 37,
+   "name": "stuck_on[G=p1,X=p2]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 39,
+   "canon": 46,
+   "name": "stuck_on[G=p1,X=p3]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 40,
+   "canon": 55,
+   "name": "stuck_on[G=p1,X=p4]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 41,
+   "canon": 64,
+   "name": "stuck_on[G=p1,X=p5]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 42,
+   "canon": 73,
+   "name": "stuck_on[G=p1,X=p6]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 43,
+   "canon": 82,
+   "name": "stuck_on[G=p1,X=p7]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 44,
+   "canon": 91,
+   "name": "stuck_on[G=p1,X=p8]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 45,
+   "canon": 20,
+   "name": "stuck_on[G=p2,X=goal]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 46,
+   "canon": 29,
+   "name": "stuck_on[G=p2,X=p1]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 47,
+   "canon": 38,
+   "name": "stuck_on[G=p2,X=p2]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 48,
+   "canon": 47,
+   "name": "stuck_on[G=p2,X=p3]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 49,
+   "canon": 56,
+   "name": "stuck_on[G=p2,X=p4]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 50,
+   "canon": 65,
+   "name": "stuck_on[G=p2,X=p5]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 51,
+   "canon": 74,
+   "name": "stuck_on[G=p2,X=p6]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 52,
+   "canon": 83,
+   "name": "stuck_on[G=p2,X=p7]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 53,
+   "canon": 92,
+   "name": "stuck_on[G=p2,X=p8]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 54,
+   "canon": 21,
+   "name": "stuck_on[G=p3,X=goal]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 55,
+   "canon": 30,
+   "name": "stuck_on[G=p3,X=p1]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 56,
+   "canon": 39,
+   "name": "stuck_on[G=p3,X=p2]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 57,
+   "canon": 48,
+   "name": "stuck_on[G=p3,X=p3]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 58,
+   "canon": 57,
+   "name": "stuck_on[G=p3,X=p4]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 59,
+   "canon": 66,
+   "name": "stuck_on[G=p3,X=p5]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 60,
+   "canon": 75,
+   "name": "stuck_on[G=p3,X=p6]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 61,
+   "canon": 84,
+   "name": "stuck_on[G=p3,X=p7]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 62,
+   "canon": 93,
+   "name": "stuck_on[G=p3,X=p8]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 63,
+   "canon": 22,
+   "name": "stuck_on[G=p4,X=goal]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 64,
+   "canon": 31,
+   "name": "stuck_on[G=p4,X=p1]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 65,
+   "canon": 40,
+   "name": "stuck_on[G=p4,X=p2]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 66,
+   "canon": 49,
+   "name": "stuck_on[G=p4,X=p3]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 67,
+   "canon": 58,
+   "name": "stuck_on[G=p4,X=p4]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 68,
+   "canon": 67,
+   "name": "stuck_on[G=p4,X=p5]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 69,
+   "canon": 76,
+   "name": "stuck_on[G=p4,X=p6]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 70,
+   "canon": 85,
+   "name": "stuck_on[G=p4,X=p7]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 71,
+   "canon": 94,
+   "name": "stuck_on[G=p4,X=p8]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 72,
+   "canon": 23,
+   "name": "stuck_on[G=p5,X=goal]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 73,
+   "canon": 32,
+   "name": "stuck_on[G=p5,X=p1]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 74,
+   "canon": 41,
+   "name": "stuck_on[G=p5,X=p2]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 75,
+   "canon": 50,
+   "name": "stuck_on[G=p5,X=p3]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 76,
+   "canon": 59,
+   "name": "stuck_on[G=p5,X=p4]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 77,
+   "canon": 68,
+   "name": "stuck_on[G=p5,X=p5]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 78,
+   "canon": 77,
+   "name": "stuck_on[G=p5,X=p6]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 79,
+   "canon": 86,
+   "name": "stuck_on[G=p5,X=p7]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 80,
+   "canon": 95,
+   "name": "stuck_on[G=p5,X=p8]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 81,
+   "canon": 24,
+   "name": "stuck_on[G=p6,X=goal]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 82,
+   "canon": 33,
+   "name": "stuck_on[G=p6,X=p1]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 83,
+   "canon": 42,
+   "name": "stuck_on[G=p6,X=p2]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 84,
+   "canon": 51,
+   "name": "stuck_on[G=p6,X=p3]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 85,
+   "canon": 60,
+   "name": "stuck_on[G=p6,X=p4]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 86,
+   "canon": 69,
+   "name": "stuck_on[G=p6,X=p5]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 87,
+   "canon": 78,
+   "name": "stuck_on[G=p6,X=p6]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 88,
+   "canon": 87,
+   "name": "stuck_on[G=p6,X=p7]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 89,
+   "canon": 96,
+   "name": "stuck_on[G=p6,X=p8]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 90,
+   "canon": 25,
+   "name": "stuck_on[G=p7,X=goal]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 91,
+   "canon": 34,
+   "name": "stuck_on[G=p7,X=p1]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 92,
+   "canon": 43,
+   "name": "stuck_on[G=p7,X=p2]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 93,
+   "canon": 52,
+   "name": "stuck_on[G=p7,X=p3]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 94,
+   "canon": 61,
+   "name": "stuck_on[G=p7,X=p4]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 95,
+   "canon": 70,
+   "name": "stuck_on[G=p7,X=p5]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 96,
+   "canon": 79,
+   "name": "stuck_on[G=p7,X=p6]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 97,
+   "canon": 88,
+   "name": "stuck_on[G=p7,X=p7]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 98,
+   "canon": 97,
+   "name": "stuck_on[G=p7,X=p8]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 99,
+   "canon": 26,
+   "name": "stuck_on[G=p8,X=goal]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 100,
+   "canon": 35,
+   "name": "stuck_on[G=p8,X=p1]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 101,
+   "canon": 44,
+   "name": "stuck_on[G=p8,X=p2]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 102,
+   "canon": 53,
+   "name": "stuck_on[G=p8,X=p3]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 103,
+   "canon": 62,
+   "name": "stuck_on[G=p8,X=p4]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 104,
+   "canon": 71,
+   "name": "stuck_on[G=p8,X=p5]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 105,
+   "canon": 80,
+   "name": "stuck_on[G=p8,X=p6]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 106,
+   "canon": 89,
+   "name": "stuck_on[G=p8,X=p7]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  },
+  {
+   "i": 107,
+   "canon": 98,
+   "name": "stuck_on[G=p8,X=p8]",
+   "rule": "stuck_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{X} was refused and I have no rule for it: I stop and ask."
+  }
+ ],
+ "cards": [
+  {
+   "name": "task",
+   "text": "the task specialist over roles",
+   "relation": "served",
+   "moves": [],
+   "effects": [],
+   "slots": []
+  }
+ ],
+ "queries": [],
+ "script": [
+  {
+   "name": "task",
+   "relation": "served",
+   "text": "the task specialist over roles",
+   "clauses": [
+    {
+     "name": "cancel_want",
+     "stage": "act",
+     "doc": "Stopped: I drop my goal.",
+     "premises": [
+      {
+       "atom": "tick__cancel(task)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "want(V0)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [],
+     "target": null
+    },
+    {
+     "name": "go",
+     "stage": "act",
+     "doc": "I'll walk onto {G}.",
+     "premises": [
+      {
+       "atom": "reach(G)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [
+      {
+       "atom": "want(G)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "goto(G)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__active(task)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "arrived",
+     "stage": "act",
+     "doc": "I am on {G}: done.",
+     "premises": [
+      {
+       "atom": "want(G)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "reached(G)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [
+      {
+       "atom": "done",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__done(task)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "stuck_on",
+     "stage": "act",
+     "doc": "{X} was refused and I have no rule for it: I stop and ask.",
+     "premises": [
+      {
+       "atom": "want(G)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "refused(X)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [
+      {
+       "atom": "stuck(X)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__stuck(task)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    }
+   ],
+   "atoms": [
+    {
+     "name": "cleared",
+     "doc": ""
+    },
+    {
+     "name": "closed",
+     "doc": ""
+    },
+    {
+     "name": "done",
+     "doc": ""
+    },
+    {
+     "name": "fight",
+     "doc": ""
+    },
+    {
+     "name": "goto",
+     "doc": ""
+    },
+    {
+     "name": "guarded",
+     "doc": ""
+    },
+    {
+     "name": "open",
+     "doc": ""
+    },
+    {
+     "name": "opened",
+     "doc": ""
+    },
+    {
+     "name": "reach",
+     "doc": ""
+    },
+    {
+     "name": "reached",
+     "doc": ""
+    },
+    {
+     "name": "refused",
+     "doc": ""
+    },
+    {
+     "name": "stuck",
+     "doc": ""
+    },
+    {
+     "name": "want",
+     "doc": ""
+    },
+    {
+     "name": "tick__status",
+     "doc": ""
+    },
+    {
+     "name": "tick__active",
+     "doc": ""
+    },
+    {
+     "name": "tick__done",
+     "doc": ""
+    },
+    {
+     "name": "tick__stuck",
+     "doc": ""
+    },
+    {
+     "name": "tick__want",
+     "doc": ""
+    },
+    {
+     "name": "tick__release",
+     "doc": ""
+    },
+    {
+     "name": "tick__grant",
+     "doc": ""
+    },
+    {
+     "name": "tick__goal",
+     "doc": ""
+    },
+    {
+     "name": "tick__revoke",
+     "doc": ""
+    },
+    {
+     "name": "tick__stop",
+     "doc": ""
+    },
+    {
+     "name": "tick__cancel",
+     "doc": ""
+    }
+   ],
+   "missing": {
+    "clause_doc": [],
+    "atom_doc": [
+     "cleared",
+     "closed",
+     "done",
+     "fight",
+     "goto",
+     "guarded",
+     "open",
+     "opened",
+     "reach",
+     "reached",
+     "refused",
+     "stuck",
+     "want",
+     "tick__status",
+     "tick__active",
+     "tick__done",
+     "tick__stuck",
+     "tick__want",
+     "tick__release",
+     "tick__grant",
+     "tick__goal",
+     "tick__revoke",
+     "tick__stop",
+     "tick__cancel"
+    ]
+   }
+  }
+ ],
+ "ir": null
+}

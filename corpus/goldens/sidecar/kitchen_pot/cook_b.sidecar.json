@@ -1,0 +1,643 @@
+{
+ "format": "metis-sidecar/1",
+ "catalog": "cook_b",
+ "key": "0c3d83b14a8c8fc520b8a0f99080af3712c75f022977e91fa9ce40394afe8618",
+ "extensions": [],
+ "init": {
+  "calm(cook_b)": 1
+ },
+ "steps": 0,
+ "stages": [
+  "act"
+ ],
+ "events": [
+  {
+   "i": 0,
+   "canon": 6,
+   "name": "fetch_onion",
+   "rule": "fetch_onion",
+   "kind": "clause",
+   "stage": "act",
+   "line": "I take an onion for my order."
+  },
+  {
+   "i": 1,
+   "canon": 2,
+   "name": "ask_pot[S=cook_b]",
+   "rule": "ask_pot",
+   "kind": "clause",
+   "stage": "act",
+   "line": "I need the pot: I ask for it."
+  },
+  {
+   "i": 2,
+   "canon": 3,
+   "name": "ask_plate[S=cook_b]",
+   "rule": "ask_plate",
+   "kind": "clause",
+   "stage": "act",
+   "line": "My soup cooks and I have no request out (a stop cancelled it): I ask for the pot to plate it."
+  },
+  {
+   "i": 3,
+   "canon": 1,
+   "name": "cancel[S=cook_b]",
+   "rule": "cancel",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: I drop my goal."
+  },
+  {
+   "i": 4,
+   "canon": 4,
+   "name": "cancel_none[S=cook_b]",
+   "rule": "cancel_none",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped as I finished: nothing left to drop."
+  },
+  {
+   "i": 5,
+   "canon": 7,
+   "name": "load[S=cook_b]",
+   "rule": "load",
+   "kind": "clause",
+   "stage": "act",
+   "line": "The pot is mine: I put my onion in."
+  },
+  {
+   "i": 6,
+   "canon": 9,
+   "name": "start[S=cook_b]",
+   "rule": "start",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Three onions are in: I start the soup."
+  },
+  {
+   "i": 7,
+   "canon": 5,
+   "name": "fetch_dish[S=cook_b]",
+   "rule": "fetch_dish",
+   "kind": "clause",
+   "stage": "act",
+   "line": "My soup cooks: I take a dish."
+  },
+  {
+   "i": 8,
+   "canon": 0,
+   "name": "plate[S=cook_b]",
+   "rule": "plate",
+   "kind": "clause",
+   "stage": "act",
+   "line": "My soup is done: I plate it and give the pot back."
+  },
+  {
+   "i": 9,
+   "canon": 8,
+   "name": "serve[S=cook_b]",
+   "rule": "serve",
+   "kind": "clause",
+   "stage": "act",
+   "line": "I serve my order."
+  }
+ ],
+ "cards": [
+  {
+   "name": "cook_b",
+   "text": "the shared-pot kitchen's cook_b",
+   "relation": "served",
+   "moves": [],
+   "effects": [],
+   "slots": []
+  }
+ ],
+ "queries": [],
+ "script": [
+  {
+   "name": "cook_b",
+   "relation": "served",
+   "text": "the shared-pot kitchen's cook_b",
+   "clauses": [
+    {
+     "name": "fetch_onion",
+     "stage": "act",
+     "doc": "I take an onion for my order.",
+     "premises": [
+      {
+       "atom": "order",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "hand_free",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "pot_space",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [
+      {
+       "atom": "held_onion",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "ask_pot",
+     "stage": "act",
+     "doc": "I need the pot: I ask for it.",
+     "premises": [
+      {
+       "atom": "order",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "held_onion",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "self(S)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "calm(S)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [
+      {
+       "atom": "asked(S)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__want(S,pot)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__active(S)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "ask_plate",
+     "stage": "act",
+     "doc": "My soup cooks and I have no request out (a stop cancelled it): I ask for the pot to plate it.",
+     "premises": [
+      {
+       "atom": "order",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "mine(S)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "self(S)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "calm(S)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [
+      {
+       "atom": "asked(S)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__want(S,pot)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__active(S)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "cancel",
+     "stage": "act",
+     "doc": "Stopped: I drop my goal.",
+     "premises": [
+      {
+       "atom": "tick__cancel(S)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "self(S)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "asked(S)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [
+      {
+       "atom": "calm(S)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "cancel_none",
+     "stage": "act",
+     "doc": "Stopped as I finished: nothing left to drop.",
+     "premises": [
+      {
+       "atom": "calm(S)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__cancel(S)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "self(S)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [
+      {
+       "atom": "calm(S)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "load",
+     "stage": "act",
+     "doc": "The pot is mine: I put my onion in.",
+     "premises": [
+      {
+       "atom": "held_onion",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "pot_space",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "self(S)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "asked(S)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "tick__grant(S,pot)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [
+      {
+       "atom": "hand_free",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "pot_onion",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "start",
+     "stage": "act",
+     "doc": "Three onions are in: I start the soup.",
+     "premises": [
+      {
+       "atom": "hand_free",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "pot_onion",
+       "n": 3,
+       "kept": false
+      },
+      {
+       "atom": "self(S)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "asked(S)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "tick__grant(S,pot)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [
+      {
+       "atom": "cooking",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "mine(S)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "fetch_dish",
+     "stage": "act",
+     "doc": "My soup cooks: I take a dish.",
+     "premises": [
+      {
+       "atom": "order",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "hand_free",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "mine(S)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "self(S)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [
+      {
+       "atom": "held_dish",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "plate",
+     "stage": "act",
+     "doc": "My soup is done: I plate it and give the pot back.",
+     "premises": [
+      {
+       "atom": "held_dish",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "cooking",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "mine(S)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "asked(S)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "self(S)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "tick__grant(S,pot)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [
+      {
+       "atom": "held_soup",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "pot_space",
+       "n": 3,
+       "kept": false
+      },
+      {
+       "atom": "tick__release(S,pot)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__done(S)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "calm(S)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "serve",
+     "stage": "act",
+     "doc": "I serve my order.",
+     "premises": [
+      {
+       "atom": "held_soup",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "order",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "self(S)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [
+      {
+       "atom": "hand_free",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    }
+   ],
+   "atoms": [
+    {
+     "name": "tick__status",
+     "doc": ""
+    },
+    {
+     "name": "tick__active",
+     "doc": ""
+    },
+    {
+     "name": "tick__done",
+     "doc": ""
+    },
+    {
+     "name": "tick__stuck",
+     "doc": ""
+    },
+    {
+     "name": "tick__want",
+     "doc": ""
+    },
+    {
+     "name": "tick__release",
+     "doc": ""
+    },
+    {
+     "name": "tick__grant",
+     "doc": ""
+    },
+    {
+     "name": "tick__goal",
+     "doc": ""
+    },
+    {
+     "name": "tick__revoke",
+     "doc": ""
+    },
+    {
+     "name": "tick__stop",
+     "doc": ""
+    },
+    {
+     "name": "tick__cancel",
+     "doc": ""
+    },
+    {
+     "name": "hand_free",
+     "doc": ""
+    },
+    {
+     "name": "held_onion",
+     "doc": ""
+    },
+    {
+     "name": "held_dish",
+     "doc": ""
+    },
+    {
+     "name": "held_soup",
+     "doc": ""
+    },
+    {
+     "name": "pot_space",
+     "doc": ""
+    },
+    {
+     "name": "pot_onion",
+     "doc": ""
+    },
+    {
+     "name": "cooking",
+     "doc": ""
+    },
+    {
+     "name": "order",
+     "doc": ""
+    },
+    {
+     "name": "calm",
+     "doc": ""
+    },
+    {
+     "name": "asked",
+     "doc": ""
+    },
+    {
+     "name": "mine",
+     "doc": ""
+    }
+   ],
+   "missing": {
+    "clause_doc": [],
+    "atom_doc": [
+     "tick__status",
+     "tick__active",
+     "tick__done",
+     "tick__stuck",
+     "tick__want",
+     "tick__release",
+     "tick__grant",
+     "tick__goal",
+     "tick__revoke",
+     "tick__stop",
+     "tick__cancel",
+     "hand_free",
+     "held_onion",
+     "held_dish",
+     "held_soup",
+     "pot_space",
+     "pot_onion",
+     "cooking",
+     "order",
+     "calm",
+     "asked",
+     "mine"
+    ]
+   }
+  }
+ ],
+ "ir": null
+}
