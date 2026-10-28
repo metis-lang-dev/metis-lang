@@ -221,8 +221,10 @@ processes:
 transport: {carrier: socket, budget: 1}        # ticks of latency the link charges to ρ (L18)
 ```
 
-A member belongs to exactly one process. The world host belongs to the process of the member that binds it
-(a world shared by members in two processes is an error: `plan-world-split`).
+A member belongs to exactly one process. The world is a peer (spec 15): each of its ports is hosted by one
+process, named in the plan (`world:` under a process; a port named nowhere is hosted where its member is),
+and a world port whose member sits elsewhere is a transport port (§5.2). Amendment 2 replaced the first
+form's `plan-world-split` error.
 
 ### 5.2 Derived transport ports
 
@@ -346,16 +348,21 @@ wheelchair image) must be hosted by the composition's world. `hosts: {member: <b
 effective binding and its origin (`manifest` | `composition`); L21 checks the override as it checks a
 manifest binding. A member not named in `hosts:` keeps its own.
 
-## Amendment 2 (2026-10-28, wheelchair-design step 3 review)
+## Amendment 2 (2026-10-28, wheelchair-design step 3; revised at the user's word the same day)
 
 - **L15 closes `priority` transitively**: the strict order the link checks and records is the transitive
   closure of the declared pairs; a cycle anywhere in the closure is `link-priority`.
-- **An endpoint is a member.** A process with no member derives no transport port, because only shared preds
-  between members cross (§5.2). A person, a console or a sensor bridge that must exchange atoms with the
-  members is therefore a thin MEMBER (a manifest with `shared:` and a host, no program rules needed beyond
-  its declarations), placed in its process by the plan. There is no world endpoint per process.
-- A composition may set a member's parameters the link records (the planner's vru role count j in road):
-  `params: {member: {name: value}}`, hashed into the image.
+- **The world is an endpoint, in any process.** Spec 15 makes the world a peer with directions (`world:
+  {out, in}`), and §5.1's first form made it belong to one process (`plan-world-split`). That was wrong: a
+  world port whose member sits in another process is a transport port like any other (§5.2), with the
+  world's host as the producing or consuming process. So an operator — the metis agent with its person, a
+  console, a sensor bridge — is the WORLD side of the composition, never a member: its readings (a goal,
+  a veto, a consent) are `world.out`, the statuses it is told are `world.in`, and the plan names the process
+  that hosts them (`processes: {agent: {world: [veto, consent, goal_*, tick__status, say]}}`). A process may
+  hold members, a share of the world, or both. The catalog's rule stands: packages are the domains, the agent
+  is the user-communication side, and its channel is the intent interface.
+- A role's count is capacity, not a parameter: the composition's `capacity` file declares the role types
+  (`type vru {vru1 vru2 vru3}`) and the link records them; there is no `params:` block.
 
 ## 10. Plan rules the runtimes impose today (from the review's §5)
 
