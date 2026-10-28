@@ -540,9 +540,24 @@ let run ~wire o comp_path =
                         add "error" "plan" "plan-world: %s: %s (process %s) is no world port" pname w pn) ws) ps;
       let proc_of n = List.find_map (fun (pn, ms, _, _) -> if List.mem n ms then Some pn else None) ps in
       (* a world port NAMED under a process's world: is hosted there and crosses to the members that read it, a
-         world-private copy included (amendment 2: the operator's readings); a port named nowhere is hosted
-         wherever its members are, each member's own host syncing it: it never crosses *)
+         world-private copy included (amendment 2: the operator's readings), and from the members that send it (a
+         world.in command). A port named nowhere is hosted where its members are, which is one place only when they
+         sit in one process: used from two processes and hosted by none, each would build its own world, and the
+         shared world (kitchen_pot's pot) would diverge (plan-world-unhosted) *)
       let named p = List.find_map (fun (pn, _, ws, _) -> if List.mem p ws then Some pn else None) ps in
+      let sends m p = List.exists (fun r ->
+          let pre = p ^ "_" in
+          r.r_name = p || (String.length r.r_name > String.length pre && String.sub r.r_name 0 (String.length pre) = pre))
+          m.m_rules in
+      List.iter (fun p ->
+          if named p = None then begin
+            let users = uniq (List.filter_map (fun m ->
+                if List.mem_assoc p m.m_shared || (List.mem p a.a_world_in && sends m p) then proc_of m.m_name else None)
+                (dm :: specs)) in
+            if List.length users > 1 then
+              add "error" "plan" "plan-world-unhosted: %s: world port %s is used from %s and hosted by none: name its host under world:"
+                pname p (String.concat ", " users)
+          end) (a.a_world_out @ a.a_world_in);
       (* the runtimes today (§10): levels need py's hook; go has no tick layer for a director with specialists *)
       List.iter (fun (pn, ms, _, rt) ->
           List.iter (fun n -> if List.mem n all_members then begin
@@ -560,10 +575,15 @@ let run ~wire o comp_path =
           let reads m = match List.assoc_opt p m.m_shared with
             | Some "in" -> true | Some "world-private" -> named p <> None | _ -> false in
           let prods = uniq (List.filter_map (fun m -> if List.assoc_opt p m.m_shared = Some "out" then proc_of m.m_name else None) (dm :: specs)
-                            @ (if List.mem p a.a_world_out then Option.to_list (named p) else [])) in
+                            @ (if List.mem p a.a_world_out then Option.to_list (named p) else [])
+                            (* a hosted world.in command: from the processes of the members that send it *)
+                            @ (if List.mem p a.a_world_in && named p <> None then
+                                 List.filter_map (fun m -> if sends m p then proc_of m.m_name else None) (dm :: specs) else [])) in
           let cons = uniq (List.filter_map (fun m -> if reads m then proc_of m.m_name else None) (dm :: specs)
                            @ (if List.mem p a.a_world_in then Option.to_list (named p) else [])) in
-          let nature = match List.assoc_opt p natures with Some n -> n | None -> "state" in
+          (* a world.in command is each sender's own act on the world, never a state two processes write *)
+          let nature = match List.assoc_opt p natures with
+            | Some n -> n | None -> if List.mem p a.a_world_in then "command" else "state" in
           let ports = List.filter_map (fun from -> match minus cons [from] with
               | [] -> None
               | to_ -> Some (p, nature, from, to_, if p = "tick__stop" then "director-first" else "beat")) prods in

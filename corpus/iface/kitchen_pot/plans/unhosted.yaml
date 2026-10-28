@@ -1,0 +1,6 @@
+# the split with its world hosted by no process (linker s-5908724a 5a): refused, plan-world-unhosted: each process would
+# build its own kitchen and the pot would diverge
+processes:
+  a: [cook_a]
+  b: [cook_b, pot_director]
+transport: {carrier: socket, budget: 1}

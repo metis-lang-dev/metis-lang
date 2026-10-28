@@ -1,5 +1,6 @@
 # kitchen_pot over two processes (linker s-5908724a step 5a): cook_a alone, cook_b with the director
 processes:
   a: [cook_a]
-  b: [cook_b, pot_director]
+  b: {members: [cook_b, pot_director], world: [hand_free, held_onion, held_dish, held_soup, pot_space, pot_onion, cooking, order,
+      tick__stop, fetch_onion, load, start, fetch_dish, plate, serve]}   # the kitchen is b's: one world, cook_a's through the transport
 transport: {carrier: socket, budget: 1}

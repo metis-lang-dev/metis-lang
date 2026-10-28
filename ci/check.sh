@@ -328,7 +328,7 @@ echo "== 17. deployment plans (spec 17 §5): metisc --link --plan == goldens; th
 # shape (every member in the runtime; the agent process hosts the world's order and stop, amendment 2), and one
 # plan of refusals (plan-member, plan-world, plan-tick-layer, L18 with the budget)
 n_pl=0
-for p in split operator bad; do
+for p in split operator bad unhosted; do
   rc=0
   ( cd "$ROOT/corpus/iface" && METIS_HOME="$ROOT/corpus/iface/_home" \
       "$ROOT/src/metisc" --link kitchen_pot/composition_split.yaml --check --plan "kitchen_pot/plans/$p.yaml" ) \
