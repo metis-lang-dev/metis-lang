@@ -338,6 +338,14 @@ Lean lemma of track B2 (ordered commit on a logical clock) is for.
 5. `METIS_HOME` unset at link is an ERROR (L20): the lock must say where the protocol came from.
 6. `tools.json` once at the image root (`tools.json`), not per member; Go's orchestrator reads it from there.
 
+## Amendment 1 (2026-10-28, wheelchair-design step 3): `hosts:` in composition.yaml
+
+The world belongs to the composition, not to a member: a member consumed by name (road's responder in the
+wheelchair image) must be hosted by the composition's world. `hosts: {member: <binding>}` in
+`composition.yaml` overrides that member's manifest `host:` for this image; `image.json` records the
+effective binding and its origin (`manifest` | `composition`); L21 checks the override as it checks a
+manifest binding. A member not named in `hosts:` keeps its own.
+
 ## 10. Plan rules the runtimes impose today (from the review's §5)
 
 - A member with `levels:` / `beliefs:` / `evaluate:` sits in a process whose runtime builds the hook (py
