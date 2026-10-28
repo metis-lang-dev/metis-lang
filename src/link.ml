@@ -3,7 +3,7 @@
 
 open Iface
 
-type opts = { out : string option; check : bool; tar : bool; bundles : string option; build : bool;
+type opts = { out : string option; check : bool; tar : bool; build : bool;
               plans : string list }
 
 (* the tree director's hysteresis (the road's: k = 2 grant ages young, m = 1
@@ -425,18 +425,7 @@ let run ~wire o comp_path =
                 add "error" "L23" "link-levels: %s: level %s reads the port %s, no weight port of its wire" m.m_name lv (str v)
               | _ -> ())
           | _ -> ()) (yfield m "levels")) members;
-  (* L19 bundles: a given sidecar's key is the wire's *)
-  let bundle_file m f = Option.map (fun b -> Filename.concat (Filename.concat b m) f) o.bundles in
-  List.iter (fun m ->
-      match bundle_file m.m_name "sidecar.json" with
-      | Some f when Sys.file_exists f ->
-        let s = Image.read_file f and (_, k) = wire_of m.m_name in
-        let needle = "\"key\": \"" ^ k ^ "\"" and needle2 = "\"key\":\"" ^ k ^ "\"" in
-        let has sub = let n = String.length sub and l = String.length s in
-          let rec go i = i + n <= l && (String.sub s i n = sub || go (i + 1)) in go 0 in
-        if not (has needle || has needle2) then add "error" "L19" "link-key: %s's sidecar key is not its wire's %s" m.m_name k
-      | Some _ -> add "error" "L19" "link-key: %s: no sidecar.json in --bundles" m.m_name
-      | None -> ()) members;
+  (* L19 keys: the sidecar is metisc's own (ruling 6), its key the program key the wire is compiled to *)
   (* L25 planner *)
   (match d.planner_err with Some e -> add "error" "L25" "link-planner: %s" e | None -> ());
   (* the image *)
@@ -448,7 +437,7 @@ let run ~wire o comp_path =
     | S s -> Image.JS s | L l -> Image.JL (List.map y_j l) | M kv -> Image.JO (List.map (fun (k, v) -> (k, y_j v)) kv) in
   let bundle_files m =
     let (wl, _) = wire_of m.m_name in
-    (* the sidecar is metisc's own (ruling 6: the image OCaml-only); --bundles only checks a given one's key (L19) *)
+    (* the sidecar is metisc's own (ruling 6: the image is OCaml-only) *)
     [("ground.wire", String.concat "\n" wl ^ "\n"); ("sidecar.json", side_of m.m_name)] in
   let bkey m = String.sub (Image.hash (bundle_files m)) 0 12 in
   let member_j m =

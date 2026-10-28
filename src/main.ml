@@ -461,7 +461,6 @@ let rec link_args comp (o : Link.opts) = function
   | "-o" :: d :: rest -> link_args comp { o with out = Some d } rest
   | "--check" :: rest -> link_args comp { o with check = true } rest
   | "--tar" :: rest -> link_args comp { o with tar = true } rest
-  | "--bundles" :: d :: rest -> link_args comp { o with bundles = Some d } rest
   | "--plan" :: f :: rest -> link_args comp { o with plans = o.plans @ [f] } rest
   | a :: _ -> failwith ("--link: unknown argument " ^ a)
 
@@ -496,12 +495,12 @@ let () =
   | _ :: "--wire" :: program :: rest -> wire_args program [] rest
   | _ :: "--sidecar" :: program :: rest -> sidecar_args program [] rest
   | _ :: "--link" :: comp :: rest ->
-    link_args comp { Link.out = None; check = false; tar = false; bundles = None; build = false; plans = [] } rest
+    link_args comp { Link.out = None; check = false; tar = false; build = false; plans = [] } rest
   | _ :: "build" :: rest ->
     (* spec/17 §7: metisc build [DIR] [-o OUT] [--tar]: the stale members compiled, the rest reused, linked *)
     let (dir, rest) = match rest with d :: r when d <> "" && d.[0] <> '-' -> (d, r) | r -> (".", r) in
     link_args (Filename.concat dir "composition.yaml")
-      { Link.out = None; check = false; tar = false; bundles = None; build = true; plans = [] } rest
+      { Link.out = None; check = false; tar = false; build = true; plans = [] } rest
   | _ :: "check" :: rest ->
     (* spec/17 §7: metisc check [DIR] = --interface, then --link --check *)
     let dir = match rest with d :: _ -> d | [] -> "." in
@@ -510,7 +509,7 @@ let () =
      | (lines, errors) ->
        List.iter print_endline lines;
        if errors > 0 then exit 1;
-       link_args comp { Link.out = None; check = true; tar = false; bundles = None; build = false; plans = [] } []
+       link_args comp { Link.out = None; check = true; tar = false; build = false; plans = [] } []
      | exception Iface.Yaml_error m -> prerr_endline ("error: " ^ m); exit 1)
   | _ :: "--evaluate" :: llp :: rest -> evaluate_args llp false false rest
   | [_; "--selftest"] -> selftest ()
