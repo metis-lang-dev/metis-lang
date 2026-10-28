@@ -266,6 +266,13 @@ The first carrier is two sockets (one per direction), line-delimited text, exact
 a later carrier: one topic per transport port, the same lines in the message body, when a simulator behind ROS
 2 is really needed (the user, 2026-10-28). The contract does not change between carriers.
 
+**Amendment 3 (2026-10-28, linker step 5b, the kitchen split):** a `command` port's atoms are SEQUENCED
+EFFECTS, not a multiset: a member may fire several commands in one beat (load, start, fetch_dish) and the
+world takes them in firing order, so a message carries command lines one per firing, in order, never folded
+by multiplicity; state atoms fold as before. And the host-produced reports (`tick__status`, spec 15 amendment
+1b) cross as reports when the direct member sits in another process: the link derives them like any
+member-keyed report (reading ii of amendment 2); until it does, a runtime sends them as report-natured state.
+
 ### 5.4 The handshake
 
 Each process, at load, sends `H image=<h12> plan=<h12> lock=<h> process=<name>` and refuses to tick until the
