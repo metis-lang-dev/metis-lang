@@ -361,6 +361,12 @@ manifest binding. A member not named in `hosts:` keeps its own.
   that hosts them (`processes: {agent: {world: [veto, consent, goal_*, tick__status, say]}}`). A process may
   hold members, a share of the world, or both. The catalog's rule stands: packages are the domains, the agent
   is the user-communication side, and its channel is the intent interface.
+- **Two readings fixed at the linker's step 5a** (2026-10-28): (i) a world port named under a process's
+  `world:` is hosted there and crosses to its readers, world-private copies included (an operator's readings);
+  a port named nowhere is hosted wherever its members are and never crosses. (ii) A transport port is per
+  (pred, producing process): member-keyed protocol reports (`tick__want(S, R)`, `tick__done(S)`) cross from
+  each producing process, their atoms being disjoint; `plan-producers` (I4 across the boundary) applies to a
+  STATE pred produced in two processes.
 - A role's count is capacity, not a parameter: the composition's `capacity` file declares the role types
   (`type vru {vru1 vru2 vru3}`) and the link records them; there is no `params:` block.
 
