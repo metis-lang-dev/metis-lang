@@ -12,7 +12,7 @@ type t = {
 
 exception Defect of string
 
-let context_cap = 12
+let context_cap = 32   (* a long rule's closure: the corpus's largest is 23 (ALFWorld's take_open) *)
 
 (* BEGIN GENERATED from metispy metis/kernel/diagnostics.py by
    metispy/tools/gen_metisc_registry.py — never hand-edit *)
