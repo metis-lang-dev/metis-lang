@@ -324,11 +324,16 @@ let run ~wire o comp_path =
   (* L21 hosts: a manifest's or the composition's (amendment 1) binding, file:symbol with the file present *)
   let hosts = match List.assoc_opt "hosts" comp with Some v -> pairs v | None -> [] in
   let host_of m =
+    if m.m_role = "direct" && not hand then
+      (* the GENERATED director's host: the runtimes' own pass host, per runtime (it acts in no world) *)
+      Some ([("py", "metis.host:pass_host"); ("go", "pass")], "generated")
+    else
     match List.assoc_opt m.m_name hosts with
     | Some (S s) -> Some ([("py", s)], "composition")
     | Some (M kv) -> Some (List.map (fun (k, v) -> (k, str v)) kv, "composition")
     | _ -> (match manifest_s m "host" with Some s -> Some ([("py", s)], "manifest") | None -> None) in
   let host_missing m = match host_of m with
+    | Some (_, "generated") -> false                 (* a module of the runtime's, not a file beside the package *)
     | Some (b, origin) -> (match List.assoc_opt "py" b with
         | Some s -> (match String.index_opt s ':' with
             | Some i -> let base = if origin = "composition" then comp_dir else Filename.dirname m.m_program in
@@ -338,6 +343,7 @@ let run ~wire o comp_path =
     | None -> false in
   List.iter (fun m ->
       match host_of m with
+      | Some (_, "generated") -> ()
       | Some (b, origin) ->
         (match List.assoc_opt "py" b with
          | Some s -> (match String.index_opt s ':' with
@@ -625,6 +631,8 @@ let run ~wire o comp_path =
                (m.m_name, Image.JO [("bundle", Image.JS (bkey m)); ("source", Image.JS m.m_key);
                                     (* the package directory, in the includes' form: a loader that builds the member from
                                        source finds it from the image alone (a generated director: inside the image) *)
+                                    ("host", match host_of m with
+                                      | Some (_, origin) -> Image.JS origin | None -> Image.JN);
                                     ("dir", if m.m_role = "direct" && not hand
                                       then Image.JO [("place", Image.JS "image"); ("path", Image.JS ("members/" ^ m.m_name))]
                                       else Image.JO [("place", Image.JS "dir"); ("path", Image.JS (Filename.dirname m.m_program))]);

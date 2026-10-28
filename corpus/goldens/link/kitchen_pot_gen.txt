@@ -9,6 +9,6 @@ warning L18 no response: linked with rho = infinity
 warning L21 cook_a's host cook_host.py:make: no file cook_host.py beside it (the runtime that loads it must have it)
 warning L21 cook_b's host cook_host.py:make: no file cook_host.py beside it (the runtime that loads it must have it)
 interface 0 error(s), 4 warning(s)
-image kitchen_pot_gen v-f9ebfb9c1198
+image kitchen_pot_gen v-8f2eac137ab7
 result 0 error(s), 7 warning(s)
 rc 0
