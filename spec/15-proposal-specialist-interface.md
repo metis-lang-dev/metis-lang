@@ -1081,3 +1081,14 @@ specialist, and drift from the real director.
 The spec is reviewed, the field names are agreed with nina (no rename; the three additions of §2.3 told to
 her), and the two decisions of §5 are handed to step 2: the hands, and the position. Implementation of §6 is a
 separate step with its own ruling.
+
+## Amendment 8 (2026-10-29, toolchain-units s-ddaed776): the stop frees a resource after its queue
+
+In the standard unit `iface/director_tree_domain.llp`, `stop_release` is guarded on the resource's queue having
+been passed over (`serving` equal to `issue`): a stop dequeues every waiting ticket first and frees the resource
+only then, so no grant can see the freed resource within the stop's tick. Before, a stop freed the resource at
+once and `grant_on_want` raced `stop_dequeue` on the sampler's draw: on some seeds the director granted the
+resource to the stopped waiter and revoked it again in the same tick. The race predates copy semantics (spec/17
+amendment 4), which only moved it between seeds. Gate 22 STOP (corpus/stop, seeds 1–10) holds the unit to
+exactly one revoke and one dequeue per stopped waiter, and to an immediate free when no waiter exists. The
+unit's key moved with this; every image that includes it was regenerated with the reason.

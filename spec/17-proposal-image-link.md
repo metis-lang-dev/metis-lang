@@ -461,3 +461,16 @@ is one tick, bounded by L18; a pending effect older than the budget is what `tic
 surprise test runs at the tick over the beat's firings, never after a single firing; a member that chains its
 own modelled effects within a beat observes a partner's change only through its consequence on its own
 commands, so a member that wants partner changes explained reads the shared state as a world-owned reading.
+
+### Amendment 4, corollary 2: three rules the runtimes carry (toolchain-units s-ddaed776 step 3, as built)
+
+- **Quiescence at the tick.** A member declares quiescence at the tick whose reading leaves it nothing to fire,
+  once per entry; a member that acts once per tick does not open a task boundary per action.
+- **A stepping world takes a tick.** A host that steps its world on an event (an observing world such as the
+  RDDL gym: a move is a command whose effect is the world's reading) makes that event end the beat; this is a
+  rule of the runtime (the watch's `tick_due`), not of the program, so the instrument and the projection, which
+  have no host to grant ticks, run unchanged.
+- **A shared world is declared.** A host whose world other members also act on (`shared_world`: the kitchen's
+  pot, the split's proxy) says so; the surprise test then compares only the atoms the member's own events
+  consumed or produced, and another member's change is the tick's input. The declaration belongs in the image's
+  host entry (§3.2 `host`) and is read from the host until the image carries it.
