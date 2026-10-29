@@ -454,4 +454,27 @@ for sc in waiter nowaiter; do
 done
 echo "STOP $n_st/20 seeds (one revoke, the waiter passed over, no grant mid-stop)"
 
+echo "== 23. the grounding budget (metispy's METIS_GROUND_BUDGET, the sw-s2 OOM): unset as before; set, refused with the rule's words"
+# corpus/budget: take reads a pair of terms nothing else binds, 2 x 40 x 40 = 3200 events. Unset, and at 3200, it
+# grounds; at 3199 and 1000 it is refused, exit 1, while it enumerates; the refusal at 1000 == budget.refused, the
+# text metispy's GroundBudget gives the same file (tests/test_ground_budget.py)
+n_gb=0
+for b in "" 3200; do
+  ( cd "$ROOT/corpus/budget" && METIS_GROUND_BUDGET=$b "$ROOT/src/metisc" --run budget.llp ) > "$WORK/budget.txt" 2>&1 \
+      && grep -q '^F 1 (done)' "$WORK/budget.txt" \
+      || { echo "budget '${b:-unset}': did not ground"; cat "$WORK/budget.txt"; exit 1; }
+  n_gb=$((n_gb + 1))
+done
+for b in 3199 1000; do
+  if ( cd "$ROOT/corpus/budget" && METIS_GROUND_BUDGET=$b "$ROOT/src/metisc" --run budget.llp ) > "$WORK/budget.txt" 2>&1; then
+    echo "budget $b: grounded past it"; exit 1
+  fi
+  grep -q "^error: ground-budget: take grounds more than $b events" "$WORK/budget.txt" \
+      || { echo "budget $b: not refused with the rule's words"; cat "$WORK/budget.txt"; exit 1; }
+  n_gb=$((n_gb + 1))
+done
+grep '^error' "$WORK/budget.txt" | diff "$ROOT/corpus/budget/budget.refused" - \
+    || { echo "budget: the refusal differs from budget.refused"; exit 1; }
+echo "BUDGET $n_gb/4 (unset and 3200 ground, 3199 and 1000 refused; the refusal == metispy's)"
+
 echo "ALL GATES GREEN"

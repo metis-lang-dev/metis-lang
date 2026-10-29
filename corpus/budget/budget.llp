@@ -1,0 +1,18 @@
+%% the grounding budget (metispy's METIS_GROUND_BUDGET, tests/test_ground_budget.py): take reads a pair of
+%% terms nothing else binds, 2 rooms x 40 x 40 = 3200 events; a budget of 1000 refuses it with its words
+catalog t 1.
+layers (dyn).
+stages (act).
+type term {t0 t1 t2 t3 t4 t5 t6 t7 t8 t9 t10 t11 t12 t13 t14 t15 t16 t17 t18 t19 t20 t21 t22 t23 t24 t25 t26 t27 t28 t29 t30 t31 t32 t33 t34 t35 t36 t37 t38 t39}.
+type room {r1 r2}.
+namespace t produce (dyn).
+pred here(room) : t.
+pred connected(term, term) : t.
+pred holds : t.
+stage act {
+  %% take, reading a pair of terms nothing else binds
+  take [dyn] : $here(R) * connected(T1, T2) -o holds.
+}
+#init here(r1) 1
+#steps 1
+#seeds 1

@@ -1,0 +1,1 @@
+error: ground-budget: take grounds more than 1000 events over its variables (R: room 2, T1: term 40, T2: term 40); bind them on the left with a fact the state holds, or drop the atom that reads them alone

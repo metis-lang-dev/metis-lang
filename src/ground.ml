@@ -38,7 +38,9 @@ let multiset patterns subst : mset =
    can complete are formed. A pruned prefix has a guard no fact matches:
    the leaf check below refuses every completion of it too. The leaf
    check is unchanged, so the result is the old one, in its order. *)
-let substitutions vars distinct guards
+exception Over
+
+let substitutions ?limit vars distinct guards
     (types : (string * string list) list) horn =
   let names = List.map fst vars in
   let domains = List.map (fun (_, ty) -> List.assoc ty types) vars in
@@ -76,12 +78,16 @@ let substitutions vars distinct guards
           List.iter (fun c -> Hashtbl.replace ok c ()) vals;
           List.filter (fun c -> Hashtbl.mem ok c) dom)
       dom gs in
-  let out = ref [] in
+  let out = ref [] and n = ref 0 in
   let rec go names domains naming bound rev_combo =
     match names, domains, naming with
     | [], _, _ ->
       (match leaf (List.rev rev_combo) with
-       | Some s -> out := s :: !out
+       | Some s ->
+         (match limit with
+          | Some l when !n >= l -> raise Over
+          | _ -> ());
+         incr n; out := s :: !out
        | None -> ())
     | v :: names', dom :: domains', gs :: naming' ->
       List.iter (fun c ->
@@ -98,6 +104,29 @@ let tag subst =
 let ground_name base subst =
   if subst = [] then base
   else Printf.sprintf "%s[%s]" base (tag subst)
+
+(* THE GROUNDING BUDGET (metispy's METIS_GROUND_BUDGET, the sw-s2 OOM
+   case): unset, no budget; set, the clauses of all schemas together (links
+   not counted) stop at it, the schema that would pass it refused with its
+   words while it enumerates, before its events are built — not
+   materialised until a memory scope kills the run. Its text is metispy's,
+   the limit the budget left when the schema began. *)
+let ground_budget () =
+  match Sys.getenv_opt "METIS_GROUND_BUDGET" with
+  | None | Some "" -> None
+  | Some b -> (match int_of_string_opt (String.trim b) with
+      | Some n -> Some n
+      | None -> failwith ("METIS_GROUND_BUDGET: not an integer: " ^ b))
+
+let over (sc : Catalog.clause_schema) types limit =
+  let sizes = String.concat ", " (List.map (fun (v, t) ->
+      Printf.sprintf "%s: %s %d" v t
+        (List.length (Option.value ~default:[] (List.assoc_opt t types))))
+      sc.cs_vars) in
+  Printf.sprintf "ground-budget: %s grounds more than %d events over its \
+                  variables (%s); bind them on the left with a fact the \
+                  state holds, or drop the atom that reads them alone"
+    sc.cs_name limit sizes
 
 let ground cat init_atoms =
   (match Catalog.typecheck cat with
@@ -121,10 +150,17 @@ let ground cat init_atoms =
      O(E^2) list append (eval-perf step 1b) *)
   let stages = ref (List.map (fun s -> (s, ref [])) cat.k_stages) in
   let links = ref [] in
+  let budget = ground_budget () and n = ref 0 in
   List.iter (fun (e : Catalog.entry) ->
       match e.e_payload with
       | Catalog.PSchema sc ->
         let cell = List.assoc sc.cs_stage !stages in
+        let limit = Option.map (fun b -> b - !n) budget in
+        let substs =
+          try substitutions ?limit sc.cs_vars sc.cs_distinct sc.cs_guards
+                cat.k_types horn
+          with Over -> failwith (over sc cat.k_types (Option.get limit)) in
+        n := !n + List.length substs;
         List.iter (fun subst ->
             cell :=
               { ev_name = ground_name sc.cs_name subst;
@@ -133,8 +169,7 @@ let ground cat init_atoms =
                 ev_persist = multiset sc.cs_persist subst;
                 ev_weight = sc.cs_weight;
                 ev_pre = None; ev_post = None } :: !cell)
-          (substitutions sc.cs_vars sc.cs_distinct sc.cs_guards
-             cat.k_types horn)
+          substs
       | Catalog.PLink ls ->
         List.iter (fun subst ->
             links :=
