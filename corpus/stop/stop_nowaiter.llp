@@ -1,0 +1,30 @@
+% stop_nowaiter — the standard director unit's stop (toolchain-units s-ddaed776): a stop while d2 holds r and nobody waits: r is free at once, as before.
+% Gate 22 replays it over 10 seeds: exactly one stop_release (one revoke) on every seed.
+catalog stop_nowaiter 1.
+provenance text "the director's stop without a waiting want" "2026-10-29".
+include "iface/director_tree_domain.llp".
+include "types.llp".
+type kind {none}.
+bwd specialist(domain).
+specialist(d1).
+specialist(d2).
+young_grant(a0).
+young_grant(a1).
+mature_grant(a2).
+mature_grant(a3).
+mature_status(a1).
+mature_status(a2).
+mature_status(a3).
+#init tick__stop 1
+#init holder(d2, r) 1
+#init held(d2, a1) 1
+#init serving(r, t1) 1
+#init issue(r, t1) 1
+#init path(d1) 1
+#init path(d2) 1
+#init tick__goal(d1) 1
+#init tick__goal(d2) 1
+#init age_of(d1, a0) 1
+#init age_of(d2, a0) 1
+#steps 20
+#seeds 10

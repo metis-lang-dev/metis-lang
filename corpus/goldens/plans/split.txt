@@ -1,5 +1,5 @@
 link composition_split.yaml
-member pot_director direct wire 31bbb583478cd2fe9b971b8fd6dff5107d420b555ba82fd99f2d5d4ab0110ee3 bundle dd66e53bd41b source ca95d6f44c2fcebf5254071ed68521fb29c378da277d20fd82c50cd0ae726d91
+member pot_director direct wire 9f9725b623ab2100c24ef9b690a457f83aacfed7e2d526b921c0c0b7bd9166fb bundle 057b5369d8d1 source 7148206b511338197b2eda2917cce38fc5d0debea282a4fcc849d8b11156a5ed
 member cook_a specialist wire 52e1ff7ceb4edd32b4e3ad391cdc663bc0bbb907b28aa0799af4040b53247b0a bundle 45d2dce1f9cc source 16512e909319140bb9c94ccdb676a55066ce2ab442dbc92158095473a1e4417b
 member cook_b specialist wire 0c3d83b14a8c8fc520b8a0f99080af3712c75f022977e91fa9ce40394afe8618 bundle b0cf6ed074d1 source cabc1349806ff30a7fd0cf0aca1bf75b300c75d459f43cf4eaf6738fddffbbab
 director pot_director hand (transitional) planner - kinds none
@@ -10,8 +10,8 @@ warning L21 cook_a's host cook_host.py:make: no file cook_host.py beside it (the
 warning L21 cook_b's host cook_host.py:make: no file cook_host.py beside it (the runtime that loads it must have it)
 warning L21 pot_director's host pass_host.py:make: no file pass_host.py beside it (the runtime that loads it must have it)
 interface 0 error(s), 4 warning(s)
-image kitchen_pot_split v-61cb6c954e1d
-plan split v-b2e6c2c8232d (image v-61cb6c954e1d)
+image kitchen_pot_split v-41c1d06ac267
+plan split v-854775c95ed4 (image v-41c1d06ac267)
   process a py [cook_a] world []
   process b py [cook_b pot_director] world [hand_free held_onion held_dish held_soup pot_space pot_onion cooking order tick__stop fetch_onion load start fetch_dish plate serve]
   transport cooking state b -> a latch beat
