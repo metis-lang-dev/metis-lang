@@ -331,7 +331,7 @@ the py Live loading each image for its goldens' cases.
 
 The image is the certified object. The interface certificate (spec 15) and each member's cell table (spec 16
 §8) are computed over bundles whose hashes the lock holds, so a certificate names an image hash and nothing
-else. A plan does not enter the image hash, and the transport carries only finite atoms latched at beats, so
+else. A plan does not enter the image hash, and the transport carries only finite atoms copied at the reader's tick (amendment 4), so
 a split does not change what any member computes in a tick: the per-member proofs (the mixture theorem, the
 cell bounds) hold unchanged, and the only new quantity the split adds is latency, bounded by L18 against ρ.
 What a split does NOT preserve is the global tick order across processes beyond the latch rule; a property
@@ -392,3 +392,59 @@ manifest binding. A member not named in `hosts:` keeps its own.
   host-local (linker step 4).
 - The py Live's config → image move (svc:291, 293, 328, 383, the token literals at svc:580–952) touches every
   Live config: A2 carries it with the config files of the catalog's cases.
+
+## Amendment 4 (2026-10-29, the user's ruling): copy semantics at ports, no global latch
+
+The linker's split proof (step 5b) showed the one-process and the two-process runs of kitchen_pot differing
+in exactly two hand-only rows at beat 1 on every seed, because the in-process holder let a member read its
+own command's effect within the beat while the remote member's effect crossed a beat later. The contention
+was whether to latch everywhere or keep the in-process shortcut. The user's ruling resolves it by a rule
+that is neither:
+
+- **Copy semantics.** Every port read is a COPY taken at the start of the reader's own tick. A member sees
+  the effect of a command it issued no earlier than its next tick, whether the holder is in its process,
+  in another process on the host, or on a remote machine. This is spec 15's Moore latch stated per READER,
+  not per global beat.
+- **No global latch.** Members tick at their own clocks (navigation fast, the person's intents slow), so one
+  signal reaches different domains on different ticks of theirs and there is no beat shared across domains to
+  latch at. §5.2's `latch: beat` on a transport port means the receiver's next tick boundary, nothing more.
+- **A plan changes delay, never meaning.** The transport (sockets today, any carrier later) adds latency
+  bounded by L18 against ρ; it adds no visibility a member would not have had in one process. Changing the
+  carrier keeps copy semantics by construction, since the carrier only moves copies.
+- **The intended deployment** is the big brain (many domains, one process, own tick layer) and the LLM
+  agent in another process, possibly on another machine, with the same message passing locally.
+
+Consequences:
+
+1. The in-process holder read that sees a same-tick effect is a VIOLATION of copy semantics, not a
+   permitted shortcut; both tick layers (metispy, Go) take the snapshot at tick start. The two rows then
+   agree in principle and the split proof's acceptance criterion is stated as it already held: every member's
+   fired rules identical beat for beat given the same port snapshots. A merged log across processes is
+   evidence, never a certification artifact.
+2. §8 reads "finite atoms copied at the reader's tick" where it said "latched at beats"; the rest of §8
+   stands: the per-member proofs are unchanged by a split, latency is the only new quantity.
+3. A property stated across processes is stated against §5.3's message order, as before.
+
+## Amendment 5 (2026-10-29, the user's ruling): the shared units are ordinary llp; L20 revised
+
+The four shared units (`iface/protocol_domain.llp`, `iface/director_domain.llp`,
+`iface/director_tree_domain.llp`, `iface/director_tree_wake.llp`) are ordinary llp units included by name.
+There is no interface language and no technical problem with the interface closure: the linker already
+computes it from the include graph and the lock records every included unit with its place and key (L19,
+L24). What singled them out is only that they declare what the runtime injects (tick, tick_s, changed, the
+director tree), so they are versioned with the toolchain, the way a standard library ships with an
+interpreter. Rulings:
+
+- **They are the language's standard units**, shipped by each toolchain distribution: authoritative in
+  metis-lang (`iface/` at the repository root, where `corpus/iface/_home/iface/` is today), vendored byte
+  for byte by metispy (`metis/catalog/iface/`, identical today), with a CI check in metispy that its copy's
+  keys equal metis-lang's at the pin.
+- **Resolution, as `include` always was**: the root (`$METIS_CATALOG`, else the cwd), then the toolchain's
+  own standard units, then `METIS_HOME`. metisc knows its standard directory (beside the binary, or
+  compiled in); `METIS_HOME` is for the user's shared packages, as site-packages beside the standard
+  library, and is not needed to link a composition that includes only standard units.
+- **L20 revised**: an include name resolves to ONE file across all members; a name that resolves nowhere is
+  the error. `METIS_HOME` unset is no longer an error by itself; the lock records each unit's place
+  (`root`, `std`, `home`) and key, which is what the certificate needs.
+- The two metispy include-edit tests set nothing and pass against a real metisc once it finds its standard
+  units.

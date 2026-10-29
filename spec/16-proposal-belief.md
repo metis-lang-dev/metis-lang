@@ -600,3 +600,21 @@ step 2; the belief-read notes and the bwd refusal are required outputs.
   and the reason for a binary64 fast path later.
 - **A cut interval's upper end is weak** when misses are known only at h: wgc's `win_cut` at budget 60 is
   [1/16, 1], its exact value 1/12. The lower end is the work done; the width is what the budget hid.
+
+## Amendment 1 (2026-10-29, the user's ruling): a manifest-declared level's declarations are the toolchain's
+
+policy-tuning-2 (s-e075f47f, step 2g) found that a level declared in the manifest's `levels:` block fully
+determines two declarations the program must carry, `type level {…}` (the level names) and
+`pred NAME(level, …)` (the arity from the port it reads), and that a program lacking them does not compile.
+The loop's driver generated them into the candidate as a stopgap. The ruling: this is the toolchain's job,
+not a driver's. In the language the single unit is the llp; an external declaration is absorbed by the
+linker or the runtime, never patched into source text by a tool outside the toolchain.
+
+- At build (`metisc build`, metispy's compile of a package), the toolchain derives from `levels:` the level
+  type and each level pred and adds them to the program's declarations as generated declarations, the way
+  the interface move and the derived director are generated; a program that declares them by hand must
+  agree (a mismatch is a build error naming the manifest line).
+- Both toolchains generate them byte-equal; the bundle's key covers the generated declarations as it covers
+  the rest of the program.
+- The loop's driver generation (metis-loop 2g) is removed once both toolchains do it; the skill's
+  LEVEL_EXAMPLE shows the yaml alone.
