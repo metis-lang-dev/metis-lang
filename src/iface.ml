@@ -429,13 +429,15 @@ let analyse ?direct_dir comp_path =
     match List.assoc_opt p m.m_decl_file with
     | Some f -> ipath_of_file f = None
     | None -> false in
-  (* a path as the listing shows it: under METIS_HOME as home:<path>,
-     else relative to the composition's directory *)
+  (* a path as the listing shows it: a standard unit as std:iface/<name>, under METIS_HOME as home:<path>, else
+     relative to the composition's directory *)
+  let under d f = String.length f > String.length d && String.sub f 0 (String.length d + 1) = d ^ "/" in
+  let std = Option.map norm (Compile.std_dir ()) in
   let home = match Sys.getenv_opt "METIS_HOME" with
     | Some h when h <> "" -> Some (norm h) | _ -> None in
-  let show f = match home with
-    | Some h when String.length f > String.length h
-                  && String.sub f 0 (String.length h + 1) = h ^ "/" -> "home:" ^ rel h f
+  let show f = match std, home with
+    | Some s, _ when under s f -> "std:iface/" ^ rel s f
+    | _, Some h when under h f -> "home:" ^ rel h f
     | _ -> rel dir f in
   (* includes that resolve nowhere *)
   List.iter (fun m ->

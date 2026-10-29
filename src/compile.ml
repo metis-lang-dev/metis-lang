@@ -65,14 +65,24 @@ let infer_vars ?emit ?(conflict_code = "var-type-conflict") name atoms
 (* -- includes: literal splice, layers/stages adoption ----------------- *)
 
 (* an include's file, the first of (the user's ruling, specialist-tree
-   s-404d001f; metispy compiler.include_path): (1) relative to the
-   including file's directory; (2) relative to the catalog root the
-   session runs in (the cwd-root rule: $METIS_CATALOG, else the cwd);
-   (3) under $METIS_HOME, the one directory of the shared packages
-   (iface/protocol_domain.llp, ...). metisc has no default for
-   METIS_HOME (metispy defaults it to its own metis/catalog): a
-   certifier reads no interpreter. A miss names the three places
-   searched. include_place also returns the place: dir | root | home. *)
+   s-404d001f; spec/17 amendment 5; metispy compiler.include_path):
+   (1) relative to the including file's directory; (2) relative to the
+   catalog root the session runs in (the cwd-root rule: $METIS_CATALOG,
+   else the cwd); (3) the toolchain's standard units, an `iface/NAME`
+   under std_dir (); (4) under $METIS_HOME, the user's shared packages
+   (unset: not searched). A miss names the places searched.
+   include_place also returns the place: dir | root | std | home. *)
+
+(* the standard units' directory (spec/17 amendment 5): iface/ beside
+   the binary (<bindir>/../iface, the checkout's src/metisc), else the
+   one compiled in (Std_dir.dir, written by the build) *)
+let std_dir () =
+  (* the native runtime reads /proc/self/exe: the binary's own path, links resolved *)
+  let exe = Sys.executable_name in
+  let exe = if Filename.is_relative exe then Filename.concat (Sys.getcwd ()) exe else exe in
+  let beside = Filename.concat (Filename.dirname (Filename.dirname exe)) "iface" in
+  List.find_opt (fun d -> Sys.file_exists d && Sys.is_directory d) [ beside; Std_dir.dir ]
+
 let include_place spec base =
   let env k = match Sys.getenv_opt k with
     | Some v when v <> "" -> Some v
@@ -80,19 +90,22 @@ let include_place spec base =
   let root = match env "METIS_CATALOG" with
     | Some r -> r
     | None -> Sys.getcwd () in
-  let places = [ ("dir", Some base, "the including file's directory");
-                 ("root", Some root, "the catalog root");
-                 ("home", env "METIS_HOME", "METIS_HOME") ] in
-  let hit = List.find_map (fun (tag, d, _) -> match d with
-      | Some d when Sys.file_exists (Filename.concat d spec)
-                 && not (Sys.is_directory (Filename.concat d spec)) ->
-        Some (tag, Filename.concat d spec)
-      | _ -> None) places in
-  match hit with
+  let is_file f = Sys.file_exists f && not (Sys.is_directory f) in
+  let std = match std_dir () with
+    | Some d when String.length spec > 6 && String.sub spec 0 6 = "iface/" ->
+      Some (Filename.concat d (String.sub spec 6 (String.length spec - 6)))
+    | _ -> None in
+  let places = [ ("dir", Some (Filename.concat base spec), base, "the including file's directory");
+                 ("root", Some (Filename.concat root spec), root, "the catalog root");
+                 ("std", std, (match std_dir () with Some d -> d | None -> "none"), "the standard units");
+                 ("home", Option.map (fun h -> Filename.concat h spec) (env "METIS_HOME"),
+                  (match env "METIS_HOME" with Some h -> h | None -> "unset"), "METIS_HOME") ] in
+  match List.find_map (fun (tag, f, _, _) -> match f with
+      | Some f when is_file f -> Some (tag, f)
+      | _ -> None) places with
   | Some h -> h
   | None ->
-    let where (_, d, why) = Printf.sprintf "%s (%s)"
-        (match d with Some d -> d | None -> "unset") why in
+    let where (_, _, d, why) = Printf.sprintf "%s (%s)" d why in
     raise (Lang_error [ Printf.sprintf "include '%s': not under %s" spec
                           (String.concat ", " (List.map where places)) ])
 

@@ -76,7 +76,7 @@ let run_case dir c =
 let key_case dir c =
   let (_, _, prog) = build dir c in
   Printf.printf "K %s %s\n" c.c_name (Nets.program_key prog);
-  (* each include: where it resolved (dir | root | home) and the key of
+  (* each include: where it resolved (dir | root | std | home) and the key of
      what it resolved to — a key never rests on an unprinted environment *)
   List.iter (fun p ->
       let path = Filename.concat dir p in
@@ -257,6 +257,8 @@ let embedded_case path =
    resolved) and list every structured diagnostic (spec 08) — the
    listing is the command's job, so exit 0 whether the compile failed
    or not; the D2 parity gate diffs this against the goldens *)
+exception Failed of exn
+
 let diagnostics_file ?base ~json path =
   let load p = Compile.resolve_includes (Parser.parse_file p)
       (Filename.dirname p) in
@@ -267,6 +269,10 @@ let diagnostics_file ?base ~json path =
     | None -> None
     | Some b -> let bast = load b in Some (fst (Compile.compile bast), bast) in
   Diag.reset ();
+  (* an include that resolves nowhere lists nothing: it is the command's
+     failure (main prints it, exit 1), as metispy's raises *)
+  let load p = try load p with
+    | Compile.Lang_error _ as e when Compile.diagnostics () = [] -> raise (Failed e) in
   (try
      match based with
      | None ->
@@ -279,7 +285,9 @@ let diagnostics_file ?base ~json path =
           diagnostics join *)
        let (pcat, _) = Compile.compile ~base:(bcat, bast) (load path) in
        ignore (Catalog.incomplete (Catalog.admit bcat pcat))
-   with Compile.Lang_error _ | Catalog.Catalog_error _ -> ());
+   with
+   | Failed e -> raise e
+   | Compile.Lang_error _ | Catalog.Catalog_error _ -> ());
   List.iter (fun d ->
       if json then print_endline (Diag.to_json d)
       else print_string (Diag.render_text d))

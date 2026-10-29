@@ -31,10 +31,15 @@ type ports = {
 
 val resolve_includes : Ast.catalog -> string -> Ast.catalog
 
+(* the standard units' directory (spec/17 amendment 5): <bindir>/../iface,
+   else the one compiled in; None when neither exists *)
+val std_dir : unit -> string option
+
 (* an include's file: the including file's directory, the catalog root
-   ($METIS_CATALOG, else the cwd), $METIS_HOME — the first that holds
-   it; a miss raises Lang_error naming the three. include_place also
-   returns the place's tag: dir | root | home *)
+   ($METIS_CATALOG, else the cwd), the standard units (an iface/NAME under
+   std_dir), $METIS_HOME — the first that holds it; a miss raises
+   Lang_error naming the four. include_place also returns the place's
+   tag: dir | root | std | home *)
 val include_place : string -> string -> string * string
 val include_path : string -> string -> string
 

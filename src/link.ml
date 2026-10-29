@@ -131,7 +131,7 @@ let director_facts d =
   @ List.map (fun (a, b, c) -> Printf.sprintf "rename(%s, %s, %s)." a b c) d.rename
   @ List.map (fun (a, b) -> Printf.sprintf "priority(%s, %s)." a b) d.priority
 
-(* the generated director's program: the toolchain's lifted bases, by name (METIS_HOME's iface/), the capacity
+(* the generated director's program: the toolchain's lifted bases, by name (its standard units), the capacity
    copied beside it (so the source and its hash do not depend on where the image is written), the facts, the
    tree director's starting state *)
 let director_llp ?types name d =
@@ -182,6 +182,9 @@ let director_manifest name d =
                               d.resources))] ^ "\n"
 
 (* -- the link ---------------------------------------------------------- *)
+
+(* an included unit's key in the lock (spec/17 amendment 5: place + key per unit): its source's, as --keys prints it *)
+let unit_key f = Sha256.hex (Ast.pretty (Ast.strip_locs (Parser.parse_file f)))
 
 let manifest_s m k = match List.assoc_opt k m.m_extra with Some (S s) -> Some s | _ -> None
 
@@ -313,8 +316,9 @@ let run ~wire o comp_path =
   (match rho with
    | Some r when r < 2 -> add "error" "L18" "link-response: response %d is under the tree director's latency of 2 ticks" r
    | _ -> ());
-  (* L20 places: METIS_HOME set; one include name, one file *)
-  if Sys.getenv_opt "METIS_HOME" = None then add "error" "L20" "link-places: METIS_HOME is unset (the lock must say where the protocol came from)";
+  (* L20 places (spec/17 amendment 5): an include name resolves somewhere (root, std or METIS_HOME; METIS_HOME unset
+     is no error by itself), and to one file across the members *)
+  List.iter (fun m -> List.iter (fun e -> add "error" "L20" "link-places: %s: %s" m.m_name e) m.m_inc_err) members;
   let incs = List.concat_map (fun m -> List.map (fun (s, _, f) -> (s, f)) m.m_inc) members in
   List.iter (fun s ->
       let files = uniq (List.filter_map (fun (s', f) -> if s' = s then Some f else None) incs) in
@@ -666,11 +670,13 @@ let run ~wire o comp_path =
                                       else Image.JO [("place", Image.JS "dir"); ("path", Image.JS (Filename.dirname m.m_program))]);
                                     ("program", Image.JS (snd (wire_of m.m_name)));
                                     ("includes", Image.JL (List.map (fun (s, place, f) ->
-                                         Image.JO [("name", Image.JS s); ("place", Image.JS place); ("path", Image.JS (inside f))]) m.m_inc))]))
+                                         Image.JO [("name", Image.JS s); ("place", Image.JS place); ("path", Image.JS (inside f));
+                                                   ("key", Image.JS (unit_key f))]) m.m_inc))]))
                (dm :: specs)));
           ("iface", Image.JO (List.map (fun i -> (Filename.basename i.i_path, Image.JS i.i_key)) a.a_ipkgs));
           ("capacity", Image.JO [("file", Image.JS (Filename.basename capacity)); ("key", Image.JS a.a_cap_key)]);
           ("places", Image.JO [("root", Image.JS comp_dir);
+                               ("std", match Compile.std_dir () with Some d -> Image.JS d | None -> Image.JN);
                                ("home", match Sys.getenv_opt "METIS_HOME" with Some h -> Image.JS h | None -> Image.JN)]);
           ("image", Image.JS h)] in
       List.iter (fun (pn, json, _) ->          (* outside the image's hash: one image, any number of plans *)
@@ -771,9 +777,10 @@ let run_package ~(bundle : string -> string list -> string list * string * strin
                ("dir", Image.JO [("place", Image.JS "dir"); ("path", Image.JS pkg_dir)]);
                ("served", Image.JS served);
                ("includes", Image.JL (List.map (fun (s, place, f) ->
-                    Image.JO [("name", Image.JS s); ("place", Image.JS place); ("path", Image.JS f)])
+                    Image.JO [("name", Image.JS s); ("place", Image.JS place); ("path", Image.JS f); ("key", Image.JS (unit_key f))])
                     (Compile.include_list (Parser.parse_file served) (Filename.dirname served))))])]);
           ("places", Image.JO [("root", Image.JS pkg_dir);
+                               ("std", match Compile.std_dir () with Some d -> Image.JS d | None -> Image.JN);
                                ("home", match Sys.getenv_opt "METIS_HOME" with Some h -> Image.JS h | None -> Image.JN)]);
           ("image", Image.JS h)] in
       let lock_s = Image.to_string lock in

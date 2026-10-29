@@ -1,6 +1,6 @@
 """The sidecar goldens (linker s-5908724a ruling 6): metispy's bundle (sidecar.json, ground.wire, tools.json) for every member of the four
 corpus images, into OUT/<image>/<member>/. Run with a python that has metispy (cb3b742 made these), from corpus/iface:
-    METIS_HOME=$PWD/_home python ../goldens/sidecar/regen.py IMAGES_DIR $PWD OUT
+    python ../goldens/sidecar/regen.py IMAGES_DIR $PWD OUT
 where IMAGES_DIR holds `metisc --link C -o IMAGES_DIR` for the four compositions."""
 import json, sys, yaml
 from pathlib import Path

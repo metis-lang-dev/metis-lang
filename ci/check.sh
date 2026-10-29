@@ -205,13 +205,13 @@ echo "== 13. interface check (spec 15 §6): metisc --interface == goldens, every
 # (metis-catalog master 8f2bc93) and one deliberately broken composition
 # per check; the
 # listing (stdout and stderr) and the exit code, from corpus/iface so
-# every path in it is relative; METIS_HOME is the corpus-local package
-# root (corpus/iface/_home: metispy master 1d0a4d6's iface/ packages, unchanged at 9c7330c)
+# every path in it is relative; the iface/ units are the toolchain's
+# standard units (iface/ at the root, spec/17 amendment 5): no METIS_HOME
 n_if=0
 for comp in $(cd "$ROOT/corpus/iface" && find . -name composition.yaml | sed 's#^\./##' | sort); do
   name=${comp%%/*}
   rc=0
-  ( cd "$ROOT/corpus/iface" && METIS_HOME="$ROOT/corpus/iface/_home" \
+  ( cd "$ROOT/corpus/iface" && \
       "$ROOT/src/metisc" --interface "$comp" ) \
       > "$WORK/iface_$name.txt" 2>&1 || rc=$?
   echo "rc $rc" >> "$WORK/iface_$name.txt"
@@ -242,12 +242,12 @@ echo "== 14. the one-tick instrument (spec 16 §6, §7): metisc --evaluate == --
 n_ev=0
 ev_check() {   # $1 the file, relative to corpus/evaluate; $2 its golden's name
   rc=0
-  ( cd "$ROOT/corpus/evaluate" && METIS_HOME="$ROOT/corpus/iface/_home" \
+  ( cd "$ROOT/corpus/evaluate" && \
       "$ROOT/src/metisc" --evaluate "$1" ) > "$WORK/ev_$2.txt" 2>&1 || rc=$?
   echo "rc $rc" >> "$WORK/ev_$2.txt"
   diff -u "$ROOT/corpus/goldens/evaluate/$2.txt" "$WORK/ev_$2.txt"
   if [ "$rc" -eq 0 ]; then
-    ( cd "$ROOT/corpus/evaluate" && METIS_HOME="$ROOT/corpus/iface/_home" \
+    ( cd "$ROOT/corpus/evaluate" && \
         "$ROOT/src/metisc" --evaluate "$1" --brute ) > "$WORK/br_$2.txt"
     grep '^V .* = ' "$WORK/ev_$2.txt" | sed 's/ worlds .*//' > "$WORK/ev_$2.v"
     sed 's/ worlds .*//' "$WORK/br_$2.txt" | grep -F -x -f "$WORK/ev_$2.v" \
@@ -285,7 +285,7 @@ for case in kitchen_pot:kitchen_pot/composition.yaml kitchen_pot_gen:kitchen_pot
             alfworld_gen:alfworld/domains/hier/composition_gen.yaml minihack:minihack/domains/hier/composition.yaml; do
   name=${case%%:*}; comp=${case#*:}
   rc=0
-  ( cd "$ROOT/corpus/iface" && METIS_HOME="$ROOT/corpus/iface/_home" \
+  ( cd "$ROOT/corpus/iface" && \
       "$ROOT/src/metisc" --link "$comp" --check ) > "$WORK/link_$name.txt" 2>&1 || rc=$?
   echo "rc $rc" >> "$WORK/link_$name.txt"
   diff -u "$ROOT/corpus/goldens/link/$name.txt" "$WORK/link_$name.txt"
@@ -295,7 +295,7 @@ n_gold=$(ls "$ROOT/corpus/goldens/link" | wc -l)
 [ "$n_ln" -eq "$n_gold" ] || { echo "link: $n_ln cases, $n_gold goldens"; exit 1; }
 # written: the directory named by the golden's hash, its tar the same files
 h=$(sed -n 's/^image kitchen_pot_gen v-\([0-9a-f]*\)$/\1/p' "$ROOT/corpus/goldens/link/kitchen_pot_gen.txt")
-( cd "$ROOT/corpus/iface" && METIS_HOME="$ROOT/corpus/iface/_home" \
+( cd "$ROOT/corpus/iface" && \
     "$ROOT/src/metisc" --link kitchen_pot/composition_gen.yaml -o "$WORK/img" --tar ) > /dev/null 2>&1
 img="$WORK/img/kitchen_pot_gen.image.v-$h"
 [ -f "$img/image.json" ] && [ -f "$img/image.lock" ] && [ -f "$img/members/tree_director/ground.wire" ] \
@@ -308,7 +308,7 @@ echo "== 16. metisc build (spec 17 §7): stale members compiled, the rest reused
 # a copy of corpus/iface/kitchen_pot: built twice (all compiled, then all reused, one hash), then one member's
 # #init edited (compiler-invisible, yet in its wire): only that member recompiled, a new hash
 cp -r "$ROOT/corpus/iface/kitchen_pot" "$WORK/bk"
-bk() { ( cd "$WORK" && METIS_HOME="$ROOT/corpus/iface/_home" "$ROOT/src/metisc" build bk 2>/dev/null ) | grep -E '^(image|build)'; }
+bk() { ( cd "$WORK" && "$ROOT/src/metisc" build bk 2>/dev/null ) | grep -E '^(image|build)'; }
 b1=$(bk); b2=$(bk)
 echo "$b1" | grep -q 'build reused 0 \[\] compiled 3' || { echo "build 1: $b1"; exit 1; }
 echo "$b2" | grep -q 'build reused 3 .* compiled 0 \[\]' || { echo "build 2: $b2"; exit 1; }
@@ -317,7 +317,7 @@ echo "#init idle 1" >> "$WORK/bk/cook_a/cook_a.llp"
 b3=$(bk)
 echo "$b3" | grep -q 'build reused 2 \[pot_director cook_b\] compiled 1 \[cook_a\]' || { echo "build 3: $b3"; exit 1; }
 [ "$(echo "$b3" | head -1)" != "$(echo "$b1" | head -1)" ] || { echo "build: an edited member, the same hash"; exit 1; }
-( cd "$ROOT/corpus/iface" && METIS_HOME="$ROOT/corpus/iface/_home" "$ROOT/src/metisc" check kitchen_pot ) > "$WORK/chk.txt" 2>&1 \
+( cd "$ROOT/corpus/iface" && "$ROOT/src/metisc" check kitchen_pot ) > "$WORK/chk.txt" 2>&1 \
     || { tail -3 "$WORK/chk.txt"; exit 1; }
 grep -q '^image kitchen_pot v-' "$WORK/chk.txt" || { echo "check: no image line"; exit 1; }
 echo "BUILD 3/3 (compiled 3, reused 3, recompiled 1 of 3) + check"
@@ -330,7 +330,7 @@ echo "== 17. deployment plans (spec 17 §5): metisc --link --plan == goldens; th
 n_pl=0
 for p in split operator bad unhosted; do
   rc=0
-  ( cd "$ROOT/corpus/iface" && METIS_HOME="$ROOT/corpus/iface/_home" \
+  ( cd "$ROOT/corpus/iface" && \
       "$ROOT/src/metisc" --link kitchen_pot/composition_split.yaml --check --plan "kitchen_pot/plans/$p.yaml" ) \
       > "$WORK/plan_$p.txt" 2>&1 || rc=$?
   echo "rc $rc" >> "$WORK/plan_$p.txt"
@@ -339,7 +339,7 @@ for p in split operator bad unhosted; do
 done
 n_gold=$(ls "$ROOT/corpus/goldens/plans" | wc -l)
 [ "$n_pl" -eq "$n_gold" ] || { echo "plans: $n_pl plans, $n_gold goldens"; exit 1; }
-( cd "$ROOT/corpus/iface" && METIS_HOME="$ROOT/corpus/iface/_home" "$ROOT/src/metisc" --link kitchen_pot/composition_split.yaml \
+( cd "$ROOT/corpus/iface" && "$ROOT/src/metisc" --link kitchen_pot/composition_split.yaml \
     -o "$WORK/pimg" --plan kitchen_pot/plans/split.yaml --plan kitchen_pot/plans/operator.yaml ) > "$WORK/pimg.txt" 2>&1
 h0=$(sed -n 's/^image kitchen_pot_split v-//p' "$ROOT/corpus/goldens/plans/split.txt")
 h1=$(sed -n 's/^image kitchen_pot_split v-//p' "$WORK/pimg.txt")
@@ -353,7 +353,7 @@ echo "== 18. the sidecars (spec 17 ruling 6): metisc's sidecar.json == metispy's
 # metispy's artifact.build, linker step 3); tools.json at the image root against the golden constant
 n_sc=0
 for c in kitchen_pot/composition.yaml road/composition.yaml alfworld/domains/hier/composition.yaml minihack/domains/hier/composition.yaml; do
-  ( cd "$ROOT/corpus/iface" && METIS_HOME="$ROOT/corpus/iface/_home" "$ROOT/src/metisc" --link "$c" -o "$WORK/sc" ) > /dev/null 2>&1 \
+  ( cd "$ROOT/corpus/iface" && "$ROOT/src/metisc" --link "$c" -o "$WORK/sc" ) > /dev/null 2>&1 \
       || { echo "sidecars: $c does not link"; exit 1; }
 done
 while read -r h b name; do
@@ -370,7 +370,7 @@ echo "== 19. the one-member image (spec 17 §2): metisc --link PKGDIR == golden;
 # corpus/iface/kitchen_pot/cook_a linked alone (a package that runs alone is the one-member composition of itself):
 # the listing == the golden, and its sidecar.json == the corpus golden's for kitchen_pot/cook_a (the same program)
 rc=0
-( cd "$ROOT/corpus/iface" && METIS_HOME="$ROOT/corpus/iface/_home" "$ROOT/src/metisc" --link kitchen_pot/cook_a -o "$WORK/pk" ) \
+( cd "$ROOT/corpus/iface" && "$ROOT/src/metisc" --link kitchen_pot/cook_a -o "$WORK/pk" ) \
     > "$WORK/pk.txt" 2>&1 || rc=$?
 echo "rc $rc" >> "$WORK/pk.txt"
 grep -v '^wrote ' "$WORK/pk.txt" | diff -u "$ROOT/corpus/goldens/package/cook_a.txt" -
@@ -378,5 +378,31 @@ want=$(awk '$3 == "kitchen_pot/cook_a" {print $1}' "$ROOT/corpus/goldens/sidecar
 got=$(sha256sum "$(ls -d "$WORK"/pk/cook_a.image.v-*/members/cook_a/sidecar.json | head -1)" | cut -d' ' -f1)
 [ "$got" = "$want" ] || { echo "package cook_a: sidecar $got, the golden $want"; exit 1; }
 echo "PACKAGE 1/1 (cook_a alone: one member, its sidecar byte-equal)"
+
+echo "== 20. the standard units (spec/17 amendment 5): root, std, METIS_HOME; L20 a name resolving nowhere"
+# iface/ at the root is the toolchain's standard units: every gate above runs with no METIS_HOME. Here: a metisc
+# copied away from the checkout finds them compiled in (the same image); the lock records each include's place and
+# key, and places.std; an include name resolving nowhere is L20 (and --diagnostics-json's failure, exit 1)
+unset METIS_HOME
+mkdir -p "$WORK/std/bin" && cp "$ROOT/src/metisc" "$WORK/std/bin/metisc"
+want=$(grep '^image ' "$ROOT/corpus/goldens/link/kitchen_pot_gen.txt")
+got=$(cd "$ROOT/corpus/iface" && "$WORK/std/bin/metisc" --link kitchen_pot/composition_gen.yaml --check | grep '^image ')
+[ "$got" = "$want" ] || { echo "std: a copied metisc links '$got', the golden '$want'"; exit 1; }
+lock=$(ls -d "$WORK"/img/kitchen_pot_gen.image.v-*/image.lock | head -1)
+grep -q "\"std\": \"$ROOT/iface\"" "$lock" || { echo "std: the lock has no places.std $ROOT/iface"; exit 1; }
+n_std=$(grep -c '"place": "std"' "$lock")
+n_key=$(grep -c '"key": "[0-9a-f]\{64\}"' "$lock")
+[ "$n_std" -gt 0 ] && [ "$n_key" -gt "$n_std" ] || { echo "std: the lock's includes: $n_std std, $n_key keyed"; exit 1; }
+cp -r "$ROOT/corpus/iface/kitchen_pot" "$WORK/std/kp"
+printf 'include "iface/nowhere.llp".\n' >> "$WORK/std/kp/cook_b/cook_b.llp"
+rc=0
+( cd "$WORK/std" && "$ROOT/src/metisc" --link kp/composition_gen.yaml --check ) > "$WORK/std/l20.txt" 2>&1 || rc=$?
+[ "$rc" -ne 0 ] && grep -q "^error L20 link-places: cook_b: include 'iface/nowhere.llp': not under " "$WORK/std/l20.txt" \
+    || { echo "std: an include resolving nowhere is not L20 (rc $rc)"; cat "$WORK/std/l20.txt"; exit 1; }
+rc=0
+"$ROOT/src/metisc" --diagnostics-json "$WORK/std/kp/cook_b/cook_b.llp" > "$WORK/std/d.txt" 2>&1 || rc=$?
+[ "$rc" -eq 1 ] && grep -q "nowhere.llp" "$WORK/std/d.txt" \
+    || { echo "std: --diagnostics-json on a nowhere include: rc $rc"; cat "$WORK/std/d.txt"; exit 1; }
+echo "STD UNITS 4/4 (a copied metisc: compiled in; the lock's places and keys; L20; the diagnostics' failure)"
 
 echo "ALL GATES GREEN"

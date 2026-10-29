@@ -10,3 +10,4 @@ paper/*.log
 paper/*.xdv
 paper/*.aux
 runtime/build/
+src/std_dir.ml
