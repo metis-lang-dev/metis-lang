@@ -1,4 +1,4 @@
-% Behavior Programs as Measures over Proofs — draft 0.4
+% Behavior Programs as Measures over Proofs — draft 0.5
 % Build: tectonic metis.tex   (or pdflatex + bibtex-free; references are inline)
 \documentclass[11pt]{article}
 
@@ -54,7 +54,7 @@ an $\mllb$ proof-net intermediate representation, and an executable,
 certified, machine-checked compilation pipeline}
 \author{The metis project\thanks{Sources, corpus, goldens, and the Lean
 mechanization: \repourl. Correspondence: \texttt{info@robofortis.com}.}}
-\date{Draft 0.4 --- 2026-10-27}
+\date{Draft 0.5 --- 2026-10-29}
 
 \begin{document}
 \maketitle
@@ -384,7 +384,13 @@ stuck). A specialist includes the interface packages it speaks and
 states its \emph{direction} on each predicate --- in, out, resource, or
 world-private --- and a static check refuses a direction the nature does
 not allow, a shared predicate declared locally, or two interfaces
-declaring one name.
+declaring one name. The interface packages every composition speaks
+--- the tick protocol, the director tree --- are ordinary lifted files
+with no special status in the language; they are the language's
+\emph{standard units}, shipped with each toolchain and resolved by the
+include rule like any package (the including directory, the project
+root, the toolchain's own units, then the user's shared packages), and
+the link records which file each name resolved to.
 
 \paragraph{The package is the certified unit.} A \textbf{package} is a
 program with its manifest, its cases (an initial multiset, a script of
@@ -398,24 +404,58 @@ with no rules.
 
 \paragraph{The shared atoms are the runtime's.} A \textbf{composition}
 is a set of packages over interface packages under a \emph{tick
-protocol}: inputs are taken at a tick boundary, outputs are latched to
-the next boundary, the relay between members is deterministic, and
-each member samples its own stream. Shared state crosses as a
-\emph{copy per port} at the boundary, never as a live shared truth: a
-linear-logic $\bang p$ readable by every rule and consumed by none would
-make a trigger that never latches and a slow member that sees a moving
-target. The composition's certificate is its package key, the verdict
+protocol} with \emph{copy semantics}: every port a member reads is a
+copy taken at the start of that member's own tick, what a member emits
+at a tick is visible to any reader --- itself included --- no earlier
+than the reader's next tick, the relay between members is deterministic,
+and each member samples its own stream. Members tick at their own
+clocks (navigation fast, the person's intents slow), so there is no
+beat shared across them to latch at; the rule is stated per reader, and
+it is the same rule whether the holder of a port is in the reader's
+process, in another process, or on another machine. Shared state is
+never a live shared truth: a linear-logic $\bang p$ readable by every
+rule and consumed by none would make a trigger that never settles and a
+slow member that sees a moving target. The composition's certificate is its package key, the verdict
 of the interface checks, and each member's own key in manifest order
 --- nothing composite is grounded, because the composite measure is a
 product the protocol determines (Proposition~\ref{prop:composite}).
 
-A \textbf{bundle} is a composition sealed for one device with a runtime
-manifest: which runtime executes each member, where it is placed, and
-which host library binds each of its ports, each library with its own
-key. A library upgrade changes the bundle's runtime key and not the
-composition's; a member may be replaced over the air iff it was
-certified against the same interface keys and the composition passes
-its checks again, which is a static and cheap test.
+\paragraph{The image is the composition's deployable denotation.} A
+\textbf{bundle} is one package compiled: its ground wire, its sidecar,
+its tool declarations, under a content hash. An \textbf{image} is a
+composition \emph{linked}: every member's bundle, every shared
+predicate resolved to its producers, consumers and nature, the capacity
+and the priority order checked, and the director \emph{generated} from
+the composition's declarations rather than written by hand, all under
+one hash over a canonical file list. The link is where the static side
+of the tick protocol is decided: that the members are exactly the
+declared specialists, that each world predicate consumed is one the
+world provides, that no belief crosses a member boundary, that the
+response the director promises is reachable in ticks, that one planner
+exists. What the image does \emph{not} contain is a \textbf{plan}: the
+assignment of members and world ports to processes, and the carrier
+between them (sockets today; a robot middleware later). A plan is
+checked against the image, is linked by the image's hash, and stays
+outside it, because under copy semantics a plan changes only
+\emph{delay} --- a copy that crossed a process boundary arrives a tick
+later, within the response budget the link checked --- and never what
+any member computes from the copies it holds. The one thing a split
+does not preserve is a global order across the boundary, which is why a
+property stated across processes is stated against the message order
+and not against a beat.
+
+This is what certification attaches to. A certificate names an image
+hash and nothing else; a runtime reads the image and nothing else ---
+not the composition, not the manifests, not the source. A member may be
+replaced iff it was certified against the same interface keys and the
+composition links again, a static and cheap test; a host library
+upgrade changes a member's binding in the image and not the
+composition's keys. The same image loads into one process holding every
+member or into two processes with the person's dialog on one side and
+the behavior on the other, and the measured difference on a two-cook
+kitchen was the delay alone: every member's fired rules identical beat
+for beat under the two plans, the only rows differing being the two
+first-beat fetches whose command crossed the boundary a tick later.
 
 \section{Run-level preservation}\label{sec:preservation}
 
@@ -1205,8 +1245,8 @@ With a by-step port, multilinearity is lost: the rows multiply along
 every trace and are functions of the forecast. The certificate then
 holds \emph{over the initial levels} --- the cells are the tick's
 levels, as before --- and the forecast that turns the tick's belief into
-rows is part of the sealed bundle (\S\ref{sec:packages}), listed as
-\emph{certified over the initial levels, predict in the bundle}, never
+rows is part of the sealed image (\S\ref{sec:packages}), listed as
+\emph{certified over the initial levels, predict in the image}, never
 by the vertex bound.
 
 \subsection{The aim: ports as functions, and the horizon}
