@@ -259,7 +259,10 @@ let embedded_case path =
    or not; the D2 parity gate diffs this against the goldens *)
 exception Failed of exn
 
-let diagnostics_file ?base ~json path =
+(* --manifest DOMAIN.YAML: the package's manifest; its levels' generated declarations (spec/16 amendment 1) join
+   the program's — the base's when there is one (an extension is diagnosed against the program it extends), else the
+   file's *)
+let diagnostics_file ?base ?manifest ~json path =
   let load p = Compile.resolve_includes (Parser.parse_file p)
       (Filename.dirname p) in
   (* a pack's BASE must compile: its failure is NOT the pack's
@@ -267,11 +270,11 @@ let diagnostics_file ?base ~json path =
      metispy diagnose() raises *)
   let based = match base with
     | None -> None
-    | Some b -> let bast = load b in Some (fst (Compile.compile bast), bast) in
+    | Some b -> let bast = Iface.with_levels ?manifest (load b) in Some (fst (Compile.compile bast), bast) in
   Diag.reset ();
   (* an include that resolves nowhere lists nothing: it is the command's
      failure (main prints it, exit 1), as metispy's raises *)
-  let load p = try load p with
+  let load p = try (if base = None then Iface.with_levels ?manifest (load p) else load p) with
     | Compile.Lang_error _ as e when Compile.diagnostics () = [] -> raise (Failed e) in
   (try
      match based with
@@ -580,12 +583,13 @@ let () =
        registries cannot drift *)
     List.iter (fun (c, (sev, phase)) ->
         Printf.printf "%s %s %s\n" c sev phase) Diag.registry
-  | [_; "--diagnostics"; llp] -> diagnostics_file ~json:false llp
-  | [_; "--diagnostics"; llp; "--base"; b] ->
-    diagnostics_file ~base:b ~json:false llp
-  | [_; "--diagnostics-json"; llp; "--base"; b] ->
-    diagnostics_file ~base:b ~json:true llp
-  | [_; "--diagnostics-json"; llp] -> diagnostics_file ~json:true llp
+  | _ :: ("--diagnostics" | "--diagnostics-json" as f) :: llp :: rest ->
+    let rec go ?base ?manifest = function
+      | [] -> diagnostics_file ?base ?manifest ~json:(f = "--diagnostics-json") llp
+      | "--base" :: b :: r -> go ~base:b ?manifest r
+      | "--manifest" :: m :: r -> go ?base ~manifest:m r
+      | a :: _ -> failwith (f ^ ": unknown argument " ^ a) in
+    go rest
   | [_; llp] when Filename.check_suffix llp ".llp" -> compile_file llp
   | [_; manifest] -> drive manifest run_case
   | _ ->

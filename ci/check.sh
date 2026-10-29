@@ -429,6 +429,11 @@ n_gold=$(ls "$ROOT/corpus/goldens/levels"/*.txt | wc -l)
     || { echo "levels: alf.llp compiled without its manifest"; exit 1; }
 ( cd "$ROOT/corpus/levels" && "$ROOT/src/metisc" --link alf_view -o "$WORK/lvimg" ) | grep -q '^result 0 error' \
     || { echo "levels: alf_view does not link"; exit 1; }
-echo "LEVELS $n_lv/$n_gold (+ the package's wire, its link)"
+# the diagnostics with the manifest list nothing for the level package; without it, the generated pred is undeclared
+[ -z "$(cd "$ROOT/corpus/levels" && "$ROOT/src/metisc" --diagnostics-json alf.llp --manifest alf_view/domain.yaml)" ] \
+    || { echo "levels: --diagnostics-json --manifest lists something"; exit 1; }
+( cd "$ROOT/corpus/levels" && "$ROOT/src/metisc" --diagnostics-json alf.llp ) | grep -q '"code":"pred-undeclared"' \
+    || { echo "levels: --diagnostics-json without the manifest found no undeclared level pred"; exit 1; }
+echo "LEVELS $n_lv/$n_gold (+ the package's wire, its link, its diagnostics with and without the manifest)"
 
 echo "ALL GATES GREEN"
