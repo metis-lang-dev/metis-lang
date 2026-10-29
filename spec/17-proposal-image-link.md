@@ -448,3 +448,16 @@ interpreter. Rulings:
   (`root`, `std`, `home`) and key, which is what the certificate needs.
 - The two metispy include-edit tests set nothing and pass against a real metisc once it finds its standard
   units.
+
+### Amendment 4, corollary: the pending rule (toolchain-units s-ddaed776 step 3)
+
+Readings are timestamped, and a reading never contradicts a command newer than itself. Every message carries
+the sender's tick (`tick=n`, §5.3) and the in-process host's sync carries the boundary tick the same way. A
+member keeps the effects it modelled for its own commands with the tick it issued them; the surprise test at a
+tick compares the snapshot with the model's state as of the SNAPSHOT's tick, so the effect of a command issued
+after that tick is pending, not contradicted, and an older reading never undoes a newer modelled effect. In one
+process, where the world applies commands at the boundary, pending is empty at the next tick; across a split it
+is one tick, bounded by L18; a pending effect older than the budget is what `tick__stuck` names. The watch's
+surprise test runs at the tick over the beat's firings, never after a single firing; a member that chains its
+own modelled effects within a beat observes a partner's change only through its consequence on its own
+commands, so a member that wants partner changes explained reads the shared state as a world-owned reading.
