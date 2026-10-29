@@ -1,0 +1,3 @@
+program: ../alf.llp
+beliefs: {inrecep: {port: where, lone: R}}
+levels: {place_level: {from: {belief: look}, at: [0.5], names: [low, high]}}

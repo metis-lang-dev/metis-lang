@@ -1,0 +1,2 @@
+error: domain.yaml:6: level-undeclared: level reach_level from evaluate fetch: no pred reach_level (an evaluate level's pred is the program's: pred reach_level(T) with type T {far near})
+rc 1

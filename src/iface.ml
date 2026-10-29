@@ -203,6 +203,135 @@ let str = function S s -> s | _ -> raise (Yaml_error "expected a scalar")
 let strs = function L l -> List.map str l | S "" -> [] | _ -> raise (Yaml_error "expected a list")
 let pairs = function M m -> m | _ -> raise (Yaml_error "expected a map")
 
+(* -- generated level declarations (spec/16 amendment 1) --------------- *)
+
+(* the manifest line naming level NAME: from the line that opens levels:, the first where NAME is a key *)
+let level_line manifest name =
+  let ic = open_in_bin manifest in
+  let lines = ref [] in
+  (try while true do lines := input_line ic :: !lines done with End_of_file -> close_in ic);
+  let is_key k l =
+    let n = String.length k and m = String.length l in
+    let rec at i =
+      if i + n > m then false
+      else if String.sub l i n = k && (i = 0 || String.contains " \t{," l.[i - 1]) then begin
+        let j = ref (i + n) in
+        while !j < m && l.[!j] = ' ' do incr j done;
+        (!j < m && l.[!j] = ':') || at (i + 1)
+      end else at (i + 1) in
+    at 0 in
+  let rec find i opened = function
+    | [] -> 0
+    | l :: tl ->
+      let opened = opened || is_key "levels" l in
+      if opened && is_key name l then i else find (i + 1) opened tl in
+  find 1 false (List.rev !lines)
+
+(* the declarations a manifest's levels: block fully determines and the resolved program lacks (spec/16
+   amendment 1, the rulings of 2026-10-29): for a BELIEF level, `type level {names}` (unless a type level is
+   there), the belief's weight port `weight PORT(V..) reads {PRED(V..)}` (unless the program has the port; V..
+   as the first rule reading $NAME(_, V..) names them, else the types' initials, the belief's one/lone formal
+   last) and `pred NAME(level, <PRED's types>) : <PRED's namespace>`, in that order, level by level. A hand
+   declaration agrees structurally: NAME's first argument's type has exactly the names, in order, and its rest
+   are PRED's types. An EVALUATE level's pred is hand-declared (nothing fixes its namespace), checked the same.
+   A disagreement or a missing declaration raises Lang_error naming the manifest line. *)
+let level_decls manifest (ast : Ast.catalog) =
+  let man = read_yaml_block manifest in
+  let map k = match List.assoc_opt k man with Some (M m) -> m | _ -> [] in
+  let levels = map "levels" and beliefs = map "beliefs" in
+  let decls = ast.Ast.cdecls in
+  let pred_sig n = List.find_map (function Ast.DPred (m, ts, ns) when m = n -> Some (ts, ns) | _ -> None) decls in
+  let type_of n = List.find_map (function Ast.DType (m, cs) when m = n -> Some cs | _ -> None) decls in
+  let has_port p = List.exists (function Ast.DPort { pkind = Ast.Weight; pname; _ } -> pname = p | _ -> false) decls in
+  let rules = List.concat_map (function Ast.DStage st -> st.Ast.srules | _ -> []) decls in
+  let fail name code fmt = Printf.ksprintf (fun t ->
+      raise (Compile.Lang_error [Printf.sprintf "%s:%d: %s: %s" (Filename.basename manifest)
+                                   (level_line manifest name) code t])) fmt in
+  let field k f = match f with M m -> List.assoc_opt k m | _ -> None in
+  let sp = String.concat " " in
+  let out = ref [] and gen_type = ref None in
+  List.iter (fun (name, spec) ->
+      let names = match field "names" spec with Some (L l) -> List.map str l | _ -> ["low"; "mid"; "high"] in
+      let agrees ts rest = match ts with
+        | t :: r -> type_of t = Some names && r = rest
+        | [] -> false in
+      match field "from" spec with
+      | Some (M [("evaluate", q)]) ->
+        (match pred_sig name with
+         | None -> fail name "level-undeclared" "level %s from evaluate %s: no pred %s (an evaluate level's pred is \
+                                                 the program's: pred %s(T) with type T {%s})" name (str q) name name (sp names)
+         | Some (ts, _) when not (agrees ts []) ->
+           fail name "level-mismatch" "pred %s(%s) does not agree with level %s: pred %s(T) with type T {%s}"
+             name (String.concat ", " ts) name name (sp names)
+         | Some _ -> ())
+      | Some (M [("belief", p)]) ->
+        let port = str p in
+        let bel = List.find_opt (fun (_, b) -> match field "port" b with Some v -> str v = port | None -> false) beliefs in
+        (match bel with
+         | None -> fail name "level-belief" "level %s from belief %s: no belief has port %s" name port port
+         | Some (bpred, b) ->
+           (match pred_sig bpred with
+            | None -> fail name "level-belief" "level %s from belief %s: the belief %s is not a pred of the program"
+                        name port bpred
+            | Some (types, ns) ->
+              let hand = pred_sig name in
+              (match hand with
+               | Some (ts, _) when not (agrees ts types) ->
+                 fail name "level-mismatch" "pred %s(%s) does not agree with level %s: pred %s(T, %s) with type T {%s}"
+                   name (String.concat ", " ts) name name (String.concat ", " types) (sp names)
+               | Some _ -> ()
+               | None ->
+                 (match type_of "level", !gen_type with
+                  | Some cs, _ when cs <> names ->
+                    fail name "level-type" "type level {%s} is not level %s's names [%s]" (sp cs) name (sp names)
+                  | Some _, _ -> ()
+                  | None, Some (other, cs) when cs <> names ->
+                    fail name "level-names" "levels %s [%s] and %s [%s] name different levels: one type level is \
+                                             generated; declare both by hand" other (sp cs) name (sp names)
+                  | None, Some _ -> ()
+                  | None, None ->
+                    gen_type := Some (name, names);
+                    out := !out @ [Ast.DType ("level", names)]));
+              if not (has_port port) then begin
+                let read = List.find_map (fun (r : Ast.rule) -> List.find_map (function
+                    | Ast.BAtom a when a.Ast.persist && a.Ast.pred = name && a.Ast.terms <> [] -> Some (List.tl a.Ast.terms)
+                    | _ -> None) r.Ast.rbody) rules in
+                let vs = match read with
+                  | Some ts when List.length ts = List.length types
+                              && List.for_all (function Ast.TVar _ -> true | _ -> false) ts ->
+                    List.map Ast.term_str ts
+                  | _ ->
+                    List.fold_left (fun vs t ->
+                        let v = ref (if t = "" then "X" else String.uppercase_ascii (String.sub t 0 1)) in
+                        while List.mem !v vs do v := !v ^ "2" done;
+                        vs @ [!v]) [] types in
+                let lone = match field "lone" b, field "one" b with
+                  | Some v, _ | None, Some v -> Some (str v) | None, None -> None in
+                let vs = match lone with
+                  | Some l when vs <> [] && not (List.mem l vs) -> List.filteri (fun i _ -> i < List.length vs - 1) vs @ [l]
+                  | _ -> vs in
+                let a = { Ast.pred = bpred; terms = List.map (fun v -> Ast.TVar v) vs; persist = false } in
+                out := !out @ [Ast.DPort { pkind = Ast.Weight; pname = port; pargs = vs;
+                                           preads = Some [{ Ast.ratom = a; rguards = [] }] }]
+              end;
+              if hand = None then out := !out @ [Ast.DPred (name, "level" :: types, ns)]))
+      | _ -> fail name "level-from" "level %s: from is {evaluate: Q} or {belief: PORT}" name)
+    levels;
+  !out
+
+(* the program with its manifest's generated level declarations after its own (none without a manifest) *)
+let with_levels ?manifest (ast : Ast.catalog) =
+  match manifest with
+  | Some f when Sys.file_exists f ->
+    let ds = level_decls f ast in
+    let loc = { Ast.file = f; line = 0; col = 0 } in
+    { ast with Ast.cdecls = ast.Ast.cdecls @ ds; cdecl_locs = ast.Ast.cdecl_locs @ List.map (fun _ -> loc) ds }
+  | _ -> ast
+
+(* a program file with its includes resolved and its manifest's generated level declarations *)
+let load_program ?manifest path =
+  with_levels ?manifest (Compile.resolve_includes (Parser.parse_file path) (Filename.dirname path))
+
 (* -- paths ----------------------------------------------------------- *)
 
 let norm p =
@@ -235,6 +364,7 @@ type rrule = {
 type member = {
   m_name : string; m_role : string;     (* specialist | direct *)
   m_program : string;                   (* normalized path *)
+  m_manifest : string;                  (* its domain.yaml *)
   m_files : string list;                (* the include closure, DFS order *)
   m_includes : (string * string) list;  (* edges: file -> included file *)
   m_decl_file : (string * string) list; (* pred/bwd name -> declaring file *)
@@ -318,17 +448,32 @@ let load_member dir name role =
   let rules = List.map (fun r ->
       { r with r_body = List.map (fun (a, k) ->
             (a, if List.mem a.pred !bwd then 'g' else k)) r.r_body }) !rules in
+  (* the program as built: with its manifest's generated level declarations (spec/16 amendment 1), keyed and
+     compiled with them, their preds and type among the member's *)
+  let manifest = Filename.concat pkg "domain.yaml" in
   let (key, compile) =
     match Compile.resolve_includes (Parser.parse_file program) (Filename.dirname program) with
     | exception e -> ("-", Some (Printexc.to_string e))
     | ast ->
+      let (ast, gen_err) = match level_decls manifest ast with
+        | gen ->
+          List.iter (function
+              | DPred (n, a, _) ->
+                if not (List.mem_assoc n !decl_file) then decl_file := !decl_file @ [(n, program)];
+                sigs := !sigs @ [(n, a)]
+              | DType (n, cs) -> types := !types @ [(n, cs)]
+              | _ -> ()) gen;
+          (with_levels ~manifest ast, None)
+        | exception Compile.Lang_error ms -> (ast, Some (String.concat "; " ms)) in
       let key = Sha256.hex (Ast.pretty (Ast.strip_locs ast)) in
-      (key, match Compile.compile ast with
-        | _ -> None
-        | exception Compile.Lang_error ms -> Some (String.concat "; " ms)
-        | exception Catalog.Catalog_error ms -> Some (String.concat "; " ms)) in
+      (key, match gen_err with
+        | Some e -> Some e
+        | None -> match Compile.compile ast with
+          | _ -> None
+          | exception Compile.Lang_error ms -> Some (String.concat "; " ms)
+          | exception Catalog.Catalog_error ms -> Some (String.concat "; " ms)) in
   let field k f = match List.assoc_opt k man with Some v -> f v | None -> [] in
-  { m_name = name; m_role = role; m_program = program;
+  { m_name = name; m_role = role; m_program = program; m_manifest = manifest;
     m_files = !files; m_includes = !edges; m_decl_file = !decl_file;
     m_sigs = !sigs; m_bwd = !bwd; m_types = !types; m_abstract = !abstract;
     m_rules = rules; m_init = init_of program; m_facts = !facts;

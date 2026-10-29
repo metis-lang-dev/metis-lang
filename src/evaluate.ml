@@ -580,6 +580,17 @@ let squash a =
       if not (!depth > 0 && (c = ' ' || c = '\t')) then Buffer.add_char b c) a;
   Buffer.contents b
 
+(* a case YAML's manifest: its manifest: key, else the domain.yaml of the package it sits in (cases/ or beside) *)
+let case_manifest path =
+  let open Iface in
+  let dir = Filename.dirname path in
+  match List.assoc_opt "manifest" (read_yaml_block path) with
+  | Some (S v) -> Filename.concat dir v
+  | Some _ -> raise (Yaml_error (path ^ ": manifest: expected a scalar"))
+  | None ->
+    if Filename.basename dir = "cases" then Filename.concat (Filename.dirname dir) "domain.yaml"
+    else Filename.concat dir "domain.yaml"
+
 let case_of_yaml path =
   let open Iface in
   let bad fmt = Printf.ksprintf (fun m -> raise (Yaml_error (path ^ ": " ^ m))) fmt in
@@ -591,12 +602,7 @@ let case_of_yaml path =
       if not (List.mem k ["case"; "manifest"; "init"; "ports"; "evaluate"; "expect"]) then
         bad "unknown key %s (case, manifest, init, ports, evaluate, expect)" k)
     case;
-  let dir = Filename.dirname path in
-  let mpath = match List.assoc_opt "manifest" case with
-    | Some v -> Filename.concat dir (str "manifest" v)
-    | None ->
-      if Filename.basename dir = "cases" then Filename.concat (Filename.dirname dir) "domain.yaml"
-      else Filename.concat dir "domain.yaml" in
+  let mpath = case_manifest path in
   let man = read_yaml_block mpath in
   let program = match List.assoc_opt "program" man with
     | Some v -> Filename.concat (Filename.dirname mpath) (str "program" v)

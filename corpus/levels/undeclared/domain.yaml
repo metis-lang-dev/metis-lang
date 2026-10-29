@@ -1,0 +1,6 @@
+program: ../alf.llp
+beliefs: {inrecep: {port: where, lone: R}}
+evaluate: {fetch: {reach: at(loc2), within: 3}}
+levels:
+  place_level: {from: {belief: where}, at: [0.05, 0.4], names: [low, mid, high]}
+  reach_level: {from: {evaluate: fetch}, at: [0.5], names: [far, near]}

@@ -1,0 +1,2 @@
+error: domain.yaml:3: level-mismatch: pred fetch_risk(risk) does not agree with level fetch_risk: pred fetch_risk(T) with type T {low mid high}
+rc 1

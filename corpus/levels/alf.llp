@@ -1,0 +1,28 @@
+% the alfworld_view level of policy-tuning-2 2f, standalone (spec/16 amendment 1's parity corpus): the rules read the
+% level atom $place_level(high, O, R); its type, the belief's weight port and the pred are the manifest's to generate
+catalog alf 1.
+provenance hand "policy-tuning-2 2f, the brain's first declared level" "2026-10-29".
+layers (dyn).
+stages (act).
+namespace alf produce (dyn).
+type object {candle1 apple1}.
+type receptacle {shelf1 drawer1 cabinet1}.
+type location {loc1 loc2 loc3}.
+type risk {high mid low}.
+pred inrecep(object, receptacle) : alf.
+pred want(object) : alf.
+pred at(location) : alf.
+pred fetch_risk(risk) : alf.
+bwd recat(receptacle, location).
+recat(shelf1, loc1).
+recat(drawer1, loc2).
+recat(cabinet1, loc3).
+stage act {
+  %% I go and look where the object is likely.
+  go_look [dyn] : $want(O) * $place_level(high, O, R) * $recat(R, L) * at(L0) * L0 <> L -o at(L).
+  %% I go and look where it is likely enough, the risk low.
+  go_look_mid [dyn] : $want(O) * $place_level(mid, O, R) * $fetch_risk(low) * $recat(R, L) * at(L0) * L0 <> L -o at(L).
+}
+#init want(candle1) 1
+#init at(loc1) 1
+#steps 2

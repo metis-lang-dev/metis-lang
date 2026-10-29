@@ -404,9 +404,16 @@ let evaluate_file path ~brute ~cost =
     Printf.eprintf "refused %s: %s\n" code m; exit 2
   | (base, init, groups) ->
     let mism = ref 0 in
+    (* the package's program (not a world model) with its manifest's generated level declarations *)
+    let manifest = if Filename.check_suffix path ".yaml" then Some (Evaluate.case_manifest path) else None in
+    let program = Option.map (fun m -> Iface.norm (Filename.concat (Filename.dirname m)
+                                                     (Iface.str (List.assoc "program" (Iface.read_yaml_block m))))) manifest in
     List.iter (fun (llp, dirs) ->
         let llp = Filename.concat base llp in
         let src = parse_llp (Filename.dirname llp) (Filename.basename llp) in
+        (* a disagreement is the instrument's own refusal (level-type, spec/16 §4): the source as it is then *)
+        let src = if Some (Iface.norm llp) = program
+          then (try Iface.with_levels ?manifest src with Compile.Lang_error _ -> src) else src in
         let (cat, ports) = compile_warn src in
         let prog = Ground.ground cat init in
         match Evaluate.run src cat ports prog ~init dirs ~brute with
@@ -430,11 +437,11 @@ let rec evaluate_args path brute cost = function
    program compiled with its includes, every extension compiled against
    the world so far and admitted over it, the ports merged (metispy
    served_doc), grounded on the program's #init, S its #steps; stdout *)
-let wire_file program extensions =
+let wire_file ?manifest program extensions =
   let c = embedded_case program in
   let load p = Compile.resolve_includes (Parser.parse_file p)
       (Filename.dirname p) in
-  let past = load program in
+  let past = Iface.with_levels ?manifest (load program) in
   let (cat, ports) = compile_warn past in
   let (cat, ports, _) = List.fold_left (fun (cat, ports, (bast : Ast.catalog)) e ->
       let east = load e in
@@ -451,19 +458,19 @@ let source_queries c =
   List.fold_left (fun acc q -> if List.mem q acc then acc else acc @ [q]) [] (List.rev c.c_queries)
 
 (* spec/17: a member's wire and program key, for the link (--wire's compile, the program alone) *)
-let member_wire program =
+let member_wire ~manifest program =
   let c = embedded_case program in
-  let ast = Compile.resolve_includes (Parser.parse_file program) (Filename.dirname program) in
+  let ast = Iface.load_program ~manifest program in
   let (cat, ports) = compile_warn ast in
   let prog = Ground.ground cat c.c_init in
   (Wire.artifact_lines cat ports prog c.c_steps, Nets.program_key prog,
    Sidecar.emit ~program ~extensions:[] ~cat ~prog ~init:c.c_init ~steps:c.c_steps ~queries:(source_queries c))
 
 (* a served file and its extensions: the wire lines, the program key, the sidecar (the link's one-member image) *)
-let package_bundle program extensions =
+let package_bundle ~manifest program extensions =
   let c = embedded_case program in
   let load p = Compile.resolve_includes (Parser.parse_file p) (Filename.dirname p) in
-  let past = load program in
+  let past = Iface.with_levels ~manifest (load program) in
   let (cat, ports) = compile_warn past in
   let (cat, ports, _) = List.fold_left (fun (cat, ports, (bast : Ast.catalog)) e ->
       let east = load e in
@@ -497,10 +504,10 @@ let rec link_args ?serve ?(exts = []) comp (o : Link.opts) = function
   | a :: _ -> failwith ("--link: unknown argument " ^ a)
 
 (* spec/17 ruling 6: one package's sidecar.json, as the link writes it (the program and its extensions) *)
-let sidecar_file program extensions =
+let sidecar_file ?manifest program extensions =
   let c = embedded_case program in
   let load p = Compile.resolve_includes (Parser.parse_file p) (Filename.dirname p) in
-  let past = load program in
+  let past = Iface.with_levels ?manifest (load program) in
   let (cat, _) = compile_warn past in
   let (cat, _) = List.fold_left (fun (cat, (bast : Ast.catalog)) e ->
       let east = load e in
@@ -512,19 +519,30 @@ let sidecar_file program extensions =
   let prog = Ground.ground cat c.c_init in
   print_string (Sidecar.emit ~program ~extensions ~cat ~prog ~init:c.c_init ~steps:c.c_steps ~queries:(source_queries c))
 
-let rec sidecar_args program exts = function
-  | [] -> sidecar_file program (List.rev exts)
-  | "--extension" :: e :: rest -> sidecar_args program (e :: exts) rest
+(* --manifest DOMAIN.YAML: the package's manifest, its levels' generated declarations with the program's
+   (spec/16 amendment 1) *)
+let rec sidecar_args ?manifest program exts = function
+  | [] -> sidecar_file ?manifest program (List.rev exts)
+  | "--extension" :: e :: rest -> sidecar_args ?manifest program (e :: exts) rest
+  | "--manifest" :: m :: rest -> sidecar_args ~manifest:m program exts rest
   | a :: _ -> failwith ("--sidecar: unknown argument " ^ a)
 
-let rec wire_args program exts = function
-  | [] -> wire_file program (List.rev exts)
-  | "--extension" :: e :: rest -> wire_args program (e :: exts) rest
+let rec wire_args ?manifest program exts = function
+  | [] -> wire_file ?manifest program (List.rev exts)
+  | "--extension" :: e :: rest -> wire_args ?manifest program (e :: exts) rest
+  | "--manifest" :: m :: rest -> wire_args ~manifest:m program exts rest
   | a :: _ -> failwith ("--wire: unknown argument " ^ a)
 
 let () =
   (try match Array.to_list Sys.argv with
   | _ :: "--wire" :: program :: rest -> wire_args program [] rest
+  | [_; "--levels"; manifest] ->
+    (* spec/16 amendment 1: the declarations the manifest's levels: block generates for its program, one per line
+       (the parity golden: metispy's catalog.level_decls prints the same) *)
+    let man = Iface.read_yaml_block manifest in
+    let program = Filename.concat (Filename.dirname manifest) (Iface.str (List.assoc "program" man)) in
+    let ast = Compile.resolve_includes (Parser.parse_file program) (Filename.dirname program) in
+    List.iter (fun d -> print_endline (Ast.decl_line d)) (Iface.level_decls manifest ast)
   | _ :: "--sidecar" :: program :: rest -> sidecar_args program [] rest
   | _ :: "--link" :: comp :: rest ->
     link_args comp { Link.out = None; check = false; tar = false; build = false; plans = [] } rest

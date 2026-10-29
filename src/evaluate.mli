@@ -28,6 +28,8 @@ val run : Ast.catalog -> Catalog.t -> Compile.ports -> Ground.program
    the parent of a `cases/` directory, else beside the case. Returns
    the package directory (the manifest's), the program (relative to
    it), the init and the directives. *)
+(* a case YAML's manifest path (its manifest: key, else its package's domain.yaml) *)
+val case_manifest : string -> string
 val case_of_yaml : string -> string * string * (string * int) list * string list list
 
 (* the directives split by the world model each query runs over

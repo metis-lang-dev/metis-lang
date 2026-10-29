@@ -1,0 +1,29 @@
+# metis ground-wire artifact — catalog alf v1; GENERATED, do not edit.
+N 1 0
+B weight where
+E 0 -1 1 go_look[O=candle1,R=shelf1,L=loc1,L0=loc2] ; c at(loc2) 1 ; o at(loc1) 1 ; p place_level(high,candle1,shelf1) 1 want(candle1) 1
+E 0 -1 1 go_look[O=candle1,R=shelf1,L=loc1,L0=loc3] ; c at(loc3) 1 ; o at(loc1) 1 ; p place_level(high,candle1,shelf1) 1 want(candle1) 1
+E 0 -1 1 go_look[O=candle1,R=drawer1,L=loc2,L0=loc1] ; c at(loc1) 1 ; o at(loc2) 1 ; p place_level(high,candle1,drawer1) 1 want(candle1) 1
+E 0 -1 1 go_look[O=candle1,R=drawer1,L=loc2,L0=loc3] ; c at(loc3) 1 ; o at(loc2) 1 ; p place_level(high,candle1,drawer1) 1 want(candle1) 1
+E 0 -1 1 go_look[O=candle1,R=cabinet1,L=loc3,L0=loc1] ; c at(loc1) 1 ; o at(loc3) 1 ; p place_level(high,candle1,cabinet1) 1 want(candle1) 1
+E 0 -1 1 go_look[O=candle1,R=cabinet1,L=loc3,L0=loc2] ; c at(loc2) 1 ; o at(loc3) 1 ; p place_level(high,candle1,cabinet1) 1 want(candle1) 1
+E 0 -1 1 go_look[O=apple1,R=shelf1,L=loc1,L0=loc2] ; c at(loc2) 1 ; o at(loc1) 1 ; p place_level(high,apple1,shelf1) 1 want(apple1) 1
+E 0 -1 1 go_look[O=apple1,R=shelf1,L=loc1,L0=loc3] ; c at(loc3) 1 ; o at(loc1) 1 ; p place_level(high,apple1,shelf1) 1 want(apple1) 1
+E 0 -1 1 go_look[O=apple1,R=drawer1,L=loc2,L0=loc1] ; c at(loc1) 1 ; o at(loc2) 1 ; p place_level(high,apple1,drawer1) 1 want(apple1) 1
+E 0 -1 1 go_look[O=apple1,R=drawer1,L=loc2,L0=loc3] ; c at(loc3) 1 ; o at(loc2) 1 ; p place_level(high,apple1,drawer1) 1 want(apple1) 1
+E 0 -1 1 go_look[O=apple1,R=cabinet1,L=loc3,L0=loc1] ; c at(loc1) 1 ; o at(loc3) 1 ; p place_level(high,apple1,cabinet1) 1 want(apple1) 1
+E 0 -1 1 go_look[O=apple1,R=cabinet1,L=loc3,L0=loc2] ; c at(loc2) 1 ; o at(loc3) 1 ; p place_level(high,apple1,cabinet1) 1 want(apple1) 1
+E 0 -1 1 go_look_mid[O=candle1,R=shelf1,L=loc1,L0=loc2] ; c at(loc2) 1 ; o at(loc1) 1 ; p fetch_risk(low) 1 place_level(mid,candle1,shelf1) 1 want(candle1) 1
+E 0 -1 1 go_look_mid[O=candle1,R=shelf1,L=loc1,L0=loc3] ; c at(loc3) 1 ; o at(loc1) 1 ; p fetch_risk(low) 1 place_level(mid,candle1,shelf1) 1 want(candle1) 1
+E 0 -1 1 go_look_mid[O=candle1,R=drawer1,L=loc2,L0=loc1] ; c at(loc1) 1 ; o at(loc2) 1 ; p fetch_risk(low) 1 place_level(mid,candle1,drawer1) 1 want(candle1) 1
+E 0 -1 1 go_look_mid[O=candle1,R=drawer1,L=loc2,L0=loc3] ; c at(loc3) 1 ; o at(loc2) 1 ; p fetch_risk(low) 1 place_level(mid,candle1,drawer1) 1 want(candle1) 1
+E 0 -1 1 go_look_mid[O=candle1,R=cabinet1,L=loc3,L0=loc1] ; c at(loc1) 1 ; o at(loc3) 1 ; p fetch_risk(low) 1 place_level(mid,candle1,cabinet1) 1 want(candle1) 1
+E 0 -1 1 go_look_mid[O=candle1,R=cabinet1,L=loc3,L0=loc2] ; c at(loc2) 1 ; o at(loc3) 1 ; p fetch_risk(low) 1 place_level(mid,candle1,cabinet1) 1 want(candle1) 1
+E 0 -1 1 go_look_mid[O=apple1,R=shelf1,L=loc1,L0=loc2] ; c at(loc2) 1 ; o at(loc1) 1 ; p fetch_risk(low) 1 place_level(mid,apple1,shelf1) 1 want(apple1) 1
+E 0 -1 1 go_look_mid[O=apple1,R=shelf1,L=loc1,L0=loc3] ; c at(loc3) 1 ; o at(loc1) 1 ; p fetch_risk(low) 1 place_level(mid,apple1,shelf1) 1 want(apple1) 1
+E 0 -1 1 go_look_mid[O=apple1,R=drawer1,L=loc2,L0=loc1] ; c at(loc1) 1 ; o at(loc2) 1 ; p fetch_risk(low) 1 place_level(mid,apple1,drawer1) 1 want(apple1) 1
+E 0 -1 1 go_look_mid[O=apple1,R=drawer1,L=loc2,L0=loc3] ; c at(loc3) 1 ; o at(loc2) 1 ; p fetch_risk(low) 1 place_level(mid,apple1,drawer1) 1 want(apple1) 1
+E 0 -1 1 go_look_mid[O=apple1,R=cabinet1,L=loc3,L0=loc1] ; c at(loc1) 1 ; o at(loc3) 1 ; p fetch_risk(low) 1 place_level(mid,apple1,cabinet1) 1 want(apple1) 1
+E 0 -1 1 go_look_mid[O=apple1,R=cabinet1,L=loc3,L0=loc2] ; c at(loc2) 1 ; o at(loc3) 1 ; p fetch_risk(low) 1 place_level(mid,apple1,cabinet1) 1 want(apple1) 1
+I at(loc1) 1 want(candle1) 1
+S 2

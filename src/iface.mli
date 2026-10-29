@@ -14,6 +14,13 @@ val read_yaml : string -> (string * y) list
 val str : y -> string
 val strs : y -> string list
 val pairs : y -> (string * y) list
+
+(* spec/16 amendment 1: the declarations a manifest's levels: block determines and the resolved program lacks
+   (belief levels: type level, the belief's weight port, the level pred); a hand declaration that disagrees, or
+   an evaluate level's missing pred, raises Compile.Lang_error naming the manifest line *)
+val level_decls : string -> Ast.catalog -> Ast.decl list
+val with_levels : ?manifest:string -> Ast.catalog -> Ast.catalog
+val load_program : ?manifest:string -> string -> Ast.catalog
 val norm : string -> string
 val rel : string -> string -> string
 
@@ -23,7 +30,7 @@ type rrule = {
   r_body : (Ast.atom * char) list;
   r_head : Ast.atom list }
 type member = {
-  m_name : string; m_role : string; m_program : string;
+  m_name : string; m_role : string; m_program : string; m_manifest : string;
   m_files : string list; m_includes : (string * string) list;
   m_decl_file : (string * string) list; m_sigs : (string * string list) list;
   m_bwd : string list; m_types : (string * string list) list; m_abstract : string list;

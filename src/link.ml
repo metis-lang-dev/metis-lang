@@ -392,7 +392,7 @@ let run ~wire o comp_path =
         Some (List.filter (( <> ) "") (String.split_on_char '\n' (Image.read_file f)), pk, Image.read_file sf)
       end else None
     | _ -> None in
-  let compile m = try Ok (wire m.m_program) with
+  let compile m = try Ok (wire ~manifest:m.m_manifest m.m_program) with
     | Catalog.Catalog_error ms | Compile.Lang_error ms -> Error (String.concat "; " ms)
     | e -> Error (Printexc.to_string e) in
   let wires = List.map (fun m -> (m.m_name, match cached m with Some w -> Ok w | None -> compile m)) members in
@@ -409,7 +409,7 @@ let run ~wire o comp_path =
           | _ -> None) (yfield m "evaluate") in
       let model_ports = List.concat_map (fun f ->
           try List.filter_map (fun l -> match String.split_on_char ' ' l with
-              | ["B"; k; p] -> Some (k, p) | _ -> None) (let (l, _, _) = wire f in l)
+              | ["B"; k; p] -> Some (k, p) | _ -> None) (let (l, _, _) = wire ~manifest:"" f in l)
           with _ -> []) models in
       let weight p = List.mem ("weight", p) (ports_of m.m_name @ model_ports) in
       List.iter (fun (b, spec) ->
@@ -706,7 +706,8 @@ let run ~wire o comp_path =
 
 (* -- the one-member image (spec/17 §2: a package that runs alone is the one-member composition of itself) ---- *)
 
-let run_package ~(bundle : string -> string list -> string list * string * string) o ?serve ?(extensions = []) pkg_dir =
+let run_package ~(bundle : manifest:string -> string -> string list -> string list * string * string) o ?serve
+    ?(extensions = []) pkg_dir =
   let pkg_dir = norm pkg_dir in
   let name = Filename.basename pkg_dir in
   let man = read_yaml_block (Filename.concat pkg_dir "domain.yaml") in     (* a manifest may be block YAML *)
@@ -719,10 +720,12 @@ let run_package ~(bundle : string -> string list -> string list * string * strin
   let lines = ref [] in
   let line fmt = Printf.ksprintf (fun s -> lines := s :: !lines) fmt in
   let errs = ref [] and warns = ref 0 in
-  let (wl, wkey, side) = try bundle served extensions with
+  let manifest = Filename.concat pkg_dir "domain.yaml" in
+  let (wl, wkey, side) = try bundle ~manifest served extensions with
     | Catalog.Catalog_error ms | Compile.Lang_error ms -> errs := String.concat "; " ms :: !errs; ([], "-", "")
     | e -> errs := Printexc.to_string e :: !errs; ([], "-", "") in
   let ast = Compile.resolve_includes (Parser.parse_file served) (Filename.dirname served) in
+  let ast = try with_levels ~manifest ast with Compile.Lang_error _ -> ast in      (* its error is the bundle's *)
   let source_key = Sha256.hex (Ast.pretty (Ast.strip_locs ast)) in
   (* the host: a manifest's `host:` (a file:symbol beside the package, or a dotted module:symbol); null when its
      file is missing (the loader refuses the member: load-host-missing) or when it declares none *)

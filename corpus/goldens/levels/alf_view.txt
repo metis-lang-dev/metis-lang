@@ -1,0 +1,4 @@
+type level {low mid high}.
+weight where(O,R) reads {inrecep(O,R)}.
+pred place_level(level,object,receptacle) : alf.
+rc 0

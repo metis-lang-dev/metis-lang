@@ -1,0 +1,2 @@
+error: domain.yaml:5: level-names: levels place_level [low mid high] and want_level [no_ yes_] name different levels: one type level is generated; declare both by hand
+rc 1

@@ -1,0 +1,5 @@
+program: ../alf.llp
+beliefs: {inrecep: {port: where, lone: R}, want: {port: wanted}}
+levels:
+  place_level: {from: {belief: where}, at: [0.05, 0.4], names: [low, mid, high]}
+  want_level: {from: {belief: wanted}, at: [0.5], names: [no_, yes_]}

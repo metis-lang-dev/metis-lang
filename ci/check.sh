@@ -405,4 +405,30 @@ rc=0
     || { echo "std: --diagnostics-json on a nowhere include: rc $rc"; cat "$WORK/std/d.txt"; exit 1; }
 echo "STD UNITS 4/4 (a copied metisc: compiled in; the lock's places and keys; L20; the diagnostics' failure)"
 
+echo "== 21. generated level declarations (spec/16 amendment 1): metisc --levels == goldens; the level package builds"
+# corpus/levels: one program (the alfworld_view level of policy-tuning-2 2f, standalone) and a manifest per case:
+# alf_view generates type level, the belief's weight port (its variables the rule's) and the level pred, and agrees
+# with a hand-declared evaluate level (fetch_risk over type risk); the others are the refusals (names that differ,
+# an evaluate level undeclared, a hand pred that disagrees, a belief level over no belief), each naming the
+# manifest line. metispy's metis.lang.levels is held to the same goldens (tests/test_levels_parity.py). Then the
+# package's wire with its manifest == the golden, and it links as a one-member image (the program alone does not
+# compile: its level declarations are the manifest's)
+n_lv=0
+for d in $(cd "$ROOT/corpus/levels" && ls -d */ | tr -d / | sort); do
+  rc=0
+  ( cd "$ROOT/corpus/levels" && "$ROOT/src/metisc" --levels "$d/domain.yaml" ) > "$WORK/lv_$d.txt" 2>&1 || rc=$?
+  echo "rc $rc" >> "$WORK/lv_$d.txt"
+  diff -u "$ROOT/corpus/goldens/levels/$d.txt" "$WORK/lv_$d.txt"
+  n_lv=$((n_lv + 1))
+done
+n_gold=$(ls "$ROOT/corpus/goldens/levels"/*.txt | wc -l)
+[ "$n_lv" -eq "$n_gold" ] || { echo "levels: $n_lv cases, $n_gold goldens"; exit 1; }
+( cd "$ROOT/corpus/levels" && "$ROOT/src/metisc" --wire alf.llp --manifest alf_view/domain.yaml ) \
+    | diff -u "$ROOT/corpus/goldens/levels/alf_view.wire" -
+! ( cd "$ROOT/corpus/levels" && "$ROOT/src/metisc" --wire alf.llp ) > /dev/null 2>&1 \
+    || { echo "levels: alf.llp compiled without its manifest"; exit 1; }
+( cd "$ROOT/corpus/levels" && "$ROOT/src/metisc" --link alf_view -o "$WORK/lvimg" ) | grep -q '^result 0 error' \
+    || { echo "levels: alf_view does not link"; exit 1; }
+echo "LEVELS $n_lv/$n_gold (+ the package's wire, its link)"
+
 echo "ALL GATES GREEN"
