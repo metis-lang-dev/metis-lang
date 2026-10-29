@@ -1,0 +1,5 @@
+% the stop scenes' members and resource (the director unit's abstract domain and resource made concrete)
+catalog stop_types 1.
+provenance text "two members and one resource for the director's stop scenes" "2026-10-29".
+type domain {d1 d2}.
+type resource {r}.

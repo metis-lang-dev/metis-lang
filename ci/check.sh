@@ -436,4 +436,22 @@ n_gold=$(ls "$ROOT/corpus/goldens/levels"/*.txt | wc -l)
     || { echo "levels: --diagnostics-json without the manifest found no undeclared level pred"; exit 1; }
 echo "LEVELS $n_lv/$n_gold (+ the package's wire, its link, its diagnostics with and without the manifest)"
 
+echo "== 22. the director's stop (the standard unit, toolchain-units s-ddaed776): no grant mid-stop, over 10 seeds"
+# corpus/stop: a stop while d2 holds r and d1's ticket waits (stop_waiter), and with nobody waiting (stop_nowaiter).
+# iface/director_tree_domain.llp's stop_release frees r only when no ticket is left (serving at issue): every seed
+# has exactly one stop_release (one revoke); with the waiter, one stop_dequeue and no grant_on_want (before the
+# guard, a sampler's draw granted the waiter mid-stop and revoked it again: seeds 3, 6 and 10 here)
+n_st=0
+for sc in waiter nowaiter; do
+  ( cd "$ROOT/corpus/stop" && "$ROOT/src/metisc" --run "stop_$sc.llp" ) > "$WORK/stop_$sc.txt" 2>&1 \
+      || { echo "stop_$sc: metisc --run failed"; cat "$WORK/stop_$sc.txt"; exit 1; }
+  bad=$(grep '^T ' "$WORK/stop_$sc.txt" | awk -v sc=$sc '{g = 0; r = 0; d = 0
+          for (i = 3; i <= NF; i++) { if ($i ~ /^grant_on_want/) g++; if ($i ~ /^stop_release/) r++; if ($i ~ /^stop_dequeue/) d++ }
+          if (r != 1 || g != 0 || (sc == "waiter" && d != 1) || (sc == "nowaiter" && d != 0)) print $2 }')
+  [ "$(grep -c '^T ' "$WORK/stop_$sc.txt")" = 10 ] && [ -z "$bad" ] \
+      || { echo "stop_$sc: seeds with a grant mid-stop or not one release: ${bad:-the run has no 10 seeds}"; exit 1; }
+  n_st=$((n_st + 10))
+done
+echo "STOP $n_st/20 seeds (one revoke, the waiter passed over, no grant mid-stop)"
+
 echo "ALL GATES GREEN"
