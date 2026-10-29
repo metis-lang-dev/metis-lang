@@ -1,4 +1,5 @@
-% The Overcooked kitchen served under a scripted host (runtime-wire
+% The tick form (tick/kitchen.llp: one action per world turn) of ../kitchen_host.llp, served by
+% metis.domains.kitchen.host:tick_make*. The Overcooked kitchen served under a scripted host (runtime-wire
 % step 1, metis-agent docs/INTEGRATION.md): orders arrive as the env's
 % tick (+pot_space 3), the env executes every fired intent and reads
 % the kitchen back through observe(). Serve it on the wire with
