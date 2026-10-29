@@ -618,3 +618,22 @@ linker or the runtime, never patched into source text by a tool outside the tool
   the rest of the program.
 - The loop's driver generation (metis-loop 2g) is removed once both toolchains do it; the skill's
   LEVEL_EXAMPLE shows the yaml alone.
+
+### Amendment 1, as built (toolchain-units s-ddaed776 step 2; the architect's rulings A and B)
+
+**(A)** The toolchain generates declarations for belief levels only, in the belief pred's namespace: `type level
+{names}`, unless a type `level` exists; the belief's weight port `weight PORT(V..) reads {PRED(V..)}` when the
+program lacks it, its variables named as the first rule reading `$NAME(_, V..)` names them, else by the types'
+initials with the one/lone formal last; and `pred NAME(level, <the belief pred's types>)`. An evaluate level's pred
+stays hand-declared, because nothing in the manifest fixes its namespace; a missing one is the build error
+`level-undeclared`, naming the manifest line.
+
+**(B)** A hand declaration agrees structurally: the level pred's first argument's type has exactly the manifest's
+`names`, in order, and its remaining arguments are the belief pred's types (none for an evaluate level); the type
+need not be named `level`. Build errors, each naming the manifest line: `level-mismatch` (a hand declaration that
+disagrees), `level-type` (a type `level` with other constants), `level-names` (two belief levels with different
+`names` lists).
+
+Not covered, by design: a file-only compile (`--run`, `--diagnostics`, a REPL opened without a manifest) has no
+manifest to generate from and compiles the source as written; the instrument keeps its own `level-type` refusal
+and falls back to the source as written on a disagreement.
