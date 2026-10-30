@@ -16,6 +16,8 @@ mature_status(a1).
 mature_status(a2).
 mature_status(a3).
 #init tick__stop 1
+#init nocommit(d1) 1
+#init nocommit(d2) 1
 #init holder(d2, r) 1
 #init held(d2, a1) 1
 #init serving(r, t1) 1

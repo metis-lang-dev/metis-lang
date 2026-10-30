@@ -1,0 +1,30 @@
+% stop_yield_nostop — the committed action (spec/15 amendment 9, wc-member s-4fe6cfd6): a yield with no stop: d2's action is no longer atomic and it keeps r.
+% Gate 22: one commit_off and no revoke on every seed.
+catalog stop_yield_nostop 1.
+provenance text "the director's stop and a committed action" "2026-10-30".
+include "iface/director_tree_domain.llp".
+include "types.llp".
+type kind {none}.
+bwd specialist(domain).
+specialist(d1).
+specialist(d2).
+young_grant(a0).
+young_grant(a1).
+mature_grant(a2).
+mature_grant(a3).
+mature_status(a1).
+mature_status(a2).
+mature_status(a3).
+#init tick__yield(d2, r) 1
+#init commit(d2, r) 1
+#init nocommit(d1) 1
+#init holder(d2, r) 1
+#init held(d2, a1) 1
+#init serving(r, t1) 1
+#init issue(r, t1) 1
+#init offpath(d1) 1
+#init offpath(d2) 1
+#init age_of(d1, a0) 1
+#init age_of(d2, a0) 1
+#steps 20
+#seeds 10

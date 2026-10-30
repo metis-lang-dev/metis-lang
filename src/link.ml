@@ -163,7 +163,7 @@ let director_llp ?types name d =
          | None -> [])
      @ List.map (fun (r, n) -> Printf.sprintf "#init free(%s) %d" r n) d.resources
      @ List.map (Printf.sprintf "#init offpath(%s) 1") off @ List.map (Printf.sprintf "#init nowant(%s) 1") off
-     @ List.map (Printf.sprintf "#init nolate(%s) 1") off
+     @ List.map (Printf.sprintf "#init nolate(%s) 1") off @ List.map (Printf.sprintf "#init nocommit(%s) 1") off
      @ List.map (fun m -> Printf.sprintf "#init age_of(%s, a0) 1" m) (d.dspecs @ Option.to_list d.planner)
      @ List.map (fun (r, _) -> Printf.sprintf "#init issue(%s, t0) 1" r) d.resources
      @ List.map (fun (r, _) -> Printf.sprintf "#init serving(%s, t0) 1" r) d.resources
@@ -176,7 +176,7 @@ let director_manifest name d =
      "clock: {beats: 1}";
      "voice: line";
      "shared: {tick__want: in, tick__release: in, tick__status: in, tick__active: in, tick__done: in, tick__stuck: in, \
-      tick__grant: out, tick__revoke: out, tick__goal: out, tick__cancel: out, tick__stop: in}";
+      tick__committed: in, tick__yield: in, tick__grant: out, tick__revoke: out, tick__goal: out, tick__cancel: out, tick__stop: in}";
      Printf.sprintf "resources: {%s}"
        (String.concat ", " (List.map (fun (r, n) -> Printf.sprintf "%s: {count: %d, free: free, held_by: [holder]}" r n)
                               d.resources))] ^ "\n"

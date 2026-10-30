@@ -29,6 +29,8 @@ mature_status(a3).
 #init nowant(cook_b) 1
 #init nolate(cook_a) 1
 #init nolate(cook_b) 1
+#init nocommit(cook_a) 1
+#init nocommit(cook_b) 1
 #init age_of(cook_a, a0) 1
 #init age_of(cook_b, a0) 1
 #init issue(pot, t0) 1

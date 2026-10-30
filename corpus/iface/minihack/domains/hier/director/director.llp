@@ -58,6 +58,8 @@ priority(act, nav).
 #init nowant(act) 1
 #init nolate(nav) 1
 #init nolate(act) 1
+#init nocommit(nav) 1
+#init nocommit(act) 1
 #init age_of(nav,a0) 1
 #init age_of(act,a0) 1
 #init age_of(task,a0) 1

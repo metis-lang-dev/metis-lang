@@ -1,18 +1,19 @@
 interface composition.yaml
-iface protocol_domain std:iface/protocol_domain.llp 78116a6c02a8584a595dd1d4d9bc465613a68eb1d62785e3791d75fa4cacbc60
+iface protocol_domain std:iface/protocol_domain.llp 2daa98a645e282c6b66c75a4056f8da9e2de533543fd7ce2d1666cb6bdf336c0
 capacity tick_types.llp 66932e47355b7b6253a7a01146e9314b3bebd3b737025cfc0dbe3fdad964235a
-member pot_director direct pot_director/pot_director.llp key 7148206b511338197b2eda2917cce38fc5d0debea282a4fcc849d8b11156a5ed ei 5147c404324c5a2b630ec56770b814a07cdb12821a319ed45fb1046f0fae278a
-member cook_a specialist cook_a/cook_a.llp key 16512e909319140bb9c94ccdb676a55066ce2ab442dbc92158095473a1e4417b ei 63e2c572773cdc4e710a9416df917c7f3312f2a79614f2ba242c57dd0b90225f
-member cook_b specialist cook_b/cook_b.llp key cabc1349806ff30a7fd0cf0aca1bf75b300c75d459f43cf4eaf6738fddffbbab ei 6610840b29a428c96909c65139e48be8599a82fb75ffb51d123b88241e044e07
-package b09bbb73aef58ae529c74174da60898afb0a2d170c9e9c34fe13773b81d62ec7
-include std iface/director_tree_domain.llp std:iface/director_tree_domain.llp key 9313c63031c264fc328271e225ae57546a949c6e920a60d899ece733a8a94609 by pot_director
-include dir protocol_domain.llp std:iface/protocol_domain.llp key d88e6c824b6bbb0534fef47148e8904553e97071670ce2e7e2e14edc267d7e69 by pot_director cook_a cook_b
+member pot_director direct pot_director/pot_director.llp key a06b2f764b57dfd44441e9f44f3d2c7e82aa598025d18df8084ebf09c276d011 ei 2da8130d189e5a4ffc2e0262e28735ae9ff73b988c6af5f34ea5d233031eb30e
+member cook_a specialist cook_a/cook_a.llp key 754c51fa4b4dee55f890304c47989f48fd824b6bccc5237e33fa13f7d4f05d96 ei c49cbb7bc5f2fdac3b923e6a425f2eca52266a7eb95ab923fc7ec9138fa61a0a
+member cook_b specialist cook_b/cook_b.llp key 8a7e16e6456b9a47d10bc39c9f158f5cca4a7da756b0c7814cdd8ff6c59d6279 ei 435e27e586118c9d3bb6598c4baa277ae6bdd9ac5d05c8ad0e629ab58e3e9f2c
+package 416ef4c7731791bd9a750f9ade5e07d3b73c36d214d2320a1fafa469cd69ddd9
+include std iface/director_tree_domain.llp std:iface/director_tree_domain.llp key d3dcbb7688468f2be8fc1a8523fd19e7e3f67c54e8a8a6dc95348b69a210cdf6 by pot_director
+include dir protocol_domain.llp std:iface/protocol_domain.llp key e6fa80212a6bb2dde7e0a8028d9a723630410578ba1dd232f1c7334cb8671007 by pot_director cook_a cook_b
 include dir ../tick_types.llp tick_types.llp key 66932e47355b7b6253a7a01146e9314b3bebd3b737025cfc0dbe3fdad964235a by pot_director cook_a cook_b
 include dir ../cook_domain.llp cook_domain.llp key eedf2b31851854c24e0aae928ca74bbaa7a0046fb2adad5a7606352ff9d5f94e by cook_a cook_b
-cut 12
+cut 14
   pot resource: out [] in [] resource [cook_a cook_b]
   tick__active signal: out [cook_a(o) cook_b(o)] in [pot_director(c)]
   tick__cancel signal: out [pot_director(o)] in [cook_a(c) cook_b(c)]
+  tick__committed signal: out [] in [pot_director(c)]
   tick__done signal: out [cook_a(o) cook_b(o)] in [pot_director(c)]
   tick__goal state: out [pot_director(co)] in []
   tick__grant signal: out [pot_director(o)] in [cook_a(cr) cook_b(cr)]
@@ -22,12 +23,15 @@ cut 12
   tick__stop reading: out [world] in [pot_director(r)]
   tick__stuck signal: out [] in [pot_director(c)]
   tick__want signal: out [cook_a(o) cook_b(o)] in [pot_director(c)]
-private pot_director=18 cook_a=11 cook_b=11
+  tick__yield signal: out [] in [pot_director(c)]
+private pot_director=22 cook_a=11 cook_b=11
 warning I2 pot_director: in tick__status is read by no rule (in-unread)
 warning I3 pot_director: in tick__stuck is a report nobody sends
+warning I3 pot_director: in tick__committed is a report nobody sends
+warning I3 pot_director: in tick__yield is a report nobody sends
 warning I4 pot_director: rule stop_cancel withdraws its own out tick__goal (a level the direct member may withdraw)
 warning I4 pot_director: rule path_pop withdraws its own out tick__goal (a level the direct member may withdraw)
 note I3 pot_director: in tick__status is produced only by the host's status assertion (amendment 1b) (transitional)
 note I8 cook_domain.llp, a lifted domain shared by cook_a, cook_b
-result 0 error(s), 4 warning(s), 2 note(s)
+result 0 error(s), 6 warning(s), 2 note(s)
 rc 0

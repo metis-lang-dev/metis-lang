@@ -1,6 +1,6 @@
 warning L21 cook_a's host cook_host.py:make: no file beside it (the runtime that loads it must have it)
 link cook_a (one member)
-member cook_a package wire 52e1ff7ceb4edd32b4e3ad391cdc663bc0bbb907b28aa0799af4040b53247b0a bundle 45d2dce1f9cc source 16512e909319140bb9c94ccdb676a55066ce2ab442dbc92158095473a1e4417b
-image cook_a v-c1d29980209b
+member cook_a package wire 52e1ff7ceb4edd32b4e3ad391cdc663bc0bbb907b28aa0799af4040b53247b0a bundle ae5c3bbbaa02 source 754c51fa4b4dee55f890304c47989f48fd824b6bccc5237e33fa13f7d4f05d96
+image cook_a v-767e80a21087
 result 0 error(s), 1 warning(s)
 rc 0

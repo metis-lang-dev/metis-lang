@@ -1092,3 +1092,46 @@ resource to the stopped waiter and revoked it again in the same tick. The race p
 amendment 4), which only moved it between seeds. Gate 22 STOP (corpus/stop, seeds 1–10) holds the unit to
 exactly one revoke and one dequeue per stopped waiter, and to an immediate free when no waiter exists. The
 unit's key moved with this; every image that includes it was regenerated with the reason.
+
+## Amendment 9 (2026-10-30, wc-member s-4fe6cfd6; the wheelchair DESIGN amendment 4 item 4): the committed action
+
+A person's stop revokes a holder at once (amendment 7). A wheelchair in a crossing is the case that must not happen
+to: the safe act is to clear the crossing, so a holder may declare its action atomic.
+
+- **Two reports**, nature `report`, member `out`, director `in`:
+  - `tick__committed(D, R)`: D's action on R is atomic from its next command on. A member reports it the beat BEFORE
+    its first atomic command. It may repeat it (`commit_more` absorbs it).
+  - `tick__yield(D, R)`: the atomic action is over.
+- **The stop.** In the standard unit `iface/director_tree_domain.llp`, `stop_release` reads `$nocommit(D)`:
+
+  ```
+  stop_committed [dyn] : $tick__stop * commit(D, R) * $holder(D, R) -o owing(D, R).
+  yield_owing    [dyn] : tick__yield(D, R) * owing(D, R) -o nocommit(D) * owed(D, R).
+  owed_release   [dyn] : owed(D, R) * holder(D, R) * held(D, A) -o free(R) * tick__revoke(D, R).
+  ```
+
+  - `stop_cancel` is unchanged: the goal is cancelled at once and D leaves the path. So a committed member's action
+    must not depend on its goal: `cancel_K` gives back `idle`, and the commitment runs on.
+  - The revoke is the director's on the yield. The member need not also report `tick__release`, and the stop's
+    latency to the revoke is the action's length.
+  - Tickets are passed over at the stop's tick as ever. A request made after it queues normally, and
+    `owed_release` frees R for it with no guard on the queue: no stop is in progress by then.
+- **`preempt` is unchanged.** It does not read the commitment: the responder's preemption beats a committed holder.
+  The preempted member's `commit` stays until it yields. It takes a new ticket as ever. If a stop had come first, what is
+  `owed` is taken when it next holds R, or by the next stop (`owed_drop`).
+- **`release_stuck` is unchanged**: stuck frees R at once. A stuck member still yields.
+- **The complement.** The language has no negation, so `nocommit(D)` is `commit`'s complement, one per member in the
+  director's start beside `nolate(D)`. `metisc --link` generates it; a hand-written director states it. A director
+  that omits it never releases on a stop, and gate 22's unchanged `stop_waiter` and `stop_nowaiter` hold the start
+  to it.
+- **One beat.** A `tick__committed` and a `tick__stop` in one director beat are ordered by the sampler. Both orders are
+  consistent: the stop first revokes D, which has not begun its atomic command (the report precedes it), and the
+  leftover `commit(D, R)` goes with its yield; the commit first defers the revoke.
+- **A composition that sends neither report** behaves as before, with the one change the listing shows: two I3
+  warnings, "a report nobody sends", as for `tick__stuck`.
+
+Gate 22 adds five scenes over 10 seeds each (corpus/stop): the stop on a committed holder with a waiter, the yield
+after a stop, a yield with no stop, the preemption, and the one beat. The unit's and the protocol's keys moved; the
+iface, link, plans and package goldens and the sidecars were regenerated, and every image that includes the unit
+moves with the reason "spec/15 amendment 9". metispy's vendored copy is byte-equal, and it runs the same scenes
+(tests/catalog/test_stop_committed.py).

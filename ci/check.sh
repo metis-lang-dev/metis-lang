@@ -452,7 +452,27 @@ for sc in waiter nowaiter; do
       || { echo "stop_$sc: seeds with a grant mid-stop or not one release: ${bad:-the run has no 10 seeds}"; exit 1; }
   n_st=$((n_st + 10))
 done
-echo "STOP $n_st/20 seeds (one revoke, the waiter passed over, no grant mid-stop)"
+# the committed action (spec/15 amendment 9): the counts per seed, by scene: a stop leaves a committed holder alone and
+# passes the waiter over; a yield after it revokes and serves the next; a yield with no stop keeps r; preemption beats
+# it; a commit and a stop in one beat are one or the other, never both
+for sc in committed yield yield_nostop preempt race; do
+  ( cd "$ROOT/corpus/stop" && "$ROOT/src/metisc" --run "stop_$sc.llp" ) > "$WORK/stop_$sc.txt" 2>&1 \
+      || { echo "stop_$sc: metisc --run failed"; cat "$WORK/stop_$sc.txt"; exit 1; }
+  bad=$(grep '^T ' "$WORK/stop_$sc.txt" | awk -v sc=$sc 'function n(r,   i, c) { c = 0
+          for (i = 3; i <= NF; i++) if (index($i, r "[") == 1) c++
+          return c }
+        { ok = 0
+          if (sc == "committed") ok = n("stop_committed") == 1 && n("stop_dequeue") == 1 && n("stop_release") == 0 && n("grant_on_want") == 0
+          if (sc == "yield") ok = n("yield_owing") == 1 && n("owed_release") == 1 && n("grant_on_want") == 1 && n("stop_release") == 0
+          if (sc == "yield_nostop") ok = n("commit_off") == 1 && n("owed_release") == 0 && n("yield_owing") == 0
+          if (sc == "preempt") ok = n("preempt") == 1
+          if (sc == "race") ok = (n("stop_release") == 1 && n("stop_committed") == 0) || (n("stop_release") == 0 && n("commit_on") == 1 && n("stop_committed") == 1)
+          if (!ok) print $2 }')
+  [ "$(grep -c '^T ' "$WORK/stop_$sc.txt")" = 10 ] && [ -z "$bad" ] \
+      || { echo "stop_$sc: seeds off its counts: ${bad:-the run has no 10 seeds}"; sed -n 1,4p "$WORK/stop_$sc.txt"; exit 1; }
+  n_st=$((n_st + 10))
+done
+echo "STOP $n_st/70 seeds (one revoke, the waiter passed over, no grant mid-stop; the committed action's five scenes)"
 
 echo "== 23. the grounding budget (metispy's METIS_GROUND_BUDGET, the sw-s2 OOM): unset as before; set, refused with the rule's words"
 # corpus/budget: take reads a pair of terms nothing else binds, 2 x 40 x 40 = 3200 events. Unset, and at 3200, it

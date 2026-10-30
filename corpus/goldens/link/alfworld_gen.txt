@@ -1,10 +1,10 @@
 link composition_gen.yaml
-member tree_director direct wire acab811f86d0e980a2d1c8672bb9a1ae54bb5352fb16e4ed61b5bd692086f069 bundle ede8554f5391 source 2161a9758a766c984b889331a33a76ca4a4b2bfbcd7ff4d990a4b3669c4fe796
-member task specialist wire f50f43baa3251a6e7ef00296f2414916e6e31c6df943631d2c407c1a542668df bundle e938a82ba778 source 8b3fc718e11de437bb56863d00e8fcc694871025ddf94810a18001835a39bbc0
-member nav specialist wire b701153fb5f85c771e4f012612964d0a96d7a4ad8ca109bf5ce982be6ea1ad25 bundle c697884e34e9 source 340f5107a10587f08dee5660e04cc44784b86dc814eddc46e8ee3322cbf5e9fd
-member access specialist wire dcdd287fc221140c3d97959efd15b4f46bb4a7231a91f458e982952c272260a0 bundle 2c949a7626d0 source 23eb9605ede1389d8df26fe9f261bf856c5d9dd6c97a7105093e129c900d600c
-member grasp specialist wire b3f97c36ac7e61a352ce41ba0bb1f60e1d7cba855a81b524fc9403d05383b9ec bundle 13ebce4f5d6c source e7b64d6b20ce76f39a58efa1bb63c38d1ca63507939bf9241da451f00ed89818
-member place specialist wire e0c70f04079d82752663b4088280bf372da5bccbcbe2d1438a07148557465acd bundle c97e0b9ccb0f source 697508945b6127d6bf28a262a804e8047332a018b19bbb2a0e6b807b547b8169
+member tree_director direct wire 9c95e8a43b2ae7a0d61ccdfa858590649add1599b5d25797e0f2cfc3e6c4cd9c bundle 7ae695eb0322 source 7b49a00525ca2e8851f8099199af6902d2c76eca18f57638a3867ab66b183e5c
+member task specialist wire f50f43baa3251a6e7ef00296f2414916e6e31c6df943631d2c407c1a542668df bundle 22b5cc4b999d source ab342a39fc010fbe16dd29bdd1ea414556abf275e5c1b454e30865e840d39409
+member nav specialist wire b701153fb5f85c771e4f012612964d0a96d7a4ad8ca109bf5ce982be6ea1ad25 bundle 00df0b529422 source fcfddc0567c427803f83386a6e5c0510b8ae2760beeb69a941f41665bcebe50f
+member access specialist wire dcdd287fc221140c3d97959efd15b4f46bb4a7231a91f458e982952c272260a0 bundle 29abdb8b9fc6 source 64c98d21084ab5175a11e5f73d8d45114193b602792305223f493b8fce4c3ace
+member grasp specialist wire b3f97c36ac7e61a352ce41ba0bb1f60e1d7cba855a81b524fc9403d05383b9ec bundle 73d131f05cce source 46b55f2d771fb04e8483e9191890624bd2d183a9677c0c52016345e600d1d376
+member place specialist wire e0c70f04079d82752663b4088280bf372da5bccbcbe2d1438a07148557465acd bundle bcc1980c401d source 2d2c6d140ccaec9843784216644a049f4e073626ded0a3bd8cc2b8ac36f26b99
 director tree_director generated planner task kinds accessible done elsewhere fetch goto open placed put reached refused refused_put refused_take stuck take taken wrong_dest wrong_object
   specialist(nav).
   specialist(access).
@@ -41,7 +41,7 @@ warning L21 nav's host alf_host.py:make: no file alf_host.py beside it (the runt
 warning L21 access's host alf_host.py:make: no file alf_host.py beside it (the runtime that loads it must have it)
 warning L21 grasp's host alf_host.py:make: no file alf_host.py beside it (the runtime that loads it must have it)
 warning L21 place's host alf_host.py:make: no file alf_host.py beside it (the runtime that loads it must have it)
-interface 0 error(s), 7 warning(s)
-image alfworld_hier_gen v-b3958d5a3606
-result 0 error(s), 13 warning(s)
+interface 0 error(s), 9 warning(s)
+image alfworld_hier_gen v-01c5d8b3b855
+result 0 error(s), 15 warning(s)
 rc 0

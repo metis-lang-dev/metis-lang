@@ -1,20 +1,21 @@
 interface composition.yaml
-iface protocol_domain std:iface/protocol_domain.llp 78116a6c02a8584a595dd1d4d9bc465613a68eb1d62785e3791d75fa4cacbc60
+iface protocol_domain std:iface/protocol_domain.llp 2daa98a645e282c6b66c75a4056f8da9e2de533543fd7ce2d1666cb6bdf336c0
 capacity capacity.llp 6232ccc8de928a9f3dfdb56e96d6d52b6b6cf74b9435d4b5e436d9e3f30a668e
-member road_director direct road_director/road_director.llp key c52d9475d9e55e32be9717c73c9ea6c0226d312538f7655dbde785cb4f95efd5 ei 8d288e9f3937a53856f0871497cba548d9d8a8958e914e6bc17cdd29529d8fc3
-member responder specialist responder/responder.llp key fbd7f0d4fbc12879be0349c68d700cfdca8f39987a3b30fdb12ab0ff1455581e ei 2b163dd9f3fefb7ba35421a936bc124a869df008843b00e93210e62386a66151
-member planner specialist planner/planner.llp key 853637a8183bdc34067460b0d6437c157863f1f8ce3afb6e5706f1007c87cfbc ei b293e990fa7073f615ed4eed170c56ec585c2bd06083d7829980a4b7f39e4760
-package 48a8f859cd16dd2110e041b0e382e6d7c280eaf1d4b0d89db4f03fa1d3e9f3e2
-include std iface/director_tree_domain.llp std:iface/director_tree_domain.llp key 9313c63031c264fc328271e225ae57546a949c6e920a60d899ece733a8a94609 by road_director
-include dir protocol_domain.llp std:iface/protocol_domain.llp key d88e6c824b6bbb0534fef47148e8904553e97071670ce2e7e2e14edc267d7e69 by road_director responder planner
+member road_director direct road_director/road_director.llp key 5ff4f676e266735bc286db12e181a30fac4c429a498a2423be5c1c3f2a906696 ei 68aec18de3a79a354754f00e516f8444a1530c0c306946b2b2a4d9937327cfc8
+member responder specialist responder/responder.llp key a0a590fbb3a943feb367294a774c47f93ae1901796a68c9a028a865121732497 ei 4292c4ea1cd67316c672e6f5ec455bc53f781f048d073556c91d75e332134677
+member planner specialist planner/planner.llp key 8b2a792b0d20f0f916332640ea8ed8b4cdf1b36f2b5bbdf13ddb4411702748b0 ei 02aa4d84afb616623b6a5e4f162169c09b60019ba26206c5c2b41576d96e9a32
+package a786917b11a8aeac2f3674c6f0fc7b5ee4fe7771e4eb2bef6e2e6af2413ad9dc
+include std iface/director_tree_domain.llp std:iface/director_tree_domain.llp key d3dcbb7688468f2be8fc1a8523fd19e7e3f67c54e8a8a6dc95348b69a210cdf6 by road_director
+include dir protocol_domain.llp std:iface/protocol_domain.llp key e6fa80212a6bb2dde7e0a8028d9a723630410578ba1dd232f1c7334cb8671007 by road_director responder planner
 include dir ../tick_types.llp tick_types.llp key 283e03eaa1ae0d17d74b445b7238bd0f5dda1bd04837dd16f0e7e39a56b69511 by road_director responder planner
 include dir ../responder_domain.llp responder_domain.llp key 75900981adf53c05bcf7b027485000d3cb35207345c65724b25908029dd89733 by responder
 include dir ../capacity.llp capacity.llp key 6232ccc8de928a9f3dfdb56e96d6d52b6b6cf74b9435d4b5e436d9e3f30a668e by responder planner
 include dir ../planner_domain.llp planner_domain.llp key d02364d0483a3ba0616d857d3b80a754df276a9edf263c30d9af6fd078395511 by planner
-cut 12
+cut 14
   controls resource: out [] in [] resource [responder planner]
   tick__active signal: out [responder(o) planner(o)] in [road_director(c)]
   tick__cancel signal: out [road_director(o)] in [responder(c) planner(c)]
+  tick__committed signal: out [] in [road_director(c)]
   tick__done signal: out [responder(o) planner(o)] in [road_director(c)]
   tick__goal state: out [road_director(co)] in []
   tick__grant reading: out [road_director(o)] in [responder(r) planner(r)]
@@ -24,11 +25,14 @@ cut 12
   tick__stop reading: out [world] in [road_director(r)]
   tick__stuck signal: out [] in [road_director(c)]
   tick__want signal: out [responder(o) planner(o)] in [road_director(c)]
-private road_director=18 responder=21 planner=32
+  tick__yield signal: out [] in [road_director(c)]
+private road_director=22 responder=21 planner=32
 warning I2 road_director: in tick__status is read by no rule (in-unread)
 warning I3 road_director: in tick__stuck is a report nobody sends
+warning I3 road_director: in tick__committed is a report nobody sends
+warning I3 road_director: in tick__yield is a report nobody sends
 warning I4 road_director: rule stop_cancel withdraws its own out tick__goal (a level the direct member may withdraw)
 warning I4 road_director: rule path_pop withdraws its own out tick__goal (a level the direct member may withdraw)
 note I3 road_director: in tick__status is produced only by the host's status assertion (amendment 1b) (transitional)
-result 0 error(s), 4 warning(s), 1 note(s)
+result 0 error(s), 6 warning(s), 1 note(s)
 rc 0

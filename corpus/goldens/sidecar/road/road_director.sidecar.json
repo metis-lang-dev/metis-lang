@@ -1,7 +1,7 @@
 {
  "format": "metis-sidecar/1",
  "catalog": "road_director",
- "key": "299b7e50063dd424ca6deb8d6286321e40a09dc70c2d3d2c0d01b41b9de08ce8",
+ "key": "13466d9b61b0f9ddff1134b8744d8cb5341f835772a58cd067d9def0fed28dd2",
  "extensions": [],
  "init": {
   "free(controls)": 1,
@@ -11,6 +11,8 @@
   "nowant(planner)": 1,
   "nolate(responder)": 1,
   "nolate(planner)": 1,
+  "nocommit(responder)": 1,
+  "nocommit(planner)": 1,
   "age_of(responder,a0)": 1,
   "age_of(planner,a0)": 1,
   "issue(controls,t0)": 1,
@@ -23,7 +25,7 @@
  "events": [
   {
    "i": 0,
-   "canon": 373,
+   "canon": 385,
    "name": "want_queue[D=responder,R=controls,T=t0,T2=t1]",
    "rule": "want_queue",
    "kind": "clause",
@@ -32,7 +34,7 @@
   },
   {
    "i": 1,
-   "canon": 375,
+   "canon": 387,
    "name": "want_queue[D=responder,R=controls,T=t1,T2=t2]",
    "rule": "want_queue",
    "kind": "clause",
@@ -41,7 +43,7 @@
   },
   {
    "i": 2,
-   "canon": 377,
+   "canon": 389,
    "name": "want_queue[D=responder,R=controls,T=t2,T2=t3]",
    "rule": "want_queue",
    "kind": "clause",
@@ -50,7 +52,7 @@
   },
   {
    "i": 3,
-   "canon": 379,
+   "canon": 391,
    "name": "want_queue[D=responder,R=controls,T=t3,T2=t4]",
    "rule": "want_queue",
    "kind": "clause",
@@ -59,7 +61,7 @@
   },
   {
    "i": 4,
-   "canon": 381,
+   "canon": 393,
    "name": "want_queue[D=responder,R=controls,T=t4,T2=t5]",
    "rule": "want_queue",
    "kind": "clause",
@@ -68,7 +70,7 @@
   },
   {
    "i": 5,
-   "canon": 383,
+   "canon": 395,
    "name": "want_queue[D=responder,R=controls,T=t5,T2=t6]",
    "rule": "want_queue",
    "kind": "clause",
@@ -77,7 +79,7 @@
   },
   {
    "i": 6,
-   "canon": 385,
+   "canon": 397,
    "name": "want_queue[D=responder,R=controls,T=t6,T2=t7]",
    "rule": "want_queue",
    "kind": "clause",
@@ -86,7 +88,7 @@
   },
   {
    "i": 7,
-   "canon": 387,
+   "canon": 399,
    "name": "want_queue[D=responder,R=controls,T=t7,T2=t0]",
    "rule": "want_queue",
    "kind": "clause",
@@ -95,7 +97,7 @@
   },
   {
    "i": 8,
-   "canon": 372,
+   "canon": 384,
    "name": "want_queue[D=planner,R=controls,T=t0,T2=t1]",
    "rule": "want_queue",
    "kind": "clause",
@@ -104,7 +106,7 @@
   },
   {
    "i": 9,
-   "canon": 374,
+   "canon": 386,
    "name": "want_queue[D=planner,R=controls,T=t1,T2=t2]",
    "rule": "want_queue",
    "kind": "clause",
@@ -113,7 +115,7 @@
   },
   {
    "i": 10,
-   "canon": 376,
+   "canon": 388,
    "name": "want_queue[D=planner,R=controls,T=t2,T2=t3]",
    "rule": "want_queue",
    "kind": "clause",
@@ -122,7 +124,7 @@
   },
   {
    "i": 11,
-   "canon": 378,
+   "canon": 390,
    "name": "want_queue[D=planner,R=controls,T=t3,T2=t4]",
    "rule": "want_queue",
    "kind": "clause",
@@ -131,7 +133,7 @@
   },
   {
    "i": 12,
-   "canon": 380,
+   "canon": 392,
    "name": "want_queue[D=planner,R=controls,T=t4,T2=t5]",
    "rule": "want_queue",
    "kind": "clause",
@@ -140,7 +142,7 @@
   },
   {
    "i": 13,
-   "canon": 382,
+   "canon": 394,
    "name": "want_queue[D=planner,R=controls,T=t5,T2=t6]",
    "rule": "want_queue",
    "kind": "clause",
@@ -149,7 +151,7 @@
   },
   {
    "i": 14,
-   "canon": 384,
+   "canon": 396,
    "name": "want_queue[D=planner,R=controls,T=t6,T2=t7]",
    "rule": "want_queue",
    "kind": "clause",
@@ -158,7 +160,7 @@
   },
   {
    "i": 15,
-   "canon": 386,
+   "canon": 398,
    "name": "want_queue[D=planner,R=controls,T=t7,T2=t0]",
    "rule": "want_queue",
    "kind": "clause",
@@ -167,7 +169,7 @@
   },
   {
    "i": 16,
-   "canon": 22,
+   "canon": 26,
    "name": "grant_on_want[D=responder,R=controls,T=t0,T2=t1]",
    "rule": "grant_on_want",
    "kind": "clause",
@@ -176,7 +178,7 @@
   },
   {
    "i": 17,
-   "canon": 23,
+   "canon": 27,
    "name": "grant_on_want[D=responder,R=controls,T=t1,T2=t2]",
    "rule": "grant_on_want",
    "kind": "clause",
@@ -185,7 +187,7 @@
   },
   {
    "i": 18,
-   "canon": 24,
+   "canon": 28,
    "name": "grant_on_want[D=responder,R=controls,T=t2,T2=t3]",
    "rule": "grant_on_want",
    "kind": "clause",
@@ -194,7 +196,7 @@
   },
   {
    "i": 19,
-   "canon": 25,
+   "canon": 29,
    "name": "grant_on_want[D=responder,R=controls,T=t3,T2=t4]",
    "rule": "grant_on_want",
    "kind": "clause",
@@ -203,7 +205,7 @@
   },
   {
    "i": 20,
-   "canon": 26,
+   "canon": 30,
    "name": "grant_on_want[D=responder,R=controls,T=t4,T2=t5]",
    "rule": "grant_on_want",
    "kind": "clause",
@@ -212,7 +214,7 @@
   },
   {
    "i": 21,
-   "canon": 27,
+   "canon": 31,
    "name": "grant_on_want[D=responder,R=controls,T=t5,T2=t6]",
    "rule": "grant_on_want",
    "kind": "clause",
@@ -221,7 +223,7 @@
   },
   {
    "i": 22,
-   "canon": 28,
+   "canon": 32,
    "name": "grant_on_want[D=responder,R=controls,T=t6,T2=t7]",
    "rule": "grant_on_want",
    "kind": "clause",
@@ -230,7 +232,7 @@
   },
   {
    "i": 23,
-   "canon": 29,
+   "canon": 33,
    "name": "grant_on_want[D=responder,R=controls,T=t7,T2=t0]",
    "rule": "grant_on_want",
    "kind": "clause",
@@ -239,7 +241,7 @@
   },
   {
    "i": 24,
-   "canon": 14,
+   "canon": 18,
    "name": "grant_on_want[D=planner,R=controls,T=t0,T2=t1]",
    "rule": "grant_on_want",
    "kind": "clause",
@@ -248,7 +250,7 @@
   },
   {
    "i": 25,
-   "canon": 15,
+   "canon": 19,
    "name": "grant_on_want[D=planner,R=controls,T=t1,T2=t2]",
    "rule": "grant_on_want",
    "kind": "clause",
@@ -257,7 +259,7 @@
   },
   {
    "i": 26,
-   "canon": 16,
+   "canon": 20,
    "name": "grant_on_want[D=planner,R=controls,T=t2,T2=t3]",
    "rule": "grant_on_want",
    "kind": "clause",
@@ -266,7 +268,7 @@
   },
   {
    "i": 27,
-   "canon": 17,
+   "canon": 21,
    "name": "grant_on_want[D=planner,R=controls,T=t3,T2=t4]",
    "rule": "grant_on_want",
    "kind": "clause",
@@ -275,7 +277,7 @@
   },
   {
    "i": 28,
-   "canon": 18,
+   "canon": 22,
    "name": "grant_on_want[D=planner,R=controls,T=t4,T2=t5]",
    "rule": "grant_on_want",
    "kind": "clause",
@@ -284,7 +286,7 @@
   },
   {
    "i": 29,
-   "canon": 19,
+   "canon": 23,
    "name": "grant_on_want[D=planner,R=controls,T=t5,T2=t6]",
    "rule": "grant_on_want",
    "kind": "clause",
@@ -293,7 +295,7 @@
   },
   {
    "i": 30,
-   "canon": 20,
+   "canon": 24,
    "name": "grant_on_want[D=planner,R=controls,T=t6,T2=t7]",
    "rule": "grant_on_want",
    "kind": "clause",
@@ -302,7 +304,7 @@
   },
   {
    "i": 31,
-   "canon": 21,
+   "canon": 25,
    "name": "grant_on_want[D=planner,R=controls,T=t7,T2=t0]",
    "rule": "grant_on_want",
    "kind": "clause",
@@ -311,7 +313,7 @@
   },
   {
    "i": 32,
-   "canon": 38,
+   "canon": 42,
    "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a0,T3=t0,T4=t1]",
    "rule": "preempt",
    "kind": "clause",
@@ -320,7 +322,7 @@
   },
   {
    "i": 33,
-   "canon": 46,
+   "canon": 50,
    "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a0,T3=t1,T4=t2]",
    "rule": "preempt",
    "kind": "clause",
@@ -329,7 +331,7 @@
   },
   {
    "i": 34,
-   "canon": 54,
+   "canon": 58,
    "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a0,T3=t2,T4=t3]",
    "rule": "preempt",
    "kind": "clause",
@@ -338,7 +340,7 @@
   },
   {
    "i": 35,
-   "canon": 62,
+   "canon": 66,
    "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a0,T3=t3,T4=t4]",
    "rule": "preempt",
    "kind": "clause",
@@ -347,7 +349,7 @@
   },
   {
    "i": 36,
-   "canon": 70,
+   "canon": 74,
    "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a0,T3=t4,T4=t5]",
    "rule": "preempt",
    "kind": "clause",
@@ -356,7 +358,7 @@
   },
   {
    "i": 37,
-   "canon": 78,
+   "canon": 82,
    "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a0,T3=t5,T4=t6]",
    "rule": "preempt",
    "kind": "clause",
@@ -365,7 +367,7 @@
   },
   {
    "i": 38,
-   "canon": 86,
+   "canon": 90,
    "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a0,T3=t6,T4=t7]",
    "rule": "preempt",
    "kind": "clause",
@@ -374,7 +376,7 @@
   },
   {
    "i": 39,
-   "canon": 94,
+   "canon": 98,
    "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a0,T3=t7,T4=t0]",
    "rule": "preempt",
    "kind": "clause",
@@ -383,7 +385,7 @@
   },
   {
    "i": 40,
-   "canon": 112,
+   "canon": 117,
    "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a1,T3=t0,T4=t1]",
    "rule": "preempt",
    "kind": "clause",
@@ -392,7 +394,7 @@
   },
   {
    "i": 41,
-   "canon": 120,
+   "canon": 125,
    "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a1,T3=t1,T4=t2]",
    "rule": "preempt",
    "kind": "clause",
@@ -401,7 +403,7 @@
   },
   {
    "i": 42,
-   "canon": 128,
+   "canon": 133,
    "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a1,T3=t2,T4=t3]",
    "rule": "preempt",
    "kind": "clause",
@@ -410,7 +412,7 @@
   },
   {
    "i": 43,
-   "canon": 136,
+   "canon": 141,
    "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a1,T3=t3,T4=t4]",
    "rule": "preempt",
    "kind": "clause",
@@ -419,7 +421,7 @@
   },
   {
    "i": 44,
-   "canon": 144,
+   "canon": 149,
    "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a1,T3=t4,T4=t5]",
    "rule": "preempt",
    "kind": "clause",
@@ -428,7 +430,7 @@
   },
   {
    "i": 45,
-   "canon": 152,
+   "canon": 157,
    "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a1,T3=t5,T4=t6]",
    "rule": "preempt",
    "kind": "clause",
@@ -437,7 +439,7 @@
   },
   {
    "i": 46,
-   "canon": 160,
+   "canon": 165,
    "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a1,T3=t6,T4=t7]",
    "rule": "preempt",
    "kind": "clause",
@@ -446,7 +448,7 @@
   },
   {
    "i": 47,
-   "canon": 168,
+   "canon": 173,
    "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a1,T3=t7,T4=t0]",
    "rule": "preempt",
    "kind": "clause",
@@ -455,7 +457,7 @@
   },
   {
    "i": 48,
-   "canon": 186,
+   "canon": 192,
    "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a2,T3=t0,T4=t1]",
    "rule": "preempt",
    "kind": "clause",
@@ -464,7 +466,7 @@
   },
   {
    "i": 49,
-   "canon": 194,
+   "canon": 200,
    "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a2,T3=t1,T4=t2]",
    "rule": "preempt",
    "kind": "clause",
@@ -473,7 +475,7 @@
   },
   {
    "i": 50,
-   "canon": 202,
+   "canon": 208,
    "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a2,T3=t2,T4=t3]",
    "rule": "preempt",
    "kind": "clause",
@@ -482,7 +484,7 @@
   },
   {
    "i": 51,
-   "canon": 210,
+   "canon": 216,
    "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a2,T3=t3,T4=t4]",
    "rule": "preempt",
    "kind": "clause",
@@ -491,7 +493,7 @@
   },
   {
    "i": 52,
-   "canon": 218,
+   "canon": 224,
    "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a2,T3=t4,T4=t5]",
    "rule": "preempt",
    "kind": "clause",
@@ -500,7 +502,7 @@
   },
   {
    "i": 53,
-   "canon": 226,
+   "canon": 232,
    "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a2,T3=t5,T4=t6]",
    "rule": "preempt",
    "kind": "clause",
@@ -509,7 +511,7 @@
   },
   {
    "i": 54,
-   "canon": 234,
+   "canon": 240,
    "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a2,T3=t6,T4=t7]",
    "rule": "preempt",
    "kind": "clause",
@@ -518,7 +520,7 @@
   },
   {
    "i": 55,
-   "canon": 242,
+   "canon": 248,
    "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a2,T3=t7,T4=t0]",
    "rule": "preempt",
    "kind": "clause",
@@ -527,7 +529,7 @@
   },
   {
    "i": 56,
-   "canon": 262,
+   "canon": 269,
    "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a3,T3=t0,T4=t1]",
    "rule": "preempt",
    "kind": "clause",
@@ -536,7 +538,7 @@
   },
   {
    "i": 57,
-   "canon": 270,
+   "canon": 277,
    "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a3,T3=t1,T4=t2]",
    "rule": "preempt",
    "kind": "clause",
@@ -545,7 +547,7 @@
   },
   {
    "i": 58,
-   "canon": 278,
+   "canon": 285,
    "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a3,T3=t2,T4=t3]",
    "rule": "preempt",
    "kind": "clause",
@@ -554,7 +556,7 @@
   },
   {
    "i": 59,
-   "canon": 286,
+   "canon": 293,
    "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a3,T3=t3,T4=t4]",
    "rule": "preempt",
    "kind": "clause",
@@ -563,7 +565,7 @@
   },
   {
    "i": 60,
-   "canon": 294,
+   "canon": 301,
    "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a3,T3=t4,T4=t5]",
    "rule": "preempt",
    "kind": "clause",
@@ -572,7 +574,7 @@
   },
   {
    "i": 61,
-   "canon": 302,
+   "canon": 309,
    "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a3,T3=t5,T4=t6]",
    "rule": "preempt",
    "kind": "clause",
@@ -581,7 +583,7 @@
   },
   {
    "i": 62,
-   "canon": 310,
+   "canon": 317,
    "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a3,T3=t6,T4=t7]",
    "rule": "preempt",
    "kind": "clause",
@@ -590,7 +592,7 @@
   },
   {
    "i": 63,
-   "canon": 318,
+   "canon": 325,
    "name": "preempt[D=responder,R=controls,T=t0,X=planner,A=a3,T3=t7,T4=t0]",
    "rule": "preempt",
    "kind": "clause",
@@ -599,7 +601,7 @@
   },
   {
    "i": 64,
-   "canon": 39,
+   "canon": 43,
    "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a0,T3=t0,T4=t1]",
    "rule": "preempt",
    "kind": "clause",
@@ -608,7 +610,7 @@
   },
   {
    "i": 65,
-   "canon": 47,
+   "canon": 51,
    "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a0,T3=t1,T4=t2]",
    "rule": "preempt",
    "kind": "clause",
@@ -617,7 +619,7 @@
   },
   {
    "i": 66,
-   "canon": 55,
+   "canon": 59,
    "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a0,T3=t2,T4=t3]",
    "rule": "preempt",
    "kind": "clause",
@@ -626,7 +628,7 @@
   },
   {
    "i": 67,
-   "canon": 63,
+   "canon": 67,
    "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a0,T3=t3,T4=t4]",
    "rule": "preempt",
    "kind": "clause",
@@ -635,7 +637,7 @@
   },
   {
    "i": 68,
-   "canon": 71,
+   "canon": 75,
    "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a0,T3=t4,T4=t5]",
    "rule": "preempt",
    "kind": "clause",
@@ -644,7 +646,7 @@
   },
   {
    "i": 69,
-   "canon": 79,
+   "canon": 83,
    "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a0,T3=t5,T4=t6]",
    "rule": "preempt",
    "kind": "clause",
@@ -653,7 +655,7 @@
   },
   {
    "i": 70,
-   "canon": 87,
+   "canon": 91,
    "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a0,T3=t6,T4=t7]",
    "rule": "preempt",
    "kind": "clause",
@@ -662,7 +664,7 @@
   },
   {
    "i": 71,
-   "canon": 95,
+   "canon": 99,
    "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a0,T3=t7,T4=t0]",
    "rule": "preempt",
    "kind": "clause",
@@ -671,7 +673,7 @@
   },
   {
    "i": 72,
-   "canon": 113,
+   "canon": 118,
    "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a1,T3=t0,T4=t1]",
    "rule": "preempt",
    "kind": "clause",
@@ -680,7 +682,7 @@
   },
   {
    "i": 73,
-   "canon": 121,
+   "canon": 126,
    "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a1,T3=t1,T4=t2]",
    "rule": "preempt",
    "kind": "clause",
@@ -689,7 +691,7 @@
   },
   {
    "i": 74,
-   "canon": 129,
+   "canon": 134,
    "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a1,T3=t2,T4=t3]",
    "rule": "preempt",
    "kind": "clause",
@@ -698,7 +700,7 @@
   },
   {
    "i": 75,
-   "canon": 137,
+   "canon": 142,
    "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a1,T3=t3,T4=t4]",
    "rule": "preempt",
    "kind": "clause",
@@ -707,7 +709,7 @@
   },
   {
    "i": 76,
-   "canon": 145,
+   "canon": 150,
    "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a1,T3=t4,T4=t5]",
    "rule": "preempt",
    "kind": "clause",
@@ -716,7 +718,7 @@
   },
   {
    "i": 77,
-   "canon": 153,
+   "canon": 158,
    "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a1,T3=t5,T4=t6]",
    "rule": "preempt",
    "kind": "clause",
@@ -725,7 +727,7 @@
   },
   {
    "i": 78,
-   "canon": 161,
+   "canon": 166,
    "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a1,T3=t6,T4=t7]",
    "rule": "preempt",
    "kind": "clause",
@@ -734,7 +736,7 @@
   },
   {
    "i": 79,
-   "canon": 169,
+   "canon": 174,
    "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a1,T3=t7,T4=t0]",
    "rule": "preempt",
    "kind": "clause",
@@ -743,7 +745,7 @@
   },
   {
    "i": 80,
-   "canon": 187,
+   "canon": 193,
    "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a2,T3=t0,T4=t1]",
    "rule": "preempt",
    "kind": "clause",
@@ -752,7 +754,7 @@
   },
   {
    "i": 81,
-   "canon": 195,
+   "canon": 201,
    "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a2,T3=t1,T4=t2]",
    "rule": "preempt",
    "kind": "clause",
@@ -761,7 +763,7 @@
   },
   {
    "i": 82,
-   "canon": 203,
+   "canon": 209,
    "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a2,T3=t2,T4=t3]",
    "rule": "preempt",
    "kind": "clause",
@@ -770,7 +772,7 @@
   },
   {
    "i": 83,
-   "canon": 211,
+   "canon": 217,
    "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a2,T3=t3,T4=t4]",
    "rule": "preempt",
    "kind": "clause",
@@ -779,7 +781,7 @@
   },
   {
    "i": 84,
-   "canon": 219,
+   "canon": 225,
    "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a2,T3=t4,T4=t5]",
    "rule": "preempt",
    "kind": "clause",
@@ -788,7 +790,7 @@
   },
   {
    "i": 85,
-   "canon": 227,
+   "canon": 233,
    "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a2,T3=t5,T4=t6]",
    "rule": "preempt",
    "kind": "clause",
@@ -797,7 +799,7 @@
   },
   {
    "i": 86,
-   "canon": 235,
+   "canon": 241,
    "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a2,T3=t6,T4=t7]",
    "rule": "preempt",
    "kind": "clause",
@@ -806,7 +808,7 @@
   },
   {
    "i": 87,
-   "canon": 243,
+   "canon": 249,
    "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a2,T3=t7,T4=t0]",
    "rule": "preempt",
    "kind": "clause",
@@ -815,7 +817,7 @@
   },
   {
    "i": 88,
-   "canon": 263,
+   "canon": 270,
    "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a3,T3=t0,T4=t1]",
    "rule": "preempt",
    "kind": "clause",
@@ -824,7 +826,7 @@
   },
   {
    "i": 89,
-   "canon": 271,
+   "canon": 278,
    "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a3,T3=t1,T4=t2]",
    "rule": "preempt",
    "kind": "clause",
@@ -833,7 +835,7 @@
   },
   {
    "i": 90,
-   "canon": 279,
+   "canon": 286,
    "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a3,T3=t2,T4=t3]",
    "rule": "preempt",
    "kind": "clause",
@@ -842,7 +844,7 @@
   },
   {
    "i": 91,
-   "canon": 287,
+   "canon": 294,
    "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a3,T3=t3,T4=t4]",
    "rule": "preempt",
    "kind": "clause",
@@ -851,7 +853,7 @@
   },
   {
    "i": 92,
-   "canon": 295,
+   "canon": 302,
    "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a3,T3=t4,T4=t5]",
    "rule": "preempt",
    "kind": "clause",
@@ -860,7 +862,7 @@
   },
   {
    "i": 93,
-   "canon": 303,
+   "canon": 310,
    "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a3,T3=t5,T4=t6]",
    "rule": "preempt",
    "kind": "clause",
@@ -869,7 +871,7 @@
   },
   {
    "i": 94,
-   "canon": 311,
+   "canon": 318,
    "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a3,T3=t6,T4=t7]",
    "rule": "preempt",
    "kind": "clause",
@@ -878,7 +880,7 @@
   },
   {
    "i": 95,
-   "canon": 319,
+   "canon": 326,
    "name": "preempt[D=responder,R=controls,T=t1,X=planner,A=a3,T3=t7,T4=t0]",
    "rule": "preempt",
    "kind": "clause",
@@ -887,7 +889,7 @@
   },
   {
    "i": 96,
-   "canon": 40,
+   "canon": 44,
    "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a0,T3=t0,T4=t1]",
    "rule": "preempt",
    "kind": "clause",
@@ -896,7 +898,7 @@
   },
   {
    "i": 97,
-   "canon": 48,
+   "canon": 52,
    "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a0,T3=t1,T4=t2]",
    "rule": "preempt",
    "kind": "clause",
@@ -905,7 +907,7 @@
   },
   {
    "i": 98,
-   "canon": 56,
+   "canon": 60,
    "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a0,T3=t2,T4=t3]",
    "rule": "preempt",
    "kind": "clause",
@@ -914,7 +916,7 @@
   },
   {
    "i": 99,
-   "canon": 64,
+   "canon": 68,
    "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a0,T3=t3,T4=t4]",
    "rule": "preempt",
    "kind": "clause",
@@ -923,7 +925,7 @@
   },
   {
    "i": 100,
-   "canon": 72,
+   "canon": 76,
    "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a0,T3=t4,T4=t5]",
    "rule": "preempt",
    "kind": "clause",
@@ -932,7 +934,7 @@
   },
   {
    "i": 101,
-   "canon": 80,
+   "canon": 84,
    "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a0,T3=t5,T4=t6]",
    "rule": "preempt",
    "kind": "clause",
@@ -941,7 +943,7 @@
   },
   {
    "i": 102,
-   "canon": 88,
+   "canon": 92,
    "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a0,T3=t6,T4=t7]",
    "rule": "preempt",
    "kind": "clause",
@@ -950,7 +952,7 @@
   },
   {
    "i": 103,
-   "canon": 96,
+   "canon": 100,
    "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a0,T3=t7,T4=t0]",
    "rule": "preempt",
    "kind": "clause",
@@ -959,7 +961,7 @@
   },
   {
    "i": 104,
-   "canon": 114,
+   "canon": 119,
    "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a1,T3=t0,T4=t1]",
    "rule": "preempt",
    "kind": "clause",
@@ -968,7 +970,7 @@
   },
   {
    "i": 105,
-   "canon": 122,
+   "canon": 127,
    "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a1,T3=t1,T4=t2]",
    "rule": "preempt",
    "kind": "clause",
@@ -977,7 +979,7 @@
   },
   {
    "i": 106,
-   "canon": 130,
+   "canon": 135,
    "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a1,T3=t2,T4=t3]",
    "rule": "preempt",
    "kind": "clause",
@@ -986,7 +988,7 @@
   },
   {
    "i": 107,
-   "canon": 138,
+   "canon": 143,
    "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a1,T3=t3,T4=t4]",
    "rule": "preempt",
    "kind": "clause",
@@ -995,7 +997,7 @@
   },
   {
    "i": 108,
-   "canon": 146,
+   "canon": 151,
    "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a1,T3=t4,T4=t5]",
    "rule": "preempt",
    "kind": "clause",
@@ -1004,7 +1006,7 @@
   },
   {
    "i": 109,
-   "canon": 154,
+   "canon": 159,
    "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a1,T3=t5,T4=t6]",
    "rule": "preempt",
    "kind": "clause",
@@ -1013,7 +1015,7 @@
   },
   {
    "i": 110,
-   "canon": 162,
+   "canon": 167,
    "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a1,T3=t6,T4=t7]",
    "rule": "preempt",
    "kind": "clause",
@@ -1022,7 +1024,7 @@
   },
   {
    "i": 111,
-   "canon": 170,
+   "canon": 175,
    "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a1,T3=t7,T4=t0]",
    "rule": "preempt",
    "kind": "clause",
@@ -1031,7 +1033,7 @@
   },
   {
    "i": 112,
-   "canon": 188,
+   "canon": 194,
    "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a2,T3=t0,T4=t1]",
    "rule": "preempt",
    "kind": "clause",
@@ -1040,7 +1042,7 @@
   },
   {
    "i": 113,
-   "canon": 196,
+   "canon": 202,
    "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a2,T3=t1,T4=t2]",
    "rule": "preempt",
    "kind": "clause",
@@ -1049,7 +1051,7 @@
   },
   {
    "i": 114,
-   "canon": 204,
+   "canon": 210,
    "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a2,T3=t2,T4=t3]",
    "rule": "preempt",
    "kind": "clause",
@@ -1058,7 +1060,7 @@
   },
   {
    "i": 115,
-   "canon": 212,
+   "canon": 218,
    "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a2,T3=t3,T4=t4]",
    "rule": "preempt",
    "kind": "clause",
@@ -1067,7 +1069,7 @@
   },
   {
    "i": 116,
-   "canon": 220,
+   "canon": 226,
    "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a2,T3=t4,T4=t5]",
    "rule": "preempt",
    "kind": "clause",
@@ -1076,7 +1078,7 @@
   },
   {
    "i": 117,
-   "canon": 228,
+   "canon": 234,
    "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a2,T3=t5,T4=t6]",
    "rule": "preempt",
    "kind": "clause",
@@ -1085,7 +1087,7 @@
   },
   {
    "i": 118,
-   "canon": 236,
+   "canon": 242,
    "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a2,T3=t6,T4=t7]",
    "rule": "preempt",
    "kind": "clause",
@@ -1094,7 +1096,7 @@
   },
   {
    "i": 119,
-   "canon": 244,
+   "canon": 250,
    "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a2,T3=t7,T4=t0]",
    "rule": "preempt",
    "kind": "clause",
@@ -1103,7 +1105,7 @@
   },
   {
    "i": 120,
-   "canon": 264,
+   "canon": 271,
    "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a3,T3=t0,T4=t1]",
    "rule": "preempt",
    "kind": "clause",
@@ -1112,7 +1114,7 @@
   },
   {
    "i": 121,
-   "canon": 272,
+   "canon": 279,
    "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a3,T3=t1,T4=t2]",
    "rule": "preempt",
    "kind": "clause",
@@ -1121,7 +1123,7 @@
   },
   {
    "i": 122,
-   "canon": 280,
+   "canon": 287,
    "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a3,T3=t2,T4=t3]",
    "rule": "preempt",
    "kind": "clause",
@@ -1130,7 +1132,7 @@
   },
   {
    "i": 123,
-   "canon": 288,
+   "canon": 295,
    "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a3,T3=t3,T4=t4]",
    "rule": "preempt",
    "kind": "clause",
@@ -1139,7 +1141,7 @@
   },
   {
    "i": 124,
-   "canon": 296,
+   "canon": 303,
    "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a3,T3=t4,T4=t5]",
    "rule": "preempt",
    "kind": "clause",
@@ -1148,7 +1150,7 @@
   },
   {
    "i": 125,
-   "canon": 304,
+   "canon": 311,
    "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a3,T3=t5,T4=t6]",
    "rule": "preempt",
    "kind": "clause",
@@ -1157,7 +1159,7 @@
   },
   {
    "i": 126,
-   "canon": 312,
+   "canon": 319,
    "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a3,T3=t6,T4=t7]",
    "rule": "preempt",
    "kind": "clause",
@@ -1166,7 +1168,7 @@
   },
   {
    "i": 127,
-   "canon": 320,
+   "canon": 327,
    "name": "preempt[D=responder,R=controls,T=t2,X=planner,A=a3,T3=t7,T4=t0]",
    "rule": "preempt",
    "kind": "clause",
@@ -1175,7 +1177,7 @@
   },
   {
    "i": 128,
-   "canon": 41,
+   "canon": 45,
    "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a0,T3=t0,T4=t1]",
    "rule": "preempt",
    "kind": "clause",
@@ -1184,7 +1186,7 @@
   },
   {
    "i": 129,
-   "canon": 49,
+   "canon": 53,
    "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a0,T3=t1,T4=t2]",
    "rule": "preempt",
    "kind": "clause",
@@ -1193,7 +1195,7 @@
   },
   {
    "i": 130,
-   "canon": 57,
+   "canon": 61,
    "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a0,T3=t2,T4=t3]",
    "rule": "preempt",
    "kind": "clause",
@@ -1202,7 +1204,7 @@
   },
   {
    "i": 131,
-   "canon": 65,
+   "canon": 69,
    "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a0,T3=t3,T4=t4]",
    "rule": "preempt",
    "kind": "clause",
@@ -1211,7 +1213,7 @@
   },
   {
    "i": 132,
-   "canon": 73,
+   "canon": 77,
    "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a0,T3=t4,T4=t5]",
    "rule": "preempt",
    "kind": "clause",
@@ -1220,7 +1222,7 @@
   },
   {
    "i": 133,
-   "canon": 81,
+   "canon": 85,
    "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a0,T3=t5,T4=t6]",
    "rule": "preempt",
    "kind": "clause",
@@ -1229,7 +1231,7 @@
   },
   {
    "i": 134,
-   "canon": 89,
+   "canon": 93,
    "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a0,T3=t6,T4=t7]",
    "rule": "preempt",
    "kind": "clause",
@@ -1238,7 +1240,7 @@
   },
   {
    "i": 135,
-   "canon": 97,
+   "canon": 101,
    "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a0,T3=t7,T4=t0]",
    "rule": "preempt",
    "kind": "clause",
@@ -1247,7 +1249,7 @@
   },
   {
    "i": 136,
-   "canon": 115,
+   "canon": 120,
    "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a1,T3=t0,T4=t1]",
    "rule": "preempt",
    "kind": "clause",
@@ -1256,7 +1258,7 @@
   },
   {
    "i": 137,
-   "canon": 123,
+   "canon": 128,
    "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a1,T3=t1,T4=t2]",
    "rule": "preempt",
    "kind": "clause",
@@ -1265,7 +1267,7 @@
   },
   {
    "i": 138,
-   "canon": 131,
+   "canon": 136,
    "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a1,T3=t2,T4=t3]",
    "rule": "preempt",
    "kind": "clause",
@@ -1274,7 +1276,7 @@
   },
   {
    "i": 139,
-   "canon": 139,
+   "canon": 144,
    "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a1,T3=t3,T4=t4]",
    "rule": "preempt",
    "kind": "clause",
@@ -1283,7 +1285,7 @@
   },
   {
    "i": 140,
-   "canon": 147,
+   "canon": 152,
    "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a1,T3=t4,T4=t5]",
    "rule": "preempt",
    "kind": "clause",
@@ -1292,7 +1294,7 @@
   },
   {
    "i": 141,
-   "canon": 155,
+   "canon": 160,
    "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a1,T3=t5,T4=t6]",
    "rule": "preempt",
    "kind": "clause",
@@ -1301,7 +1303,7 @@
   },
   {
    "i": 142,
-   "canon": 163,
+   "canon": 168,
    "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a1,T3=t6,T4=t7]",
    "rule": "preempt",
    "kind": "clause",
@@ -1310,7 +1312,7 @@
   },
   {
    "i": 143,
-   "canon": 171,
+   "canon": 176,
    "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a1,T3=t7,T4=t0]",
    "rule": "preempt",
    "kind": "clause",
@@ -1319,7 +1321,7 @@
   },
   {
    "i": 144,
-   "canon": 189,
+   "canon": 195,
    "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a2,T3=t0,T4=t1]",
    "rule": "preempt",
    "kind": "clause",
@@ -1328,7 +1330,7 @@
   },
   {
    "i": 145,
-   "canon": 197,
+   "canon": 203,
    "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a2,T3=t1,T4=t2]",
    "rule": "preempt",
    "kind": "clause",
@@ -1337,7 +1339,7 @@
   },
   {
    "i": 146,
-   "canon": 205,
+   "canon": 211,
    "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a2,T3=t2,T4=t3]",
    "rule": "preempt",
    "kind": "clause",
@@ -1346,7 +1348,7 @@
   },
   {
    "i": 147,
-   "canon": 213,
+   "canon": 219,
    "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a2,T3=t3,T4=t4]",
    "rule": "preempt",
    "kind": "clause",
@@ -1355,7 +1357,7 @@
   },
   {
    "i": 148,
-   "canon": 221,
+   "canon": 227,
    "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a2,T3=t4,T4=t5]",
    "rule": "preempt",
    "kind": "clause",
@@ -1364,7 +1366,7 @@
   },
   {
    "i": 149,
-   "canon": 229,
+   "canon": 235,
    "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a2,T3=t5,T4=t6]",
    "rule": "preempt",
    "kind": "clause",
@@ -1373,7 +1375,7 @@
   },
   {
    "i": 150,
-   "canon": 237,
+   "canon": 243,
    "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a2,T3=t6,T4=t7]",
    "rule": "preempt",
    "kind": "clause",
@@ -1382,7 +1384,7 @@
   },
   {
    "i": 151,
-   "canon": 245,
+   "canon": 251,
    "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a2,T3=t7,T4=t0]",
    "rule": "preempt",
    "kind": "clause",
@@ -1391,7 +1393,7 @@
   },
   {
    "i": 152,
-   "canon": 265,
+   "canon": 272,
    "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a3,T3=t0,T4=t1]",
    "rule": "preempt",
    "kind": "clause",
@@ -1400,7 +1402,7 @@
   },
   {
    "i": 153,
-   "canon": 273,
+   "canon": 280,
    "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a3,T3=t1,T4=t2]",
    "rule": "preempt",
    "kind": "clause",
@@ -1409,7 +1411,7 @@
   },
   {
    "i": 154,
-   "canon": 281,
+   "canon": 288,
    "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a3,T3=t2,T4=t3]",
    "rule": "preempt",
    "kind": "clause",
@@ -1418,7 +1420,7 @@
   },
   {
    "i": 155,
-   "canon": 289,
+   "canon": 296,
    "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a3,T3=t3,T4=t4]",
    "rule": "preempt",
    "kind": "clause",
@@ -1427,7 +1429,7 @@
   },
   {
    "i": 156,
-   "canon": 297,
+   "canon": 304,
    "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a3,T3=t4,T4=t5]",
    "rule": "preempt",
    "kind": "clause",
@@ -1436,7 +1438,7 @@
   },
   {
    "i": 157,
-   "canon": 305,
+   "canon": 312,
    "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a3,T3=t5,T4=t6]",
    "rule": "preempt",
    "kind": "clause",
@@ -1445,7 +1447,7 @@
   },
   {
    "i": 158,
-   "canon": 313,
+   "canon": 320,
    "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a3,T3=t6,T4=t7]",
    "rule": "preempt",
    "kind": "clause",
@@ -1454,7 +1456,7 @@
   },
   {
    "i": 159,
-   "canon": 321,
+   "canon": 328,
    "name": "preempt[D=responder,R=controls,T=t3,X=planner,A=a3,T3=t7,T4=t0]",
    "rule": "preempt",
    "kind": "clause",
@@ -1463,7 +1465,7 @@
   },
   {
    "i": 160,
-   "canon": 42,
+   "canon": 46,
    "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a0,T3=t0,T4=t1]",
    "rule": "preempt",
    "kind": "clause",
@@ -1472,7 +1474,7 @@
   },
   {
    "i": 161,
-   "canon": 50,
+   "canon": 54,
    "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a0,T3=t1,T4=t2]",
    "rule": "preempt",
    "kind": "clause",
@@ -1481,7 +1483,7 @@
   },
   {
    "i": 162,
-   "canon": 58,
+   "canon": 62,
    "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a0,T3=t2,T4=t3]",
    "rule": "preempt",
    "kind": "clause",
@@ -1490,7 +1492,7 @@
   },
   {
    "i": 163,
-   "canon": 66,
+   "canon": 70,
    "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a0,T3=t3,T4=t4]",
    "rule": "preempt",
    "kind": "clause",
@@ -1499,7 +1501,7 @@
   },
   {
    "i": 164,
-   "canon": 74,
+   "canon": 78,
    "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a0,T3=t4,T4=t5]",
    "rule": "preempt",
    "kind": "clause",
@@ -1508,7 +1510,7 @@
   },
   {
    "i": 165,
-   "canon": 82,
+   "canon": 86,
    "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a0,T3=t5,T4=t6]",
    "rule": "preempt",
    "kind": "clause",
@@ -1517,7 +1519,7 @@
   },
   {
    "i": 166,
-   "canon": 90,
+   "canon": 94,
    "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a0,T3=t6,T4=t7]",
    "rule": "preempt",
    "kind": "clause",
@@ -1526,7 +1528,7 @@
   },
   {
    "i": 167,
-   "canon": 98,
+   "canon": 102,
    "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a0,T3=t7,T4=t0]",
    "rule": "preempt",
    "kind": "clause",
@@ -1535,7 +1537,7 @@
   },
   {
    "i": 168,
-   "canon": 116,
+   "canon": 121,
    "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a1,T3=t0,T4=t1]",
    "rule": "preempt",
    "kind": "clause",
@@ -1544,7 +1546,7 @@
   },
   {
    "i": 169,
-   "canon": 124,
+   "canon": 129,
    "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a1,T3=t1,T4=t2]",
    "rule": "preempt",
    "kind": "clause",
@@ -1553,7 +1555,7 @@
   },
   {
    "i": 170,
-   "canon": 132,
+   "canon": 137,
    "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a1,T3=t2,T4=t3]",
    "rule": "preempt",
    "kind": "clause",
@@ -1562,7 +1564,7 @@
   },
   {
    "i": 171,
-   "canon": 140,
+   "canon": 145,
    "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a1,T3=t3,T4=t4]",
    "rule": "preempt",
    "kind": "clause",
@@ -1571,7 +1573,7 @@
   },
   {
    "i": 172,
-   "canon": 148,
+   "canon": 153,
    "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a1,T3=t4,T4=t5]",
    "rule": "preempt",
    "kind": "clause",
@@ -1580,7 +1582,7 @@
   },
   {
    "i": 173,
-   "canon": 156,
+   "canon": 161,
    "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a1,T3=t5,T4=t6]",
    "rule": "preempt",
    "kind": "clause",
@@ -1589,7 +1591,7 @@
   },
   {
    "i": 174,
-   "canon": 164,
+   "canon": 169,
    "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a1,T3=t6,T4=t7]",
    "rule": "preempt",
    "kind": "clause",
@@ -1598,7 +1600,7 @@
   },
   {
    "i": 175,
-   "canon": 172,
+   "canon": 177,
    "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a1,T3=t7,T4=t0]",
    "rule": "preempt",
    "kind": "clause",
@@ -1607,7 +1609,7 @@
   },
   {
    "i": 176,
-   "canon": 190,
+   "canon": 196,
    "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a2,T3=t0,T4=t1]",
    "rule": "preempt",
    "kind": "clause",
@@ -1616,7 +1618,7 @@
   },
   {
    "i": 177,
-   "canon": 198,
+   "canon": 204,
    "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a2,T3=t1,T4=t2]",
    "rule": "preempt",
    "kind": "clause",
@@ -1625,7 +1627,7 @@
   },
   {
    "i": 178,
-   "canon": 206,
+   "canon": 212,
    "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a2,T3=t2,T4=t3]",
    "rule": "preempt",
    "kind": "clause",
@@ -1634,7 +1636,7 @@
   },
   {
    "i": 179,
-   "canon": 214,
+   "canon": 220,
    "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a2,T3=t3,T4=t4]",
    "rule": "preempt",
    "kind": "clause",
@@ -1643,7 +1645,7 @@
   },
   {
    "i": 180,
-   "canon": 222,
+   "canon": 228,
    "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a2,T3=t4,T4=t5]",
    "rule": "preempt",
    "kind": "clause",
@@ -1652,7 +1654,7 @@
   },
   {
    "i": 181,
-   "canon": 230,
+   "canon": 236,
    "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a2,T3=t5,T4=t6]",
    "rule": "preempt",
    "kind": "clause",
@@ -1661,7 +1663,7 @@
   },
   {
    "i": 182,
-   "canon": 238,
+   "canon": 244,
    "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a2,T3=t6,T4=t7]",
    "rule": "preempt",
    "kind": "clause",
@@ -1670,7 +1672,7 @@
   },
   {
    "i": 183,
-   "canon": 246,
+   "canon": 252,
    "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a2,T3=t7,T4=t0]",
    "rule": "preempt",
    "kind": "clause",
@@ -1679,7 +1681,7 @@
   },
   {
    "i": 184,
-   "canon": 266,
+   "canon": 273,
    "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a3,T3=t0,T4=t1]",
    "rule": "preempt",
    "kind": "clause",
@@ -1688,7 +1690,7 @@
   },
   {
    "i": 185,
-   "canon": 274,
+   "canon": 281,
    "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a3,T3=t1,T4=t2]",
    "rule": "preempt",
    "kind": "clause",
@@ -1697,7 +1699,7 @@
   },
   {
    "i": 186,
-   "canon": 282,
+   "canon": 289,
    "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a3,T3=t2,T4=t3]",
    "rule": "preempt",
    "kind": "clause",
@@ -1706,7 +1708,7 @@
   },
   {
    "i": 187,
-   "canon": 290,
+   "canon": 297,
    "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a3,T3=t3,T4=t4]",
    "rule": "preempt",
    "kind": "clause",
@@ -1715,7 +1717,7 @@
   },
   {
    "i": 188,
-   "canon": 298,
+   "canon": 305,
    "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a3,T3=t4,T4=t5]",
    "rule": "preempt",
    "kind": "clause",
@@ -1724,7 +1726,7 @@
   },
   {
    "i": 189,
-   "canon": 306,
+   "canon": 313,
    "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a3,T3=t5,T4=t6]",
    "rule": "preempt",
    "kind": "clause",
@@ -1733,7 +1735,7 @@
   },
   {
    "i": 190,
-   "canon": 314,
+   "canon": 321,
    "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a3,T3=t6,T4=t7]",
    "rule": "preempt",
    "kind": "clause",
@@ -1742,7 +1744,7 @@
   },
   {
    "i": 191,
-   "canon": 322,
+   "canon": 329,
    "name": "preempt[D=responder,R=controls,T=t4,X=planner,A=a3,T3=t7,T4=t0]",
    "rule": "preempt",
    "kind": "clause",
@@ -1751,7 +1753,7 @@
   },
   {
    "i": 192,
-   "canon": 43,
+   "canon": 47,
    "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a0,T3=t0,T4=t1]",
    "rule": "preempt",
    "kind": "clause",
@@ -1760,7 +1762,7 @@
   },
   {
    "i": 193,
-   "canon": 51,
+   "canon": 55,
    "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a0,T3=t1,T4=t2]",
    "rule": "preempt",
    "kind": "clause",
@@ -1769,7 +1771,7 @@
   },
   {
    "i": 194,
-   "canon": 59,
+   "canon": 63,
    "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a0,T3=t2,T4=t3]",
    "rule": "preempt",
    "kind": "clause",
@@ -1778,7 +1780,7 @@
   },
   {
    "i": 195,
-   "canon": 67,
+   "canon": 71,
    "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a0,T3=t3,T4=t4]",
    "rule": "preempt",
    "kind": "clause",
@@ -1787,7 +1789,7 @@
   },
   {
    "i": 196,
-   "canon": 75,
+   "canon": 79,
    "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a0,T3=t4,T4=t5]",
    "rule": "preempt",
    "kind": "clause",
@@ -1796,7 +1798,7 @@
   },
   {
    "i": 197,
-   "canon": 83,
+   "canon": 87,
    "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a0,T3=t5,T4=t6]",
    "rule": "preempt",
    "kind": "clause",
@@ -1805,7 +1807,7 @@
   },
   {
    "i": 198,
-   "canon": 91,
+   "canon": 95,
    "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a0,T3=t6,T4=t7]",
    "rule": "preempt",
    "kind": "clause",
@@ -1814,7 +1816,7 @@
   },
   {
    "i": 199,
-   "canon": 99,
+   "canon": 103,
    "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a0,T3=t7,T4=t0]",
    "rule": "preempt",
    "kind": "clause",
@@ -1823,7 +1825,7 @@
   },
   {
    "i": 200,
-   "canon": 117,
+   "canon": 122,
    "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a1,T3=t0,T4=t1]",
    "rule": "preempt",
    "kind": "clause",
@@ -1832,7 +1834,7 @@
   },
   {
    "i": 201,
-   "canon": 125,
+   "canon": 130,
    "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a1,T3=t1,T4=t2]",
    "rule": "preempt",
    "kind": "clause",
@@ -1841,7 +1843,7 @@
   },
   {
    "i": 202,
-   "canon": 133,
+   "canon": 138,
    "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a1,T3=t2,T4=t3]",
    "rule": "preempt",
    "kind": "clause",
@@ -1850,7 +1852,7 @@
   },
   {
    "i": 203,
-   "canon": 141,
+   "canon": 146,
    "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a1,T3=t3,T4=t4]",
    "rule": "preempt",
    "kind": "clause",
@@ -1859,7 +1861,7 @@
   },
   {
    "i": 204,
-   "canon": 149,
+   "canon": 154,
    "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a1,T3=t4,T4=t5]",
    "rule": "preempt",
    "kind": "clause",
@@ -1868,7 +1870,7 @@
   },
   {
    "i": 205,
-   "canon": 157,
+   "canon": 162,
    "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a1,T3=t5,T4=t6]",
    "rule": "preempt",
    "kind": "clause",
@@ -1877,7 +1879,7 @@
   },
   {
    "i": 206,
-   "canon": 165,
+   "canon": 170,
    "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a1,T3=t6,T4=t7]",
    "rule": "preempt",
    "kind": "clause",
@@ -1886,7 +1888,7 @@
   },
   {
    "i": 207,
-   "canon": 173,
+   "canon": 178,
    "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a1,T3=t7,T4=t0]",
    "rule": "preempt",
    "kind": "clause",
@@ -1895,7 +1897,7 @@
   },
   {
    "i": 208,
-   "canon": 191,
+   "canon": 197,
    "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a2,T3=t0,T4=t1]",
    "rule": "preempt",
    "kind": "clause",
@@ -1904,7 +1906,7 @@
   },
   {
    "i": 209,
-   "canon": 199,
+   "canon": 205,
    "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a2,T3=t1,T4=t2]",
    "rule": "preempt",
    "kind": "clause",
@@ -1913,7 +1915,7 @@
   },
   {
    "i": 210,
-   "canon": 207,
+   "canon": 213,
    "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a2,T3=t2,T4=t3]",
    "rule": "preempt",
    "kind": "clause",
@@ -1922,7 +1924,7 @@
   },
   {
    "i": 211,
-   "canon": 215,
+   "canon": 221,
    "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a2,T3=t3,T4=t4]",
    "rule": "preempt",
    "kind": "clause",
@@ -1931,7 +1933,7 @@
   },
   {
    "i": 212,
-   "canon": 223,
+   "canon": 229,
    "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a2,T3=t4,T4=t5]",
    "rule": "preempt",
    "kind": "clause",
@@ -1940,7 +1942,7 @@
   },
   {
    "i": 213,
-   "canon": 231,
+   "canon": 237,
    "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a2,T3=t5,T4=t6]",
    "rule": "preempt",
    "kind": "clause",
@@ -1949,7 +1951,7 @@
   },
   {
    "i": 214,
-   "canon": 239,
+   "canon": 245,
    "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a2,T3=t6,T4=t7]",
    "rule": "preempt",
    "kind": "clause",
@@ -1958,7 +1960,7 @@
   },
   {
    "i": 215,
-   "canon": 247,
+   "canon": 253,
    "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a2,T3=t7,T4=t0]",
    "rule": "preempt",
    "kind": "clause",
@@ -1967,7 +1969,7 @@
   },
   {
    "i": 216,
-   "canon": 267,
+   "canon": 274,
    "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a3,T3=t0,T4=t1]",
    "rule": "preempt",
    "kind": "clause",
@@ -1976,7 +1978,7 @@
   },
   {
    "i": 217,
-   "canon": 275,
+   "canon": 282,
    "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a3,T3=t1,T4=t2]",
    "rule": "preempt",
    "kind": "clause",
@@ -1985,7 +1987,7 @@
   },
   {
    "i": 218,
-   "canon": 283,
+   "canon": 290,
    "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a3,T3=t2,T4=t3]",
    "rule": "preempt",
    "kind": "clause",
@@ -1994,7 +1996,7 @@
   },
   {
    "i": 219,
-   "canon": 291,
+   "canon": 298,
    "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a3,T3=t3,T4=t4]",
    "rule": "preempt",
    "kind": "clause",
@@ -2003,7 +2005,7 @@
   },
   {
    "i": 220,
-   "canon": 299,
+   "canon": 306,
    "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a3,T3=t4,T4=t5]",
    "rule": "preempt",
    "kind": "clause",
@@ -2012,7 +2014,7 @@
   },
   {
    "i": 221,
-   "canon": 307,
+   "canon": 314,
    "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a3,T3=t5,T4=t6]",
    "rule": "preempt",
    "kind": "clause",
@@ -2021,7 +2023,7 @@
   },
   {
    "i": 222,
-   "canon": 315,
+   "canon": 322,
    "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a3,T3=t6,T4=t7]",
    "rule": "preempt",
    "kind": "clause",
@@ -2030,7 +2032,7 @@
   },
   {
    "i": 223,
-   "canon": 323,
+   "canon": 330,
    "name": "preempt[D=responder,R=controls,T=t5,X=planner,A=a3,T3=t7,T4=t0]",
    "rule": "preempt",
    "kind": "clause",
@@ -2039,7 +2041,7 @@
   },
   {
    "i": 224,
-   "canon": 44,
+   "canon": 48,
    "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a0,T3=t0,T4=t1]",
    "rule": "preempt",
    "kind": "clause",
@@ -2048,7 +2050,7 @@
   },
   {
    "i": 225,
-   "canon": 52,
+   "canon": 56,
    "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a0,T3=t1,T4=t2]",
    "rule": "preempt",
    "kind": "clause",
@@ -2057,7 +2059,7 @@
   },
   {
    "i": 226,
-   "canon": 60,
+   "canon": 64,
    "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a0,T3=t2,T4=t3]",
    "rule": "preempt",
    "kind": "clause",
@@ -2066,7 +2068,7 @@
   },
   {
    "i": 227,
-   "canon": 68,
+   "canon": 72,
    "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a0,T3=t3,T4=t4]",
    "rule": "preempt",
    "kind": "clause",
@@ -2075,7 +2077,7 @@
   },
   {
    "i": 228,
-   "canon": 76,
+   "canon": 80,
    "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a0,T3=t4,T4=t5]",
    "rule": "preempt",
    "kind": "clause",
@@ -2084,7 +2086,7 @@
   },
   {
    "i": 229,
-   "canon": 84,
+   "canon": 88,
    "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a0,T3=t5,T4=t6]",
    "rule": "preempt",
    "kind": "clause",
@@ -2093,7 +2095,7 @@
   },
   {
    "i": 230,
-   "canon": 92,
+   "canon": 96,
    "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a0,T3=t6,T4=t7]",
    "rule": "preempt",
    "kind": "clause",
@@ -2102,7 +2104,7 @@
   },
   {
    "i": 231,
-   "canon": 100,
+   "canon": 104,
    "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a0,T3=t7,T4=t0]",
    "rule": "preempt",
    "kind": "clause",
@@ -2111,7 +2113,7 @@
   },
   {
    "i": 232,
-   "canon": 118,
+   "canon": 123,
    "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a1,T3=t0,T4=t1]",
    "rule": "preempt",
    "kind": "clause",
@@ -2120,7 +2122,7 @@
   },
   {
    "i": 233,
-   "canon": 126,
+   "canon": 131,
    "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a1,T3=t1,T4=t2]",
    "rule": "preempt",
    "kind": "clause",
@@ -2129,7 +2131,7 @@
   },
   {
    "i": 234,
-   "canon": 134,
+   "canon": 139,
    "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a1,T3=t2,T4=t3]",
    "rule": "preempt",
    "kind": "clause",
@@ -2138,7 +2140,7 @@
   },
   {
    "i": 235,
-   "canon": 142,
+   "canon": 147,
    "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a1,T3=t3,T4=t4]",
    "rule": "preempt",
    "kind": "clause",
@@ -2147,7 +2149,7 @@
   },
   {
    "i": 236,
-   "canon": 150,
+   "canon": 155,
    "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a1,T3=t4,T4=t5]",
    "rule": "preempt",
    "kind": "clause",
@@ -2156,7 +2158,7 @@
   },
   {
    "i": 237,
-   "canon": 158,
+   "canon": 163,
    "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a1,T3=t5,T4=t6]",
    "rule": "preempt",
    "kind": "clause",
@@ -2165,7 +2167,7 @@
   },
   {
    "i": 238,
-   "canon": 166,
+   "canon": 171,
    "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a1,T3=t6,T4=t7]",
    "rule": "preempt",
    "kind": "clause",
@@ -2174,7 +2176,7 @@
   },
   {
    "i": 239,
-   "canon": 174,
+   "canon": 179,
    "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a1,T3=t7,T4=t0]",
    "rule": "preempt",
    "kind": "clause",
@@ -2183,7 +2185,7 @@
   },
   {
    "i": 240,
-   "canon": 192,
+   "canon": 198,
    "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a2,T3=t0,T4=t1]",
    "rule": "preempt",
    "kind": "clause",
@@ -2192,7 +2194,7 @@
   },
   {
    "i": 241,
-   "canon": 200,
+   "canon": 206,
    "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a2,T3=t1,T4=t2]",
    "rule": "preempt",
    "kind": "clause",
@@ -2201,7 +2203,7 @@
   },
   {
    "i": 242,
-   "canon": 208,
+   "canon": 214,
    "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a2,T3=t2,T4=t3]",
    "rule": "preempt",
    "kind": "clause",
@@ -2210,7 +2212,7 @@
   },
   {
    "i": 243,
-   "canon": 216,
+   "canon": 222,
    "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a2,T3=t3,T4=t4]",
    "rule": "preempt",
    "kind": "clause",
@@ -2219,7 +2221,7 @@
   },
   {
    "i": 244,
-   "canon": 224,
+   "canon": 230,
    "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a2,T3=t4,T4=t5]",
    "rule": "preempt",
    "kind": "clause",
@@ -2228,7 +2230,7 @@
   },
   {
    "i": 245,
-   "canon": 232,
+   "canon": 238,
    "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a2,T3=t5,T4=t6]",
    "rule": "preempt",
    "kind": "clause",
@@ -2237,7 +2239,7 @@
   },
   {
    "i": 246,
-   "canon": 240,
+   "canon": 246,
    "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a2,T3=t6,T4=t7]",
    "rule": "preempt",
    "kind": "clause",
@@ -2246,7 +2248,7 @@
   },
   {
    "i": 247,
-   "canon": 248,
+   "canon": 254,
    "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a2,T3=t7,T4=t0]",
    "rule": "preempt",
    "kind": "clause",
@@ -2255,7 +2257,7 @@
   },
   {
    "i": 248,
-   "canon": 268,
+   "canon": 275,
    "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a3,T3=t0,T4=t1]",
    "rule": "preempt",
    "kind": "clause",
@@ -2264,7 +2266,7 @@
   },
   {
    "i": 249,
-   "canon": 276,
+   "canon": 283,
    "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a3,T3=t1,T4=t2]",
    "rule": "preempt",
    "kind": "clause",
@@ -2273,7 +2275,7 @@
   },
   {
    "i": 250,
-   "canon": 284,
+   "canon": 291,
    "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a3,T3=t2,T4=t3]",
    "rule": "preempt",
    "kind": "clause",
@@ -2282,7 +2284,7 @@
   },
   {
    "i": 251,
-   "canon": 292,
+   "canon": 299,
    "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a3,T3=t3,T4=t4]",
    "rule": "preempt",
    "kind": "clause",
@@ -2291,7 +2293,7 @@
   },
   {
    "i": 252,
-   "canon": 300,
+   "canon": 307,
    "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a3,T3=t4,T4=t5]",
    "rule": "preempt",
    "kind": "clause",
@@ -2300,7 +2302,7 @@
   },
   {
    "i": 253,
-   "canon": 308,
+   "canon": 315,
    "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a3,T3=t5,T4=t6]",
    "rule": "preempt",
    "kind": "clause",
@@ -2309,7 +2311,7 @@
   },
   {
    "i": 254,
-   "canon": 316,
+   "canon": 323,
    "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a3,T3=t6,T4=t7]",
    "rule": "preempt",
    "kind": "clause",
@@ -2318,7 +2320,7 @@
   },
   {
    "i": 255,
-   "canon": 324,
+   "canon": 331,
    "name": "preempt[D=responder,R=controls,T=t6,X=planner,A=a3,T3=t7,T4=t0]",
    "rule": "preempt",
    "kind": "clause",
@@ -2327,7 +2329,7 @@
   },
   {
    "i": 256,
-   "canon": 45,
+   "canon": 49,
    "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a0,T3=t0,T4=t1]",
    "rule": "preempt",
    "kind": "clause",
@@ -2336,7 +2338,7 @@
   },
   {
    "i": 257,
-   "canon": 53,
+   "canon": 57,
    "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a0,T3=t1,T4=t2]",
    "rule": "preempt",
    "kind": "clause",
@@ -2345,7 +2347,7 @@
   },
   {
    "i": 258,
-   "canon": 61,
+   "canon": 65,
    "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a0,T3=t2,T4=t3]",
    "rule": "preempt",
    "kind": "clause",
@@ -2354,7 +2356,7 @@
   },
   {
    "i": 259,
-   "canon": 69,
+   "canon": 73,
    "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a0,T3=t3,T4=t4]",
    "rule": "preempt",
    "kind": "clause",
@@ -2363,7 +2365,7 @@
   },
   {
    "i": 260,
-   "canon": 77,
+   "canon": 81,
    "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a0,T3=t4,T4=t5]",
    "rule": "preempt",
    "kind": "clause",
@@ -2372,7 +2374,7 @@
   },
   {
    "i": 261,
-   "canon": 85,
+   "canon": 89,
    "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a0,T3=t5,T4=t6]",
    "rule": "preempt",
    "kind": "clause",
@@ -2381,7 +2383,7 @@
   },
   {
    "i": 262,
-   "canon": 93,
+   "canon": 97,
    "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a0,T3=t6,T4=t7]",
    "rule": "preempt",
    "kind": "clause",
@@ -2390,7 +2392,7 @@
   },
   {
    "i": 263,
-   "canon": 101,
+   "canon": 105,
    "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a0,T3=t7,T4=t0]",
    "rule": "preempt",
    "kind": "clause",
@@ -2399,7 +2401,7 @@
   },
   {
    "i": 264,
-   "canon": 119,
+   "canon": 124,
    "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a1,T3=t0,T4=t1]",
    "rule": "preempt",
    "kind": "clause",
@@ -2408,7 +2410,7 @@
   },
   {
    "i": 265,
-   "canon": 127,
+   "canon": 132,
    "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a1,T3=t1,T4=t2]",
    "rule": "preempt",
    "kind": "clause",
@@ -2417,7 +2419,7 @@
   },
   {
    "i": 266,
-   "canon": 135,
+   "canon": 140,
    "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a1,T3=t2,T4=t3]",
    "rule": "preempt",
    "kind": "clause",
@@ -2426,7 +2428,7 @@
   },
   {
    "i": 267,
-   "canon": 143,
+   "canon": 148,
    "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a1,T3=t3,T4=t4]",
    "rule": "preempt",
    "kind": "clause",
@@ -2435,7 +2437,7 @@
   },
   {
    "i": 268,
-   "canon": 151,
+   "canon": 156,
    "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a1,T3=t4,T4=t5]",
    "rule": "preempt",
    "kind": "clause",
@@ -2444,7 +2446,7 @@
   },
   {
    "i": 269,
-   "canon": 159,
+   "canon": 164,
    "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a1,T3=t5,T4=t6]",
    "rule": "preempt",
    "kind": "clause",
@@ -2453,7 +2455,7 @@
   },
   {
    "i": 270,
-   "canon": 167,
+   "canon": 172,
    "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a1,T3=t6,T4=t7]",
    "rule": "preempt",
    "kind": "clause",
@@ -2462,7 +2464,7 @@
   },
   {
    "i": 271,
-   "canon": 175,
+   "canon": 180,
    "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a1,T3=t7,T4=t0]",
    "rule": "preempt",
    "kind": "clause",
@@ -2471,7 +2473,7 @@
   },
   {
    "i": 272,
-   "canon": 193,
+   "canon": 199,
    "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a2,T3=t0,T4=t1]",
    "rule": "preempt",
    "kind": "clause",
@@ -2480,7 +2482,7 @@
   },
   {
    "i": 273,
-   "canon": 201,
+   "canon": 207,
    "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a2,T3=t1,T4=t2]",
    "rule": "preempt",
    "kind": "clause",
@@ -2489,7 +2491,7 @@
   },
   {
    "i": 274,
-   "canon": 209,
+   "canon": 215,
    "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a2,T3=t2,T4=t3]",
    "rule": "preempt",
    "kind": "clause",
@@ -2498,7 +2500,7 @@
   },
   {
    "i": 275,
-   "canon": 217,
+   "canon": 223,
    "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a2,T3=t3,T4=t4]",
    "rule": "preempt",
    "kind": "clause",
@@ -2507,7 +2509,7 @@
   },
   {
    "i": 276,
-   "canon": 225,
+   "canon": 231,
    "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a2,T3=t4,T4=t5]",
    "rule": "preempt",
    "kind": "clause",
@@ -2516,7 +2518,7 @@
   },
   {
    "i": 277,
-   "canon": 233,
+   "canon": 239,
    "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a2,T3=t5,T4=t6]",
    "rule": "preempt",
    "kind": "clause",
@@ -2525,7 +2527,7 @@
   },
   {
    "i": 278,
-   "canon": 241,
+   "canon": 247,
    "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a2,T3=t6,T4=t7]",
    "rule": "preempt",
    "kind": "clause",
@@ -2534,7 +2536,7 @@
   },
   {
    "i": 279,
-   "canon": 249,
+   "canon": 255,
    "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a2,T3=t7,T4=t0]",
    "rule": "preempt",
    "kind": "clause",
@@ -2543,7 +2545,7 @@
   },
   {
    "i": 280,
-   "canon": 269,
+   "canon": 276,
    "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a3,T3=t0,T4=t1]",
    "rule": "preempt",
    "kind": "clause",
@@ -2552,7 +2554,7 @@
   },
   {
    "i": 281,
-   "canon": 277,
+   "canon": 284,
    "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a3,T3=t1,T4=t2]",
    "rule": "preempt",
    "kind": "clause",
@@ -2561,7 +2563,7 @@
   },
   {
    "i": 282,
-   "canon": 285,
+   "canon": 292,
    "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a3,T3=t2,T4=t3]",
    "rule": "preempt",
    "kind": "clause",
@@ -2570,7 +2572,7 @@
   },
   {
    "i": 283,
-   "canon": 293,
+   "canon": 300,
    "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a3,T3=t3,T4=t4]",
    "rule": "preempt",
    "kind": "clause",
@@ -2579,7 +2581,7 @@
   },
   {
    "i": 284,
-   "canon": 301,
+   "canon": 308,
    "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a3,T3=t4,T4=t5]",
    "rule": "preempt",
    "kind": "clause",
@@ -2588,7 +2590,7 @@
   },
   {
    "i": 285,
-   "canon": 309,
+   "canon": 316,
    "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a3,T3=t5,T4=t6]",
    "rule": "preempt",
    "kind": "clause",
@@ -2597,7 +2599,7 @@
   },
   {
    "i": 286,
-   "canon": 317,
+   "canon": 324,
    "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a3,T3=t6,T4=t7]",
    "rule": "preempt",
    "kind": "clause",
@@ -2606,7 +2608,7 @@
   },
   {
    "i": 287,
-   "canon": 325,
+   "canon": 332,
    "name": "preempt[D=responder,R=controls,T=t7,X=planner,A=a3,T3=t7,T4=t0]",
    "rule": "preempt",
    "kind": "clause",
@@ -2615,7 +2617,7 @@
   },
   {
    "i": 288,
-   "canon": 410,
+   "canon": 428,
    "name": "skip_ticket[R=controls,T=t0,T2=t1]",
    "rule": "skip_ticket",
    "kind": "clause",
@@ -2624,7 +2626,7 @@
   },
   {
    "i": 289,
-   "canon": 411,
+   "canon": 429,
    "name": "skip_ticket[R=controls,T=t1,T2=t2]",
    "rule": "skip_ticket",
    "kind": "clause",
@@ -2633,7 +2635,7 @@
   },
   {
    "i": 290,
-   "canon": 412,
+   "canon": 430,
    "name": "skip_ticket[R=controls,T=t2,T2=t3]",
    "rule": "skip_ticket",
    "kind": "clause",
@@ -2642,7 +2644,7 @@
   },
   {
    "i": 291,
-   "canon": 413,
+   "canon": 431,
    "name": "skip_ticket[R=controls,T=t3,T2=t4]",
    "rule": "skip_ticket",
    "kind": "clause",
@@ -2651,7 +2653,7 @@
   },
   {
    "i": 292,
-   "canon": 414,
+   "canon": 432,
    "name": "skip_ticket[R=controls,T=t4,T2=t5]",
    "rule": "skip_ticket",
    "kind": "clause",
@@ -2660,7 +2662,7 @@
   },
   {
    "i": 293,
-   "canon": 415,
+   "canon": 433,
    "name": "skip_ticket[R=controls,T=t5,T2=t6]",
    "rule": "skip_ticket",
    "kind": "clause",
@@ -2669,7 +2671,7 @@
   },
   {
    "i": 294,
-   "canon": 416,
+   "canon": 434,
    "name": "skip_ticket[R=controls,T=t6,T2=t7]",
    "rule": "skip_ticket",
    "kind": "clause",
@@ -2678,7 +2680,7 @@
   },
   {
    "i": 295,
-   "canon": 417,
+   "canon": 435,
    "name": "skip_ticket[R=controls,T=t7,T2=t0]",
    "rule": "skip_ticket",
    "kind": "clause",
@@ -2687,7 +2689,7 @@
   },
   {
    "i": 296,
-   "canon": 358,
+   "canon": 369,
    "name": "release_on_report[D=responder,R=controls,A=a2]",
    "rule": "release_on_report",
    "kind": "clause",
@@ -2696,7 +2698,7 @@
   },
   {
    "i": 297,
-   "canon": 370,
+   "canon": 382,
    "name": "release_on_report[D=responder,R=controls,A=a3]",
    "rule": "release_on_report",
    "kind": "clause",
@@ -2705,7 +2707,7 @@
   },
   {
    "i": 298,
-   "canon": 251,
+   "canon": 258,
    "name": "release_on_report[D=planner,R=controls,A=a2]",
    "rule": "release_on_report",
    "kind": "clause",
@@ -2714,7 +2716,7 @@
   },
   {
    "i": 299,
-   "canon": 327,
+   "canon": 335,
    "name": "release_on_report[D=planner,R=controls,A=a3]",
    "rule": "release_on_report",
    "kind": "clause",
@@ -2723,7 +2725,7 @@
   },
   {
    "i": 300,
-   "canon": 427,
+   "canon": 447,
    "name": "release_report_wait[D=responder,R=controls,A=a0]",
    "rule": "release_report_wait",
    "kind": "clause",
@@ -2732,7 +2734,7 @@
   },
   {
    "i": 301,
-   "canon": 428,
+   "canon": 448,
    "name": "release_report_wait[D=responder,R=controls,A=a1]",
    "rule": "release_report_wait",
    "kind": "clause",
@@ -2741,7 +2743,7 @@
   },
   {
    "i": 302,
-   "canon": 425,
+   "canon": 445,
    "name": "release_report_wait[D=planner,R=controls,A=a0]",
    "rule": "release_report_wait",
    "kind": "clause",
@@ -2750,7 +2752,7 @@
   },
   {
    "i": 303,
-   "canon": 426,
+   "canon": 446,
    "name": "release_report_wait[D=planner,R=controls,A=a1]",
    "rule": "release_report_wait",
    "kind": "clause",
@@ -2759,7 +2761,7 @@
   },
   {
    "i": 304,
-   "canon": 357,
+   "canon": 367,
    "name": "release_report_late[D=responder,R=controls,A=a2]",
    "rule": "release_report_late",
    "kind": "clause",
@@ -2768,7 +2770,7 @@
   },
   {
    "i": 305,
-   "canon": 369,
+   "canon": 380,
    "name": "release_report_late[D=responder,R=controls,A=a3]",
    "rule": "release_report_late",
    "kind": "clause",
@@ -2777,7 +2779,7 @@
   },
   {
    "i": 306,
-   "canon": 250,
+   "canon": 256,
    "name": "release_report_late[D=planner,R=controls,A=a2]",
    "rule": "release_report_late",
    "kind": "clause",
@@ -2786,7 +2788,7 @@
   },
   {
    "i": 307,
-   "canon": 326,
+   "canon": 333,
    "name": "release_report_late[D=planner,R=controls,A=a3]",
    "rule": "release_report_late",
    "kind": "clause",
@@ -2795,7 +2797,7 @@
   },
   {
    "i": 308,
-   "canon": 337,
+   "canon": 346,
    "name": "release_stuck[D=responder,R=controls,A=a0]",
    "rule": "release_stuck",
    "kind": "clause",
@@ -2804,7 +2806,7 @@
   },
   {
    "i": 309,
-   "canon": 347,
+   "canon": 357,
    "name": "release_stuck[D=responder,R=controls,A=a1]",
    "rule": "release_stuck",
    "kind": "clause",
@@ -2813,7 +2815,7 @@
   },
   {
    "i": 310,
-   "canon": 359,
+   "canon": 370,
    "name": "release_stuck[D=responder,R=controls,A=a2]",
    "rule": "release_stuck",
    "kind": "clause",
@@ -2822,7 +2824,7 @@
   },
   {
    "i": 311,
-   "canon": 371,
+   "canon": 383,
    "name": "release_stuck[D=responder,R=controls,A=a3]",
    "rule": "release_stuck",
    "kind": "clause",
@@ -2831,7 +2833,7 @@
   },
   {
    "i": 312,
-   "canon": 102,
+   "canon": 107,
    "name": "release_stuck[D=planner,R=controls,A=a0]",
    "rule": "release_stuck",
    "kind": "clause",
@@ -2840,7 +2842,7 @@
   },
   {
    "i": 313,
-   "canon": 176,
+   "canon": 182,
    "name": "release_stuck[D=planner,R=controls,A=a1]",
    "rule": "release_stuck",
    "kind": "clause",
@@ -2849,7 +2851,7 @@
   },
   {
    "i": 314,
-   "canon": 252,
+   "canon": 259,
    "name": "release_stuck[D=planner,R=controls,A=a2]",
    "rule": "release_stuck",
    "kind": "clause",
@@ -2858,7 +2860,7 @@
   },
   {
    "i": 315,
-   "canon": 328,
+   "canon": 336,
    "name": "release_stuck[D=planner,R=controls,A=a3]",
    "rule": "release_stuck",
    "kind": "clause",
@@ -2867,7 +2869,7 @@
   },
   {
    "i": 316,
-   "canon": 393,
+   "canon": 411,
    "name": "stop_cancel[D=responder]",
    "rule": "stop_cancel",
    "kind": "clause",
@@ -2876,7 +2878,7 @@
   },
   {
    "i": 317,
-   "canon": 391,
+   "canon": 409,
    "name": "stop_cancel[D=planner]",
    "rule": "stop_cancel",
    "kind": "clause",
@@ -2885,7 +2887,7 @@
   },
   {
    "i": 318,
-   "canon": 329,
+   "canon": 337,
    "name": "stop_release[D=responder,R=controls,A=a0,T=t0]",
    "rule": "stop_release",
    "kind": "clause",
@@ -2894,7 +2896,7 @@
   },
   {
    "i": 319,
-   "canon": 330,
+   "canon": 338,
    "name": "stop_release[D=responder,R=controls,A=a0,T=t1]",
    "rule": "stop_release",
    "kind": "clause",
@@ -2903,7 +2905,7 @@
   },
   {
    "i": 320,
-   "canon": 331,
+   "canon": 339,
    "name": "stop_release[D=responder,R=controls,A=a0,T=t2]",
    "rule": "stop_release",
    "kind": "clause",
@@ -2912,7 +2914,7 @@
   },
   {
    "i": 321,
-   "canon": 332,
+   "canon": 340,
    "name": "stop_release[D=responder,R=controls,A=a0,T=t3]",
    "rule": "stop_release",
    "kind": "clause",
@@ -2921,7 +2923,7 @@
   },
   {
    "i": 322,
-   "canon": 333,
+   "canon": 341,
    "name": "stop_release[D=responder,R=controls,A=a0,T=t4]",
    "rule": "stop_release",
    "kind": "clause",
@@ -2930,7 +2932,7 @@
   },
   {
    "i": 323,
-   "canon": 334,
+   "canon": 342,
    "name": "stop_release[D=responder,R=controls,A=a0,T=t5]",
    "rule": "stop_release",
    "kind": "clause",
@@ -2939,7 +2941,7 @@
   },
   {
    "i": 324,
-   "canon": 335,
+   "canon": 343,
    "name": "stop_release[D=responder,R=controls,A=a0,T=t6]",
    "rule": "stop_release",
    "kind": "clause",
@@ -2948,7 +2950,7 @@
   },
   {
    "i": 325,
-   "canon": 336,
+   "canon": 344,
    "name": "stop_release[D=responder,R=controls,A=a0,T=t7]",
    "rule": "stop_release",
    "kind": "clause",
@@ -2957,7 +2959,7 @@
   },
   {
    "i": 326,
-   "canon": 339,
+   "canon": 348,
    "name": "stop_release[D=responder,R=controls,A=a1,T=t0]",
    "rule": "stop_release",
    "kind": "clause",
@@ -2966,7 +2968,7 @@
   },
   {
    "i": 327,
-   "canon": 340,
+   "canon": 349,
    "name": "stop_release[D=responder,R=controls,A=a1,T=t1]",
    "rule": "stop_release",
    "kind": "clause",
@@ -2975,7 +2977,7 @@
   },
   {
    "i": 328,
-   "canon": 341,
+   "canon": 350,
    "name": "stop_release[D=responder,R=controls,A=a1,T=t2]",
    "rule": "stop_release",
    "kind": "clause",
@@ -2984,7 +2986,7 @@
   },
   {
    "i": 329,
-   "canon": 342,
+   "canon": 351,
    "name": "stop_release[D=responder,R=controls,A=a1,T=t3]",
    "rule": "stop_release",
    "kind": "clause",
@@ -2993,7 +2995,7 @@
   },
   {
    "i": 330,
-   "canon": 343,
+   "canon": 352,
    "name": "stop_release[D=responder,R=controls,A=a1,T=t4]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3002,7 +3004,7 @@
   },
   {
    "i": 331,
-   "canon": 344,
+   "canon": 353,
    "name": "stop_release[D=responder,R=controls,A=a1,T=t5]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3011,7 +3013,7 @@
   },
   {
    "i": 332,
-   "canon": 345,
+   "canon": 354,
    "name": "stop_release[D=responder,R=controls,A=a1,T=t6]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3020,7 +3022,7 @@
   },
   {
    "i": 333,
-   "canon": 346,
+   "canon": 355,
    "name": "stop_release[D=responder,R=controls,A=a1,T=t7]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3029,7 +3031,7 @@
   },
   {
    "i": 334,
-   "canon": 349,
+   "canon": 359,
    "name": "stop_release[D=responder,R=controls,A=a2,T=t0]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3038,7 +3040,7 @@
   },
   {
    "i": 335,
-   "canon": 350,
+   "canon": 360,
    "name": "stop_release[D=responder,R=controls,A=a2,T=t1]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3047,7 +3049,7 @@
   },
   {
    "i": 336,
-   "canon": 351,
+   "canon": 361,
    "name": "stop_release[D=responder,R=controls,A=a2,T=t2]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3056,7 +3058,7 @@
   },
   {
    "i": 337,
-   "canon": 352,
+   "canon": 362,
    "name": "stop_release[D=responder,R=controls,A=a2,T=t3]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3065,7 +3067,7 @@
   },
   {
    "i": 338,
-   "canon": 353,
+   "canon": 363,
    "name": "stop_release[D=responder,R=controls,A=a2,T=t4]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3074,7 +3076,7 @@
   },
   {
    "i": 339,
-   "canon": 354,
+   "canon": 364,
    "name": "stop_release[D=responder,R=controls,A=a2,T=t5]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3083,7 +3085,7 @@
   },
   {
    "i": 340,
-   "canon": 355,
+   "canon": 365,
    "name": "stop_release[D=responder,R=controls,A=a2,T=t6]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3092,7 +3094,7 @@
   },
   {
    "i": 341,
-   "canon": 356,
+   "canon": 366,
    "name": "stop_release[D=responder,R=controls,A=a2,T=t7]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3101,7 +3103,7 @@
   },
   {
    "i": 342,
-   "canon": 361,
+   "canon": 372,
    "name": "stop_release[D=responder,R=controls,A=a3,T=t0]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3110,7 +3112,7 @@
   },
   {
    "i": 343,
-   "canon": 362,
+   "canon": 373,
    "name": "stop_release[D=responder,R=controls,A=a3,T=t1]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3119,7 +3121,7 @@
   },
   {
    "i": 344,
-   "canon": 363,
+   "canon": 374,
    "name": "stop_release[D=responder,R=controls,A=a3,T=t2]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3128,7 +3130,7 @@
   },
   {
    "i": 345,
-   "canon": 364,
+   "canon": 375,
    "name": "stop_release[D=responder,R=controls,A=a3,T=t3]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3137,7 +3139,7 @@
   },
   {
    "i": 346,
-   "canon": 365,
+   "canon": 376,
    "name": "stop_release[D=responder,R=controls,A=a3,T=t4]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3146,7 +3148,7 @@
   },
   {
    "i": 347,
-   "canon": 366,
+   "canon": 377,
    "name": "stop_release[D=responder,R=controls,A=a3,T=t5]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3155,7 +3157,7 @@
   },
   {
    "i": 348,
-   "canon": 367,
+   "canon": 378,
    "name": "stop_release[D=responder,R=controls,A=a3,T=t6]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3164,7 +3166,7 @@
   },
   {
    "i": 349,
-   "canon": 368,
+   "canon": 379,
    "name": "stop_release[D=responder,R=controls,A=a3,T=t7]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3173,7 +3175,7 @@
   },
   {
    "i": 350,
-   "canon": 30,
+   "canon": 34,
    "name": "stop_release[D=planner,R=controls,A=a0,T=t0]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3182,7 +3184,7 @@
   },
   {
    "i": 351,
-   "canon": 31,
+   "canon": 35,
    "name": "stop_release[D=planner,R=controls,A=a0,T=t1]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3191,7 +3193,7 @@
   },
   {
    "i": 352,
-   "canon": 32,
+   "canon": 36,
    "name": "stop_release[D=planner,R=controls,A=a0,T=t2]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3200,7 +3202,7 @@
   },
   {
    "i": 353,
-   "canon": 33,
+   "canon": 37,
    "name": "stop_release[D=planner,R=controls,A=a0,T=t3]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3209,7 +3211,7 @@
   },
   {
    "i": 354,
-   "canon": 34,
+   "canon": 38,
    "name": "stop_release[D=planner,R=controls,A=a0,T=t4]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3218,7 +3220,7 @@
   },
   {
    "i": 355,
-   "canon": 35,
+   "canon": 39,
    "name": "stop_release[D=planner,R=controls,A=a0,T=t5]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3227,7 +3229,7 @@
   },
   {
    "i": 356,
-   "canon": 36,
+   "canon": 40,
    "name": "stop_release[D=planner,R=controls,A=a0,T=t6]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3236,7 +3238,7 @@
   },
   {
    "i": 357,
-   "canon": 37,
+   "canon": 41,
    "name": "stop_release[D=planner,R=controls,A=a0,T=t7]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3245,7 +3247,7 @@
   },
   {
    "i": 358,
-   "canon": 104,
+   "canon": 109,
    "name": "stop_release[D=planner,R=controls,A=a1,T=t0]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3254,7 +3256,7 @@
   },
   {
    "i": 359,
-   "canon": 105,
+   "canon": 110,
    "name": "stop_release[D=planner,R=controls,A=a1,T=t1]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3263,7 +3265,7 @@
   },
   {
    "i": 360,
-   "canon": 106,
+   "canon": 111,
    "name": "stop_release[D=planner,R=controls,A=a1,T=t2]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3272,7 +3274,7 @@
   },
   {
    "i": 361,
-   "canon": 107,
+   "canon": 112,
    "name": "stop_release[D=planner,R=controls,A=a1,T=t3]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3281,7 +3283,7 @@
   },
   {
    "i": 362,
-   "canon": 108,
+   "canon": 113,
    "name": "stop_release[D=planner,R=controls,A=a1,T=t4]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3290,7 +3292,7 @@
   },
   {
    "i": 363,
-   "canon": 109,
+   "canon": 114,
    "name": "stop_release[D=planner,R=controls,A=a1,T=t5]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3299,7 +3301,7 @@
   },
   {
    "i": 364,
-   "canon": 110,
+   "canon": 115,
    "name": "stop_release[D=planner,R=controls,A=a1,T=t6]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3308,7 +3310,7 @@
   },
   {
    "i": 365,
-   "canon": 111,
+   "canon": 116,
    "name": "stop_release[D=planner,R=controls,A=a1,T=t7]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3317,7 +3319,7 @@
   },
   {
    "i": 366,
-   "canon": 178,
+   "canon": 184,
    "name": "stop_release[D=planner,R=controls,A=a2,T=t0]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3326,7 +3328,7 @@
   },
   {
    "i": 367,
-   "canon": 179,
+   "canon": 185,
    "name": "stop_release[D=planner,R=controls,A=a2,T=t1]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3335,7 +3337,7 @@
   },
   {
    "i": 368,
-   "canon": 180,
+   "canon": 186,
    "name": "stop_release[D=planner,R=controls,A=a2,T=t2]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3344,7 +3346,7 @@
   },
   {
    "i": 369,
-   "canon": 181,
+   "canon": 187,
    "name": "stop_release[D=planner,R=controls,A=a2,T=t3]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3353,7 +3355,7 @@
   },
   {
    "i": 370,
-   "canon": 182,
+   "canon": 188,
    "name": "stop_release[D=planner,R=controls,A=a2,T=t4]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3362,7 +3364,7 @@
   },
   {
    "i": 371,
-   "canon": 183,
+   "canon": 189,
    "name": "stop_release[D=planner,R=controls,A=a2,T=t5]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3371,7 +3373,7 @@
   },
   {
    "i": 372,
-   "canon": 184,
+   "canon": 190,
    "name": "stop_release[D=planner,R=controls,A=a2,T=t6]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3380,7 +3382,7 @@
   },
   {
    "i": 373,
-   "canon": 185,
+   "canon": 191,
    "name": "stop_release[D=planner,R=controls,A=a2,T=t7]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3389,7 +3391,7 @@
   },
   {
    "i": 374,
-   "canon": 254,
+   "canon": 261,
    "name": "stop_release[D=planner,R=controls,A=a3,T=t0]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3398,7 +3400,7 @@
   },
   {
    "i": 375,
-   "canon": 255,
+   "canon": 262,
    "name": "stop_release[D=planner,R=controls,A=a3,T=t1]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3407,7 +3409,7 @@
   },
   {
    "i": 376,
-   "canon": 256,
+   "canon": 263,
    "name": "stop_release[D=planner,R=controls,A=a3,T=t2]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3416,7 +3418,7 @@
   },
   {
    "i": 377,
-   "canon": 257,
+   "canon": 264,
    "name": "stop_release[D=planner,R=controls,A=a3,T=t3]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3425,7 +3427,7 @@
   },
   {
    "i": 378,
-   "canon": 258,
+   "canon": 265,
    "name": "stop_release[D=planner,R=controls,A=a3,T=t4]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3434,7 +3436,7 @@
   },
   {
    "i": 379,
-   "canon": 259,
+   "canon": 266,
    "name": "stop_release[D=planner,R=controls,A=a3,T=t5]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3443,7 +3445,7 @@
   },
   {
    "i": 380,
-   "canon": 260,
+   "canon": 267,
    "name": "stop_release[D=planner,R=controls,A=a3,T=t6]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3452,7 +3454,7 @@
   },
   {
    "i": 381,
-   "canon": 261,
+   "canon": 268,
    "name": "stop_release[D=planner,R=controls,A=a3,T=t7]",
    "rule": "stop_release",
    "kind": "clause",
@@ -3461,7 +3463,7 @@
   },
   {
    "i": 382,
-   "canon": 402,
+   "canon": 420,
    "name": "stop_dequeue[D=responder,R=controls,T=t0]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -3470,7 +3472,7 @@
   },
   {
    "i": 383,
-   "canon": 403,
+   "canon": 421,
    "name": "stop_dequeue[D=responder,R=controls,T=t1]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -3479,7 +3481,7 @@
   },
   {
    "i": 384,
-   "canon": 404,
+   "canon": 422,
    "name": "stop_dequeue[D=responder,R=controls,T=t2]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -3488,7 +3490,7 @@
   },
   {
    "i": 385,
-   "canon": 405,
+   "canon": 423,
    "name": "stop_dequeue[D=responder,R=controls,T=t3]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -3497,7 +3499,7 @@
   },
   {
    "i": 386,
-   "canon": 406,
+   "canon": 424,
    "name": "stop_dequeue[D=responder,R=controls,T=t4]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -3506,7 +3508,7 @@
   },
   {
    "i": 387,
-   "canon": 407,
+   "canon": 425,
    "name": "stop_dequeue[D=responder,R=controls,T=t5]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -3515,7 +3517,7 @@
   },
   {
    "i": 388,
-   "canon": 408,
+   "canon": 426,
    "name": "stop_dequeue[D=responder,R=controls,T=t6]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -3524,7 +3526,7 @@
   },
   {
    "i": 389,
-   "canon": 409,
+   "canon": 427,
    "name": "stop_dequeue[D=responder,R=controls,T=t7]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -3533,7 +3535,7 @@
   },
   {
    "i": 390,
-   "canon": 394,
+   "canon": 412,
    "name": "stop_dequeue[D=planner,R=controls,T=t0]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -3542,7 +3544,7 @@
   },
   {
    "i": 391,
-   "canon": 395,
+   "canon": 413,
    "name": "stop_dequeue[D=planner,R=controls,T=t1]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -3551,7 +3553,7 @@
   },
   {
    "i": 392,
-   "canon": 396,
+   "canon": 414,
    "name": "stop_dequeue[D=planner,R=controls,T=t2]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -3560,7 +3562,7 @@
   },
   {
    "i": 393,
-   "canon": 397,
+   "canon": 415,
    "name": "stop_dequeue[D=planner,R=controls,T=t3]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -3569,7 +3571,7 @@
   },
   {
    "i": 394,
-   "canon": 398,
+   "canon": 416,
    "name": "stop_dequeue[D=planner,R=controls,T=t4]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -3578,7 +3580,7 @@
   },
   {
    "i": 395,
-   "canon": 399,
+   "canon": 417,
    "name": "stop_dequeue[D=planner,R=controls,T=t5]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -3587,7 +3589,7 @@
   },
   {
    "i": 396,
-   "canon": 400,
+   "canon": 418,
    "name": "stop_dequeue[D=planner,R=controls,T=t6]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -3596,7 +3598,7 @@
   },
   {
    "i": 397,
-   "canon": 401,
+   "canon": 419,
    "name": "stop_dequeue[D=planner,R=controls,T=t7]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -3605,7 +3607,187 @@
   },
   {
    "i": 398,
-   "canon": 338,
+   "canon": 401,
+   "name": "commit_on[D=responder,R=controls]",
+   "rule": "commit_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s action on {R} is atomic."
+  },
+  {
+   "i": 399,
+   "canon": 400,
+   "name": "commit_on[D=planner,R=controls]",
+   "rule": "commit_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s action on {R} is atomic."
+  },
+  {
+   "i": 400,
+   "canon": 442,
+   "name": "commit_more[D=responder,R=controls]",
+   "rule": "commit_more",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} says again that its action on {R} is atomic."
+  },
+  {
+   "i": 401,
+   "canon": 441,
+   "name": "commit_more[D=planner,R=controls]",
+   "rule": "commit_more",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} says again that its action on {R} is atomic."
+  },
+  {
+   "i": 402,
+   "canon": 17,
+   "name": "commit_off[D=responder,R=controls]",
+   "rule": "commit_off",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s atomic action on {R} is over."
+  },
+  {
+   "i": 403,
+   "canon": 15,
+   "name": "commit_off[D=planner,R=controls]",
+   "rule": "commit_off",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s atomic action on {R} is over."
+  },
+  {
+   "i": 404,
+   "canon": 16,
+   "name": "stop_committed[D=responder,R=controls]",
+   "rule": "stop_committed",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {D}'s action on {R} is atomic, its revoke waits."
+  },
+  {
+   "i": 405,
+   "canon": 14,
+   "name": "stop_committed[D=planner,R=controls]",
+   "rule": "stop_committed",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {D}'s action on {R} is atomic, its revoke waits."
+  },
+  {
+   "i": 406,
+   "canon": 407,
+   "name": "yield_owing[D=responder,R=controls]",
+   "rule": "yield_owing",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s atomic action on {R} is over, and a stop came: the revoke is owed."
+  },
+  {
+   "i": 407,
+   "canon": 406,
+   "name": "yield_owing[D=planner,R=controls]",
+   "rule": "yield_owing",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s atomic action on {R} is over, and a stop came: the revoke is owed."
+  },
+  {
+   "i": 408,
+   "canon": 345,
+   "name": "owed_release[D=responder,R=controls,A=a0]",
+   "rule": "owed_release",
+   "kind": "clause",
+   "stage": "act",
+   "line": "The stop's revoke: {R} is free."
+  },
+  {
+   "i": 409,
+   "canon": 356,
+   "name": "owed_release[D=responder,R=controls,A=a1]",
+   "rule": "owed_release",
+   "kind": "clause",
+   "stage": "act",
+   "line": "The stop's revoke: {R} is free."
+  },
+  {
+   "i": 410,
+   "canon": 368,
+   "name": "owed_release[D=responder,R=controls,A=a2]",
+   "rule": "owed_release",
+   "kind": "clause",
+   "stage": "act",
+   "line": "The stop's revoke: {R} is free."
+  },
+  {
+   "i": 411,
+   "canon": 381,
+   "name": "owed_release[D=responder,R=controls,A=a3]",
+   "rule": "owed_release",
+   "kind": "clause",
+   "stage": "act",
+   "line": "The stop's revoke: {R} is free."
+  },
+  {
+   "i": 412,
+   "canon": 106,
+   "name": "owed_release[D=planner,R=controls,A=a0]",
+   "rule": "owed_release",
+   "kind": "clause",
+   "stage": "act",
+   "line": "The stop's revoke: {R} is free."
+  },
+  {
+   "i": 413,
+   "canon": 181,
+   "name": "owed_release[D=planner,R=controls,A=a1]",
+   "rule": "owed_release",
+   "kind": "clause",
+   "stage": "act",
+   "line": "The stop's revoke: {R} is free."
+  },
+  {
+   "i": 414,
+   "canon": 257,
+   "name": "owed_release[D=planner,R=controls,A=a2]",
+   "rule": "owed_release",
+   "kind": "clause",
+   "stage": "act",
+   "line": "The stop's revoke: {R} is free."
+  },
+  {
+   "i": 415,
+   "canon": 334,
+   "name": "owed_release[D=planner,R=controls,A=a3]",
+   "rule": "owed_release",
+   "kind": "clause",
+   "stage": "act",
+   "line": "The stop's revoke: {R} is free."
+  },
+  {
+   "i": 416,
+   "canon": 405,
+   "name": "owed_drop[D=responder,R=controls]",
+   "rule": "owed_drop",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped again: what was owed is this stop's."
+  },
+  {
+   "i": 417,
+   "canon": 404,
+   "name": "owed_drop[D=planner,R=controls]",
+   "rule": "owed_drop",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped again: what was owed is this stop's."
+  },
+  {
+   "i": 418,
+   "canon": 347,
    "name": "age_grant[D=responder,A=a0,B=a1]",
    "rule": "age_grant",
    "kind": "clause",
@@ -3613,8 +3795,8 @@
    "line": "A tick: {D}'s grant is older."
   },
   {
-   "i": 399,
-   "canon": 348,
+   "i": 419,
+   "canon": 358,
    "name": "age_grant[D=responder,A=a1,B=a2]",
    "rule": "age_grant",
    "kind": "clause",
@@ -3622,8 +3804,8 @@
    "line": "A tick: {D}'s grant is older."
   },
   {
-   "i": 400,
-   "canon": 360,
+   "i": 420,
+   "canon": 371,
    "name": "age_grant[D=responder,A=a2,B=a3]",
    "rule": "age_grant",
    "kind": "clause",
@@ -3631,8 +3813,8 @@
    "line": "A tick: {D}'s grant is older."
   },
   {
-   "i": 401,
-   "canon": 103,
+   "i": 421,
+   "canon": 108,
    "name": "age_grant[D=planner,A=a0,B=a1]",
    "rule": "age_grant",
    "kind": "clause",
@@ -3640,8 +3822,8 @@
    "line": "A tick: {D}'s grant is older."
   },
   {
-   "i": 402,
-   "canon": 177,
+   "i": 422,
+   "canon": 183,
    "name": "age_grant[D=planner,A=a1,B=a2]",
    "rule": "age_grant",
    "kind": "clause",
@@ -3649,8 +3831,8 @@
    "line": "A tick: {D}'s grant is older."
   },
   {
-   "i": 403,
-   "canon": 253,
+   "i": 423,
+   "canon": 260,
    "name": "age_grant[D=planner,A=a2,B=a3]",
    "rule": "age_grant",
    "kind": "clause",
@@ -3658,8 +3840,8 @@
    "line": "A tick: {D}'s grant is older."
   },
   {
-   "i": 404,
-   "canon": 420,
+   "i": 424,
+   "canon": 438,
    "name": "age_grant_top[D=responder,A=a3]",
    "rule": "age_grant_top",
    "kind": "clause",
@@ -3667,8 +3849,8 @@
    "line": "A tick: {D}'s grant is as old as it counts."
   },
   {
-   "i": 405,
-   "canon": 419,
+   "i": 425,
+   "canon": 437,
    "name": "age_grant_top[D=planner,A=a3]",
    "rule": "age_grant_top",
    "kind": "clause",
@@ -3676,8 +3858,8 @@
    "line": "A tick: {D}'s grant is as old as it counts."
   },
   {
-   "i": 406,
-   "canon": 418,
+   "i": 426,
+   "canon": 436,
    "name": "tick_free[R=controls]",
    "rule": "tick_free",
    "kind": "clause",
@@ -3685,7 +3867,7 @@
    "line": "A tick: {R} is free."
   },
   {
-   "i": 407,
+   "i": 427,
    "canon": 7,
    "name": "status_reset[D=responder,A=a0]",
    "rule": "status_reset",
@@ -3694,7 +3876,7 @@
    "line": "{D}'s status changed: its age starts again."
   },
   {
-   "i": 408,
+   "i": 428,
    "canon": 9,
    "name": "status_reset[D=responder,A=a1]",
    "rule": "status_reset",
@@ -3703,7 +3885,7 @@
    "line": "{D}'s status changed: its age starts again."
   },
   {
-   "i": 409,
+   "i": 429,
    "canon": 11,
    "name": "status_reset[D=responder,A=a2]",
    "rule": "status_reset",
@@ -3712,7 +3894,7 @@
    "line": "{D}'s status changed: its age starts again."
   },
   {
-   "i": 410,
+   "i": 430,
    "canon": 13,
    "name": "status_reset[D=responder,A=a3]",
    "rule": "status_reset",
@@ -3721,7 +3903,7 @@
    "line": "{D}'s status changed: its age starts again."
   },
   {
-   "i": 411,
+   "i": 431,
    "canon": 0,
    "name": "status_reset[D=planner,A=a0]",
    "rule": "status_reset",
@@ -3730,7 +3912,7 @@
    "line": "{D}'s status changed: its age starts again."
   },
   {
-   "i": 412,
+   "i": 432,
    "canon": 2,
    "name": "status_reset[D=planner,A=a1]",
    "rule": "status_reset",
@@ -3739,7 +3921,7 @@
    "line": "{D}'s status changed: its age starts again."
   },
   {
-   "i": 413,
+   "i": 433,
    "canon": 4,
    "name": "status_reset[D=planner,A=a2]",
    "rule": "status_reset",
@@ -3748,7 +3930,7 @@
    "line": "{D}'s status changed: its age starts again."
   },
   {
-   "i": 414,
+   "i": 434,
    "canon": 6,
    "name": "status_reset[D=planner,A=a3]",
    "rule": "status_reset",
@@ -3757,7 +3939,7 @@
    "line": "{D}'s status changed: its age starts again."
   },
   {
-   "i": 415,
+   "i": 435,
    "canon": 8,
    "name": "status_age[D=responder,A=a0,B=a1]",
    "rule": "status_age",
@@ -3766,7 +3948,7 @@
    "line": "A tick: {D}'s status is older."
   },
   {
-   "i": 416,
+   "i": 436,
    "canon": 10,
    "name": "status_age[D=responder,A=a1,B=a2]",
    "rule": "status_age",
@@ -3775,7 +3957,7 @@
    "line": "A tick: {D}'s status is older."
   },
   {
-   "i": 417,
+   "i": 437,
    "canon": 12,
    "name": "status_age[D=responder,A=a2,B=a3]",
    "rule": "status_age",
@@ -3784,7 +3966,7 @@
    "line": "A tick: {D}'s status is older."
   },
   {
-   "i": 418,
+   "i": 438,
    "canon": 1,
    "name": "status_age[D=planner,A=a0,B=a1]",
    "rule": "status_age",
@@ -3793,7 +3975,7 @@
    "line": "A tick: {D}'s status is older."
   },
   {
-   "i": 419,
+   "i": 439,
    "canon": 3,
    "name": "status_age[D=planner,A=a1,B=a2]",
    "rule": "status_age",
@@ -3802,7 +3984,7 @@
    "line": "A tick: {D}'s status is older."
   },
   {
-   "i": 420,
+   "i": 440,
    "canon": 5,
    "name": "status_age[D=planner,A=a2,B=a3]",
    "rule": "status_age",
@@ -3811,8 +3993,8 @@
    "line": "A tick: {D}'s status is older."
   },
   {
-   "i": 421,
-   "canon": 430,
+   "i": 441,
+   "canon": 450,
    "name": "status_top[D=responder,A=a3]",
    "rule": "status_top",
    "kind": "clause",
@@ -3820,8 +4002,8 @@
    "line": "A tick: {D}'s status is as old as it counts."
   },
   {
-   "i": 422,
-   "canon": 429,
+   "i": 442,
+   "canon": 449,
    "name": "status_top[D=planner,A=a3]",
    "rule": "status_top",
    "kind": "clause",
@@ -3829,8 +4011,8 @@
    "line": "A tick: {D}'s status is as old as it counts."
   },
   {
-   "i": 423,
-   "canon": 389,
+   "i": 443,
+   "canon": 403,
    "name": "path_push[D=responder]",
    "rule": "path_push",
    "kind": "clause",
@@ -3838,8 +4020,8 @@
    "line": "{D} is active: on the path."
   },
   {
-   "i": 424,
-   "canon": 388,
+   "i": 444,
+   "canon": 402,
    "name": "path_push[D=planner]",
    "rule": "path_push",
    "kind": "clause",
@@ -3847,8 +4029,8 @@
    "line": "{D} is active: on the path."
   },
   {
-   "i": 425,
-   "canon": 422,
+   "i": 445,
+   "canon": 440,
    "name": "active_more[D=responder]",
    "rule": "active_more",
    "kind": "clause",
@@ -3856,8 +4038,8 @@
    "line": "{D} is active, and on the path already."
   },
   {
-   "i": 426,
-   "canon": 421,
+   "i": 446,
+   "canon": 439,
    "name": "active_more[D=planner]",
    "rule": "active_more",
    "kind": "clause",
@@ -3865,8 +4047,8 @@
    "line": "{D} is active, and on the path already."
   },
   {
-   "i": 427,
-   "canon": 392,
+   "i": 447,
+   "canon": 410,
    "name": "path_pop[D=responder]",
    "rule": "path_pop",
    "kind": "clause",
@@ -3874,8 +4056,8 @@
    "line": "{D} is done: off the path."
   },
   {
-   "i": 428,
-   "canon": 390,
+   "i": 448,
+   "canon": 408,
    "name": "path_pop[D=planner]",
    "rule": "path_pop",
    "kind": "clause",
@@ -3883,8 +4065,8 @@
    "line": "{D} is done: off the path."
   },
   {
-   "i": 429,
-   "canon": 424,
+   "i": 449,
+   "canon": 444,
    "name": "done_off[D=responder]",
    "rule": "done_off",
    "kind": "clause",
@@ -3892,8 +4074,8 @@
    "line": "{D} is done, and off the path already."
   },
   {
-   "i": 430,
-   "canon": 423,
+   "i": 450,
+   "canon": 443,
    "name": "done_off[D=planner]",
    "rule": "done_off",
    "kind": "clause",
@@ -4306,6 +4488,11 @@
        "kept": true
       },
       {
+       "atom": "nocommit(D)",
+       "n": 1,
+       "kept": true
+      },
+      {
        "atom": "holder(D,R)",
        "n": 1,
        "kept": false
@@ -4363,6 +4550,189 @@
        "kept": false
       }
      ],
+     "target": null
+    },
+    {
+     "name": "commit_on",
+     "stage": "act",
+     "doc": "{D}'s action on {R} is atomic.",
+     "premises": [
+      {
+       "atom": "tick__committed(D,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "nocommit(D)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [
+      {
+       "atom": "commit(D,R)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "commit_more",
+     "stage": "act",
+     "doc": "{D} says again that its action on {R} is atomic.",
+     "premises": [
+      {
+       "atom": "tick__committed(D,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "commit(D,R)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [],
+     "target": null
+    },
+    {
+     "name": "commit_off",
+     "stage": "act",
+     "doc": "{D}'s atomic action on {R} is over.",
+     "premises": [
+      {
+       "atom": "tick__yield(D,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "commit(D,R)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [
+      {
+       "atom": "nocommit(D)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "stop_committed",
+     "stage": "act",
+     "doc": "Stopped: {D}'s action on {R} is atomic, its revoke waits.",
+     "premises": [
+      {
+       "atom": "tick__stop",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "commit(D,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "holder(D,R)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [
+      {
+       "atom": "owing(D,R)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "yield_owing",
+     "stage": "act",
+     "doc": "{D}'s atomic action on {R} is over, and a stop came: the revoke is owed.",
+     "premises": [
+      {
+       "atom": "tick__yield(D,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "owing(D,R)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [
+      {
+       "atom": "nocommit(D)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "owed(D,R)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "owed_release",
+     "stage": "act",
+     "doc": "The stop's revoke: {R} is free.",
+     "premises": [
+      {
+       "atom": "owed(D,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "holder(D,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "held(D,A)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [
+      {
+       "atom": "free(R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__revoke(D,R)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "owed_drop",
+     "stage": "act",
+     "doc": "Stopped again: what was owed is this stop's.",
+     "premises": [
+      {
+       "atom": "tick__stop",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "owed(D,R)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [],
      "target": null
     },
     {
@@ -4642,6 +5012,14 @@
      "doc": ""
     },
     {
+     "name": "tick__committed",
+     "doc": ""
+    },
+    {
+     "name": "tick__yield",
+     "doc": ""
+    },
+    {
      "name": "tick__grant",
      "doc": ""
     },
@@ -4702,6 +5080,22 @@
      "doc": ""
     },
     {
+     "name": "nocommit",
+     "doc": ""
+    },
+    {
+     "name": "commit",
+     "doc": ""
+    },
+    {
+     "name": "owing",
+     "doc": ""
+    },
+    {
+     "name": "owed",
+     "doc": ""
+    },
+    {
      "name": "want",
      "doc": ""
     },
@@ -4743,6 +5137,8 @@
      "tick__stuck",
      "tick__want",
      "tick__release",
+     "tick__committed",
+     "tick__yield",
      "tick__grant",
      "tick__goal",
      "tick__revoke",
@@ -4758,6 +5154,10 @@
      "late",
      "nolate",
      "late_release",
+     "nocommit",
+     "commit",
+     "owing",
+     "owed",
      "want",
      "nowant",
      "path",

@@ -1,7 +1,7 @@
 link composition.yaml
-member pot_director direct wire 9f9725b623ab2100c24ef9b690a457f83aacfed7e2d526b921c0c0b7bd9166fb bundle 057b5369d8d1 source 7148206b511338197b2eda2917cce38fc5d0debea282a4fcc849d8b11156a5ed
-member cook_a specialist wire 52e1ff7ceb4edd32b4e3ad391cdc663bc0bbb907b28aa0799af4040b53247b0a bundle 45d2dce1f9cc source 16512e909319140bb9c94ccdb676a55066ce2ab442dbc92158095473a1e4417b
-member cook_b specialist wire 0c3d83b14a8c8fc520b8a0f99080af3712c75f022977e91fa9ce40394afe8618 bundle b0cf6ed074d1 source cabc1349806ff30a7fd0cf0aca1bf75b300c75d459f43cf4eaf6738fddffbbab
+member pot_director direct wire efd87804a48160d42dbde0d094bbd06f1f0780e2eb4181f3759191f343c309cd bundle a280ca1f7b0a source a06b2f764b57dfd44441e9f44f3d2c7e82aa598025d18df8084ebf09c276d011
+member cook_a specialist wire 52e1ff7ceb4edd32b4e3ad391cdc663bc0bbb907b28aa0799af4040b53247b0a bundle ae5c3bbbaa02 source 754c51fa4b4dee55f890304c47989f48fd824b6bccc5237e33fa13f7d4f05d96
+member cook_b specialist wire 0c3d83b14a8c8fc520b8a0f99080af3712c75f022977e91fa9ce40394afe8618 bundle e901289c9073 source 8a7e16e6456b9a47d10bc39c9f158f5cca4a7da756b0c7814cdd8ff6c59d6279
 director pot_director hand (transitional) planner - kinds none
   specialist(cook_a).
   specialist(cook_b).
@@ -10,7 +10,7 @@ warning L18 no response: linked with rho = infinity
 warning L21 cook_a's host cook_host.py:make: no file cook_host.py beside it (the runtime that loads it must have it)
 warning L21 cook_b's host cook_host.py:make: no file cook_host.py beside it (the runtime that loads it must have it)
 warning L21 pot_director's host pass_host.py:make: no file pass_host.py beside it (the runtime that loads it must have it)
-interface 0 error(s), 4 warning(s)
-image kitchen_pot v-339568ee276b
-result 0 error(s), 9 warning(s)
+interface 0 error(s), 6 warning(s)
+image kitchen_pot v-cc91b0ca5a65
+result 0 error(s), 11 warning(s)
 rc 0

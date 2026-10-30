@@ -1,15 +1,15 @@
 interface composition.yaml
-iface protocol_domain std:iface/protocol_domain.llp 78116a6c02a8584a595dd1d4d9bc465613a68eb1d62785e3791d75fa4cacbc60
+iface protocol_domain std:iface/protocol_domain.llp 2daa98a645e282c6b66c75a4056f8da9e2de533543fd7ce2d1666cb6bdf336c0
 iface minihack_iface iface/minihack.llp d48d34810d4632feab8187d31b65aad7f03017f9ba119f62359ec9ae0c651d69
 capacity capacity.llp 154af6234d85acb6901f7a8a7bbc108fd9132725007314b4aec9ccd90436c61c
-member director direct director/director.llp key 08c468c967e5b5c8051401022cf5bfb6f789b3e109591085c97b4ddf94997619 ei ec99356516c0e8736fb88f60083f82c205072d3d50f60900f5352fa156fa07e8
-member task specialist task/task.llp key 4494a61e61189ae6622b43747662195881f26fe6aad1ec8a7e2055b5ec391683 ei 4d2d8d14e6250e933caf99df739f8d00aa2f010d51fea3ffd9a4092407d2782d
-member nav specialist nav/nav.llp key a264f5cd190e141e4c95a8e2d4646ed81aeaed3ec9b57a46dc5f04ac9e35a1c1 ei e2261bfd80384a9b8cc12a6eb211989f552c38300e4bff76f07f40d4d83982c5
-member act specialist act/act.llp key 33191b82649117871fd2c3f05b73df46a7b6fcdb4633489609a3f5d5d5628294 ei 0b857c8a35cd3f6aa067f480271868ea4a95e2b869544e3d1f3ff2b83613c522
-package 403c1ab807c6fca9f66af9079d30a1eabfc089a3bb5623aed2c2ae648ebd682b
+member director direct director/director.llp key 9aa4899f50fb27f2b0e0368074864fd17dc5c9ebfbe43c549f3f0a0689b5819e ei a12da886f6354486ef9d2161a2aa234984133ca9d9a32c029b803ebee8fab1d7
+member task specialist task/task.llp key 6bbf074b52367d9bb86fb38af4acb996133417013263ebfb4dc536cef961b419 ei a6afe5b7f51dfbe5427ace5b7360717d4522f244e4a054af4214314eee2dfaf1
+member nav specialist nav/nav.llp key 7850cdf5473918ec85354d05fa56459073c7be7ea0aaaa644255e2004196184b ei c356e4457ba60abad8137d4ba0b527d44b44aff006156ae9777d15763c30322c
+member act specialist act/act.llp key a3df86e820105f17f66fc09aa2532bd6c4663560149476233e289da198c4f179 ei 305aebc687df866ae70a7ed245ae1f5cc21e4baba52740244e7fa7a1a408c287
+package 834a15906f3cfb5a1475573ada5fe62063ee31b912a4c30ea5214fe1f9096f84
 include dir ../../director_domain.llp ../director_domain.llp key eae3a58005b47eba86ebcb7f5352bcbbf73e4a33bf26c2faba28eff453a6574e by director
-include std iface/director_tree_domain.llp std:iface/director_tree_domain.llp key 9313c63031c264fc328271e225ae57546a949c6e920a60d899ece733a8a94609 by director
-include dir protocol_domain.llp std:iface/protocol_domain.llp key d88e6c824b6bbb0534fef47148e8904553e97071670ce2e7e2e14edc267d7e69 by director task nav act
+include std iface/director_tree_domain.llp std:iface/director_tree_domain.llp key d3dcbb7688468f2be8fc1a8523fd19e7e3f67c54e8a8a6dc95348b69a210cdf6 by director
+include dir protocol_domain.llp std:iface/protocol_domain.llp key e6fa80212a6bb2dde7e0a8028d9a723630410578ba1dd232f1c7334cb8671007 by director task nav act
 include std iface/director_tree_wake.llp std:iface/director_tree_wake.llp key 569a9870f06eac68bf8933cc961fe972b6060f56aab7e435e741ec5fb40af12f by director
 include dir ../task_domain.llp task_domain.llp key 4e0704ba3f9c2f5fe141b5685729d693eaf49551c9a68d9d083c599cc4f16187 by task
 include dir iface/minihack.llp iface/minihack.llp key 315fc7b5080434a9e93289f9999f68fae1caf218828996d04e05b146c2e2be62 by task nav act
@@ -17,7 +17,7 @@ include dir ../capacity.llp capacity.llp key 154af6234d85acb6901f7a8a7bbc108fd91
 include dir ../tick_types.llp tick_types.llp key 1b6bb2856ccee308a7eac539b5bb7f1524b607dd5e13c15c64d16bdf08c68b98 by task nav act
 include dir ../nav_domain.llp nav_domain.llp key a080c9aacb84c76b3cff7cc03715ac86d007b0d3baae694a411a156a427490cb by nav
 include dir ../act_domain.llp act_domain.llp key d2c14d308918ef5521441b2ce72e96d3a4b1fbdd39b95f3d0ff92e13bffc5f1b by act
-cut 24
+cut 26
   cleared reading: out [act(o)] in [task]
   closed reading: out [nav(o)] in []
   done reading: out [task(o)] in []
@@ -33,6 +33,7 @@ cut 24
   stuck reading: out [task(o)] in []
   tick__active signal: out [task(o) nav(o) act(o)] in [director(c)]
   tick__cancel signal: out [director(o)] in [task(c) nav(c) act(c)]
+  tick__committed signal: out [] in [director(c)]
   tick__done signal: out [task(o) nav(o) act(o)] in [director(c)]
   tick__goal state: out [director(co)] in []
   tick__grant reading: out [director(o)] in [nav(r) act(r)]
@@ -42,10 +43,13 @@ cut 24
   tick__stop reading: out [world] in [director(r)]
   tick__stuck signal: out [task(o)] in [director(c)]
   tick__want signal: out [act(o)] in [director(c)]
-private director=32 task=1 nav=9 act=20
+  tick__yield signal: out [] in [director(c)]
+private director=36 task=1 nav=9 act=20
 warning I2 task: in opened is read by no rule (in-unread)
 warning I2 task: in cleared is read by no rule (in-unread)
 warning I2 director: in tick__status is read by no rule (in-unread)
+warning I3 director: in tick__committed is a report nobody sends
+warning I3 director: in tick__yield is a report nobody sends
 warning I4 director: rule stop_cancel withdraws its own out tick__goal (a level the direct member may withdraw)
 warning I4 director: rule path_pop withdraws its own out tick__goal (a level the direct member may withdraw)
 warning I4 director: rule path_off withdraws its own out tick__goal (a level the direct member may withdraw)
@@ -54,5 +58,5 @@ note I3 task: in refused is produced only by director's relay facts, until goal(
 note I3 act: in open is produced only by director's relay facts, until goal(S, K) (§8.4) (transitional)
 note I3 act: in fight is produced only by director's relay facts, until goal(S, K) (§8.4) (transitional)
 note I3 director: in tick__status is produced only by the host's status assertion (amendment 1b) (transitional)
-result 0 error(s), 7 warning(s), 4 note(s)
+result 0 error(s), 9 warning(s), 4 note(s)
 rc 0

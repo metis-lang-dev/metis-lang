@@ -1187,6 +1187,14 @@
      "doc": ""
     },
     {
+     "name": "tick__committed",
+     "doc": ""
+    },
+    {
+     "name": "tick__yield",
+     "doc": ""
+    },
+    {
      "name": "tick__grant",
      "doc": ""
     },
@@ -1229,6 +1237,8 @@
      "tick__stuck",
      "tick__want",
      "tick__release",
+     "tick__committed",
+     "tick__yield",
      "tick__grant",
      "tick__goal",
      "tick__revoke",

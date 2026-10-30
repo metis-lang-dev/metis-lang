@@ -1,7 +1,7 @@
 {
  "format": "metis-sidecar/1",
  "catalog": "pot_director",
- "key": "9f9725b623ab2100c24ef9b690a457f83aacfed7e2d526b921c0c0b7bd9166fb",
+ "key": "efd87804a48160d42dbde0d094bbd06f1f0780e2eb4181f3759191f343c309cd",
  "extensions": [],
  "init": {
   "free(pot)": 1,
@@ -11,6 +11,8 @@
   "nowant(cook_b)": 1,
   "nolate(cook_a)": 1,
   "nolate(cook_b)": 1,
+  "nocommit(cook_a)": 1,
+  "nocommit(cook_b)": 1,
   "age_of(cook_a,a0)": 1,
   "age_of(cook_b,a0)": 1,
   "issue(pot,t0)": 1,
@@ -23,7 +25,7 @@
  "events": [
   {
    "i": 0,
-   "canon": 116,
+   "canon": 128,
    "name": "want_queue[D=cook_a,R=pot,T=t0,T2=t1]",
    "rule": "want_queue",
    "kind": "clause",
@@ -32,7 +34,7 @@
   },
   {
    "i": 1,
-   "canon": 118,
+   "canon": 130,
    "name": "want_queue[D=cook_a,R=pot,T=t1,T2=t2]",
    "rule": "want_queue",
    "kind": "clause",
@@ -41,7 +43,7 @@
   },
   {
    "i": 2,
-   "canon": 120,
+   "canon": 132,
    "name": "want_queue[D=cook_a,R=pot,T=t2,T2=t3]",
    "rule": "want_queue",
    "kind": "clause",
@@ -50,7 +52,7 @@
   },
   {
    "i": 3,
-   "canon": 122,
+   "canon": 134,
    "name": "want_queue[D=cook_a,R=pot,T=t3,T2=t4]",
    "rule": "want_queue",
    "kind": "clause",
@@ -59,7 +61,7 @@
   },
   {
    "i": 4,
-   "canon": 124,
+   "canon": 136,
    "name": "want_queue[D=cook_a,R=pot,T=t4,T2=t5]",
    "rule": "want_queue",
    "kind": "clause",
@@ -68,7 +70,7 @@
   },
   {
    "i": 5,
-   "canon": 126,
+   "canon": 138,
    "name": "want_queue[D=cook_a,R=pot,T=t5,T2=t6]",
    "rule": "want_queue",
    "kind": "clause",
@@ -77,7 +79,7 @@
   },
   {
    "i": 6,
-   "canon": 128,
+   "canon": 140,
    "name": "want_queue[D=cook_a,R=pot,T=t6,T2=t7]",
    "rule": "want_queue",
    "kind": "clause",
@@ -86,7 +88,7 @@
   },
   {
    "i": 7,
-   "canon": 130,
+   "canon": 142,
    "name": "want_queue[D=cook_a,R=pot,T=t7,T2=t0]",
    "rule": "want_queue",
    "kind": "clause",
@@ -95,7 +97,7 @@
   },
   {
    "i": 8,
-   "canon": 117,
+   "canon": 129,
    "name": "want_queue[D=cook_b,R=pot,T=t0,T2=t1]",
    "rule": "want_queue",
    "kind": "clause",
@@ -104,7 +106,7 @@
   },
   {
    "i": 9,
-   "canon": 119,
+   "canon": 131,
    "name": "want_queue[D=cook_b,R=pot,T=t1,T2=t2]",
    "rule": "want_queue",
    "kind": "clause",
@@ -113,7 +115,7 @@
   },
   {
    "i": 10,
-   "canon": 121,
+   "canon": 133,
    "name": "want_queue[D=cook_b,R=pot,T=t2,T2=t3]",
    "rule": "want_queue",
    "kind": "clause",
@@ -122,7 +124,7 @@
   },
   {
    "i": 11,
-   "canon": 123,
+   "canon": 135,
    "name": "want_queue[D=cook_b,R=pot,T=t3,T2=t4]",
    "rule": "want_queue",
    "kind": "clause",
@@ -131,7 +133,7 @@
   },
   {
    "i": 12,
-   "canon": 125,
+   "canon": 137,
    "name": "want_queue[D=cook_b,R=pot,T=t4,T2=t5]",
    "rule": "want_queue",
    "kind": "clause",
@@ -140,7 +142,7 @@
   },
   {
    "i": 13,
-   "canon": 127,
+   "canon": 139,
    "name": "want_queue[D=cook_b,R=pot,T=t5,T2=t6]",
    "rule": "want_queue",
    "kind": "clause",
@@ -149,7 +151,7 @@
   },
   {
    "i": 14,
-   "canon": 129,
+   "canon": 141,
    "name": "want_queue[D=cook_b,R=pot,T=t6,T2=t7]",
    "rule": "want_queue",
    "kind": "clause",
@@ -158,7 +160,7 @@
   },
   {
    "i": 15,
-   "canon": 131,
+   "canon": 143,
    "name": "want_queue[D=cook_b,R=pot,T=t7,T2=t0]",
    "rule": "want_queue",
    "kind": "clause",
@@ -167,7 +169,7 @@
   },
   {
    "i": 16,
-   "canon": 14,
+   "canon": 18,
    "name": "grant_on_want[D=cook_a,R=pot,T=t0,T2=t1]",
    "rule": "grant_on_want",
    "kind": "clause",
@@ -176,7 +178,7 @@
   },
   {
    "i": 17,
-   "canon": 15,
+   "canon": 19,
    "name": "grant_on_want[D=cook_a,R=pot,T=t1,T2=t2]",
    "rule": "grant_on_want",
    "kind": "clause",
@@ -185,7 +187,7 @@
   },
   {
    "i": 18,
-   "canon": 16,
+   "canon": 20,
    "name": "grant_on_want[D=cook_a,R=pot,T=t2,T2=t3]",
    "rule": "grant_on_want",
    "kind": "clause",
@@ -194,7 +196,7 @@
   },
   {
    "i": 19,
-   "canon": 17,
+   "canon": 21,
    "name": "grant_on_want[D=cook_a,R=pot,T=t3,T2=t4]",
    "rule": "grant_on_want",
    "kind": "clause",
@@ -203,7 +205,7 @@
   },
   {
    "i": 20,
-   "canon": 18,
+   "canon": 22,
    "name": "grant_on_want[D=cook_a,R=pot,T=t4,T2=t5]",
    "rule": "grant_on_want",
    "kind": "clause",
@@ -212,7 +214,7 @@
   },
   {
    "i": 21,
-   "canon": 19,
+   "canon": 23,
    "name": "grant_on_want[D=cook_a,R=pot,T=t5,T2=t6]",
    "rule": "grant_on_want",
    "kind": "clause",
@@ -221,7 +223,7 @@
   },
   {
    "i": 22,
-   "canon": 20,
+   "canon": 24,
    "name": "grant_on_want[D=cook_a,R=pot,T=t6,T2=t7]",
    "rule": "grant_on_want",
    "kind": "clause",
@@ -230,7 +232,7 @@
   },
   {
    "i": 23,
-   "canon": 21,
+   "canon": 25,
    "name": "grant_on_want[D=cook_a,R=pot,T=t7,T2=t0]",
    "rule": "grant_on_want",
    "kind": "clause",
@@ -239,7 +241,7 @@
   },
   {
    "i": 24,
-   "canon": 22,
+   "canon": 26,
    "name": "grant_on_want[D=cook_b,R=pot,T=t0,T2=t1]",
    "rule": "grant_on_want",
    "kind": "clause",
@@ -248,7 +250,7 @@
   },
   {
    "i": 25,
-   "canon": 23,
+   "canon": 27,
    "name": "grant_on_want[D=cook_b,R=pot,T=t1,T2=t2]",
    "rule": "grant_on_want",
    "kind": "clause",
@@ -257,7 +259,7 @@
   },
   {
    "i": 26,
-   "canon": 24,
+   "canon": 28,
    "name": "grant_on_want[D=cook_b,R=pot,T=t2,T2=t3]",
    "rule": "grant_on_want",
    "kind": "clause",
@@ -266,7 +268,7 @@
   },
   {
    "i": 27,
-   "canon": 25,
+   "canon": 29,
    "name": "grant_on_want[D=cook_b,R=pot,T=t3,T2=t4]",
    "rule": "grant_on_want",
    "kind": "clause",
@@ -275,7 +277,7 @@
   },
   {
    "i": 28,
-   "canon": 26,
+   "canon": 30,
    "name": "grant_on_want[D=cook_b,R=pot,T=t4,T2=t5]",
    "rule": "grant_on_want",
    "kind": "clause",
@@ -284,7 +286,7 @@
   },
   {
    "i": 29,
-   "canon": 27,
+   "canon": 31,
    "name": "grant_on_want[D=cook_b,R=pot,T=t5,T2=t6]",
    "rule": "grant_on_want",
    "kind": "clause",
@@ -293,7 +295,7 @@
   },
   {
    "i": 30,
-   "canon": 28,
+   "canon": 32,
    "name": "grant_on_want[D=cook_b,R=pot,T=t6,T2=t7]",
    "rule": "grant_on_want",
    "kind": "clause",
@@ -302,7 +304,7 @@
   },
   {
    "i": 31,
-   "canon": 29,
+   "canon": 33,
    "name": "grant_on_want[D=cook_b,R=pot,T=t7,T2=t0]",
    "rule": "grant_on_want",
    "kind": "clause",
@@ -311,7 +313,7 @@
   },
   {
    "i": 32,
-   "canon": 154,
+   "canon": 172,
    "name": "skip_ticket[R=pot,T=t0,T2=t1]",
    "rule": "skip_ticket",
    "kind": "clause",
@@ -320,7 +322,7 @@
   },
   {
    "i": 33,
-   "canon": 155,
+   "canon": 173,
    "name": "skip_ticket[R=pot,T=t1,T2=t2]",
    "rule": "skip_ticket",
    "kind": "clause",
@@ -329,7 +331,7 @@
   },
   {
    "i": 34,
-   "canon": 156,
+   "canon": 174,
    "name": "skip_ticket[R=pot,T=t2,T2=t3]",
    "rule": "skip_ticket",
    "kind": "clause",
@@ -338,7 +340,7 @@
   },
   {
    "i": 35,
-   "canon": 157,
+   "canon": 175,
    "name": "skip_ticket[R=pot,T=t3,T2=t4]",
    "rule": "skip_ticket",
    "kind": "clause",
@@ -347,7 +349,7 @@
   },
   {
    "i": 36,
-   "canon": 158,
+   "canon": 176,
    "name": "skip_ticket[R=pot,T=t4,T2=t5]",
    "rule": "skip_ticket",
    "kind": "clause",
@@ -356,7 +358,7 @@
   },
   {
    "i": 37,
-   "canon": 159,
+   "canon": 177,
    "name": "skip_ticket[R=pot,T=t5,T2=t6]",
    "rule": "skip_ticket",
    "kind": "clause",
@@ -365,7 +367,7 @@
   },
   {
    "i": 38,
-   "canon": 160,
+   "canon": 178,
    "name": "skip_ticket[R=pot,T=t6,T2=t7]",
    "rule": "skip_ticket",
    "kind": "clause",
@@ -374,7 +376,7 @@
   },
   {
    "i": 39,
-   "canon": 161,
+   "canon": 179,
    "name": "skip_ticket[R=pot,T=t7,T2=t0]",
    "rule": "skip_ticket",
    "kind": "clause",
@@ -383,7 +385,7 @@
   },
   {
    "i": 40,
-   "canon": 59,
+   "canon": 66,
    "name": "release_on_report[D=cook_a,R=pot,A=a2]",
    "rule": "release_on_report",
    "kind": "clause",
@@ -392,7 +394,7 @@
   },
   {
    "i": 41,
-   "canon": 71,
+   "canon": 79,
    "name": "release_on_report[D=cook_a,R=pot,A=a3]",
    "rule": "release_on_report",
    "kind": "clause",
@@ -401,7 +403,7 @@
   },
   {
    "i": 42,
-   "canon": 102,
+   "canon": 113,
    "name": "release_on_report[D=cook_b,R=pot,A=a2]",
    "rule": "release_on_report",
    "kind": "clause",
@@ -410,7 +412,7 @@
   },
   {
    "i": 43,
-   "canon": 114,
+   "canon": 126,
    "name": "release_on_report[D=cook_b,R=pot,A=a3]",
    "rule": "release_on_report",
    "kind": "clause",
@@ -419,7 +421,7 @@
   },
   {
    "i": 44,
-   "canon": 169,
+   "canon": 189,
    "name": "release_report_wait[D=cook_a,R=pot,A=a0]",
    "rule": "release_report_wait",
    "kind": "clause",
@@ -428,7 +430,7 @@
   },
   {
    "i": 45,
-   "canon": 170,
+   "canon": 190,
    "name": "release_report_wait[D=cook_a,R=pot,A=a1]",
    "rule": "release_report_wait",
    "kind": "clause",
@@ -437,7 +439,7 @@
   },
   {
    "i": 46,
-   "canon": 171,
+   "canon": 191,
    "name": "release_report_wait[D=cook_b,R=pot,A=a0]",
    "rule": "release_report_wait",
    "kind": "clause",
@@ -446,7 +448,7 @@
   },
   {
    "i": 47,
-   "canon": 172,
+   "canon": 192,
    "name": "release_report_wait[D=cook_b,R=pot,A=a1]",
    "rule": "release_report_wait",
    "kind": "clause",
@@ -455,7 +457,7 @@
   },
   {
    "i": 48,
-   "canon": 58,
+   "canon": 64,
    "name": "release_report_late[D=cook_a,R=pot,A=a2]",
    "rule": "release_report_late",
    "kind": "clause",
@@ -464,7 +466,7 @@
   },
   {
    "i": 49,
-   "canon": 70,
+   "canon": 77,
    "name": "release_report_late[D=cook_a,R=pot,A=a3]",
    "rule": "release_report_late",
    "kind": "clause",
@@ -473,7 +475,7 @@
   },
   {
    "i": 50,
-   "canon": 101,
+   "canon": 111,
    "name": "release_report_late[D=cook_b,R=pot,A=a2]",
    "rule": "release_report_late",
    "kind": "clause",
@@ -482,7 +484,7 @@
   },
   {
    "i": 51,
-   "canon": 113,
+   "canon": 124,
    "name": "release_report_late[D=cook_b,R=pot,A=a3]",
    "rule": "release_report_late",
    "kind": "clause",
@@ -491,7 +493,7 @@
   },
   {
    "i": 52,
-   "canon": 38,
+   "canon": 43,
    "name": "release_stuck[D=cook_a,R=pot,A=a0]",
    "rule": "release_stuck",
    "kind": "clause",
@@ -500,7 +502,7 @@
   },
   {
    "i": 53,
-   "canon": 48,
+   "canon": 54,
    "name": "release_stuck[D=cook_a,R=pot,A=a1]",
    "rule": "release_stuck",
    "kind": "clause",
@@ -509,7 +511,7 @@
   },
   {
    "i": 54,
-   "canon": 60,
+   "canon": 67,
    "name": "release_stuck[D=cook_a,R=pot,A=a2]",
    "rule": "release_stuck",
    "kind": "clause",
@@ -518,7 +520,7 @@
   },
   {
    "i": 55,
-   "canon": 72,
+   "canon": 80,
    "name": "release_stuck[D=cook_a,R=pot,A=a3]",
    "rule": "release_stuck",
    "kind": "clause",
@@ -527,7 +529,7 @@
   },
   {
    "i": 56,
-   "canon": 81,
+   "canon": 90,
    "name": "release_stuck[D=cook_b,R=pot,A=a0]",
    "rule": "release_stuck",
    "kind": "clause",
@@ -536,7 +538,7 @@
   },
   {
    "i": 57,
-   "canon": 91,
+   "canon": 101,
    "name": "release_stuck[D=cook_b,R=pot,A=a1]",
    "rule": "release_stuck",
    "kind": "clause",
@@ -545,7 +547,7 @@
   },
   {
    "i": 58,
-   "canon": 103,
+   "canon": 114,
    "name": "release_stuck[D=cook_b,R=pot,A=a2]",
    "rule": "release_stuck",
    "kind": "clause",
@@ -554,7 +556,7 @@
   },
   {
    "i": 59,
-   "canon": 115,
+   "canon": 127,
    "name": "release_stuck[D=cook_b,R=pot,A=a3]",
    "rule": "release_stuck",
    "kind": "clause",
@@ -563,7 +565,7 @@
   },
   {
    "i": 60,
-   "canon": 135,
+   "canon": 153,
    "name": "stop_cancel[D=cook_a]",
    "rule": "stop_cancel",
    "kind": "clause",
@@ -572,7 +574,7 @@
   },
   {
    "i": 61,
-   "canon": 137,
+   "canon": 155,
    "name": "stop_cancel[D=cook_b]",
    "rule": "stop_cancel",
    "kind": "clause",
@@ -581,7 +583,7 @@
   },
   {
    "i": 62,
-   "canon": 30,
+   "canon": 34,
    "name": "stop_release[D=cook_a,R=pot,A=a0,T=t0]",
    "rule": "stop_release",
    "kind": "clause",
@@ -590,7 +592,7 @@
   },
   {
    "i": 63,
-   "canon": 31,
+   "canon": 35,
    "name": "stop_release[D=cook_a,R=pot,A=a0,T=t1]",
    "rule": "stop_release",
    "kind": "clause",
@@ -599,7 +601,7 @@
   },
   {
    "i": 64,
-   "canon": 32,
+   "canon": 36,
    "name": "stop_release[D=cook_a,R=pot,A=a0,T=t2]",
    "rule": "stop_release",
    "kind": "clause",
@@ -608,7 +610,7 @@
   },
   {
    "i": 65,
-   "canon": 33,
+   "canon": 37,
    "name": "stop_release[D=cook_a,R=pot,A=a0,T=t3]",
    "rule": "stop_release",
    "kind": "clause",
@@ -617,7 +619,7 @@
   },
   {
    "i": 66,
-   "canon": 34,
+   "canon": 38,
    "name": "stop_release[D=cook_a,R=pot,A=a0,T=t4]",
    "rule": "stop_release",
    "kind": "clause",
@@ -626,7 +628,7 @@
   },
   {
    "i": 67,
-   "canon": 35,
+   "canon": 39,
    "name": "stop_release[D=cook_a,R=pot,A=a0,T=t5]",
    "rule": "stop_release",
    "kind": "clause",
@@ -635,7 +637,7 @@
   },
   {
    "i": 68,
-   "canon": 36,
+   "canon": 40,
    "name": "stop_release[D=cook_a,R=pot,A=a0,T=t6]",
    "rule": "stop_release",
    "kind": "clause",
@@ -644,7 +646,7 @@
   },
   {
    "i": 69,
-   "canon": 37,
+   "canon": 41,
    "name": "stop_release[D=cook_a,R=pot,A=a0,T=t7]",
    "rule": "stop_release",
    "kind": "clause",
@@ -653,7 +655,7 @@
   },
   {
    "i": 70,
-   "canon": 40,
+   "canon": 45,
    "name": "stop_release[D=cook_a,R=pot,A=a1,T=t0]",
    "rule": "stop_release",
    "kind": "clause",
@@ -662,7 +664,7 @@
   },
   {
    "i": 71,
-   "canon": 41,
+   "canon": 46,
    "name": "stop_release[D=cook_a,R=pot,A=a1,T=t1]",
    "rule": "stop_release",
    "kind": "clause",
@@ -671,7 +673,7 @@
   },
   {
    "i": 72,
-   "canon": 42,
+   "canon": 47,
    "name": "stop_release[D=cook_a,R=pot,A=a1,T=t2]",
    "rule": "stop_release",
    "kind": "clause",
@@ -680,7 +682,7 @@
   },
   {
    "i": 73,
-   "canon": 43,
+   "canon": 48,
    "name": "stop_release[D=cook_a,R=pot,A=a1,T=t3]",
    "rule": "stop_release",
    "kind": "clause",
@@ -689,7 +691,7 @@
   },
   {
    "i": 74,
-   "canon": 44,
+   "canon": 49,
    "name": "stop_release[D=cook_a,R=pot,A=a1,T=t4]",
    "rule": "stop_release",
    "kind": "clause",
@@ -698,7 +700,7 @@
   },
   {
    "i": 75,
-   "canon": 45,
+   "canon": 50,
    "name": "stop_release[D=cook_a,R=pot,A=a1,T=t5]",
    "rule": "stop_release",
    "kind": "clause",
@@ -707,7 +709,7 @@
   },
   {
    "i": 76,
-   "canon": 46,
+   "canon": 51,
    "name": "stop_release[D=cook_a,R=pot,A=a1,T=t6]",
    "rule": "stop_release",
    "kind": "clause",
@@ -716,7 +718,7 @@
   },
   {
    "i": 77,
-   "canon": 47,
+   "canon": 52,
    "name": "stop_release[D=cook_a,R=pot,A=a1,T=t7]",
    "rule": "stop_release",
    "kind": "clause",
@@ -725,7 +727,7 @@
   },
   {
    "i": 78,
-   "canon": 50,
+   "canon": 56,
    "name": "stop_release[D=cook_a,R=pot,A=a2,T=t0]",
    "rule": "stop_release",
    "kind": "clause",
@@ -734,7 +736,7 @@
   },
   {
    "i": 79,
-   "canon": 51,
+   "canon": 57,
    "name": "stop_release[D=cook_a,R=pot,A=a2,T=t1]",
    "rule": "stop_release",
    "kind": "clause",
@@ -743,7 +745,7 @@
   },
   {
    "i": 80,
-   "canon": 52,
+   "canon": 58,
    "name": "stop_release[D=cook_a,R=pot,A=a2,T=t2]",
    "rule": "stop_release",
    "kind": "clause",
@@ -752,7 +754,7 @@
   },
   {
    "i": 81,
-   "canon": 53,
+   "canon": 59,
    "name": "stop_release[D=cook_a,R=pot,A=a2,T=t3]",
    "rule": "stop_release",
    "kind": "clause",
@@ -761,7 +763,7 @@
   },
   {
    "i": 82,
-   "canon": 54,
+   "canon": 60,
    "name": "stop_release[D=cook_a,R=pot,A=a2,T=t4]",
    "rule": "stop_release",
    "kind": "clause",
@@ -770,7 +772,7 @@
   },
   {
    "i": 83,
-   "canon": 55,
+   "canon": 61,
    "name": "stop_release[D=cook_a,R=pot,A=a2,T=t5]",
    "rule": "stop_release",
    "kind": "clause",
@@ -779,7 +781,7 @@
   },
   {
    "i": 84,
-   "canon": 56,
+   "canon": 62,
    "name": "stop_release[D=cook_a,R=pot,A=a2,T=t6]",
    "rule": "stop_release",
    "kind": "clause",
@@ -788,7 +790,7 @@
   },
   {
    "i": 85,
-   "canon": 57,
+   "canon": 63,
    "name": "stop_release[D=cook_a,R=pot,A=a2,T=t7]",
    "rule": "stop_release",
    "kind": "clause",
@@ -797,7 +799,7 @@
   },
   {
    "i": 86,
-   "canon": 62,
+   "canon": 69,
    "name": "stop_release[D=cook_a,R=pot,A=a3,T=t0]",
    "rule": "stop_release",
    "kind": "clause",
@@ -806,7 +808,7 @@
   },
   {
    "i": 87,
-   "canon": 63,
+   "canon": 70,
    "name": "stop_release[D=cook_a,R=pot,A=a3,T=t1]",
    "rule": "stop_release",
    "kind": "clause",
@@ -815,7 +817,7 @@
   },
   {
    "i": 88,
-   "canon": 64,
+   "canon": 71,
    "name": "stop_release[D=cook_a,R=pot,A=a3,T=t2]",
    "rule": "stop_release",
    "kind": "clause",
@@ -824,7 +826,7 @@
   },
   {
    "i": 89,
-   "canon": 65,
+   "canon": 72,
    "name": "stop_release[D=cook_a,R=pot,A=a3,T=t3]",
    "rule": "stop_release",
    "kind": "clause",
@@ -833,7 +835,7 @@
   },
   {
    "i": 90,
-   "canon": 66,
+   "canon": 73,
    "name": "stop_release[D=cook_a,R=pot,A=a3,T=t4]",
    "rule": "stop_release",
    "kind": "clause",
@@ -842,7 +844,7 @@
   },
   {
    "i": 91,
-   "canon": 67,
+   "canon": 74,
    "name": "stop_release[D=cook_a,R=pot,A=a3,T=t5]",
    "rule": "stop_release",
    "kind": "clause",
@@ -851,7 +853,7 @@
   },
   {
    "i": 92,
-   "canon": 68,
+   "canon": 75,
    "name": "stop_release[D=cook_a,R=pot,A=a3,T=t6]",
    "rule": "stop_release",
    "kind": "clause",
@@ -860,7 +862,7 @@
   },
   {
    "i": 93,
-   "canon": 69,
+   "canon": 76,
    "name": "stop_release[D=cook_a,R=pot,A=a3,T=t7]",
    "rule": "stop_release",
    "kind": "clause",
@@ -869,7 +871,7 @@
   },
   {
    "i": 94,
-   "canon": 73,
+   "canon": 81,
    "name": "stop_release[D=cook_b,R=pot,A=a0,T=t0]",
    "rule": "stop_release",
    "kind": "clause",
@@ -878,7 +880,7 @@
   },
   {
    "i": 95,
-   "canon": 74,
+   "canon": 82,
    "name": "stop_release[D=cook_b,R=pot,A=a0,T=t1]",
    "rule": "stop_release",
    "kind": "clause",
@@ -887,7 +889,7 @@
   },
   {
    "i": 96,
-   "canon": 75,
+   "canon": 83,
    "name": "stop_release[D=cook_b,R=pot,A=a0,T=t2]",
    "rule": "stop_release",
    "kind": "clause",
@@ -896,7 +898,7 @@
   },
   {
    "i": 97,
-   "canon": 76,
+   "canon": 84,
    "name": "stop_release[D=cook_b,R=pot,A=a0,T=t3]",
    "rule": "stop_release",
    "kind": "clause",
@@ -905,7 +907,7 @@
   },
   {
    "i": 98,
-   "canon": 77,
+   "canon": 85,
    "name": "stop_release[D=cook_b,R=pot,A=a0,T=t4]",
    "rule": "stop_release",
    "kind": "clause",
@@ -914,7 +916,7 @@
   },
   {
    "i": 99,
-   "canon": 78,
+   "canon": 86,
    "name": "stop_release[D=cook_b,R=pot,A=a0,T=t5]",
    "rule": "stop_release",
    "kind": "clause",
@@ -923,7 +925,7 @@
   },
   {
    "i": 100,
-   "canon": 79,
+   "canon": 87,
    "name": "stop_release[D=cook_b,R=pot,A=a0,T=t6]",
    "rule": "stop_release",
    "kind": "clause",
@@ -932,7 +934,7 @@
   },
   {
    "i": 101,
-   "canon": 80,
+   "canon": 88,
    "name": "stop_release[D=cook_b,R=pot,A=a0,T=t7]",
    "rule": "stop_release",
    "kind": "clause",
@@ -941,7 +943,7 @@
   },
   {
    "i": 102,
-   "canon": 83,
+   "canon": 92,
    "name": "stop_release[D=cook_b,R=pot,A=a1,T=t0]",
    "rule": "stop_release",
    "kind": "clause",
@@ -950,7 +952,7 @@
   },
   {
    "i": 103,
-   "canon": 84,
+   "canon": 93,
    "name": "stop_release[D=cook_b,R=pot,A=a1,T=t1]",
    "rule": "stop_release",
    "kind": "clause",
@@ -959,7 +961,7 @@
   },
   {
    "i": 104,
-   "canon": 85,
+   "canon": 94,
    "name": "stop_release[D=cook_b,R=pot,A=a1,T=t2]",
    "rule": "stop_release",
    "kind": "clause",
@@ -968,7 +970,7 @@
   },
   {
    "i": 105,
-   "canon": 86,
+   "canon": 95,
    "name": "stop_release[D=cook_b,R=pot,A=a1,T=t3]",
    "rule": "stop_release",
    "kind": "clause",
@@ -977,7 +979,7 @@
   },
   {
    "i": 106,
-   "canon": 87,
+   "canon": 96,
    "name": "stop_release[D=cook_b,R=pot,A=a1,T=t4]",
    "rule": "stop_release",
    "kind": "clause",
@@ -986,7 +988,7 @@
   },
   {
    "i": 107,
-   "canon": 88,
+   "canon": 97,
    "name": "stop_release[D=cook_b,R=pot,A=a1,T=t5]",
    "rule": "stop_release",
    "kind": "clause",
@@ -995,7 +997,7 @@
   },
   {
    "i": 108,
-   "canon": 89,
+   "canon": 98,
    "name": "stop_release[D=cook_b,R=pot,A=a1,T=t6]",
    "rule": "stop_release",
    "kind": "clause",
@@ -1004,7 +1006,7 @@
   },
   {
    "i": 109,
-   "canon": 90,
+   "canon": 99,
    "name": "stop_release[D=cook_b,R=pot,A=a1,T=t7]",
    "rule": "stop_release",
    "kind": "clause",
@@ -1013,7 +1015,7 @@
   },
   {
    "i": 110,
-   "canon": 93,
+   "canon": 103,
    "name": "stop_release[D=cook_b,R=pot,A=a2,T=t0]",
    "rule": "stop_release",
    "kind": "clause",
@@ -1022,7 +1024,7 @@
   },
   {
    "i": 111,
-   "canon": 94,
+   "canon": 104,
    "name": "stop_release[D=cook_b,R=pot,A=a2,T=t1]",
    "rule": "stop_release",
    "kind": "clause",
@@ -1031,7 +1033,7 @@
   },
   {
    "i": 112,
-   "canon": 95,
+   "canon": 105,
    "name": "stop_release[D=cook_b,R=pot,A=a2,T=t2]",
    "rule": "stop_release",
    "kind": "clause",
@@ -1040,7 +1042,7 @@
   },
   {
    "i": 113,
-   "canon": 96,
+   "canon": 106,
    "name": "stop_release[D=cook_b,R=pot,A=a2,T=t3]",
    "rule": "stop_release",
    "kind": "clause",
@@ -1049,7 +1051,7 @@
   },
   {
    "i": 114,
-   "canon": 97,
+   "canon": 107,
    "name": "stop_release[D=cook_b,R=pot,A=a2,T=t4]",
    "rule": "stop_release",
    "kind": "clause",
@@ -1058,7 +1060,7 @@
   },
   {
    "i": 115,
-   "canon": 98,
+   "canon": 108,
    "name": "stop_release[D=cook_b,R=pot,A=a2,T=t5]",
    "rule": "stop_release",
    "kind": "clause",
@@ -1067,7 +1069,7 @@
   },
   {
    "i": 116,
-   "canon": 99,
+   "canon": 109,
    "name": "stop_release[D=cook_b,R=pot,A=a2,T=t6]",
    "rule": "stop_release",
    "kind": "clause",
@@ -1076,7 +1078,7 @@
   },
   {
    "i": 117,
-   "canon": 100,
+   "canon": 110,
    "name": "stop_release[D=cook_b,R=pot,A=a2,T=t7]",
    "rule": "stop_release",
    "kind": "clause",
@@ -1085,7 +1087,7 @@
   },
   {
    "i": 118,
-   "canon": 105,
+   "canon": 116,
    "name": "stop_release[D=cook_b,R=pot,A=a3,T=t0]",
    "rule": "stop_release",
    "kind": "clause",
@@ -1094,7 +1096,7 @@
   },
   {
    "i": 119,
-   "canon": 106,
+   "canon": 117,
    "name": "stop_release[D=cook_b,R=pot,A=a3,T=t1]",
    "rule": "stop_release",
    "kind": "clause",
@@ -1103,7 +1105,7 @@
   },
   {
    "i": 120,
-   "canon": 107,
+   "canon": 118,
    "name": "stop_release[D=cook_b,R=pot,A=a3,T=t2]",
    "rule": "stop_release",
    "kind": "clause",
@@ -1112,7 +1114,7 @@
   },
   {
    "i": 121,
-   "canon": 108,
+   "canon": 119,
    "name": "stop_release[D=cook_b,R=pot,A=a3,T=t3]",
    "rule": "stop_release",
    "kind": "clause",
@@ -1121,7 +1123,7 @@
   },
   {
    "i": 122,
-   "canon": 109,
+   "canon": 120,
    "name": "stop_release[D=cook_b,R=pot,A=a3,T=t4]",
    "rule": "stop_release",
    "kind": "clause",
@@ -1130,7 +1132,7 @@
   },
   {
    "i": 123,
-   "canon": 110,
+   "canon": 121,
    "name": "stop_release[D=cook_b,R=pot,A=a3,T=t5]",
    "rule": "stop_release",
    "kind": "clause",
@@ -1139,7 +1141,7 @@
   },
   {
    "i": 124,
-   "canon": 111,
+   "canon": 122,
    "name": "stop_release[D=cook_b,R=pot,A=a3,T=t6]",
    "rule": "stop_release",
    "kind": "clause",
@@ -1148,7 +1150,7 @@
   },
   {
    "i": 125,
-   "canon": 112,
+   "canon": 123,
    "name": "stop_release[D=cook_b,R=pot,A=a3,T=t7]",
    "rule": "stop_release",
    "kind": "clause",
@@ -1157,7 +1159,7 @@
   },
   {
    "i": 126,
-   "canon": 138,
+   "canon": 156,
    "name": "stop_dequeue[D=cook_a,R=pot,T=t0]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -1166,7 +1168,7 @@
   },
   {
    "i": 127,
-   "canon": 139,
+   "canon": 157,
    "name": "stop_dequeue[D=cook_a,R=pot,T=t1]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -1175,7 +1177,7 @@
   },
   {
    "i": 128,
-   "canon": 140,
+   "canon": 158,
    "name": "stop_dequeue[D=cook_a,R=pot,T=t2]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -1184,7 +1186,7 @@
   },
   {
    "i": 129,
-   "canon": 141,
+   "canon": 159,
    "name": "stop_dequeue[D=cook_a,R=pot,T=t3]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -1193,7 +1195,7 @@
   },
   {
    "i": 130,
-   "canon": 142,
+   "canon": 160,
    "name": "stop_dequeue[D=cook_a,R=pot,T=t4]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -1202,7 +1204,7 @@
   },
   {
    "i": 131,
-   "canon": 143,
+   "canon": 161,
    "name": "stop_dequeue[D=cook_a,R=pot,T=t5]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -1211,7 +1213,7 @@
   },
   {
    "i": 132,
-   "canon": 144,
+   "canon": 162,
    "name": "stop_dequeue[D=cook_a,R=pot,T=t6]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -1220,7 +1222,7 @@
   },
   {
    "i": 133,
-   "canon": 145,
+   "canon": 163,
    "name": "stop_dequeue[D=cook_a,R=pot,T=t7]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -1229,7 +1231,7 @@
   },
   {
    "i": 134,
-   "canon": 146,
+   "canon": 164,
    "name": "stop_dequeue[D=cook_b,R=pot,T=t0]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -1238,7 +1240,7 @@
   },
   {
    "i": 135,
-   "canon": 147,
+   "canon": 165,
    "name": "stop_dequeue[D=cook_b,R=pot,T=t1]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -1247,7 +1249,7 @@
   },
   {
    "i": 136,
-   "canon": 148,
+   "canon": 166,
    "name": "stop_dequeue[D=cook_b,R=pot,T=t2]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -1256,7 +1258,7 @@
   },
   {
    "i": 137,
-   "canon": 149,
+   "canon": 167,
    "name": "stop_dequeue[D=cook_b,R=pot,T=t3]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -1265,7 +1267,7 @@
   },
   {
    "i": 138,
-   "canon": 150,
+   "canon": 168,
    "name": "stop_dequeue[D=cook_b,R=pot,T=t4]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -1274,7 +1276,7 @@
   },
   {
    "i": 139,
-   "canon": 151,
+   "canon": 169,
    "name": "stop_dequeue[D=cook_b,R=pot,T=t5]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -1283,7 +1285,7 @@
   },
   {
    "i": 140,
-   "canon": 152,
+   "canon": 170,
    "name": "stop_dequeue[D=cook_b,R=pot,T=t6]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -1292,7 +1294,7 @@
   },
   {
    "i": 141,
-   "canon": 153,
+   "canon": 171,
    "name": "stop_dequeue[D=cook_b,R=pot,T=t7]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -1301,7 +1303,187 @@
   },
   {
    "i": 142,
-   "canon": 39,
+   "canon": 144,
+   "name": "commit_on[D=cook_a,R=pot]",
+   "rule": "commit_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s action on {R} is atomic."
+  },
+  {
+   "i": 143,
+   "canon": 145,
+   "name": "commit_on[D=cook_b,R=pot]",
+   "rule": "commit_on",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s action on {R} is atomic."
+  },
+  {
+   "i": 144,
+   "canon": 185,
+   "name": "commit_more[D=cook_a,R=pot]",
+   "rule": "commit_more",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} says again that its action on {R} is atomic."
+  },
+  {
+   "i": 145,
+   "canon": 186,
+   "name": "commit_more[D=cook_b,R=pot]",
+   "rule": "commit_more",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D} says again that its action on {R} is atomic."
+  },
+  {
+   "i": 146,
+   "canon": 15,
+   "name": "commit_off[D=cook_a,R=pot]",
+   "rule": "commit_off",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s atomic action on {R} is over."
+  },
+  {
+   "i": 147,
+   "canon": 17,
+   "name": "commit_off[D=cook_b,R=pot]",
+   "rule": "commit_off",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s atomic action on {R} is over."
+  },
+  {
+   "i": 148,
+   "canon": 14,
+   "name": "stop_committed[D=cook_a,R=pot]",
+   "rule": "stop_committed",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {D}'s action on {R} is atomic, its revoke waits."
+  },
+  {
+   "i": 149,
+   "canon": 16,
+   "name": "stop_committed[D=cook_b,R=pot]",
+   "rule": "stop_committed",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped: {D}'s action on {R} is atomic, its revoke waits."
+  },
+  {
+   "i": 150,
+   "canon": 150,
+   "name": "yield_owing[D=cook_a,R=pot]",
+   "rule": "yield_owing",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s atomic action on {R} is over, and a stop came: the revoke is owed."
+  },
+  {
+   "i": 151,
+   "canon": 151,
+   "name": "yield_owing[D=cook_b,R=pot]",
+   "rule": "yield_owing",
+   "kind": "clause",
+   "stage": "act",
+   "line": "{D}'s atomic action on {R} is over, and a stop came: the revoke is owed."
+  },
+  {
+   "i": 152,
+   "canon": 42,
+   "name": "owed_release[D=cook_a,R=pot,A=a0]",
+   "rule": "owed_release",
+   "kind": "clause",
+   "stage": "act",
+   "line": "The stop's revoke: {R} is free."
+  },
+  {
+   "i": 153,
+   "canon": 53,
+   "name": "owed_release[D=cook_a,R=pot,A=a1]",
+   "rule": "owed_release",
+   "kind": "clause",
+   "stage": "act",
+   "line": "The stop's revoke: {R} is free."
+  },
+  {
+   "i": 154,
+   "canon": 65,
+   "name": "owed_release[D=cook_a,R=pot,A=a2]",
+   "rule": "owed_release",
+   "kind": "clause",
+   "stage": "act",
+   "line": "The stop's revoke: {R} is free."
+  },
+  {
+   "i": 155,
+   "canon": 78,
+   "name": "owed_release[D=cook_a,R=pot,A=a3]",
+   "rule": "owed_release",
+   "kind": "clause",
+   "stage": "act",
+   "line": "The stop's revoke: {R} is free."
+  },
+  {
+   "i": 156,
+   "canon": 89,
+   "name": "owed_release[D=cook_b,R=pot,A=a0]",
+   "rule": "owed_release",
+   "kind": "clause",
+   "stage": "act",
+   "line": "The stop's revoke: {R} is free."
+  },
+  {
+   "i": 157,
+   "canon": 100,
+   "name": "owed_release[D=cook_b,R=pot,A=a1]",
+   "rule": "owed_release",
+   "kind": "clause",
+   "stage": "act",
+   "line": "The stop's revoke: {R} is free."
+  },
+  {
+   "i": 158,
+   "canon": 112,
+   "name": "owed_release[D=cook_b,R=pot,A=a2]",
+   "rule": "owed_release",
+   "kind": "clause",
+   "stage": "act",
+   "line": "The stop's revoke: {R} is free."
+  },
+  {
+   "i": 159,
+   "canon": 125,
+   "name": "owed_release[D=cook_b,R=pot,A=a3]",
+   "rule": "owed_release",
+   "kind": "clause",
+   "stage": "act",
+   "line": "The stop's revoke: {R} is free."
+  },
+  {
+   "i": 160,
+   "canon": 148,
+   "name": "owed_drop[D=cook_a,R=pot]",
+   "rule": "owed_drop",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped again: what was owed is this stop's."
+  },
+  {
+   "i": 161,
+   "canon": 149,
+   "name": "owed_drop[D=cook_b,R=pot]",
+   "rule": "owed_drop",
+   "kind": "clause",
+   "stage": "act",
+   "line": "Stopped again: what was owed is this stop's."
+  },
+  {
+   "i": 162,
+   "canon": 44,
    "name": "age_grant[D=cook_a,A=a0,B=a1]",
    "rule": "age_grant",
    "kind": "clause",
@@ -1309,8 +1491,8 @@
    "line": "A tick: {D}'s grant is older."
   },
   {
-   "i": 143,
-   "canon": 49,
+   "i": 163,
+   "canon": 55,
    "name": "age_grant[D=cook_a,A=a1,B=a2]",
    "rule": "age_grant",
    "kind": "clause",
@@ -1318,8 +1500,8 @@
    "line": "A tick: {D}'s grant is older."
   },
   {
-   "i": 144,
-   "canon": 61,
+   "i": 164,
+   "canon": 68,
    "name": "age_grant[D=cook_a,A=a2,B=a3]",
    "rule": "age_grant",
    "kind": "clause",
@@ -1327,8 +1509,8 @@
    "line": "A tick: {D}'s grant is older."
   },
   {
-   "i": 145,
-   "canon": 82,
+   "i": 165,
+   "canon": 91,
    "name": "age_grant[D=cook_b,A=a0,B=a1]",
    "rule": "age_grant",
    "kind": "clause",
@@ -1336,8 +1518,8 @@
    "line": "A tick: {D}'s grant is older."
   },
   {
-   "i": 146,
-   "canon": 92,
+   "i": 166,
+   "canon": 102,
    "name": "age_grant[D=cook_b,A=a1,B=a2]",
    "rule": "age_grant",
    "kind": "clause",
@@ -1345,8 +1527,8 @@
    "line": "A tick: {D}'s grant is older."
   },
   {
-   "i": 147,
-   "canon": 104,
+   "i": 167,
+   "canon": 115,
    "name": "age_grant[D=cook_b,A=a2,B=a3]",
    "rule": "age_grant",
    "kind": "clause",
@@ -1354,8 +1536,8 @@
    "line": "A tick: {D}'s grant is older."
   },
   {
-   "i": 148,
-   "canon": 163,
+   "i": 168,
+   "canon": 181,
    "name": "age_grant_top[D=cook_a,A=a3]",
    "rule": "age_grant_top",
    "kind": "clause",
@@ -1363,8 +1545,8 @@
    "line": "A tick: {D}'s grant is as old as it counts."
   },
   {
-   "i": 149,
-   "canon": 164,
+   "i": 169,
+   "canon": 182,
    "name": "age_grant_top[D=cook_b,A=a3]",
    "rule": "age_grant_top",
    "kind": "clause",
@@ -1372,8 +1554,8 @@
    "line": "A tick: {D}'s grant is as old as it counts."
   },
   {
-   "i": 150,
-   "canon": 162,
+   "i": 170,
+   "canon": 180,
    "name": "tick_free[R=pot]",
    "rule": "tick_free",
    "kind": "clause",
@@ -1381,7 +1563,7 @@
    "line": "A tick: {R} is free."
   },
   {
-   "i": 151,
+   "i": 171,
    "canon": 0,
    "name": "status_reset[D=cook_a,A=a0]",
    "rule": "status_reset",
@@ -1390,7 +1572,7 @@
    "line": "{D}'s status changed: its age starts again."
   },
   {
-   "i": 152,
+   "i": 172,
    "canon": 2,
    "name": "status_reset[D=cook_a,A=a1]",
    "rule": "status_reset",
@@ -1399,7 +1581,7 @@
    "line": "{D}'s status changed: its age starts again."
   },
   {
-   "i": 153,
+   "i": 173,
    "canon": 4,
    "name": "status_reset[D=cook_a,A=a2]",
    "rule": "status_reset",
@@ -1408,7 +1590,7 @@
    "line": "{D}'s status changed: its age starts again."
   },
   {
-   "i": 154,
+   "i": 174,
    "canon": 6,
    "name": "status_reset[D=cook_a,A=a3]",
    "rule": "status_reset",
@@ -1417,7 +1599,7 @@
    "line": "{D}'s status changed: its age starts again."
   },
   {
-   "i": 155,
+   "i": 175,
    "canon": 7,
    "name": "status_reset[D=cook_b,A=a0]",
    "rule": "status_reset",
@@ -1426,7 +1608,7 @@
    "line": "{D}'s status changed: its age starts again."
   },
   {
-   "i": 156,
+   "i": 176,
    "canon": 9,
    "name": "status_reset[D=cook_b,A=a1]",
    "rule": "status_reset",
@@ -1435,7 +1617,7 @@
    "line": "{D}'s status changed: its age starts again."
   },
   {
-   "i": 157,
+   "i": 177,
    "canon": 11,
    "name": "status_reset[D=cook_b,A=a2]",
    "rule": "status_reset",
@@ -1444,7 +1626,7 @@
    "line": "{D}'s status changed: its age starts again."
   },
   {
-   "i": 158,
+   "i": 178,
    "canon": 13,
    "name": "status_reset[D=cook_b,A=a3]",
    "rule": "status_reset",
@@ -1453,7 +1635,7 @@
    "line": "{D}'s status changed: its age starts again."
   },
   {
-   "i": 159,
+   "i": 179,
    "canon": 1,
    "name": "status_age[D=cook_a,A=a0,B=a1]",
    "rule": "status_age",
@@ -1462,7 +1644,7 @@
    "line": "A tick: {D}'s status is older."
   },
   {
-   "i": 160,
+   "i": 180,
    "canon": 3,
    "name": "status_age[D=cook_a,A=a1,B=a2]",
    "rule": "status_age",
@@ -1471,7 +1653,7 @@
    "line": "A tick: {D}'s status is older."
   },
   {
-   "i": 161,
+   "i": 181,
    "canon": 5,
    "name": "status_age[D=cook_a,A=a2,B=a3]",
    "rule": "status_age",
@@ -1480,7 +1662,7 @@
    "line": "A tick: {D}'s status is older."
   },
   {
-   "i": 162,
+   "i": 182,
    "canon": 8,
    "name": "status_age[D=cook_b,A=a0,B=a1]",
    "rule": "status_age",
@@ -1489,7 +1671,7 @@
    "line": "A tick: {D}'s status is older."
   },
   {
-   "i": 163,
+   "i": 183,
    "canon": 10,
    "name": "status_age[D=cook_b,A=a1,B=a2]",
    "rule": "status_age",
@@ -1498,7 +1680,7 @@
    "line": "A tick: {D}'s status is older."
   },
   {
-   "i": 164,
+   "i": 184,
    "canon": 12,
    "name": "status_age[D=cook_b,A=a2,B=a3]",
    "rule": "status_age",
@@ -1507,8 +1689,8 @@
    "line": "A tick: {D}'s status is older."
   },
   {
-   "i": 165,
-   "canon": 173,
+   "i": 185,
+   "canon": 193,
    "name": "status_top[D=cook_a,A=a3]",
    "rule": "status_top",
    "kind": "clause",
@@ -1516,8 +1698,8 @@
    "line": "A tick: {D}'s status is as old as it counts."
   },
   {
-   "i": 166,
-   "canon": 174,
+   "i": 186,
+   "canon": 194,
    "name": "status_top[D=cook_b,A=a3]",
    "rule": "status_top",
    "kind": "clause",
@@ -1525,8 +1707,8 @@
    "line": "A tick: {D}'s status is as old as it counts."
   },
   {
-   "i": 167,
-   "canon": 132,
+   "i": 187,
+   "canon": 146,
    "name": "path_push[D=cook_a]",
    "rule": "path_push",
    "kind": "clause",
@@ -1534,8 +1716,8 @@
    "line": "{D} is active: on the path."
   },
   {
-   "i": 168,
-   "canon": 133,
+   "i": 188,
+   "canon": 147,
    "name": "path_push[D=cook_b]",
    "rule": "path_push",
    "kind": "clause",
@@ -1543,8 +1725,8 @@
    "line": "{D} is active: on the path."
   },
   {
-   "i": 169,
-   "canon": 165,
+   "i": 189,
+   "canon": 183,
    "name": "active_more[D=cook_a]",
    "rule": "active_more",
    "kind": "clause",
@@ -1552,8 +1734,8 @@
    "line": "{D} is active, and on the path already."
   },
   {
-   "i": 170,
-   "canon": 166,
+   "i": 190,
+   "canon": 184,
    "name": "active_more[D=cook_b]",
    "rule": "active_more",
    "kind": "clause",
@@ -1561,8 +1743,8 @@
    "line": "{D} is active, and on the path already."
   },
   {
-   "i": 171,
-   "canon": 134,
+   "i": 191,
+   "canon": 152,
    "name": "path_pop[D=cook_a]",
    "rule": "path_pop",
    "kind": "clause",
@@ -1570,8 +1752,8 @@
    "line": "{D} is done: off the path."
   },
   {
-   "i": 172,
-   "canon": 136,
+   "i": 192,
+   "canon": 154,
    "name": "path_pop[D=cook_b]",
    "rule": "path_pop",
    "kind": "clause",
@@ -1579,8 +1761,8 @@
    "line": "{D} is done: off the path."
   },
   {
-   "i": 173,
-   "canon": 167,
+   "i": 193,
+   "canon": 187,
    "name": "done_off[D=cook_a]",
    "rule": "done_off",
    "kind": "clause",
@@ -1588,8 +1770,8 @@
    "line": "{D} is done, and off the path already."
   },
   {
-   "i": 174,
-   "canon": 168,
+   "i": 194,
+   "canon": 188,
    "name": "done_off[D=cook_b]",
    "rule": "done_off",
    "kind": "clause",
@@ -2002,6 +2184,11 @@
        "kept": true
       },
       {
+       "atom": "nocommit(D)",
+       "n": 1,
+       "kept": true
+      },
+      {
        "atom": "holder(D,R)",
        "n": 1,
        "kept": false
@@ -2059,6 +2246,189 @@
        "kept": false
       }
      ],
+     "target": null
+    },
+    {
+     "name": "commit_on",
+     "stage": "act",
+     "doc": "{D}'s action on {R} is atomic.",
+     "premises": [
+      {
+       "atom": "tick__committed(D,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "nocommit(D)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [
+      {
+       "atom": "commit(D,R)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "commit_more",
+     "stage": "act",
+     "doc": "{D} says again that its action on {R} is atomic.",
+     "premises": [
+      {
+       "atom": "tick__committed(D,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "commit(D,R)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [],
+     "target": null
+    },
+    {
+     "name": "commit_off",
+     "stage": "act",
+     "doc": "{D}'s atomic action on {R} is over.",
+     "premises": [
+      {
+       "atom": "tick__yield(D,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "commit(D,R)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [
+      {
+       "atom": "nocommit(D)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "stop_committed",
+     "stage": "act",
+     "doc": "Stopped: {D}'s action on {R} is atomic, its revoke waits.",
+     "premises": [
+      {
+       "atom": "tick__stop",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "commit(D,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "holder(D,R)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [
+      {
+       "atom": "owing(D,R)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "yield_owing",
+     "stage": "act",
+     "doc": "{D}'s atomic action on {R} is over, and a stop came: the revoke is owed.",
+     "premises": [
+      {
+       "atom": "tick__yield(D,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "owing(D,R)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [
+      {
+       "atom": "nocommit(D)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "owed(D,R)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "owed_release",
+     "stage": "act",
+     "doc": "The stop's revoke: {R} is free.",
+     "premises": [
+      {
+       "atom": "owed(D,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "holder(D,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "held(D,A)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [
+      {
+       "atom": "free(R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__revoke(D,R)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "owed_drop",
+     "stage": "act",
+     "doc": "Stopped again: what was owed is this stop's.",
+     "premises": [
+      {
+       "atom": "tick__stop",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "owed(D,R)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "effects": [],
      "target": null
     },
     {
@@ -2338,6 +2708,14 @@
      "doc": ""
     },
     {
+     "name": "tick__committed",
+     "doc": ""
+    },
+    {
+     "name": "tick__yield",
+     "doc": ""
+    },
+    {
      "name": "tick__grant",
      "doc": ""
     },
@@ -2398,6 +2776,22 @@
      "doc": ""
     },
     {
+     "name": "nocommit",
+     "doc": ""
+    },
+    {
+     "name": "commit",
+     "doc": ""
+    },
+    {
+     "name": "owing",
+     "doc": ""
+    },
+    {
+     "name": "owed",
+     "doc": ""
+    },
+    {
      "name": "want",
      "doc": ""
     },
@@ -2439,6 +2833,8 @@
      "tick__stuck",
      "tick__want",
      "tick__release",
+     "tick__committed",
+     "tick__yield",
      "tick__grant",
      "tick__goal",
      "tick__revoke",
@@ -2454,6 +2850,10 @@
      "late",
      "nolate",
      "late_release",
+     "nocommit",
+     "commit",
+     "owing",
+     "owed",
      "want",
      "nowant",
      "path",

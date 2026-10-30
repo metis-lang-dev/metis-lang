@@ -1,17 +1,17 @@
 interface composition.yaml
-iface protocol_domain std:iface/protocol_domain.llp 78116a6c02a8584a595dd1d4d9bc465613a68eb1d62785e3791d75fa4cacbc60
+iface protocol_domain std:iface/protocol_domain.llp 2daa98a645e282c6b66c75a4056f8da9e2de533543fd7ce2d1666cb6bdf336c0
 iface alfworld_iface iface/alfworld.llp 56a322d819f9631295777369d398660abef4da0e7ba3ced6efa0bdfa9def4e1d
 capacity capacity.llp f07d764186e208ce11e3ea7febf40d00b43883bd59e7b27cd1d85fe78ec77f08
-member director direct director/director.llp key 38e40bc992280445433102959dab2846c9ba5feb0d5ded00d1f01810a086e338 ei 5968967a73fc483d05eff62fc9d139ffa7bc3dc0310f66d68f4fbedfd19ae13b
-member task specialist task/task.llp key 8b3fc718e11de437bb56863d00e8fcc694871025ddf94810a18001835a39bbc0 ei cc690821e43bf00596a61355d6597e4d9c9e5e476eca09932994f1900643e77b
-member nav specialist nav/nav.llp key 340f5107a10587f08dee5660e04cc44784b86dc814eddc46e8ee3322cbf5e9fd ei b04cceefefc406c75c218fed3251c26565f84dfacc4a13cc567fccd27c133663
-member access specialist access/access.llp key 23eb9605ede1389d8df26fe9f261bf856c5d9dd6c97a7105093e129c900d600c ei 2d61fdeb1feaa7a4f114ecc75e1041caf6f8ab9484257f5f1a3994ed1d951936
-member grasp specialist grasp/grasp.llp key e7b64d6b20ce76f39a58efa1bb63c38d1ca63507939bf9241da451f00ed89818 ei b1262f78d827fce0e167ba85f7a27fdf2fb0e2303823ef28af7a0ec236947e4e
-member place specialist place/place.llp key 697508945b6127d6bf28a262a804e8047332a018b19bbb2a0e6b807b547b8169 ei 46217c0f41f97817f0443352f85d2e6d815912f247b010a6519b2aa75a115510
-package 9be768ae6a9baf8b99d8660cd8b0ac1e28197b9fb84d6d4ceebb082f134f3b3b
+member director direct director/director.llp key fe4a16d5805be264f77829983043d96055c563197600eb79edbb7e772fd88111 ei 9458b6cad5942aa5bdbe46ef4a575e97db566dea6b4f9313752b934f4b91531e
+member task specialist task/task.llp key ab342a39fc010fbe16dd29bdd1ea414556abf275e5c1b454e30865e840d39409 ei 512973312bc03adb3858839ba1a71544f224a10418f9fd68ebc0016b45bcf550
+member nav specialist nav/nav.llp key fcfddc0567c427803f83386a6e5c0510b8ae2760beeb69a941f41665bcebe50f ei 20ed58e95136dba52b0319e2b5a0837f23817b19ba760fc44a6b11bd5dfea919
+member access specialist access/access.llp key 64c98d21084ab5175a11e5f73d8d45114193b602792305223f493b8fce4c3ace ei d13da5bc0a36aa0cf4ee5f87e46b17755c6d60206dbaafb8f403830c7568a3bd
+member grasp specialist grasp/grasp.llp key 46b55f2d771fb04e8483e9191890624bd2d183a9677c0c52016345e600d1d376 ei 97bc2e2b47f0ce2aabfa74607dbd28ac022e0c6dad4686e53015787b1b40aab9
+member place specialist place/place.llp key 2d2c6d140ccaec9843784216644a049f4e073626ded0a3bd8cc2b8ac36f26b99 ei 3e3f6db04044f9f1bf6602349e3a13b58bc883e117d0c0919c522a7b5a26cc6a
+package 6de333802afb631bb367e6ef19a2dfcb9281e51d9049e49cc700b29cb69ef57e
 include dir ../../director_domain.llp ../director_domain.llp key eae3a58005b47eba86ebcb7f5352bcbbf73e4a33bf26c2faba28eff453a6574e by director
-include std iface/director_tree_domain.llp std:iface/director_tree_domain.llp key 9313c63031c264fc328271e225ae57546a949c6e920a60d899ece733a8a94609 by director
-include dir protocol_domain.llp std:iface/protocol_domain.llp key d88e6c824b6bbb0534fef47148e8904553e97071670ce2e7e2e14edc267d7e69 by director task nav access grasp place
+include std iface/director_tree_domain.llp std:iface/director_tree_domain.llp key d3dcbb7688468f2be8fc1a8523fd19e7e3f67c54e8a8a6dc95348b69a210cdf6 by director
+include dir protocol_domain.llp std:iface/protocol_domain.llp key e6fa80212a6bb2dde7e0a8028d9a723630410578ba1dd232f1c7334cb8671007 by director task nav access grasp place
 include std iface/director_tree_wake.llp std:iface/director_tree_wake.llp key 569a9870f06eac68bf8933cc961fe972b6060f56aab7e435e741ec5fb40af12f by director
 include dir ../task_domain.llp task_domain.llp key d0fe49684be59becba52973ba49907410c0fa77864dc986644dd53006933ff7b by task
 include dir iface/alfworld.llp iface/alfworld.llp key 61edf2cf12d7e890a6464c1811048ba545481bc9404f0730ca2ef10e328fc133 by task nav access grasp place
@@ -21,7 +21,7 @@ include dir ../nav_domain.llp nav_domain.llp key 441caff2b55b50cc6b0ee3b7baa675e
 include dir ../access_domain.llp access_domain.llp key 5aeba48bb72dbae54e727f3538bf61e07b81b2787fb9898cc06afec77d147335 by access
 include dir ../grasp_domain.llp grasp_domain.llp key 23313a6f37d0b4af620da2e1c7dacb926504128417a3f489de1e8ec3a5722ace by grasp
 include dir ../place_domain.llp place_domain.llp key 245c7c86badb2ff3fcc48d7b95f5e6ab14d9869d31987d45c8d44b187c510676 by place
-cut 27
+cut 29
   accessible signal: out [access(o)] in [task(c)]
   done reading: out [task(o)] in []
   elsewhere reading: out [access(o) grasp(o) place(o)] in []
@@ -40,6 +40,7 @@ cut 27
   taken signal: out [grasp(o)] in [task(c)]
   tick__active signal: out [task(o) nav(o) access(o) grasp(o) place(o)] in [director(c)]
   tick__cancel signal: out [director(o)] in [task(c) nav(c) access(c) grasp(c) place(c)]
+  tick__committed signal: out [] in [director(c)]
   tick__done signal: out [task(o) nav(o) access(o) grasp(o) place(o)] in [director(c)]
   tick__goal state: out [director(co)] in []
   tick__grant reading: out [director(o)] in [nav(r) access(r) grasp(r) place(r)]
@@ -47,15 +48,18 @@ cut 27
   tick__status reading: out [host(transitional)] in [director]
   tick__stop reading: out [world] in [director(r)]
   tick__stuck signal: out [task(o) grasp(o) place(o)] in [director(c)]
+  tick__yield signal: out [] in [director(c)]
   wrong_dest reading: out [task(o)] in []
   wrong_object reading: out [task(o)] in []
-private director=32 task=10 nav=4 access=9 grasp=13 place=13
+private director=36 task=10 nav=4 access=9 grasp=13 place=13
 warning I2 director: in tick__status is read by no rule (in-unread)
+warning I3 director: in tick__committed is a report nobody sends
+warning I3 director: in tick__yield is a report nobody sends
 warning I4 director: rule stop_cancel withdraws its own out tick__goal (a level the direct member may withdraw)
 warning I4 director: rule path_pop withdraws its own out tick__goal (a level the direct member may withdraw)
 warning I4 director: rule path_off withdraws its own out tick__goal (a level the direct member may withdraw)
 warning I4 director: rule path_stuck withdraws its own out tick__goal (a level the direct member may withdraw)
 note I3 task: in refused is produced only by director's relay facts, until goal(S, K) (§8.4) (transitional)
 note I3 director: in tick__status is produced only by the host's status assertion (amendment 1b) (transitional)
-result 0 error(s), 5 warning(s), 2 note(s)
+result 0 error(s), 7 warning(s), 2 note(s)
 rc 0
