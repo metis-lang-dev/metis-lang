@@ -118,6 +118,12 @@ let derive ~comp ~proto ~world_out ~(specs : member list) ~(hand : member option
     handles = handles_s @ handles_p; results; ends; finished; nohandler; detour; escalate; rename;
     priority; resources; kinds = (if kinds = [] || planner = None then ["none"] else kinds); planner_err }
 
+(* the strict order the declared pairs give (spec/17 amendment 2): what the link checks and records, and what the director runs on *)
+let rec priority_closure c =
+  let c' = uniq (c @ List.concat_map (fun (a, b) -> List.filter_map (fun (b', e) ->
+      if b = b' then Some (a, e) else None) c) c) in
+  if List.length c' = List.length c then c else priority_closure c'
+
 let director_facts d =
   List.map (fun s -> Printf.sprintf "specialist(%s)." s) d.dspecs
   @ (match d.planner with Some p -> [Printf.sprintf "planner(%s)." p] | None -> [])
@@ -129,7 +135,7 @@ let director_facts d =
   @ List.map (fun (a, b) -> Printf.sprintf "detour(%s, %s)." a b) d.detour
   @ List.map (fun (a, b) -> Printf.sprintf "escalate(%s, %s)." a b) d.escalate
   @ List.map (fun (a, b, c) -> Printf.sprintf "rename(%s, %s, %s)." a b c) d.rename
-  @ List.map (fun (a, b) -> Printf.sprintf "priority(%s, %s)." a b) d.priority
+  @ List.map (fun (a, b) -> Printf.sprintf "priority(%s, %s)." a b) (priority_closure (uniq d.priority))
 
 (* the generated director's program: the toolchain's lifted bases, by name (its standard units), the capacity
    copied beside it (so the source and its hash do not depend on where the image is written), the facts, the
@@ -272,11 +278,7 @@ let run ~wire o comp_path =
       if p = q then add "error" "L15" "link-priority: priority(%s, %s) is a self pair" p q;
       List.iter (fun x -> if not (List.mem x specialists) then
                     add "error" "L15" "link-priority: %s is not a specialist" x) [p; q]) pri;
-  let rec closure c =
-    let c' = uniq (c @ List.concat_map (fun (a, b) -> List.filter_map (fun (b', e) ->
-        if b = b' then Some (a, e) else None) c) c) in
-    if List.length c' = List.length c then c else closure c' in
-  let closed = closure (uniq pri) in
+  let closed = priority_closure (uniq pri) in
   List.iter (fun (p, q) -> if p = q then add "error" "L15" "link-priority: a cycle through %s" p)
     (uniq (List.filter (fun (p, q) -> p = q) closed));
   (* L16 world.in: produced by a member (a rule of that name, or a head atom), consumed by none *)

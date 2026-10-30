@@ -293,6 +293,13 @@ for case in kitchen_pot:kitchen_pot/composition.yaml kitchen_pot_gen:kitchen_pot
 done
 n_gold=$(ls "$ROOT/corpus/goldens/link" | wc -l)
 [ "$n_ln" -eq "$n_gold" ] || { echo "link: $n_ln cases, $n_gold goldens"; exit 1; }
+# the director runs on the order the link records (spec/17 amendment 2): a chain of declared pairs reaches its generated facts
+mkdir -p "$WORK/closure"
+cp -r "$ROOT/corpus/iface/alfworld" "$WORK/closure/a"
+printf 'priority: [[task, nav], [nav, access]]\n' >> "$WORK/closure/a/domains/hier/composition_gen.yaml"
+( cd "$WORK/closure" && "$ROOT/src/metisc" --link a/domains/hier/composition_gen.yaml --check ) > "$WORK/closure/out.txt" 2>&1 || true
+grep -q '^  priority(task, access)\.$' "$WORK/closure/out.txt" \
+    || { echo "link: the director's priority is not the closure"; cat "$WORK/closure/out.txt"; exit 1; }
 # written: the directory named by the golden's hash, its tar the same files
 h=$(sed -n 's/^image kitchen_pot_gen v-\([0-9a-f]*\)$/\1/p' "$ROOT/corpus/goldens/link/kitchen_pot_gen.txt")
 ( cd "$ROOT/corpus/iface" && \

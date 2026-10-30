@@ -361,8 +361,11 @@ manifest binding. A member not named in `hosts:` keeps its own.
 
 ## Amendment 2 (2026-10-28, wheelchair-design step 3; revised at the user's word the same day)
 
-- **L15 closes `priority` transitively**: the strict order the link checks and records is the transitive
-  closure of the declared pairs; a cycle anywhere in the closure is `link-priority`.
+- **L15 closes `priority` transitively**: the strict order the link checks and records, and the one the generated
+  director's facts carry, is the transitive closure of the declared pairs; a cycle anywhere in the closure is
+  `link-priority`. (The facts carried the declared pairs alone until wc-nav s-fda86820: the preempt rule reads one
+  pair, so in a chain the top could not take a resource from the bottom. A hand director's facts are compared with
+  the closure, a warning as before.)
 - **The world is an endpoint, in any process.** Spec 15 makes the world a peer with directions (`world:
   {out, in}`), and §5.1's first form made it belong to one process (`plan-world-split`). That was wrong: a
   world port whose member sits in another process is a transport port like any other (§5.2), with the
