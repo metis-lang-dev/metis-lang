@@ -1,0 +1,23 @@
+% b — commands the world: once by a head atom, once by its rule's name.
+catalog b 1.
+provenance text "the plan_ports fixture: a commander" "2026-10-30".
+layers (dyn).
+stages (act).
+include "iface/protocol_domain.llp".
+include "../capacity.llp".
+namespace b produce (dyn).
+%% It has something to do.
+pred todo : b.
+%% It may load.
+pred ready : b.
+%% It loaded.
+pred loaded : b.
+%% The world is pushed.
+pred push(thing) : b.
+stage act {
+  %% It commands the world by a head atom; the rule is not named for the command.
+  reply [dyn] : todo -o push(t1) * ready.
+  %% It commands the world by its rule's name.
+  load [dyn] : ready -o loaded.
+}
+#init todo 1

@@ -1,0 +1,16 @@
+% a — reads the world's reading; the fixture's other member.
+catalog a 1.
+provenance text "the plan_ports fixture: a reader" "2026-10-30".
+layers (dyn).
+stages (act).
+include "iface/protocol_domain.llp".
+include "../capacity.llp".
+namespace a produce (dyn).
+%% A thing the world shows.
+pred seen(thing) : a.
+%% It was noted.
+pred noted : a.
+stage act {
+  %% It notes what it sees.
+  look [dyn] : seen(T) -o noted.
+}

@@ -1,0 +1,10 @@
+# composition — a world command's port (spec/17 amendment 6, wc-motion s-efcc13bf): `load` is a command by its rule's
+# name, `push` only by a rule's head; `seen` is a reading. plans/bridge.yaml hosts all three in a process with no member
+name: plan_ports
+capacity: capacity.llp
+protocol: iface/protocol_domain.llp
+specialists: [a, b]
+direct: tree_director
+world: {out: [seen, tick__stop], in: [push, load]}
+resources: {hand: 1}
+response: 3

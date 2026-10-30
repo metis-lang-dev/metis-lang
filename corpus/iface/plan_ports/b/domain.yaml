@@ -1,0 +1,8 @@
+# b
+display: b
+line: "the plan_ports fixture: a commander"
+voice: third
+program: b.llp
+clock: {beats: 1}
+shared: {}
+status: {success: [], failure: []}

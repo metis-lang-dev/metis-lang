@@ -1,0 +1,6 @@
+% capacity — the fixture's members, resource and things (spec/17 amendment 6)
+catalog plan_ports_capacity 1.
+provenance text "two members, one resource" "2026-10-30".
+type domain {a b}.
+type resource {hand}.
+type thing {t1 t2}.

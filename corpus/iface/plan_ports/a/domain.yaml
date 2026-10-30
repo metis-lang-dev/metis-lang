@@ -1,0 +1,8 @@
+# a
+display: a
+line: "the plan_ports fixture: a reader"
+voice: third
+program: a.llp
+clock: {beats: 1}
+shared: {seen: world-private}
+status: {success: [], failure: []}

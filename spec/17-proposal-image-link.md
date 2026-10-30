@@ -474,3 +474,14 @@ commands, so a member that wants partner changes explained reads the shared stat
   pot, the split's proxy) says so; the surprise test then compares only the atoms the member's own events
   consumed or produced, and another member's change is the tick's input. The declaration belongs in the image's
   host entry (§3.2 `host`) and is read from the host until the image carries it.
+
+## Amendment 6 (2026-10-30, wc-motion s-efcc13bf): a world peer's missing message; a command's port
+
+- **A missing message at a world peer.** §5.3's `stuck` report names a member, and a world endpoint is none: there is no
+  D for `tick__stuck(D)`. So a process that misses, past the budget, the message of a peer holding only world ports folds it
+  into a WORLD READING that its members already read: for the wheelchair's bridge, `blocked(Z)` of the zone the chair
+  was going to. It is still never a silent wait, and no member's report is made up. Between processes that hold members,
+  §5.3 stands.
+- **A command's port.** L16 and the plan's transport ports read one test: a member sends the world command P when a rule
+  is named P or `P_…`, or a rule has P in its head. Before, the ports read the name alone, so a command only in a rule's
+  head passed L16 and derived no port, with no error. Gate 17 holds both forms (corpus/iface/plan_ports).

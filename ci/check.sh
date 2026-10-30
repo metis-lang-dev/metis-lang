@@ -347,6 +347,13 @@ h1=$(sed -n 's/^image kitchen_pot_split v-//p' "$WORK/pimg.txt")
     && [ -f "$WORK/pimg/kitchen_pot_split.image.v-$h1/plans/operator.json" ] \
     || { echo "plans: the image v-$h1 (the golden's v-$h0) or its plans/ missing"; exit 1; }
 echo "PLANS $n_pl/$n_gold (image v-$h1 with plans/split.json and plans/operator.json, its hash unchanged)"
+# a world command's port (spec/17 amendment 6): corpus/iface/plan_ports has a command named for its rule (load) and one only in
+# a rule's head (push, the rule named reply). L16 reads both; the plan's ports must too, or the head's command passes the
+# link and never crosses
+( cd "$ROOT/corpus/iface" && "$ROOT/src/metisc" --link plan_ports/composition_ports.yaml --check --plan plan_ports/plans/bridge.yaml ) \
+    > "$WORK/plan_ports.txt" 2>&1 || { echo "plan_ports: does not link"; cat "$WORK/plan_ports.txt"; exit 1; }
+grep '^  transport ' "$WORK/plan_ports.txt" | diff -u "$ROOT/corpus/iface/plan_ports/ports.golden" -
+echo "PLAN PORTS 3/3 (a command by its rule's name, a command by its rule's head, a reading back)"
 
 echo "== 18. the sidecars (spec 17 ruling 6): metisc's sidecar.json == metispy's, byte for byte, every corpus member"
 # the four corpus images linked; each member's sidecar.json against corpus/goldens/sidecar/sidecars.sha256 (made by

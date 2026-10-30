@@ -181,6 +181,13 @@ let director_manifest name d =
        (String.concat ", " (List.map (fun (r, n) -> Printf.sprintf "%s: {count: %d, free: free, held_by: [holder]}" r n)
                               d.resources))] ^ "\n"
 
+(* M sends the world command P: a rule of that name (P or P_...), or a rule with P in its head. L16 and the plan's
+   transport ports read this one test, so a command that passes L16 always has its port *)
+let sends_command m p =
+  let pre = p ^ "_" in
+  let verb n = n = p || (String.length n > String.length pre && String.sub n 0 (String.length pre) = pre) in
+  List.exists (fun r -> verb r.r_name || List.exists (fun (h : Ast.atom) -> h.pred = p) r.r_head) m.m_rules
+
 (* -- the link ---------------------------------------------------------- *)
 
 (* an included unit's key in the lock (spec/17 amendment 5: place + key per unit): its source's, as --keys prints it *)
@@ -274,10 +281,7 @@ let run ~wire o comp_path =
     (uniq (List.filter (fun (p, q) -> p = q) closed));
   (* L16 world.in: produced by a member (a rule of that name, or a head atom), consumed by none *)
   List.iter (fun p ->
-      let pre = p ^ "_" in
-      let verb n = n = p || (String.length n > String.length pre && String.sub n 0 (String.length pre) = pre) in
-      let produced = List.exists (fun m -> List.exists (fun r ->
-          verb r.r_name || List.exists (fun (h : Ast.atom) -> h.pred = p) r.r_head) m.m_rules) members in
+      let produced = List.exists (fun m -> sends_command m p) members in
       (* a command verb may also be a goal kind between members (alfworld's take(O): the planner's out, grasp's in)
          or a routing target (minihack's open: detour(closed, open)); consumed FROM THE WORLD only otherwise *)
       let member_out = List.exists (fun m -> List.assoc_opt p m.m_shared = Some "out") members in
@@ -549,10 +553,7 @@ let run ~wire o comp_path =
          sit in one process: used from two processes and hosted by none, each would build its own world, and the
          shared world (kitchen_pot's pot) would diverge (plan-world-unhosted) *)
       let named p = List.find_map (fun (pn, _, ws, _) -> if List.mem p ws then Some pn else None) ps in
-      let sends m p = List.exists (fun r ->
-          let pre = p ^ "_" in
-          r.r_name = p || (String.length r.r_name > String.length pre && String.sub r.r_name 0 (String.length pre) = pre))
-          m.m_rules in
+      let sends = sends_command in
       List.iter (fun p ->
           if named p = None then begin
             let users = uniq (List.filter_map (fun m ->

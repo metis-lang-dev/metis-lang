@@ -1,0 +1,5 @@
+# the world's command side and the reading in a process of its own (spec/17 amendment 2)
+processes:
+  runtime: [a, b, tree_director]
+  bridge: {world: [push, load, seen]}
+transport: {carrier: socket, budget: 1}
