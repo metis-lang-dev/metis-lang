@@ -485,3 +485,8 @@ commands, so a member that wants partner changes explained reads the shared stat
 - **A command's port.** L16 and the plan's transport ports read one test: a member sends the world command P when a rule
   is named P or `P_…`, or a rule has P in its head. Before, the ports read the name alone, so a command only in a rule's
   head passed L16 and derived no port, with no error. Gate 17 holds both forms (corpus/iface/plan_ports).
+- **A command left out of a plan.** A world port named nowhere is hosted with its member (amendment 2), so a command
+  omitted from a process that takes the others never crosses. When a process of world ports alone hosts at least one
+  command, every command it leaves out is a warning, `plan-world-unnamed`. Readings are not checked: they are rightly
+  hosted beside the members while another process takes the commands, and a process hosting only readings (an
+  operator's) leaves the commands where they are. So a reading left out is still only seen in the plan's listing.

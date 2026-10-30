@@ -563,6 +563,17 @@ let run ~wire o comp_path =
               add "error" "plan" "plan-world-unhosted: %s: world port %s is used from %s and hosted by none: name its host under world:"
                 pname p (String.concat ", " users)
           end) (a.a_world_out @ a.a_world_in);
+      (* a process of world ports alone that hosts part of the command side: a command named nowhere stays with its member
+         and never crosses, with no other finding (spec/17 amendment 6). Readings are not listed: a world's readings are
+         rightly hosted in the runtime beside a process that takes its commands (MOTION's bridge), and one that hosts only
+         readings (the operator's) leaves the commands where they are *)
+      List.iter (fun (pn, ms, ws, _) ->
+          if ms = [] && List.exists (fun w -> List.mem w a.a_world_in) ws then begin
+            let left = List.filter (fun p -> named p = None) a.a_world_in in
+            if left <> [] then
+              add "warning" "plan" "plan-world-unnamed: %s: process %s hosts world commands and holds no member; named nowhere, these stay with their members and never cross: %s"
+                pname pn (String.concat ", " left)
+          end) ps;
       (* the runtimes today (§10): levels need py's hook; go has no tick layer for a director with specialists *)
       List.iter (fun (pn, ms, _, rt) ->
           List.iter (fun n -> if List.mem n all_members then begin

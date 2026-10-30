@@ -353,7 +353,14 @@ echo "PLANS $n_pl/$n_gold (image v-$h1 with plans/split.json and plans/operator.
 ( cd "$ROOT/corpus/iface" && "$ROOT/src/metisc" --link plan_ports/composition_ports.yaml --check --plan plan_ports/plans/bridge.yaml ) \
     > "$WORK/plan_ports.txt" 2>&1 || { echo "plan_ports: does not link"; cat "$WORK/plan_ports.txt"; exit 1; }
 grep '^  transport ' "$WORK/plan_ports.txt" | diff -u "$ROOT/corpus/iface/plan_ports/ports.golden" -
-echo "PLAN PORTS 3/3 (a command by its rule's name, a command by its rule's head, a reading back)"
+grep -q 'plan-world-unnamed' "$WORK/plan_ports.txt" && { echo "plan_ports: a warning on a plan that names every command"; exit 1; }
+# the same process with one command left out: it links, the port is gone, and the warning names it
+( cd "$ROOT/corpus/iface" && "$ROOT/src/metisc" --link plan_ports/composition_ports.yaml --check --plan plan_ports/plans/omit.yaml ) \
+    > "$WORK/plan_omit.txt" 2>&1 || { echo "plan_ports: the omission does not link"; cat "$WORK/plan_omit.txt"; exit 1; }
+grep -q '^warning plan plan-world-unnamed: omit: process bridge .* never cross: push$' "$WORK/plan_omit.txt" \
+    || { echo "plan_ports: no warning for the command left out"; cat "$WORK/plan_omit.txt"; exit 1; }
+! grep -q '^  transport push ' "$WORK/plan_omit.txt" || { echo "plan_ports: the command left out has a port"; exit 1; }
+echo "PLAN PORTS 5/5 (a command by its rule's name, by its rule's head, a reading back; a command left out warned, no port)"
 
 echo "== 18. the sidecars (spec 17 ruling 6): metisc's sidecar.json == metispy's, byte for byte, every corpus member"
 # the four corpus images linked; each member's sidecar.json against corpus/goldens/sidecar/sidecars.sha256 (made by

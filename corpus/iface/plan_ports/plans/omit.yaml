@@ -1,0 +1,5 @@
+# bridge.yaml with one command left out: it links, push never crosses, and plan-world-unnamed says so
+processes:
+  runtime: [a, b, tree_director]
+  bridge: {world: [load, seen]}
+transport: {carrier: socket, budget: 1}
