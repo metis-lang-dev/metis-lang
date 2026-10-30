@@ -1102,6 +1102,8 @@ to: the safe act is to clear the crossing, so a holder may declare its action at
   - `tick__committed(D, R)`: D's action on R is atomic from its next command on. A member reports it the beat BEFORE
     its first atomic command. It may repeat it (`commit_more` absorbs it).
   - `tick__yield(D, R)`: the atomic action is over.
+  - A member's atomic action is on ONE resource at a time: `commit_on` consumes `nocommit(D)`, so a second resource's
+    `tick__committed` waits unread until the first yields.
 - **The stop.** In the standard unit `iface/director_tree_domain.llp`, `stop_release` reads `$nocommit(D)`:
 
   ```
