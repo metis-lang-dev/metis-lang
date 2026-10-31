@@ -1137,3 +1137,17 @@ after a stop, a yield with no stop, the preemption, and the one beat. The unit's
 iface, link, plans and package goldens and the sidecars were regenerated, and every image that includes the unit
 moves with the reason "spec/15 amendment 9". metispy's vendored copy is byte-equal, and it runs the same scenes
 (tests/catalog/test_stop_committed.py).
+
+## Amendment 10 (2026-10-31, release-race s-c88bf623; the architect's ruling, the user's "your judgement"): a grant has a generation
+
+A grant has a generation. Beside tick__grant(D,R) the director asserts tick__gen(D,R,G), G fresh per grant of R. A member's tick__release(D,R) is member-local and unchanged; the generated protocol stub carries the echo rule that turns it into the report tick__released(D,R,G) with the G the member holds. The director consumes tick__released(D,R,G) only against the generation of the grant held; a released whose G is not the held one, or on a free R, is consumed by rule and reported in the journal as stale. late(D) becomes late(D,R). A queued(D,R,T) ticket of a member that holds R is skipped. The runtime relays reports as before and stamps nothing: every arbitration is in the rules.
+
+**Why (the trace, `metis-worlds minihack/experiments/release_case.py`):** a fight's last beat produces a result and a release. The director takes the way back on the result at that tick, and the release is relayed after it, to a session where its member holds nothing. No rule consumed it, so it waited and revoked the member's next grant one beat after it was given. Four tokens were of this class (tick__release, late, late_release, queued), because the routing (wake, sleep) and the tree (want, release, preempt) hand one resource over and neither cleaned the other's tokens. A release can also meet its member's NEW grant in one beat, so no rule reading only who holds now can tell the two apart: the token has to name its grant.
+
+**As built:**
+- `iface/protocol_domain.llp`: `type tick__gen {g0 g1 g2 g3}`, `tick__gen(domain, resource, tick__gen)` (signal), `tick__released(domain, resource, tick__gen)` (report). `tick__release` stays declared there with no nature, and is not a manifest port.
+- `iface/director_tree_domain.llp`: `gen(R, G)` per resource, in the start at g0; each grant moves it on (`gnext`) and says `tick__gen`. `release_on_report` and `release_report_wait` read `$gen(R, G)`. New: `release_old` (another G), `release_on_free` (this G, R free), `late_release_free`, `late_release_other`, `ticket_held`.
+- `iface/director_tree_wake.llp`: the same for its grants; `late(D, R)`; new `late_free`, `late_other`.
+- `metis.catalog.protocol_stub` writes the echo with the cancels: `released [dyn] : tick__release(D, R) * $tick__gen(D, R, G) -o tick__released(D, R, G).`, and the start `#init tick__gen(D, R, g0) 1` (a lifted base's instances carry theirs). **tick__gen stays after a revoke:** that is how a member already revoked reports the grant it had, with no rule reading the grant. **It is there from the start:** a release before any grant would otherwise wait for the first grant and report that one.
+- The agent replaces the member's tick__gen when the director's arrives, as it applies a grant: transport, between beats, so no rule races it. Only a member whose manifest names tick__gen gets it.
+- Generations wrap at 4: a stale report lives one tick, consumed at the director's next beat.

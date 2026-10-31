@@ -1,8 +1,8 @@
 link composition.yaml
-member director direct wire b52cfb4593e6a1a5cf714decb6d84719c61ce1fd5751b4aa13e593ba9aa0e996 bundle 20b4e325164a source 9aa4899f50fb27f2b0e0368074864fd17dc5c9ebfbe43c549f3f0a0689b5819e
-member task specialist wire 4663844eb08d45372d5b773f718a6dfd065ce2c257b2f7bc6cabc4a04580c0a9 bundle 8d84d7d46341 source 6bbf074b52367d9bb86fb38af4acb996133417013263ebfb4dc536cef961b419
-member nav specialist wire 6a79dd004372168c1c422e7700f094f37969ab8262c77501e3de20ed373cb69a bundle 183769d9d20e source 7850cdf5473918ec85354d05fa56459073c7be7ea0aaaa644255e2004196184b
-member act specialist wire 044964d380377c77aab4b0b38980576235cb7587c4d679702f2d9abcf32964c5 bundle 7a58d31f8d8a source a3df86e820105f17f66fc09aa2532bd6c4663560149476233e289da198c4f179
+member director direct wire 0d2ac319afe0f9cb462ccfb838a5344b434b2d09709b5d45e584b22e7906ade1 bundle 94d77b975228 source e807deebdb05fa454f59f482bfb08e167741955da4f89c2a3bc4af5c6f4d25fc
+member task specialist wire 4663844eb08d45372d5b773f718a6dfd065ce2c257b2f7bc6cabc4a04580c0a9 bundle e98906cd31ce source 6001eacdc940e21b84b0e4e2ef09480cd5ece961c89de9303554585dc2c40af9
+member nav specialist wire 6a79dd004372168c1c422e7700f094f37969ab8262c77501e3de20ed373cb69a bundle 0cb6a2994cca source 9a60d35598d9ab354d4866efe99055f5e8a4b474f6f2fc6ee21086b1bd474e8d
+member act specialist wire 394d6d007180b735ae90c39e7add15946f8c96ad1ecb26c887c3a7a75ad56d15 bundle ba8ab3e7c6e2 source 0f9ccb2a9faf6921bff77ccf5ba3f2d29ad541297141451ba7e5d93b98823eba
 director director hand (transitional) planner task kinds cleared closed done fight goto guarded open opened reach reached refused stuck
   specialist(nav).
   specialist(act).
@@ -36,6 +36,6 @@ warning L21 nav's host mh_host.py:make: no file mh_host.py beside it (the runtim
 warning L21 act's host mh_host.py:make: no file mh_host.py beside it (the runtime that loads it must have it)
 warning L21 director's host director_host.py:make: no file director_host.py beside it (the runtime that loads it must have it)
 interface 0 error(s), 9 warning(s)
-image minihack_hier v-4b9cca551155
+image minihack_hier v-de45d7e0d4a1
 result 0 error(s), 15 warning(s)
 rc 0

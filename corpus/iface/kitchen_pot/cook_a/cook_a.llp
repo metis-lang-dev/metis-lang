@@ -5,3 +5,4 @@ include "../cook_domain.llp".
 include "../tick_types.llp".
 self(cook_a).
 #init calm(cook_a) 1
+#init tick__gen(cook_a, pot, g0) 1

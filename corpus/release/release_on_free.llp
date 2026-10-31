@@ -1,0 +1,30 @@
+% corpus/release/release_on_free.llp — spec/15 amendment 10 (release-race s-c88bf623): a report of the last grant, the resource freed by another path: consumed
+catalog release_on_free 1.
+provenance text "a scene of the stale release" "2026-10-31".
+include "iface/director_tree_domain.llp".
+include "../stop/types.llp".
+mature_grant(a1).
+mature_grant(a2).
+mature_grant(a3).
+young_grant(a0).
+mature_status(a1).
+mature_status(a2).
+mature_status(a3).
+
+#init gen(r, g1) 1
+#init free(r) 1
+#init tick__released(d1, r, g1) 1
+#init offpath(d1) 1
+#init offpath(d2) 1
+#init nowant(d1) 1
+#init nowant(d2) 1
+#init nolate(d1) 1
+#init nolate(d2) 1
+#init nocommit(d1) 1
+#init nocommit(d2) 1
+#init issue(r, t0) 1
+#init serving(r, t0) 1
+#init age_of(d1, a0) 1
+#init age_of(d2, a0) 1
+#steps 12
+#seeds 10

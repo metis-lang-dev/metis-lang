@@ -1,7 +1,7 @@
 {
  "format": "metis-sidecar/1",
  "catalog": "planner",
- "key": "b5dbcf1e6040218f6f6b296dd6fe303a4cf9bdae9d901cb994d28b796dfc4a64",
+ "key": "2e9fa9481dc5017063101cc38a59cfadc91d5dd18f897d3db8d80fd08d327471",
  "extensions": [],
  "init": {
   "idle": 1,
@@ -42,6 +42,42 @@
   },
   {
    "i": 3,
+   "canon": 14,
+   "name": "released[R=controls,G=g0]",
+   "rule": "released",
+   "kind": "clause",
+   "stage": "safety",
+   "line": "I gave {R} back: I say which grant."
+  },
+  {
+   "i": 4,
+   "canon": 15,
+   "name": "released[R=controls,G=g1]",
+   "rule": "released",
+   "kind": "clause",
+   "stage": "safety",
+   "line": "I gave {R} back: I say which grant."
+  },
+  {
+   "i": 5,
+   "canon": 16,
+   "name": "released[R=controls,G=g2]",
+   "rule": "released",
+   "kind": "clause",
+   "stage": "safety",
+   "line": "I gave {R} back: I say which grant."
+  },
+  {
+   "i": 6,
+   "canon": 17,
+   "name": "released[R=controls,G=g3]",
+   "rule": "released",
+   "kind": "clause",
+   "stage": "safety",
+   "line": "I gave {R} back: I say which grant."
+  },
+  {
+   "i": 7,
    "canon": 1,
    "name": "arrive",
    "rule": "arrive",
@@ -50,7 +86,7 @@
    "line": "I am there."
   },
   {
-   "i": 4,
+   "i": 8,
    "canon": 6,
    "name": "yield_zone[C=near,P=obj]",
    "rule": "yield_zone",
@@ -59,7 +95,7 @@
    "line": "The zone ahead is not mine to take and someone comes: I stop before its line."
   },
   {
-   "i": 5,
+   "i": 9,
    "canon": 7,
    "name": "yield_zone[C=near,P=same]",
    "rule": "yield_zone",
@@ -68,7 +104,7 @@
    "line": "The zone ahead is not mine to take and someone comes: I stop before its line."
   },
   {
-   "i": 6,
+   "i": 10,
    "canon": 4,
    "name": "yield_zone[C=at,P=obj]",
    "rule": "yield_zone",
@@ -77,7 +113,7 @@
    "line": "The zone ahead is not mine to take and someone comes: I stop before its line."
   },
   {
-   "i": 7,
+   "i": 11,
    "canon": 5,
    "name": "yield_zone[C=at,P=same]",
    "rule": "yield_zone",
@@ -86,7 +122,7 @@
    "line": "The zone ahead is not mine to take and someone comes: I stop before its line."
   },
   {
-   "i": 8,
+   "i": 12,
    "canon": 9,
    "name": "yield_walker[W=near,C=near]",
    "rule": "yield_walker",
@@ -95,7 +131,7 @@
    "line": "A walker is at the crossing ahead: I stop before it."
   },
   {
-   "i": 9,
+   "i": 13,
    "canon": 8,
    "name": "yield_walker[W=near,C=at]",
    "rule": "yield_walker",
@@ -104,7 +140,7 @@
    "line": "A walker is at the crossing ahead: I stop before it."
   },
   {
-   "i": 10,
+   "i": 14,
    "canon": 11,
    "name": "yield_walker[W=on,C=near]",
    "rule": "yield_walker",
@@ -113,7 +149,7 @@
    "line": "A walker is at the crossing ahead: I stop before it."
   },
   {
-   "i": 11,
+   "i": 15,
    "canon": 10,
    "name": "yield_walker[W=on,C=at]",
    "rule": "yield_walker",
@@ -122,7 +158,7 @@
    "line": "A walker is at the crossing ahead: I stop before it."
   },
   {
-   "i": 12,
+   "i": 16,
    "canon": 13,
    "name": "yield_merge[C=near]",
    "rule": "yield_merge",
@@ -131,7 +167,7 @@
    "line": "The merge ahead: not my turn, and the other lane comes: I let it in."
   },
   {
-   "i": 13,
+   "i": 17,
    "canon": 12,
    "name": "yield_merge[C=at]",
    "rule": "yield_merge",
@@ -140,8 +176,8 @@
    "line": "The merge ahead: not my turn, and the other lane comes: I let it in."
   },
   {
-   "i": 14,
-   "canon": 17,
+   "i": 18,
+   "canon": 21,
    "name": "change[D=left,L=leadleft,F=followleft,C=none]",
    "rule": "change",
    "kind": "clause",
@@ -149,8 +185,8 @@
    "line": "The lead is slow and the {D} lane is safe ahead and behind, and I did not just leave it: I change to it."
   },
   {
-   "i": 15,
-   "canon": 16,
+   "i": 19,
+   "canon": 20,
    "name": "change[D=left,L=leadleft,F=followleft,C=far]",
    "rule": "change",
    "kind": "clause",
@@ -158,8 +194,8 @@
    "line": "The lead is slow and the {D} lane is safe ahead and behind, and I did not just leave it: I change to it."
   },
   {
-   "i": 16,
-   "canon": 19,
+   "i": 20,
+   "canon": 23,
    "name": "change[D=right,L=leadright,F=followright,C=none]",
    "rule": "change",
    "kind": "clause",
@@ -167,8 +203,8 @@
    "line": "The lead is slow and the {D} lane is safe ahead and behind, and I did not just leave it: I change to it."
   },
   {
-   "i": 17,
-   "canon": 18,
+   "i": 21,
+   "canon": 22,
    "name": "change[D=right,L=leadright,F=followright,C=far]",
    "rule": "change",
    "kind": "clause",
@@ -176,8 +212,8 @@
    "line": "The lead is slow and the {D} lane is safe ahead and behind, and I did not just leave it: I change to it."
   },
   {
-   "i": 18,
-   "canon": 15,
+   "i": 22,
+   "canon": 19,
    "name": "accel",
    "rule": "accel",
    "kind": "clause",
@@ -185,8 +221,8 @@
    "line": "Below the limit, nothing slow ahead, room before the lead: I speed up."
   },
   {
-   "i": 19,
-   "canon": 14,
+   "i": 23,
+   "canon": 18,
    "name": "keep_gap",
    "rule": "keep_gap",
    "kind": "clause",
@@ -194,8 +230,8 @@
    "line": "Below the limit, but no room to speed up before the lead: I keep my speed."
   },
   {
-   "i": 20,
-   "canon": 20,
+   "i": 24,
+   "canon": 24,
    "name": "keep_limit",
    "rule": "keep_limit",
    "kind": "clause",
@@ -203,8 +239,8 @@
    "line": "At the limit: I keep my speed."
   },
   {
-   "i": 21,
-   "canon": 22,
+   "i": 25,
+   "canon": 26,
    "name": "keep_lead",
    "rule": "keep_lead",
    "kind": "clause",
@@ -212,8 +248,8 @@
    "line": "The lead is slow and no lane is free: I follow it."
   },
   {
-   "i": 22,
-   "canon": 21,
+   "i": 26,
+   "canon": 25,
    "name": "brake_follow[R=brake_min_correct]",
    "rule": "brake_follow",
    "kind": "clause",
@@ -221,8 +257,8 @@
    "line": "The lead is closing in on me: I ease off, {R}."
   },
   {
-   "i": 23,
-   "canon": 24,
+   "i": 27,
+   "canon": 28,
    "name": "decide",
    "rule": "decide",
    "kind": "link",
@@ -230,8 +266,8 @@
    "line": ""
   },
   {
-   "i": 24,
-   "canon": 23,
+   "i": 28,
+   "canon": 27,
    "name": "back",
    "rule": "back",
    "kind": "link",
@@ -335,6 +371,31 @@
      "effects": [
       {
        "atom": "idle",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "released",
+     "stage": "safety",
+     "doc": "I gave {R} back: I say which grant.",
+     "premises": [
+      {
+       "atom": "tick__release(planner,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__gen(planner,R,G)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [
+      {
+       "atom": "tick__released(planner,R,G)",
        "n": 1,
        "kept": false
       }
@@ -810,7 +871,7 @@
      "doc": ""
     },
     {
-     "name": "tick__release",
+     "name": "tick__released",
      "doc": ""
     },
     {
@@ -822,7 +883,15 @@
      "doc": ""
     },
     {
+     "name": "tick__release",
+     "doc": ""
+    },
+    {
      "name": "tick__grant",
+     "doc": ""
+    },
+    {
+     "name": "tick__gen",
      "doc": ""
     },
     {
@@ -978,10 +1047,12 @@
      "tick__done",
      "tick__stuck",
      "tick__want",
-     "tick__release",
+     "tick__released",
      "tick__committed",
      "tick__yield",
+     "tick__release",
      "tick__grant",
+     "tick__gen",
      "tick__goal",
      "tick__revoke",
      "tick__stop",

@@ -15,6 +15,7 @@ mature_grant(a3).
 mature_status(a1).
 mature_status(a2).
 mature_status(a3).
+#init gen(r, g0) 1
 #init tick__stop 1
 #init nocommit(d1) 1
 #init nocommit(d2) 1

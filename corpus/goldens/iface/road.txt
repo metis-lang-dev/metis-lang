@@ -1,32 +1,33 @@
 interface composition.yaml
-iface protocol_domain std:iface/protocol_domain.llp 2daa98a645e282c6b66c75a4056f8da9e2de533543fd7ce2d1666cb6bdf336c0
+iface protocol_domain std:iface/protocol_domain.llp 8fa04425636d3f861b5955665cf25addc8c582e2c2bcfa0ec36a15b77e91b4ac
 capacity capacity.llp 6232ccc8de928a9f3dfdb56e96d6d52b6b6cf74b9435d4b5e436d9e3f30a668e
-member road_director direct road_director/road_director.llp key 5ff4f676e266735bc286db12e181a30fac4c429a498a2423be5c1c3f2a906696 ei 68aec18de3a79a354754f00e516f8444a1530c0c306946b2b2a4d9937327cfc8
-member responder specialist responder/responder.llp key a0a590fbb3a943feb367294a774c47f93ae1901796a68c9a028a865121732497 ei 4292c4ea1cd67316c672e6f5ec455bc53f781f048d073556c91d75e332134677
-member planner specialist planner/planner.llp key 8b2a792b0d20f0f916332640ea8ed8b4cdf1b36f2b5bbdf13ddb4411702748b0 ei 02aa4d84afb616623b6a5e4f162169c09b60019ba26206c5c2b41576d96e9a32
-package a786917b11a8aeac2f3674c6f0fc7b5ee4fe7771e4eb2bef6e2e6af2413ad9dc
-include std iface/director_tree_domain.llp std:iface/director_tree_domain.llp key d3dcbb7688468f2be8fc1a8523fd19e7e3f67c54e8a8a6dc95348b69a210cdf6 by road_director
-include dir protocol_domain.llp std:iface/protocol_domain.llp key e6fa80212a6bb2dde7e0a8028d9a723630410578ba1dd232f1c7334cb8671007 by road_director responder planner
+member road_director direct road_director/road_director.llp key 58234e678420c7dbd2661cb30a6d0fd4a8c914c5aa94bff7f55a57e163319bf4 ei 06d885f73951e5392b819ac17308fa8b8f94bf94e04273195f782ba13e77e75d
+member responder specialist responder/responder.llp key 2cee7748b7b6b69101e3ae7f5be8bccabc713cb1e4b32ce1b8225f0376ce7cc0 ei 86f9cb7a61d0247ce9fb9b04d291049fe31d7ecb4a3a6176f6f9cae212175284
+member planner specialist planner/planner.llp key 585bf4bef2b9fa650689b94bc72478534b65c4e1b1f80dc44502b8a08d1dfe52 ei 0cab65445d8c5188b6b77ed699c34bd0b2e73a1a9271fad28034c27df48da2f1
+package a830f78933ac0c09ad8bf9f16f0d874117302d926cd8c2670d48e21f527bdc7f
+include std iface/director_tree_domain.llp std:iface/director_tree_domain.llp key 20ed149343adaa01626baab200b32a8098c979500159dc73b11e3bec11dad0b4 by road_director
+include dir protocol_domain.llp std:iface/protocol_domain.llp key 7850460869529819420dd14f60972f611b5b9a6f59a48ffa08b7c28641dc68d1 by road_director responder planner
 include dir ../tick_types.llp tick_types.llp key 283e03eaa1ae0d17d74b445b7238bd0f5dda1bd04837dd16f0e7e39a56b69511 by road_director responder planner
-include dir ../responder_domain.llp responder_domain.llp key 75900981adf53c05bcf7b027485000d3cb35207345c65724b25908029dd89733 by responder
+include dir ../responder_domain.llp responder_domain.llp key 6159614399786eb03c0cec6466f4f2dceb164e9daef4526b7dcd1682932bb85b by responder
 include dir ../capacity.llp capacity.llp key 6232ccc8de928a9f3dfdb56e96d6d52b6b6cf74b9435d4b5e436d9e3f30a668e by responder planner
-include dir ../planner_domain.llp planner_domain.llp key d02364d0483a3ba0616d857d3b80a754df276a9edf263c30d9af6fd078395511 by planner
-cut 14
+include dir ../planner_domain.llp planner_domain.llp key f9cb19b19771cafd91b84bb13a5c1174c86db9be99bdc1402e55d6583c9fab88 by planner
+cut 15
   controls resource: out [] in [] resource [responder planner]
   tick__active signal: out [responder(o) planner(o)] in [road_director(c)]
   tick__cancel signal: out [road_director(o)] in [responder(c) planner(c)]
   tick__committed signal: out [] in [road_director(c)]
   tick__done signal: out [responder(o) planner(o)] in [road_director(c)]
+  tick__gen reading: out [road_director(o)] in [responder(r) planner(r)]
   tick__goal state: out [road_director(co)] in []
   tick__grant reading: out [road_director(o)] in [responder(r) planner(r)]
-  tick__release signal: out [responder(o) planner(o)] in [road_director(c)]
+  tick__released signal: out [responder(o) planner(o)] in [road_director(c)]
   tick__revoke reading: out [road_director(o)] in []
   tick__status reading: out [host(transitional)] in [road_director]
   tick__stop reading: out [world] in [road_director(r)]
   tick__stuck signal: out [] in [road_director(c)]
   tick__want signal: out [responder(o) planner(o)] in [road_director(c)]
   tick__yield signal: out [] in [road_director(c)]
-private road_director=22 responder=21 planner=32
+private road_director=23 responder=21 planner=32
 warning I2 road_director: in tick__status is read by no rule (in-unread)
 warning I3 road_director: in tick__stuck is a report nobody sends
 warning I3 road_director: in tick__committed is a report nobody sends
