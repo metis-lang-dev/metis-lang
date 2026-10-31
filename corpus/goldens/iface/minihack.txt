@@ -2,13 +2,13 @@ interface composition.yaml
 iface protocol_domain std:iface/protocol_domain.llp 8fa04425636d3f861b5955665cf25addc8c582e2c2bcfa0ec36a15b77e91b4ac
 iface minihack_iface iface/minihack.llp d48d34810d4632feab8187d31b65aad7f03017f9ba119f62359ec9ae0c651d69
 capacity capacity.llp 154af6234d85acb6901f7a8a7bbc108fd9132725007314b4aec9ccd90436c61c
-member director direct director/director.llp key a816d45fb20d98333628ac52fc608c57c30420a425b949765661254d957ca3c4 ei 828f25465d95951ee9cd417c986ec0ac1a60488b57b450df4f4bd37be65ee074
+member director direct director/director.llp key f7afb4eff097cb4da970fa60f2274e601b322113b9254bdcef66015133835893 ei 828f25465d95951ee9cd417c986ec0ac1a60488b57b450df4f4bd37be65ee074
 member task specialist task/task.llp key 6001eacdc940e21b84b0e4e2ef09480cd5ece961c89de9303554585dc2c40af9 ei 062f588b9ab75a54fce73cf3b16f2c5ecaf1e4be9afcd31fc274421ccd5aa9ef
 member nav specialist nav/nav.llp key 9a60d35598d9ab354d4866efe99055f5e8a4b474f6f2fc6ee21086b1bd474e8d ei 6883983172d9049e4b274342078142d64f751706921ede6287806d3654a7ff08
 member act specialist act/act.llp key 0f9ccb2a9faf6921bff77ccf5ba3f2d29ad541297141451ba7e5d93b98823eba ei 3f07fbeb035cadeba96bb879134af0ed5ae4c4770fa8c9db9e6cb1c87bd32261
-package cba9567df2284da7e3a611a2d41ff6289bca7712aa21bbd52faa9d4dd8011a8a
+package 6de9c0b17d22fdf5d86ddaf45d1938e4fa901034e6849d678b6e8a10aa4922fb
 include dir ../../director_domain.llp ../director_domain.llp key 3facf5a830016a3bf4b2d48506035ef31b201b2a104ff83327130e98f1e08a0a by director
-include std iface/director_tree_domain.llp std:iface/director_tree_domain.llp key 08c7dbbc1daae0e1bf8f0565bb9f0d9fa2eca095df3abf07529c571b92fb3353 by director
+include std iface/director_tree_domain.llp std:iface/director_tree_domain.llp key 03ad02301a9c948f974915ce4dff81c412b7c93b8e6b40a540e4ad76803ee1fe by director
 include dir protocol_domain.llp std:iface/protocol_domain.llp key 7850460869529819420dd14f60972f611b5b9a6f59a48ffa08b7c28641dc68d1 by director task nav act
 include std iface/director_tree_wake.llp std:iface/director_tree_wake.llp key cb0ce97d106bf93a68d14824ede9d091753f09a664604c8be140d2102d10823a by director
 include dir ../task_domain.llp task_domain.llp key 4e0704ba3f9c2f5fe141b5685729d693eaf49551c9a68d9d083c599cc4f16187 by task
@@ -43,7 +43,7 @@ cut 27
   tick__status reading: out [host(transitional)] in [director]
   tick__stop reading: out [world] in [director(r)]
   tick__stuck signal: out [task(o)] in [director(c)]
-  tick__want signal: out [act(o)] in [director(c)]
+  tick__want signal: out [act(o)] in [director(cr)]
   tick__yield signal: out [] in [director(c)]
 private director=37 task=1 nav=9 act=20
 warning I2 task: in opened is read by no rule (in-unread)

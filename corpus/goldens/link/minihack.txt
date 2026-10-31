@@ -1,5 +1,5 @@
 link composition.yaml
-member director direct wire a3aad99a33140d0bff59c69f59a0850bcc601cd16718b00a0fe600b95cec9bb0 bundle adfae494f3f1 source a816d45fb20d98333628ac52fc608c57c30420a425b949765661254d957ca3c4
+member director direct wire 46e9d6af5831b24adc2c6ae00faca7b818aac27d46926c6b7353752d949acaf8 bundle 7e6871921b5d source f7afb4eff097cb4da970fa60f2274e601b322113b9254bdcef66015133835893
 member task specialist wire 4663844eb08d45372d5b773f718a6dfd065ce2c257b2f7bc6cabc4a04580c0a9 bundle e98906cd31ce source 6001eacdc940e21b84b0e4e2ef09480cd5ece961c89de9303554585dc2c40af9
 member nav specialist wire 6a79dd004372168c1c422e7700f094f37969ab8262c77501e3de20ed373cb69a bundle 0cb6a2994cca source 9a60d35598d9ab354d4866efe99055f5e8a4b474f6f2fc6ee21086b1bd474e8d
 member act specialist wire 191f53100d51dfcd026bd648d94503d2c94d9956a1ec9c0da39594dfa41c5d8e bundle 71fca87db519 source 0f9ccb2a9faf6921bff77ccf5ba3f2d29ad541297141451ba7e5d93b98823eba
@@ -36,6 +36,6 @@ warning L21 nav's host mh_host.py:make: no file mh_host.py beside it (the runtim
 warning L21 act's host mh_host.py:make: no file mh_host.py beside it (the runtime that loads it must have it)
 warning L21 director's host director_host.py:make: no file director_host.py beside it (the runtime that loads it must have it)
 interface 0 error(s), 9 warning(s)
-image minihack_hier v-ab9738a8a744
+image minihack_hier v-754ef2e0be72
 result 0 error(s), 15 warning(s)
 rc 0
