@@ -20260,8 +20260,8 @@
   {
    "i": 2248,
    "canon": 2533,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g1,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g1,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20269,8 +20269,8 @@
   {
    "i": 2249,
    "canon": 2558,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g1,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g1,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20278,8 +20278,8 @@
   {
    "i": 2250,
    "canon": 2583,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g1,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g1,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20287,8 +20287,8 @@
   {
    "i": 2251,
    "canon": 2608,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g1,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g1,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20296,8 +20296,8 @@
   {
    "i": 2252,
    "canon": 2633,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g1,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g1,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20305,8 +20305,8 @@
   {
    "i": 2253,
    "canon": 2658,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g1,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g1,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20314,8 +20314,8 @@
   {
    "i": 2254,
    "canon": 2683,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g1,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g1,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20323,8 +20323,8 @@
   {
    "i": 2255,
    "canon": 2708,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g1,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g1,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20332,8 +20332,8 @@
   {
    "i": 2256,
    "canon": 2534,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g1,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g1,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20341,8 +20341,8 @@
   {
    "i": 2257,
    "canon": 2559,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g1,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g1,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20350,8 +20350,8 @@
   {
    "i": 2258,
    "canon": 2584,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g1,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g1,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20359,8 +20359,8 @@
   {
    "i": 2259,
    "canon": 2609,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g1,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g1,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20368,8 +20368,8 @@
   {
    "i": 2260,
    "canon": 2634,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g1,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g1,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20377,8 +20377,8 @@
   {
    "i": 2261,
    "canon": 2659,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g1,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g1,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20386,8 +20386,8 @@
   {
    "i": 2262,
    "canon": 2684,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g1,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g1,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20395,8 +20395,8 @@
   {
    "i": 2263,
    "canon": 2709,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g1,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g1,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20404,8 +20404,8 @@
   {
    "i": 2264,
    "canon": 2535,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g2,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g2,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20413,8 +20413,8 @@
   {
    "i": 2265,
    "canon": 2560,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g2,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g2,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20422,8 +20422,8 @@
   {
    "i": 2266,
    "canon": 2585,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g2,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g2,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20431,8 +20431,8 @@
   {
    "i": 2267,
    "canon": 2610,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g2,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g2,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20440,8 +20440,8 @@
   {
    "i": 2268,
    "canon": 2635,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g2,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g2,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20449,8 +20449,8 @@
   {
    "i": 2269,
    "canon": 2660,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g2,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g2,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20458,8 +20458,8 @@
   {
    "i": 2270,
    "canon": 2685,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g2,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g2,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20467,8 +20467,8 @@
   {
    "i": 2271,
    "canon": 2710,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g2,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g2,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20476,8 +20476,8 @@
   {
    "i": 2272,
    "canon": 2536,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g2,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g2,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20485,8 +20485,8 @@
   {
    "i": 2273,
    "canon": 2561,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g2,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g2,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20494,8 +20494,8 @@
   {
    "i": 2274,
    "canon": 2586,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g2,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g2,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20503,8 +20503,8 @@
   {
    "i": 2275,
    "canon": 2611,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g2,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g2,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20512,8 +20512,8 @@
   {
    "i": 2276,
    "canon": 2636,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g2,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g2,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20521,8 +20521,8 @@
   {
    "i": 2277,
    "canon": 2661,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g2,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g2,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20530,8 +20530,8 @@
   {
    "i": 2278,
    "canon": 2686,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g2,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g2,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20539,8 +20539,8 @@
   {
    "i": 2279,
    "canon": 2711,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g2,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g2,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20548,8 +20548,8 @@
   {
    "i": 2280,
    "canon": 2537,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g3,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g3,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20557,8 +20557,8 @@
   {
    "i": 2281,
    "canon": 2562,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g3,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g3,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20566,8 +20566,8 @@
   {
    "i": 2282,
    "canon": 2587,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g3,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g3,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20575,8 +20575,8 @@
   {
    "i": 2283,
    "canon": 2612,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g3,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g3,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20584,8 +20584,8 @@
   {
    "i": 2284,
    "canon": 2637,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g3,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g3,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20593,8 +20593,8 @@
   {
    "i": 2285,
    "canon": 2662,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g3,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g3,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20602,8 +20602,8 @@
   {
    "i": 2286,
    "canon": 2687,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g3,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g3,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20611,8 +20611,8 @@
   {
    "i": 2287,
    "canon": 2712,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g3,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g3,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20620,8 +20620,8 @@
   {
    "i": 2288,
    "canon": 2538,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g3,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g3,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20629,8 +20629,8 @@
   {
    "i": 2289,
    "canon": 2563,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g3,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g3,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20638,8 +20638,8 @@
   {
    "i": 2290,
    "canon": 2588,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g3,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g3,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20647,8 +20647,8 @@
   {
    "i": 2291,
    "canon": 2613,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g3,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g3,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20656,8 +20656,8 @@
   {
    "i": 2292,
    "canon": 2638,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g3,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g3,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20665,8 +20665,8 @@
   {
    "i": 2293,
    "canon": 2663,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g3,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g3,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20674,8 +20674,8 @@
   {
    "i": 2294,
    "canon": 2688,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g3,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g3,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20683,8 +20683,8 @@
   {
    "i": 2295,
    "canon": 2713,
-   "name": "release_withdraw[D=responder,R=controls,G=g0,G2=g3,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g0,G2=g3,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20692,8 +20692,8 @@
   {
    "i": 2296,
    "canon": 2539,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g0,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g0,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20701,8 +20701,8 @@
   {
    "i": 2297,
    "canon": 2564,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g0,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g0,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20710,8 +20710,8 @@
   {
    "i": 2298,
    "canon": 2589,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g0,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g0,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20719,8 +20719,8 @@
   {
    "i": 2299,
    "canon": 2614,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g0,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g0,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20728,8 +20728,8 @@
   {
    "i": 2300,
    "canon": 2639,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g0,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g0,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20737,8 +20737,8 @@
   {
    "i": 2301,
    "canon": 2664,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g0,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g0,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20746,8 +20746,8 @@
   {
    "i": 2302,
    "canon": 2689,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g0,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g0,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20755,8 +20755,8 @@
   {
    "i": 2303,
    "canon": 2714,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g0,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g0,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20764,8 +20764,8 @@
   {
    "i": 2304,
    "canon": 2540,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g0,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g0,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20773,8 +20773,8 @@
   {
    "i": 2305,
    "canon": 2565,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g0,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g0,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20782,8 +20782,8 @@
   {
    "i": 2306,
    "canon": 2590,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g0,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g0,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20791,8 +20791,8 @@
   {
    "i": 2307,
    "canon": 2615,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g0,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g0,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20800,8 +20800,8 @@
   {
    "i": 2308,
    "canon": 2640,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g0,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g0,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20809,8 +20809,8 @@
   {
    "i": 2309,
    "canon": 2665,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g0,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g0,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20818,8 +20818,8 @@
   {
    "i": 2310,
    "canon": 2690,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g0,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g0,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20827,8 +20827,8 @@
   {
    "i": 2311,
    "canon": 2715,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g0,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g0,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20836,8 +20836,8 @@
   {
    "i": 2312,
    "canon": 2541,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g2,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g2,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20845,8 +20845,8 @@
   {
    "i": 2313,
    "canon": 2566,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g2,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g2,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20854,8 +20854,8 @@
   {
    "i": 2314,
    "canon": 2591,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g2,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g2,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20863,8 +20863,8 @@
   {
    "i": 2315,
    "canon": 2616,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g2,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g2,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20872,8 +20872,8 @@
   {
    "i": 2316,
    "canon": 2641,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g2,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g2,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20881,8 +20881,8 @@
   {
    "i": 2317,
    "canon": 2666,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g2,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g2,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20890,8 +20890,8 @@
   {
    "i": 2318,
    "canon": 2691,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g2,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g2,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20899,8 +20899,8 @@
   {
    "i": 2319,
    "canon": 2716,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g2,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g2,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20908,8 +20908,8 @@
   {
    "i": 2320,
    "canon": 2542,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g2,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g2,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20917,8 +20917,8 @@
   {
    "i": 2321,
    "canon": 2567,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g2,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g2,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20926,8 +20926,8 @@
   {
    "i": 2322,
    "canon": 2592,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g2,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g2,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20935,8 +20935,8 @@
   {
    "i": 2323,
    "canon": 2617,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g2,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g2,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20944,8 +20944,8 @@
   {
    "i": 2324,
    "canon": 2642,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g2,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g2,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20953,8 +20953,8 @@
   {
    "i": 2325,
    "canon": 2667,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g2,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g2,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20962,8 +20962,8 @@
   {
    "i": 2326,
    "canon": 2692,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g2,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g2,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20971,8 +20971,8 @@
   {
    "i": 2327,
    "canon": 2717,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g2,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g2,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20980,8 +20980,8 @@
   {
    "i": 2328,
    "canon": 2543,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g3,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g3,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20989,8 +20989,8 @@
   {
    "i": 2329,
    "canon": 2568,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g3,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g3,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -20998,8 +20998,8 @@
   {
    "i": 2330,
    "canon": 2593,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g3,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g3,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21007,8 +21007,8 @@
   {
    "i": 2331,
    "canon": 2618,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g3,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g3,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21016,8 +21016,8 @@
   {
    "i": 2332,
    "canon": 2643,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g3,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g3,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21025,8 +21025,8 @@
   {
    "i": 2333,
    "canon": 2668,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g3,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g3,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21034,8 +21034,8 @@
   {
    "i": 2334,
    "canon": 2693,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g3,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g3,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21043,8 +21043,8 @@
   {
    "i": 2335,
    "canon": 2718,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g3,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g3,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21052,8 +21052,8 @@
   {
    "i": 2336,
    "canon": 2544,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g3,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g3,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21061,8 +21061,8 @@
   {
    "i": 2337,
    "canon": 2569,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g3,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g3,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21070,8 +21070,8 @@
   {
    "i": 2338,
    "canon": 2594,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g3,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g3,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21079,8 +21079,8 @@
   {
    "i": 2339,
    "canon": 2619,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g3,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g3,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21088,8 +21088,8 @@
   {
    "i": 2340,
    "canon": 2644,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g3,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g3,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21097,8 +21097,8 @@
   {
    "i": 2341,
    "canon": 2669,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g3,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g3,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21106,8 +21106,8 @@
   {
    "i": 2342,
    "canon": 2694,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g3,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g3,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21115,8 +21115,8 @@
   {
    "i": 2343,
    "canon": 2719,
-   "name": "release_withdraw[D=responder,R=controls,G=g1,G2=g3,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g1,G2=g3,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21124,8 +21124,8 @@
   {
    "i": 2344,
    "canon": 2545,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g0,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g0,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21133,8 +21133,8 @@
   {
    "i": 2345,
    "canon": 2570,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g0,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g0,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21142,8 +21142,8 @@
   {
    "i": 2346,
    "canon": 2595,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g0,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g0,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21151,8 +21151,8 @@
   {
    "i": 2347,
    "canon": 2620,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g0,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g0,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21160,8 +21160,8 @@
   {
    "i": 2348,
    "canon": 2645,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g0,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g0,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21169,8 +21169,8 @@
   {
    "i": 2349,
    "canon": 2670,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g0,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g0,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21178,8 +21178,8 @@
   {
    "i": 2350,
    "canon": 2695,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g0,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g0,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21187,8 +21187,8 @@
   {
    "i": 2351,
    "canon": 2720,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g0,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g0,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21196,8 +21196,8 @@
   {
    "i": 2352,
    "canon": 2546,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g0,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g0,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21205,8 +21205,8 @@
   {
    "i": 2353,
    "canon": 2571,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g0,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g0,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21214,8 +21214,8 @@
   {
    "i": 2354,
    "canon": 2596,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g0,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g0,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21223,8 +21223,8 @@
   {
    "i": 2355,
    "canon": 2621,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g0,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g0,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21232,8 +21232,8 @@
   {
    "i": 2356,
    "canon": 2646,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g0,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g0,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21241,8 +21241,8 @@
   {
    "i": 2357,
    "canon": 2671,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g0,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g0,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21250,8 +21250,8 @@
   {
    "i": 2358,
    "canon": 2696,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g0,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g0,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21259,8 +21259,8 @@
   {
    "i": 2359,
    "canon": 2721,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g0,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g0,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21268,8 +21268,8 @@
   {
    "i": 2360,
    "canon": 2547,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g1,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g1,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21277,8 +21277,8 @@
   {
    "i": 2361,
    "canon": 2572,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g1,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g1,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21286,8 +21286,8 @@
   {
    "i": 2362,
    "canon": 2597,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g1,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g1,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21295,8 +21295,8 @@
   {
    "i": 2363,
    "canon": 2622,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g1,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g1,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21304,8 +21304,8 @@
   {
    "i": 2364,
    "canon": 2647,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g1,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g1,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21313,8 +21313,8 @@
   {
    "i": 2365,
    "canon": 2672,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g1,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g1,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21322,8 +21322,8 @@
   {
    "i": 2366,
    "canon": 2697,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g1,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g1,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21331,8 +21331,8 @@
   {
    "i": 2367,
    "canon": 2722,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g1,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g1,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21340,8 +21340,8 @@
   {
    "i": 2368,
    "canon": 2548,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g1,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g1,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21349,8 +21349,8 @@
   {
    "i": 2369,
    "canon": 2573,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g1,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g1,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21358,8 +21358,8 @@
   {
    "i": 2370,
    "canon": 2598,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g1,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g1,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21367,8 +21367,8 @@
   {
    "i": 2371,
    "canon": 2623,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g1,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g1,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21376,8 +21376,8 @@
   {
    "i": 2372,
    "canon": 2648,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g1,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g1,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21385,8 +21385,8 @@
   {
    "i": 2373,
    "canon": 2673,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g1,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g1,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21394,8 +21394,8 @@
   {
    "i": 2374,
    "canon": 2698,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g1,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g1,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21403,8 +21403,8 @@
   {
    "i": 2375,
    "canon": 2723,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g1,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g1,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21412,8 +21412,8 @@
   {
    "i": 2376,
    "canon": 2549,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g3,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g3,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21421,8 +21421,8 @@
   {
    "i": 2377,
    "canon": 2574,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g3,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g3,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21430,8 +21430,8 @@
   {
    "i": 2378,
    "canon": 2599,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g3,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g3,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21439,8 +21439,8 @@
   {
    "i": 2379,
    "canon": 2624,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g3,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g3,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21448,8 +21448,8 @@
   {
    "i": 2380,
    "canon": 2649,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g3,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g3,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21457,8 +21457,8 @@
   {
    "i": 2381,
    "canon": 2674,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g3,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g3,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21466,8 +21466,8 @@
   {
    "i": 2382,
    "canon": 2699,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g3,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g3,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21475,8 +21475,8 @@
   {
    "i": 2383,
    "canon": 2724,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g3,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g3,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21484,8 +21484,8 @@
   {
    "i": 2384,
    "canon": 2550,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g3,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g3,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21493,8 +21493,8 @@
   {
    "i": 2385,
    "canon": 2575,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g3,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g3,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21502,8 +21502,8 @@
   {
    "i": 2386,
    "canon": 2600,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g3,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g3,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21511,8 +21511,8 @@
   {
    "i": 2387,
    "canon": 2625,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g3,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g3,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21520,8 +21520,8 @@
   {
    "i": 2388,
    "canon": 2650,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g3,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g3,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21529,8 +21529,8 @@
   {
    "i": 2389,
    "canon": 2675,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g3,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g3,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21538,8 +21538,8 @@
   {
    "i": 2390,
    "canon": 2700,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g3,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g3,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21547,8 +21547,8 @@
   {
    "i": 2391,
    "canon": 2725,
-   "name": "release_withdraw[D=responder,R=controls,G=g2,G2=g3,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g2,G2=g3,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21556,8 +21556,8 @@
   {
    "i": 2392,
    "canon": 2551,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g0,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g0,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21565,8 +21565,8 @@
   {
    "i": 2393,
    "canon": 2576,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g0,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g0,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21574,8 +21574,8 @@
   {
    "i": 2394,
    "canon": 2601,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g0,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g0,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21583,8 +21583,8 @@
   {
    "i": 2395,
    "canon": 2626,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g0,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g0,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21592,8 +21592,8 @@
   {
    "i": 2396,
    "canon": 2651,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g0,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g0,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21601,8 +21601,8 @@
   {
    "i": 2397,
    "canon": 2676,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g0,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g0,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21610,8 +21610,8 @@
   {
    "i": 2398,
    "canon": 2701,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g0,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g0,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21619,8 +21619,8 @@
   {
    "i": 2399,
    "canon": 2726,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g0,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g0,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21628,8 +21628,8 @@
   {
    "i": 2400,
    "canon": 2552,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g0,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g0,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21637,8 +21637,8 @@
   {
    "i": 2401,
    "canon": 2577,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g0,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g0,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21646,8 +21646,8 @@
   {
    "i": 2402,
    "canon": 2602,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g0,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g0,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21655,8 +21655,8 @@
   {
    "i": 2403,
    "canon": 2627,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g0,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g0,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21664,8 +21664,8 @@
   {
    "i": 2404,
    "canon": 2652,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g0,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g0,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21673,8 +21673,8 @@
   {
    "i": 2405,
    "canon": 2677,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g0,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g0,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21682,8 +21682,8 @@
   {
    "i": 2406,
    "canon": 2702,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g0,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g0,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21691,8 +21691,8 @@
   {
    "i": 2407,
    "canon": 2727,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g0,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g0,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21700,8 +21700,8 @@
   {
    "i": 2408,
    "canon": 2553,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g1,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g1,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21709,8 +21709,8 @@
   {
    "i": 2409,
    "canon": 2578,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g1,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g1,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21718,8 +21718,8 @@
   {
    "i": 2410,
    "canon": 2603,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g1,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g1,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21727,8 +21727,8 @@
   {
    "i": 2411,
    "canon": 2628,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g1,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g1,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21736,8 +21736,8 @@
   {
    "i": 2412,
    "canon": 2653,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g1,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g1,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21745,8 +21745,8 @@
   {
    "i": 2413,
    "canon": 2678,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g1,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g1,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21754,8 +21754,8 @@
   {
    "i": 2414,
    "canon": 2703,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g1,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g1,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21763,8 +21763,8 @@
   {
    "i": 2415,
    "canon": 2728,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g1,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g1,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21772,8 +21772,8 @@
   {
    "i": 2416,
    "canon": 2554,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g1,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g1,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21781,8 +21781,8 @@
   {
    "i": 2417,
    "canon": 2579,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g1,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g1,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21790,8 +21790,8 @@
   {
    "i": 2418,
    "canon": 2604,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g1,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g1,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21799,8 +21799,8 @@
   {
    "i": 2419,
    "canon": 2629,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g1,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g1,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21808,8 +21808,8 @@
   {
    "i": 2420,
    "canon": 2654,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g1,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g1,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21817,8 +21817,8 @@
   {
    "i": 2421,
    "canon": 2679,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g1,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g1,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21826,8 +21826,8 @@
   {
    "i": 2422,
    "canon": 2704,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g1,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g1,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21835,8 +21835,8 @@
   {
    "i": 2423,
    "canon": 2729,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g1,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g1,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21844,8 +21844,8 @@
   {
    "i": 2424,
    "canon": 2555,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g2,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g2,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21853,8 +21853,8 @@
   {
    "i": 2425,
    "canon": 2580,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g2,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g2,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21862,8 +21862,8 @@
   {
    "i": 2426,
    "canon": 2605,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g2,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g2,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21871,8 +21871,8 @@
   {
    "i": 2427,
    "canon": 2630,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g2,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g2,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21880,8 +21880,8 @@
   {
    "i": 2428,
    "canon": 2655,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g2,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g2,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21889,8 +21889,8 @@
   {
    "i": 2429,
    "canon": 2680,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g2,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g2,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21898,8 +21898,8 @@
   {
    "i": 2430,
    "canon": 2705,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g2,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g2,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21907,8 +21907,8 @@
   {
    "i": 2431,
    "canon": 2730,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g2,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g2,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21916,8 +21916,8 @@
   {
    "i": 2432,
    "canon": 2556,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g2,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g2,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21925,8 +21925,8 @@
   {
    "i": 2433,
    "canon": 2581,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g2,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g2,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21934,8 +21934,8 @@
   {
    "i": 2434,
    "canon": 2606,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g2,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g2,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21943,8 +21943,8 @@
   {
    "i": 2435,
    "canon": 2631,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g2,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g2,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21952,8 +21952,8 @@
   {
    "i": 2436,
    "canon": 2656,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g2,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g2,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21961,8 +21961,8 @@
   {
    "i": 2437,
    "canon": 2681,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g2,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g2,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21970,8 +21970,8 @@
   {
    "i": 2438,
    "canon": 2706,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g2,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g2,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21979,8 +21979,8 @@
   {
    "i": 2439,
    "canon": 2731,
-   "name": "release_withdraw[D=responder,R=controls,G=g3,G2=g2,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=responder,R=controls,G=g3,G2=g2,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21988,8 +21988,8 @@
   {
    "i": 2440,
    "canon": 2333,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g1,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g1,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -21997,8 +21997,8 @@
   {
    "i": 2441,
    "canon": 2358,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g1,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g1,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22006,8 +22006,8 @@
   {
    "i": 2442,
    "canon": 2383,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g1,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g1,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22015,8 +22015,8 @@
   {
    "i": 2443,
    "canon": 2408,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g1,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g1,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22024,8 +22024,8 @@
   {
    "i": 2444,
    "canon": 2433,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g1,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g1,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22033,8 +22033,8 @@
   {
    "i": 2445,
    "canon": 2458,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g1,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g1,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22042,8 +22042,8 @@
   {
    "i": 2446,
    "canon": 2483,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g1,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g1,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22051,8 +22051,8 @@
   {
    "i": 2447,
    "canon": 2508,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g1,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g1,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22060,8 +22060,8 @@
   {
    "i": 2448,
    "canon": 2334,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g1,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g1,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22069,8 +22069,8 @@
   {
    "i": 2449,
    "canon": 2359,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g1,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g1,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22078,8 +22078,8 @@
   {
    "i": 2450,
    "canon": 2384,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g1,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g1,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22087,8 +22087,8 @@
   {
    "i": 2451,
    "canon": 2409,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g1,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g1,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22096,8 +22096,8 @@
   {
    "i": 2452,
    "canon": 2434,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g1,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g1,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22105,8 +22105,8 @@
   {
    "i": 2453,
    "canon": 2459,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g1,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g1,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22114,8 +22114,8 @@
   {
    "i": 2454,
    "canon": 2484,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g1,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g1,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22123,8 +22123,8 @@
   {
    "i": 2455,
    "canon": 2509,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g1,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g1,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22132,8 +22132,8 @@
   {
    "i": 2456,
    "canon": 2335,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g2,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g2,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22141,8 +22141,8 @@
   {
    "i": 2457,
    "canon": 2360,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g2,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g2,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22150,8 +22150,8 @@
   {
    "i": 2458,
    "canon": 2385,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g2,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g2,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22159,8 +22159,8 @@
   {
    "i": 2459,
    "canon": 2410,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g2,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g2,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22168,8 +22168,8 @@
   {
    "i": 2460,
    "canon": 2435,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g2,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g2,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22177,8 +22177,8 @@
   {
    "i": 2461,
    "canon": 2460,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g2,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g2,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22186,8 +22186,8 @@
   {
    "i": 2462,
    "canon": 2485,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g2,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g2,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22195,8 +22195,8 @@
   {
    "i": 2463,
    "canon": 2510,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g2,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g2,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22204,8 +22204,8 @@
   {
    "i": 2464,
    "canon": 2336,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g2,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g2,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22213,8 +22213,8 @@
   {
    "i": 2465,
    "canon": 2361,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g2,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g2,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22222,8 +22222,8 @@
   {
    "i": 2466,
    "canon": 2386,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g2,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g2,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22231,8 +22231,8 @@
   {
    "i": 2467,
    "canon": 2411,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g2,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g2,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22240,8 +22240,8 @@
   {
    "i": 2468,
    "canon": 2436,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g2,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g2,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22249,8 +22249,8 @@
   {
    "i": 2469,
    "canon": 2461,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g2,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g2,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22258,8 +22258,8 @@
   {
    "i": 2470,
    "canon": 2486,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g2,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g2,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22267,8 +22267,8 @@
   {
    "i": 2471,
    "canon": 2511,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g2,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g2,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22276,8 +22276,8 @@
   {
    "i": 2472,
    "canon": 2337,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g3,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g3,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22285,8 +22285,8 @@
   {
    "i": 2473,
    "canon": 2362,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g3,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g3,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22294,8 +22294,8 @@
   {
    "i": 2474,
    "canon": 2387,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g3,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g3,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22303,8 +22303,8 @@
   {
    "i": 2475,
    "canon": 2412,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g3,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g3,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22312,8 +22312,8 @@
   {
    "i": 2476,
    "canon": 2437,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g3,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g3,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22321,8 +22321,8 @@
   {
    "i": 2477,
    "canon": 2462,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g3,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g3,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22330,8 +22330,8 @@
   {
    "i": 2478,
    "canon": 2487,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g3,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g3,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22339,8 +22339,8 @@
   {
    "i": 2479,
    "canon": 2512,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g3,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g3,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22348,8 +22348,8 @@
   {
    "i": 2480,
    "canon": 2338,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g3,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g3,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22357,8 +22357,8 @@
   {
    "i": 2481,
    "canon": 2363,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g3,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g3,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22366,8 +22366,8 @@
   {
    "i": 2482,
    "canon": 2388,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g3,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g3,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22375,8 +22375,8 @@
   {
    "i": 2483,
    "canon": 2413,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g3,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g3,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22384,8 +22384,8 @@
   {
    "i": 2484,
    "canon": 2438,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g3,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g3,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22393,8 +22393,8 @@
   {
    "i": 2485,
    "canon": 2463,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g3,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g3,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22402,8 +22402,8 @@
   {
    "i": 2486,
    "canon": 2488,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g3,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g3,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22411,8 +22411,8 @@
   {
    "i": 2487,
    "canon": 2513,
-   "name": "release_withdraw[D=planner,R=controls,G=g0,G2=g3,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g0,G2=g3,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22420,8 +22420,8 @@
   {
    "i": 2488,
    "canon": 2339,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g0,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g0,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22429,8 +22429,8 @@
   {
    "i": 2489,
    "canon": 2364,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g0,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g0,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22438,8 +22438,8 @@
   {
    "i": 2490,
    "canon": 2389,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g0,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g0,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22447,8 +22447,8 @@
   {
    "i": 2491,
    "canon": 2414,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g0,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g0,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22456,8 +22456,8 @@
   {
    "i": 2492,
    "canon": 2439,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g0,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g0,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22465,8 +22465,8 @@
   {
    "i": 2493,
    "canon": 2464,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g0,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g0,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22474,8 +22474,8 @@
   {
    "i": 2494,
    "canon": 2489,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g0,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g0,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22483,8 +22483,8 @@
   {
    "i": 2495,
    "canon": 2514,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g0,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g0,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22492,8 +22492,8 @@
   {
    "i": 2496,
    "canon": 2340,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g0,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g0,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22501,8 +22501,8 @@
   {
    "i": 2497,
    "canon": 2365,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g0,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g0,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22510,8 +22510,8 @@
   {
    "i": 2498,
    "canon": 2390,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g0,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g0,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22519,8 +22519,8 @@
   {
    "i": 2499,
    "canon": 2415,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g0,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g0,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22528,8 +22528,8 @@
   {
    "i": 2500,
    "canon": 2440,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g0,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g0,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22537,8 +22537,8 @@
   {
    "i": 2501,
    "canon": 2465,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g0,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g0,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22546,8 +22546,8 @@
   {
    "i": 2502,
    "canon": 2490,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g0,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g0,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22555,8 +22555,8 @@
   {
    "i": 2503,
    "canon": 2515,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g0,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g0,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22564,8 +22564,8 @@
   {
    "i": 2504,
    "canon": 2341,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g2,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g2,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22573,8 +22573,8 @@
   {
    "i": 2505,
    "canon": 2366,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g2,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g2,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22582,8 +22582,8 @@
   {
    "i": 2506,
    "canon": 2391,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g2,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g2,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22591,8 +22591,8 @@
   {
    "i": 2507,
    "canon": 2416,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g2,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g2,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22600,8 +22600,8 @@
   {
    "i": 2508,
    "canon": 2441,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g2,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g2,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22609,8 +22609,8 @@
   {
    "i": 2509,
    "canon": 2466,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g2,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g2,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22618,8 +22618,8 @@
   {
    "i": 2510,
    "canon": 2491,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g2,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g2,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22627,8 +22627,8 @@
   {
    "i": 2511,
    "canon": 2516,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g2,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g2,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22636,8 +22636,8 @@
   {
    "i": 2512,
    "canon": 2342,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g2,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g2,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22645,8 +22645,8 @@
   {
    "i": 2513,
    "canon": 2367,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g2,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g2,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22654,8 +22654,8 @@
   {
    "i": 2514,
    "canon": 2392,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g2,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g2,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22663,8 +22663,8 @@
   {
    "i": 2515,
    "canon": 2417,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g2,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g2,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22672,8 +22672,8 @@
   {
    "i": 2516,
    "canon": 2442,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g2,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g2,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22681,8 +22681,8 @@
   {
    "i": 2517,
    "canon": 2467,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g2,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g2,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22690,8 +22690,8 @@
   {
    "i": 2518,
    "canon": 2492,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g2,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g2,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22699,8 +22699,8 @@
   {
    "i": 2519,
    "canon": 2517,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g2,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g2,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22708,8 +22708,8 @@
   {
    "i": 2520,
    "canon": 2343,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g3,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g3,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22717,8 +22717,8 @@
   {
    "i": 2521,
    "canon": 2368,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g3,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g3,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22726,8 +22726,8 @@
   {
    "i": 2522,
    "canon": 2393,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g3,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g3,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22735,8 +22735,8 @@
   {
    "i": 2523,
    "canon": 2418,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g3,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g3,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22744,8 +22744,8 @@
   {
    "i": 2524,
    "canon": 2443,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g3,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g3,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22753,8 +22753,8 @@
   {
    "i": 2525,
    "canon": 2468,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g3,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g3,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22762,8 +22762,8 @@
   {
    "i": 2526,
    "canon": 2493,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g3,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g3,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22771,8 +22771,8 @@
   {
    "i": 2527,
    "canon": 2518,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g3,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g3,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22780,8 +22780,8 @@
   {
    "i": 2528,
    "canon": 2344,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g3,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g3,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22789,8 +22789,8 @@
   {
    "i": 2529,
    "canon": 2369,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g3,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g3,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22798,8 +22798,8 @@
   {
    "i": 2530,
    "canon": 2394,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g3,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g3,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22807,8 +22807,8 @@
   {
    "i": 2531,
    "canon": 2419,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g3,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g3,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22816,8 +22816,8 @@
   {
    "i": 2532,
    "canon": 2444,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g3,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g3,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22825,8 +22825,8 @@
   {
    "i": 2533,
    "canon": 2469,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g3,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g3,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22834,8 +22834,8 @@
   {
    "i": 2534,
    "canon": 2494,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g3,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g3,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22843,8 +22843,8 @@
   {
    "i": 2535,
    "canon": 2519,
-   "name": "release_withdraw[D=planner,R=controls,G=g1,G2=g3,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g1,G2=g3,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22852,8 +22852,8 @@
   {
    "i": 2536,
    "canon": 2345,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g0,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g0,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22861,8 +22861,8 @@
   {
    "i": 2537,
    "canon": 2370,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g0,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g0,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22870,8 +22870,8 @@
   {
    "i": 2538,
    "canon": 2395,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g0,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g0,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22879,8 +22879,8 @@
   {
    "i": 2539,
    "canon": 2420,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g0,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g0,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22888,8 +22888,8 @@
   {
    "i": 2540,
    "canon": 2445,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g0,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g0,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22897,8 +22897,8 @@
   {
    "i": 2541,
    "canon": 2470,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g0,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g0,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22906,8 +22906,8 @@
   {
    "i": 2542,
    "canon": 2495,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g0,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g0,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22915,8 +22915,8 @@
   {
    "i": 2543,
    "canon": 2520,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g0,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g0,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22924,8 +22924,8 @@
   {
    "i": 2544,
    "canon": 2346,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g0,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g0,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22933,8 +22933,8 @@
   {
    "i": 2545,
    "canon": 2371,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g0,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g0,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22942,8 +22942,8 @@
   {
    "i": 2546,
    "canon": 2396,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g0,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g0,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22951,8 +22951,8 @@
   {
    "i": 2547,
    "canon": 2421,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g0,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g0,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22960,8 +22960,8 @@
   {
    "i": 2548,
    "canon": 2446,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g0,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g0,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22969,8 +22969,8 @@
   {
    "i": 2549,
    "canon": 2471,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g0,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g0,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22978,8 +22978,8 @@
   {
    "i": 2550,
    "canon": 2496,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g0,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g0,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22987,8 +22987,8 @@
   {
    "i": 2551,
    "canon": 2521,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g0,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g0,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -22996,8 +22996,8 @@
   {
    "i": 2552,
    "canon": 2347,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g1,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g1,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23005,8 +23005,8 @@
   {
    "i": 2553,
    "canon": 2372,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g1,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g1,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23014,8 +23014,8 @@
   {
    "i": 2554,
    "canon": 2397,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g1,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g1,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23023,8 +23023,8 @@
   {
    "i": 2555,
    "canon": 2422,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g1,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g1,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23032,8 +23032,8 @@
   {
    "i": 2556,
    "canon": 2447,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g1,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g1,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23041,8 +23041,8 @@
   {
    "i": 2557,
    "canon": 2472,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g1,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g1,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23050,8 +23050,8 @@
   {
    "i": 2558,
    "canon": 2497,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g1,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g1,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23059,8 +23059,8 @@
   {
    "i": 2559,
    "canon": 2522,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g1,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g1,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23068,8 +23068,8 @@
   {
    "i": 2560,
    "canon": 2348,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g1,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g1,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23077,8 +23077,8 @@
   {
    "i": 2561,
    "canon": 2373,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g1,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g1,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23086,8 +23086,8 @@
   {
    "i": 2562,
    "canon": 2398,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g1,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g1,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23095,8 +23095,8 @@
   {
    "i": 2563,
    "canon": 2423,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g1,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g1,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23104,8 +23104,8 @@
   {
    "i": 2564,
    "canon": 2448,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g1,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g1,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23113,8 +23113,8 @@
   {
    "i": 2565,
    "canon": 2473,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g1,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g1,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23122,8 +23122,8 @@
   {
    "i": 2566,
    "canon": 2498,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g1,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g1,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23131,8 +23131,8 @@
   {
    "i": 2567,
    "canon": 2523,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g1,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g1,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23140,8 +23140,8 @@
   {
    "i": 2568,
    "canon": 2349,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g3,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g3,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23149,8 +23149,8 @@
   {
    "i": 2569,
    "canon": 2374,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g3,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g3,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23158,8 +23158,8 @@
   {
    "i": 2570,
    "canon": 2399,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g3,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g3,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23167,8 +23167,8 @@
   {
    "i": 2571,
    "canon": 2424,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g3,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g3,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23176,8 +23176,8 @@
   {
    "i": 2572,
    "canon": 2449,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g3,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g3,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23185,8 +23185,8 @@
   {
    "i": 2573,
    "canon": 2474,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g3,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g3,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23194,8 +23194,8 @@
   {
    "i": 2574,
    "canon": 2499,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g3,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g3,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23203,8 +23203,8 @@
   {
    "i": 2575,
    "canon": 2524,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g3,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g3,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23212,8 +23212,8 @@
   {
    "i": 2576,
    "canon": 2350,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g3,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g3,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23221,8 +23221,8 @@
   {
    "i": 2577,
    "canon": 2375,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g3,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g3,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23230,8 +23230,8 @@
   {
    "i": 2578,
    "canon": 2400,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g3,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g3,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23239,8 +23239,8 @@
   {
    "i": 2579,
    "canon": 2425,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g3,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g3,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23248,8 +23248,8 @@
   {
    "i": 2580,
    "canon": 2450,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g3,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g3,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23257,8 +23257,8 @@
   {
    "i": 2581,
    "canon": 2475,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g3,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g3,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23266,8 +23266,8 @@
   {
    "i": 2582,
    "canon": 2500,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g3,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g3,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23275,8 +23275,8 @@
   {
    "i": 2583,
    "canon": 2525,
-   "name": "release_withdraw[D=planner,R=controls,G=g2,G2=g3,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g2,G2=g3,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23284,8 +23284,8 @@
   {
    "i": 2584,
    "canon": 2351,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g0,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g0,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23293,8 +23293,8 @@
   {
    "i": 2585,
    "canon": 2376,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g0,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g0,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23302,8 +23302,8 @@
   {
    "i": 2586,
    "canon": 2401,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g0,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g0,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23311,8 +23311,8 @@
   {
    "i": 2587,
    "canon": 2426,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g0,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g0,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23320,8 +23320,8 @@
   {
    "i": 2588,
    "canon": 2451,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g0,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g0,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23329,8 +23329,8 @@
   {
    "i": 2589,
    "canon": 2476,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g0,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g0,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23338,8 +23338,8 @@
   {
    "i": 2590,
    "canon": 2501,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g0,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g0,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23347,8 +23347,8 @@
   {
    "i": 2591,
    "canon": 2526,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g0,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g0,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23356,8 +23356,8 @@
   {
    "i": 2592,
    "canon": 2352,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g0,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g0,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23365,8 +23365,8 @@
   {
    "i": 2593,
    "canon": 2377,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g0,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g0,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23374,8 +23374,8 @@
   {
    "i": 2594,
    "canon": 2402,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g0,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g0,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23383,8 +23383,8 @@
   {
    "i": 2595,
    "canon": 2427,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g0,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g0,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23392,8 +23392,8 @@
   {
    "i": 2596,
    "canon": 2452,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g0,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g0,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23401,8 +23401,8 @@
   {
    "i": 2597,
    "canon": 2477,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g0,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g0,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23410,8 +23410,8 @@
   {
    "i": 2598,
    "canon": 2502,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g0,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g0,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23419,8 +23419,8 @@
   {
    "i": 2599,
    "canon": 2527,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g0,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g0,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23428,8 +23428,8 @@
   {
    "i": 2600,
    "canon": 2353,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g1,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g1,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23437,8 +23437,8 @@
   {
    "i": 2601,
    "canon": 2378,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g1,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g1,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23446,8 +23446,8 @@
   {
    "i": 2602,
    "canon": 2403,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g1,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g1,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23455,8 +23455,8 @@
   {
    "i": 2603,
    "canon": 2428,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g1,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g1,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23464,8 +23464,8 @@
   {
    "i": 2604,
    "canon": 2453,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g1,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g1,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23473,8 +23473,8 @@
   {
    "i": 2605,
    "canon": 2478,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g1,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g1,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23482,8 +23482,8 @@
   {
    "i": 2606,
    "canon": 2503,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g1,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g1,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23491,8 +23491,8 @@
   {
    "i": 2607,
    "canon": 2528,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g1,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g1,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23500,8 +23500,8 @@
   {
    "i": 2608,
    "canon": 2354,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g1,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g1,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23509,8 +23509,8 @@
   {
    "i": 2609,
    "canon": 2379,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g1,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g1,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23518,8 +23518,8 @@
   {
    "i": 2610,
    "canon": 2404,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g1,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g1,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23527,8 +23527,8 @@
   {
    "i": 2611,
    "canon": 2429,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g1,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g1,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23536,8 +23536,8 @@
   {
    "i": 2612,
    "canon": 2454,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g1,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g1,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23545,8 +23545,8 @@
   {
    "i": 2613,
    "canon": 2479,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g1,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g1,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23554,8 +23554,8 @@
   {
    "i": 2614,
    "canon": 2504,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g1,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g1,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23563,8 +23563,8 @@
   {
    "i": 2615,
    "canon": 2529,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g1,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g1,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23572,8 +23572,8 @@
   {
    "i": 2616,
    "canon": 2355,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g2,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g2,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23581,8 +23581,8 @@
   {
    "i": 2617,
    "canon": 2380,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g2,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g2,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23590,8 +23590,8 @@
   {
    "i": 2618,
    "canon": 2405,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g2,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g2,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23599,8 +23599,8 @@
   {
    "i": 2619,
    "canon": 2430,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g2,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g2,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23608,8 +23608,8 @@
   {
    "i": 2620,
    "canon": 2455,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g2,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g2,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23617,8 +23617,8 @@
   {
    "i": 2621,
    "canon": 2480,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g2,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g2,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23626,8 +23626,8 @@
   {
    "i": 2622,
    "canon": 2505,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g2,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g2,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23635,8 +23635,8 @@
   {
    "i": 2623,
    "canon": 2530,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g2,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g2,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23644,8 +23644,8 @@
   {
    "i": 2624,
    "canon": 2356,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g2,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g2,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23653,8 +23653,8 @@
   {
    "i": 2625,
    "canon": 2381,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g2,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g2,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23662,8 +23662,8 @@
   {
    "i": 2626,
    "canon": 2406,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g2,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g2,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23671,8 +23671,8 @@
   {
    "i": 2627,
    "canon": 2431,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g2,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g2,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23680,8 +23680,8 @@
   {
    "i": 2628,
    "canon": 2456,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g2,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g2,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23689,8 +23689,8 @@
   {
    "i": 2629,
    "canon": 2481,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g2,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g2,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23698,8 +23698,8 @@
   {
    "i": 2630,
    "canon": 2506,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g2,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g2,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -23707,8 +23707,8 @@
   {
    "i": 2631,
    "canon": 2531,
-   "name": "release_withdraw[D=planner,R=controls,G=g3,G2=g2,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=planner,R=controls,G=g3,G2=g2,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -26408,7 +26408,7 @@
      "target": null
     },
     {
-     "name": "release_withdraw",
+     "name": "unwant",
      "stage": "act",
      "doc": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}.",
      "premises": [

@@ -500,7 +500,7 @@ echo "== 22b. the stale release (spec/15 amendment 10, release-race s-c88bf623):
 # one of the grant held frees R, one from a member waiting with a ticket withdraws the ticket, one crossing a grant the member asked for ends that grant, not one by the routing, a waiting release or sleep ends when its holder has changed, a woken holder's ticket is passed over
 n_rl=0
 for sc in same_member:release_old on_free:release_on_free real:release_on_report late_gone:late_release_other \
-          withdraw:release_withdraw want:release_withdraw crossed:release_crossed ticket:ticket_held late_other:late_other late_free:late_free late_real:release_late; do
+          withdraw:unwant want:unwant crossed:release_crossed ticket:ticket_held late_other:late_other late_free:late_free late_real:release_late; do
   name=${sc%%:*}; rule=${sc#*:}
   ( cd "$ROOT/corpus/release" && "$ROOT/src/metisc" --run "release_$name.llp" ) > "$WORK/rel_$name.txt" 2>&1 \
       || { echo "release_$name: metisc --run failed"; cat "$WORK/rel_$name.txt"; exit 1; }

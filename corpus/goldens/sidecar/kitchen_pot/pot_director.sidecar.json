@@ -1828,8 +1828,8 @@
   {
    "i": 200,
    "canon": 285,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g1,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g1,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -1837,8 +1837,8 @@
   {
    "i": 201,
    "canon": 310,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g1,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g1,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -1846,8 +1846,8 @@
   {
    "i": 202,
    "canon": 335,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g1,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g1,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -1855,8 +1855,8 @@
   {
    "i": 203,
    "canon": 360,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g1,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g1,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -1864,8 +1864,8 @@
   {
    "i": 204,
    "canon": 385,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g1,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g1,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -1873,8 +1873,8 @@
   {
    "i": 205,
    "canon": 410,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g1,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g1,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -1882,8 +1882,8 @@
   {
    "i": 206,
    "canon": 435,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g1,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g1,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -1891,8 +1891,8 @@
   {
    "i": 207,
    "canon": 460,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g1,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g1,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -1900,8 +1900,8 @@
   {
    "i": 208,
    "canon": 286,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g1,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g1,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -1909,8 +1909,8 @@
   {
    "i": 209,
    "canon": 311,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g1,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g1,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -1918,8 +1918,8 @@
   {
    "i": 210,
    "canon": 336,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g1,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g1,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -1927,8 +1927,8 @@
   {
    "i": 211,
    "canon": 361,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g1,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g1,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -1936,8 +1936,8 @@
   {
    "i": 212,
    "canon": 386,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g1,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g1,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -1945,8 +1945,8 @@
   {
    "i": 213,
    "canon": 411,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g1,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g1,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -1954,8 +1954,8 @@
   {
    "i": 214,
    "canon": 436,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g1,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g1,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -1963,8 +1963,8 @@
   {
    "i": 215,
    "canon": 461,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g1,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g1,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -1972,8 +1972,8 @@
   {
    "i": 216,
    "canon": 287,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g2,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g2,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -1981,8 +1981,8 @@
   {
    "i": 217,
    "canon": 312,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g2,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g2,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -1990,8 +1990,8 @@
   {
    "i": 218,
    "canon": 337,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g2,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g2,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -1999,8 +1999,8 @@
   {
    "i": 219,
    "canon": 362,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g2,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g2,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2008,8 +2008,8 @@
   {
    "i": 220,
    "canon": 387,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g2,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g2,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2017,8 +2017,8 @@
   {
    "i": 221,
    "canon": 412,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g2,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g2,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2026,8 +2026,8 @@
   {
    "i": 222,
    "canon": 437,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g2,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g2,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2035,8 +2035,8 @@
   {
    "i": 223,
    "canon": 462,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g2,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g2,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2044,8 +2044,8 @@
   {
    "i": 224,
    "canon": 288,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g2,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g2,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2053,8 +2053,8 @@
   {
    "i": 225,
    "canon": 313,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g2,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g2,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2062,8 +2062,8 @@
   {
    "i": 226,
    "canon": 338,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g2,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g2,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2071,8 +2071,8 @@
   {
    "i": 227,
    "canon": 363,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g2,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g2,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2080,8 +2080,8 @@
   {
    "i": 228,
    "canon": 388,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g2,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g2,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2089,8 +2089,8 @@
   {
    "i": 229,
    "canon": 413,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g2,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g2,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2098,8 +2098,8 @@
   {
    "i": 230,
    "canon": 438,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g2,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g2,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2107,8 +2107,8 @@
   {
    "i": 231,
    "canon": 463,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g2,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g2,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2116,8 +2116,8 @@
   {
    "i": 232,
    "canon": 289,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g3,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g3,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2125,8 +2125,8 @@
   {
    "i": 233,
    "canon": 314,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g3,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g3,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2134,8 +2134,8 @@
   {
    "i": 234,
    "canon": 339,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g3,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g3,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2143,8 +2143,8 @@
   {
    "i": 235,
    "canon": 364,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g3,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g3,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2152,8 +2152,8 @@
   {
    "i": 236,
    "canon": 389,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g3,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g3,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2161,8 +2161,8 @@
   {
    "i": 237,
    "canon": 414,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g3,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g3,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2170,8 +2170,8 @@
   {
    "i": 238,
    "canon": 439,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g3,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g3,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2179,8 +2179,8 @@
   {
    "i": 239,
    "canon": 464,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g3,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g3,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2188,8 +2188,8 @@
   {
    "i": 240,
    "canon": 290,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g3,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g3,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2197,8 +2197,8 @@
   {
    "i": 241,
    "canon": 315,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g3,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g3,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2206,8 +2206,8 @@
   {
    "i": 242,
    "canon": 340,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g3,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g3,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2215,8 +2215,8 @@
   {
    "i": 243,
    "canon": 365,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g3,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g3,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2224,8 +2224,8 @@
   {
    "i": 244,
    "canon": 390,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g3,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g3,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2233,8 +2233,8 @@
   {
    "i": 245,
    "canon": 415,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g3,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g3,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2242,8 +2242,8 @@
   {
    "i": 246,
    "canon": 440,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g3,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g3,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2251,8 +2251,8 @@
   {
    "i": 247,
    "canon": 465,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g0,G2=g3,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g0,G2=g3,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2260,8 +2260,8 @@
   {
    "i": 248,
    "canon": 291,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g0,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g0,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2269,8 +2269,8 @@
   {
    "i": 249,
    "canon": 316,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g0,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g0,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2278,8 +2278,8 @@
   {
    "i": 250,
    "canon": 341,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g0,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g0,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2287,8 +2287,8 @@
   {
    "i": 251,
    "canon": 366,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g0,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g0,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2296,8 +2296,8 @@
   {
    "i": 252,
    "canon": 391,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g0,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g0,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2305,8 +2305,8 @@
   {
    "i": 253,
    "canon": 416,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g0,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g0,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2314,8 +2314,8 @@
   {
    "i": 254,
    "canon": 441,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g0,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g0,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2323,8 +2323,8 @@
   {
    "i": 255,
    "canon": 466,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g0,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g0,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2332,8 +2332,8 @@
   {
    "i": 256,
    "canon": 292,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g0,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g0,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2341,8 +2341,8 @@
   {
    "i": 257,
    "canon": 317,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g0,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g0,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2350,8 +2350,8 @@
   {
    "i": 258,
    "canon": 342,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g0,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g0,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2359,8 +2359,8 @@
   {
    "i": 259,
    "canon": 367,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g0,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g0,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2368,8 +2368,8 @@
   {
    "i": 260,
    "canon": 392,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g0,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g0,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2377,8 +2377,8 @@
   {
    "i": 261,
    "canon": 417,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g0,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g0,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2386,8 +2386,8 @@
   {
    "i": 262,
    "canon": 442,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g0,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g0,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2395,8 +2395,8 @@
   {
    "i": 263,
    "canon": 467,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g0,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g0,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2404,8 +2404,8 @@
   {
    "i": 264,
    "canon": 293,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g2,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g2,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2413,8 +2413,8 @@
   {
    "i": 265,
    "canon": 318,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g2,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g2,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2422,8 +2422,8 @@
   {
    "i": 266,
    "canon": 343,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g2,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g2,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2431,8 +2431,8 @@
   {
    "i": 267,
    "canon": 368,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g2,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g2,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2440,8 +2440,8 @@
   {
    "i": 268,
    "canon": 393,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g2,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g2,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2449,8 +2449,8 @@
   {
    "i": 269,
    "canon": 418,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g2,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g2,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2458,8 +2458,8 @@
   {
    "i": 270,
    "canon": 443,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g2,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g2,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2467,8 +2467,8 @@
   {
    "i": 271,
    "canon": 468,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g2,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g2,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2476,8 +2476,8 @@
   {
    "i": 272,
    "canon": 294,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g2,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g2,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2485,8 +2485,8 @@
   {
    "i": 273,
    "canon": 319,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g2,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g2,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2494,8 +2494,8 @@
   {
    "i": 274,
    "canon": 344,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g2,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g2,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2503,8 +2503,8 @@
   {
    "i": 275,
    "canon": 369,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g2,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g2,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2512,8 +2512,8 @@
   {
    "i": 276,
    "canon": 394,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g2,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g2,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2521,8 +2521,8 @@
   {
    "i": 277,
    "canon": 419,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g2,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g2,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2530,8 +2530,8 @@
   {
    "i": 278,
    "canon": 444,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g2,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g2,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2539,8 +2539,8 @@
   {
    "i": 279,
    "canon": 469,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g2,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g2,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2548,8 +2548,8 @@
   {
    "i": 280,
    "canon": 295,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g3,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g3,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2557,8 +2557,8 @@
   {
    "i": 281,
    "canon": 320,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g3,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g3,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2566,8 +2566,8 @@
   {
    "i": 282,
    "canon": 345,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g3,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g3,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2575,8 +2575,8 @@
   {
    "i": 283,
    "canon": 370,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g3,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g3,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2584,8 +2584,8 @@
   {
    "i": 284,
    "canon": 395,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g3,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g3,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2593,8 +2593,8 @@
   {
    "i": 285,
    "canon": 420,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g3,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g3,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2602,8 +2602,8 @@
   {
    "i": 286,
    "canon": 445,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g3,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g3,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2611,8 +2611,8 @@
   {
    "i": 287,
    "canon": 470,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g3,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g3,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2620,8 +2620,8 @@
   {
    "i": 288,
    "canon": 296,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g3,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g3,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2629,8 +2629,8 @@
   {
    "i": 289,
    "canon": 321,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g3,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g3,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2638,8 +2638,8 @@
   {
    "i": 290,
    "canon": 346,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g3,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g3,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2647,8 +2647,8 @@
   {
    "i": 291,
    "canon": 371,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g3,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g3,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2656,8 +2656,8 @@
   {
    "i": 292,
    "canon": 396,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g3,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g3,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2665,8 +2665,8 @@
   {
    "i": 293,
    "canon": 421,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g3,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g3,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2674,8 +2674,8 @@
   {
    "i": 294,
    "canon": 446,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g3,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g3,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2683,8 +2683,8 @@
   {
    "i": 295,
    "canon": 471,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g1,G2=g3,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g1,G2=g3,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2692,8 +2692,8 @@
   {
    "i": 296,
    "canon": 297,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g0,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g0,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2701,8 +2701,8 @@
   {
    "i": 297,
    "canon": 322,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g0,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g0,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2710,8 +2710,8 @@
   {
    "i": 298,
    "canon": 347,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g0,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g0,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2719,8 +2719,8 @@
   {
    "i": 299,
    "canon": 372,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g0,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g0,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2728,8 +2728,8 @@
   {
    "i": 300,
    "canon": 397,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g0,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g0,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2737,8 +2737,8 @@
   {
    "i": 301,
    "canon": 422,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g0,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g0,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2746,8 +2746,8 @@
   {
    "i": 302,
    "canon": 447,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g0,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g0,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2755,8 +2755,8 @@
   {
    "i": 303,
    "canon": 472,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g0,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g0,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2764,8 +2764,8 @@
   {
    "i": 304,
    "canon": 298,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g0,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g0,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2773,8 +2773,8 @@
   {
    "i": 305,
    "canon": 323,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g0,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g0,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2782,8 +2782,8 @@
   {
    "i": 306,
    "canon": 348,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g0,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g0,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2791,8 +2791,8 @@
   {
    "i": 307,
    "canon": 373,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g0,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g0,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2800,8 +2800,8 @@
   {
    "i": 308,
    "canon": 398,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g0,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g0,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2809,8 +2809,8 @@
   {
    "i": 309,
    "canon": 423,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g0,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g0,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2818,8 +2818,8 @@
   {
    "i": 310,
    "canon": 448,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g0,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g0,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2827,8 +2827,8 @@
   {
    "i": 311,
    "canon": 473,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g0,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g0,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2836,8 +2836,8 @@
   {
    "i": 312,
    "canon": 299,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g1,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g1,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2845,8 +2845,8 @@
   {
    "i": 313,
    "canon": 324,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g1,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g1,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2854,8 +2854,8 @@
   {
    "i": 314,
    "canon": 349,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g1,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g1,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2863,8 +2863,8 @@
   {
    "i": 315,
    "canon": 374,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g1,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g1,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2872,8 +2872,8 @@
   {
    "i": 316,
    "canon": 399,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g1,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g1,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2881,8 +2881,8 @@
   {
    "i": 317,
    "canon": 424,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g1,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g1,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2890,8 +2890,8 @@
   {
    "i": 318,
    "canon": 449,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g1,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g1,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2899,8 +2899,8 @@
   {
    "i": 319,
    "canon": 474,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g1,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g1,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2908,8 +2908,8 @@
   {
    "i": 320,
    "canon": 300,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g1,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g1,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2917,8 +2917,8 @@
   {
    "i": 321,
    "canon": 325,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g1,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g1,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2926,8 +2926,8 @@
   {
    "i": 322,
    "canon": 350,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g1,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g1,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2935,8 +2935,8 @@
   {
    "i": 323,
    "canon": 375,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g1,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g1,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2944,8 +2944,8 @@
   {
    "i": 324,
    "canon": 400,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g1,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g1,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2953,8 +2953,8 @@
   {
    "i": 325,
    "canon": 425,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g1,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g1,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2962,8 +2962,8 @@
   {
    "i": 326,
    "canon": 450,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g1,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g1,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2971,8 +2971,8 @@
   {
    "i": 327,
    "canon": 475,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g1,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g1,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2980,8 +2980,8 @@
   {
    "i": 328,
    "canon": 301,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g3,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g3,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2989,8 +2989,8 @@
   {
    "i": 329,
    "canon": 326,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g3,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g3,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -2998,8 +2998,8 @@
   {
    "i": 330,
    "canon": 351,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g3,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g3,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3007,8 +3007,8 @@
   {
    "i": 331,
    "canon": 376,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g3,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g3,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3016,8 +3016,8 @@
   {
    "i": 332,
    "canon": 401,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g3,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g3,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3025,8 +3025,8 @@
   {
    "i": 333,
    "canon": 426,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g3,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g3,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3034,8 +3034,8 @@
   {
    "i": 334,
    "canon": 451,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g3,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g3,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3043,8 +3043,8 @@
   {
    "i": 335,
    "canon": 476,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g3,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g3,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3052,8 +3052,8 @@
   {
    "i": 336,
    "canon": 302,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g3,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g3,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3061,8 +3061,8 @@
   {
    "i": 337,
    "canon": 327,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g3,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g3,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3070,8 +3070,8 @@
   {
    "i": 338,
    "canon": 352,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g3,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g3,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3079,8 +3079,8 @@
   {
    "i": 339,
    "canon": 377,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g3,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g3,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3088,8 +3088,8 @@
   {
    "i": 340,
    "canon": 402,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g3,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g3,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3097,8 +3097,8 @@
   {
    "i": 341,
    "canon": 427,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g3,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g3,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3106,8 +3106,8 @@
   {
    "i": 342,
    "canon": 452,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g3,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g3,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3115,8 +3115,8 @@
   {
    "i": 343,
    "canon": 477,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g2,G2=g3,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g2,G2=g3,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3124,8 +3124,8 @@
   {
    "i": 344,
    "canon": 303,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g0,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g0,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3133,8 +3133,8 @@
   {
    "i": 345,
    "canon": 328,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g0,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g0,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3142,8 +3142,8 @@
   {
    "i": 346,
    "canon": 353,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g0,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g0,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3151,8 +3151,8 @@
   {
    "i": 347,
    "canon": 378,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g0,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g0,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3160,8 +3160,8 @@
   {
    "i": 348,
    "canon": 403,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g0,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g0,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3169,8 +3169,8 @@
   {
    "i": 349,
    "canon": 428,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g0,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g0,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3178,8 +3178,8 @@
   {
    "i": 350,
    "canon": 453,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g0,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g0,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3187,8 +3187,8 @@
   {
    "i": 351,
    "canon": 478,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g0,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g0,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3196,8 +3196,8 @@
   {
    "i": 352,
    "canon": 304,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g0,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g0,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3205,8 +3205,8 @@
   {
    "i": 353,
    "canon": 329,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g0,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g0,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3214,8 +3214,8 @@
   {
    "i": 354,
    "canon": 354,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g0,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g0,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3223,8 +3223,8 @@
   {
    "i": 355,
    "canon": 379,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g0,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g0,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3232,8 +3232,8 @@
   {
    "i": 356,
    "canon": 404,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g0,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g0,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3241,8 +3241,8 @@
   {
    "i": 357,
    "canon": 429,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g0,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g0,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3250,8 +3250,8 @@
   {
    "i": 358,
    "canon": 454,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g0,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g0,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3259,8 +3259,8 @@
   {
    "i": 359,
    "canon": 479,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g0,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g0,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3268,8 +3268,8 @@
   {
    "i": 360,
    "canon": 305,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g1,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g1,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3277,8 +3277,8 @@
   {
    "i": 361,
    "canon": 330,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g1,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g1,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3286,8 +3286,8 @@
   {
    "i": 362,
    "canon": 355,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g1,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g1,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3295,8 +3295,8 @@
   {
    "i": 363,
    "canon": 380,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g1,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g1,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3304,8 +3304,8 @@
   {
    "i": 364,
    "canon": 405,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g1,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g1,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3313,8 +3313,8 @@
   {
    "i": 365,
    "canon": 430,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g1,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g1,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3322,8 +3322,8 @@
   {
    "i": 366,
    "canon": 455,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g1,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g1,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3331,8 +3331,8 @@
   {
    "i": 367,
    "canon": 480,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g1,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g1,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3340,8 +3340,8 @@
   {
    "i": 368,
    "canon": 306,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g1,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g1,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3349,8 +3349,8 @@
   {
    "i": 369,
    "canon": 331,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g1,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g1,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3358,8 +3358,8 @@
   {
    "i": 370,
    "canon": 356,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g1,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g1,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3367,8 +3367,8 @@
   {
    "i": 371,
    "canon": 381,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g1,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g1,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3376,8 +3376,8 @@
   {
    "i": 372,
    "canon": 406,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g1,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g1,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3385,8 +3385,8 @@
   {
    "i": 373,
    "canon": 431,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g1,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g1,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3394,8 +3394,8 @@
   {
    "i": 374,
    "canon": 456,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g1,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g1,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3403,8 +3403,8 @@
   {
    "i": 375,
    "canon": 481,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g1,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g1,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3412,8 +3412,8 @@
   {
    "i": 376,
    "canon": 307,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g2,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g2,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3421,8 +3421,8 @@
   {
    "i": 377,
    "canon": 332,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g2,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g2,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3430,8 +3430,8 @@
   {
    "i": 378,
    "canon": 357,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g2,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g2,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3439,8 +3439,8 @@
   {
    "i": 379,
    "canon": 382,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g2,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g2,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3448,8 +3448,8 @@
   {
    "i": 380,
    "canon": 407,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g2,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g2,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3457,8 +3457,8 @@
   {
    "i": 381,
    "canon": 432,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g2,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g2,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3466,8 +3466,8 @@
   {
    "i": 382,
    "canon": 457,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g2,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g2,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3475,8 +3475,8 @@
   {
    "i": 383,
    "canon": 482,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g2,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g2,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3484,8 +3484,8 @@
   {
    "i": 384,
    "canon": 308,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g2,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g2,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3493,8 +3493,8 @@
   {
    "i": 385,
    "canon": 333,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g2,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g2,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3502,8 +3502,8 @@
   {
    "i": 386,
    "canon": 358,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g2,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g2,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3511,8 +3511,8 @@
   {
    "i": 387,
    "canon": 383,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g2,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g2,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3520,8 +3520,8 @@
   {
    "i": 388,
    "canon": 408,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g2,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g2,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3529,8 +3529,8 @@
   {
    "i": 389,
    "canon": 433,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g2,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g2,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3538,8 +3538,8 @@
   {
    "i": 390,
    "canon": 458,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g2,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g2,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3547,8 +3547,8 @@
   {
    "i": 391,
    "canon": 483,
-   "name": "release_withdraw[D=cook_a,R=pot,G=g3,G2=g2,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_a,R=pot,G=g3,G2=g2,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3556,8 +3556,8 @@
   {
    "i": 392,
    "canon": 485,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g1,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g1,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3565,8 +3565,8 @@
   {
    "i": 393,
    "canon": 510,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g1,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g1,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3574,8 +3574,8 @@
   {
    "i": 394,
    "canon": 535,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g1,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g1,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3583,8 +3583,8 @@
   {
    "i": 395,
    "canon": 560,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g1,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g1,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3592,8 +3592,8 @@
   {
    "i": 396,
    "canon": 585,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g1,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g1,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3601,8 +3601,8 @@
   {
    "i": 397,
    "canon": 610,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g1,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g1,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3610,8 +3610,8 @@
   {
    "i": 398,
    "canon": 635,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g1,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g1,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3619,8 +3619,8 @@
   {
    "i": 399,
    "canon": 660,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g1,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g1,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3628,8 +3628,8 @@
   {
    "i": 400,
    "canon": 486,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g1,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g1,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3637,8 +3637,8 @@
   {
    "i": 401,
    "canon": 511,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g1,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g1,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3646,8 +3646,8 @@
   {
    "i": 402,
    "canon": 536,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g1,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g1,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3655,8 +3655,8 @@
   {
    "i": 403,
    "canon": 561,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g1,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g1,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3664,8 +3664,8 @@
   {
    "i": 404,
    "canon": 586,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g1,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g1,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3673,8 +3673,8 @@
   {
    "i": 405,
    "canon": 611,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g1,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g1,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3682,8 +3682,8 @@
   {
    "i": 406,
    "canon": 636,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g1,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g1,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3691,8 +3691,8 @@
   {
    "i": 407,
    "canon": 661,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g1,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g1,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3700,8 +3700,8 @@
   {
    "i": 408,
    "canon": 487,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g2,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g2,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3709,8 +3709,8 @@
   {
    "i": 409,
    "canon": 512,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g2,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g2,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3718,8 +3718,8 @@
   {
    "i": 410,
    "canon": 537,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g2,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g2,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3727,8 +3727,8 @@
   {
    "i": 411,
    "canon": 562,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g2,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g2,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3736,8 +3736,8 @@
   {
    "i": 412,
    "canon": 587,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g2,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g2,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3745,8 +3745,8 @@
   {
    "i": 413,
    "canon": 612,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g2,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g2,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3754,8 +3754,8 @@
   {
    "i": 414,
    "canon": 637,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g2,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g2,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3763,8 +3763,8 @@
   {
    "i": 415,
    "canon": 662,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g2,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g2,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3772,8 +3772,8 @@
   {
    "i": 416,
    "canon": 488,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g2,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g2,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3781,8 +3781,8 @@
   {
    "i": 417,
    "canon": 513,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g2,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g2,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3790,8 +3790,8 @@
   {
    "i": 418,
    "canon": 538,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g2,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g2,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3799,8 +3799,8 @@
   {
    "i": 419,
    "canon": 563,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g2,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g2,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3808,8 +3808,8 @@
   {
    "i": 420,
    "canon": 588,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g2,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g2,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3817,8 +3817,8 @@
   {
    "i": 421,
    "canon": 613,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g2,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g2,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3826,8 +3826,8 @@
   {
    "i": 422,
    "canon": 638,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g2,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g2,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3835,8 +3835,8 @@
   {
    "i": 423,
    "canon": 663,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g2,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g2,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3844,8 +3844,8 @@
   {
    "i": 424,
    "canon": 489,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g3,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g3,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3853,8 +3853,8 @@
   {
    "i": 425,
    "canon": 514,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g3,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g3,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3862,8 +3862,8 @@
   {
    "i": 426,
    "canon": 539,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g3,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g3,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3871,8 +3871,8 @@
   {
    "i": 427,
    "canon": 564,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g3,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g3,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3880,8 +3880,8 @@
   {
    "i": 428,
    "canon": 589,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g3,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g3,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3889,8 +3889,8 @@
   {
    "i": 429,
    "canon": 614,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g3,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g3,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3898,8 +3898,8 @@
   {
    "i": 430,
    "canon": 639,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g3,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g3,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3907,8 +3907,8 @@
   {
    "i": 431,
    "canon": 664,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g3,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g3,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3916,8 +3916,8 @@
   {
    "i": 432,
    "canon": 490,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g3,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g3,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3925,8 +3925,8 @@
   {
    "i": 433,
    "canon": 515,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g3,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g3,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3934,8 +3934,8 @@
   {
    "i": 434,
    "canon": 540,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g3,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g3,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3943,8 +3943,8 @@
   {
    "i": 435,
    "canon": 565,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g3,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g3,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3952,8 +3952,8 @@
   {
    "i": 436,
    "canon": 590,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g3,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g3,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3961,8 +3961,8 @@
   {
    "i": 437,
    "canon": 615,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g3,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g3,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3970,8 +3970,8 @@
   {
    "i": 438,
    "canon": 640,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g3,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g3,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3979,8 +3979,8 @@
   {
    "i": 439,
    "canon": 665,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g0,G2=g3,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g0,G2=g3,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3988,8 +3988,8 @@
   {
    "i": 440,
    "canon": 491,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g0,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g0,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -3997,8 +3997,8 @@
   {
    "i": 441,
    "canon": 516,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g0,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g0,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4006,8 +4006,8 @@
   {
    "i": 442,
    "canon": 541,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g0,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g0,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4015,8 +4015,8 @@
   {
    "i": 443,
    "canon": 566,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g0,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g0,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4024,8 +4024,8 @@
   {
    "i": 444,
    "canon": 591,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g0,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g0,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4033,8 +4033,8 @@
   {
    "i": 445,
    "canon": 616,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g0,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g0,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4042,8 +4042,8 @@
   {
    "i": 446,
    "canon": 641,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g0,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g0,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4051,8 +4051,8 @@
   {
    "i": 447,
    "canon": 666,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g0,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g0,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4060,8 +4060,8 @@
   {
    "i": 448,
    "canon": 492,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g0,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g0,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4069,8 +4069,8 @@
   {
    "i": 449,
    "canon": 517,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g0,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g0,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4078,8 +4078,8 @@
   {
    "i": 450,
    "canon": 542,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g0,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g0,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4087,8 +4087,8 @@
   {
    "i": 451,
    "canon": 567,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g0,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g0,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4096,8 +4096,8 @@
   {
    "i": 452,
    "canon": 592,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g0,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g0,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4105,8 +4105,8 @@
   {
    "i": 453,
    "canon": 617,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g0,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g0,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4114,8 +4114,8 @@
   {
    "i": 454,
    "canon": 642,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g0,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g0,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4123,8 +4123,8 @@
   {
    "i": 455,
    "canon": 667,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g0,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g0,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4132,8 +4132,8 @@
   {
    "i": 456,
    "canon": 493,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g2,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g2,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4141,8 +4141,8 @@
   {
    "i": 457,
    "canon": 518,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g2,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g2,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4150,8 +4150,8 @@
   {
    "i": 458,
    "canon": 543,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g2,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g2,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4159,8 +4159,8 @@
   {
    "i": 459,
    "canon": 568,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g2,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g2,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4168,8 +4168,8 @@
   {
    "i": 460,
    "canon": 593,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g2,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g2,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4177,8 +4177,8 @@
   {
    "i": 461,
    "canon": 618,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g2,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g2,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4186,8 +4186,8 @@
   {
    "i": 462,
    "canon": 643,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g2,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g2,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4195,8 +4195,8 @@
   {
    "i": 463,
    "canon": 668,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g2,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g2,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4204,8 +4204,8 @@
   {
    "i": 464,
    "canon": 494,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g2,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g2,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4213,8 +4213,8 @@
   {
    "i": 465,
    "canon": 519,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g2,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g2,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4222,8 +4222,8 @@
   {
    "i": 466,
    "canon": 544,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g2,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g2,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4231,8 +4231,8 @@
   {
    "i": 467,
    "canon": 569,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g2,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g2,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4240,8 +4240,8 @@
   {
    "i": 468,
    "canon": 594,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g2,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g2,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4249,8 +4249,8 @@
   {
    "i": 469,
    "canon": 619,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g2,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g2,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4258,8 +4258,8 @@
   {
    "i": 470,
    "canon": 644,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g2,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g2,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4267,8 +4267,8 @@
   {
    "i": 471,
    "canon": 669,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g2,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g2,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4276,8 +4276,8 @@
   {
    "i": 472,
    "canon": 495,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g3,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g3,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4285,8 +4285,8 @@
   {
    "i": 473,
    "canon": 520,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g3,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g3,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4294,8 +4294,8 @@
   {
    "i": 474,
    "canon": 545,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g3,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g3,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4303,8 +4303,8 @@
   {
    "i": 475,
    "canon": 570,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g3,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g3,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4312,8 +4312,8 @@
   {
    "i": 476,
    "canon": 595,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g3,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g3,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4321,8 +4321,8 @@
   {
    "i": 477,
    "canon": 620,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g3,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g3,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4330,8 +4330,8 @@
   {
    "i": 478,
    "canon": 645,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g3,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g3,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4339,8 +4339,8 @@
   {
    "i": 479,
    "canon": 670,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g3,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g3,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4348,8 +4348,8 @@
   {
    "i": 480,
    "canon": 496,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g3,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g3,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4357,8 +4357,8 @@
   {
    "i": 481,
    "canon": 521,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g3,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g3,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4366,8 +4366,8 @@
   {
    "i": 482,
    "canon": 546,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g3,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g3,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4375,8 +4375,8 @@
   {
    "i": 483,
    "canon": 571,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g3,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g3,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4384,8 +4384,8 @@
   {
    "i": 484,
    "canon": 596,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g3,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g3,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4393,8 +4393,8 @@
   {
    "i": 485,
    "canon": 621,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g3,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g3,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4402,8 +4402,8 @@
   {
    "i": 486,
    "canon": 646,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g3,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g3,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4411,8 +4411,8 @@
   {
    "i": 487,
    "canon": 671,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g1,G2=g3,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g1,G2=g3,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4420,8 +4420,8 @@
   {
    "i": 488,
    "canon": 497,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g0,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g0,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4429,8 +4429,8 @@
   {
    "i": 489,
    "canon": 522,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g0,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g0,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4438,8 +4438,8 @@
   {
    "i": 490,
    "canon": 547,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g0,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g0,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4447,8 +4447,8 @@
   {
    "i": 491,
    "canon": 572,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g0,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g0,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4456,8 +4456,8 @@
   {
    "i": 492,
    "canon": 597,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g0,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g0,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4465,8 +4465,8 @@
   {
    "i": 493,
    "canon": 622,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g0,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g0,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4474,8 +4474,8 @@
   {
    "i": 494,
    "canon": 647,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g0,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g0,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4483,8 +4483,8 @@
   {
    "i": 495,
    "canon": 672,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g0,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g0,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4492,8 +4492,8 @@
   {
    "i": 496,
    "canon": 498,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g0,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g0,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4501,8 +4501,8 @@
   {
    "i": 497,
    "canon": 523,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g0,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g0,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4510,8 +4510,8 @@
   {
    "i": 498,
    "canon": 548,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g0,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g0,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4519,8 +4519,8 @@
   {
    "i": 499,
    "canon": 573,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g0,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g0,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4528,8 +4528,8 @@
   {
    "i": 500,
    "canon": 598,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g0,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g0,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4537,8 +4537,8 @@
   {
    "i": 501,
    "canon": 623,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g0,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g0,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4546,8 +4546,8 @@
   {
    "i": 502,
    "canon": 648,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g0,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g0,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4555,8 +4555,8 @@
   {
    "i": 503,
    "canon": 673,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g0,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g0,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4564,8 +4564,8 @@
   {
    "i": 504,
    "canon": 499,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g1,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g1,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4573,8 +4573,8 @@
   {
    "i": 505,
    "canon": 524,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g1,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g1,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4582,8 +4582,8 @@
   {
    "i": 506,
    "canon": 549,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g1,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g1,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4591,8 +4591,8 @@
   {
    "i": 507,
    "canon": 574,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g1,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g1,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4600,8 +4600,8 @@
   {
    "i": 508,
    "canon": 599,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g1,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g1,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4609,8 +4609,8 @@
   {
    "i": 509,
    "canon": 624,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g1,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g1,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4618,8 +4618,8 @@
   {
    "i": 510,
    "canon": 649,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g1,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g1,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4627,8 +4627,8 @@
   {
    "i": 511,
    "canon": 674,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g1,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g1,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4636,8 +4636,8 @@
   {
    "i": 512,
    "canon": 500,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g1,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g1,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4645,8 +4645,8 @@
   {
    "i": 513,
    "canon": 525,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g1,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g1,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4654,8 +4654,8 @@
   {
    "i": 514,
    "canon": 550,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g1,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g1,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4663,8 +4663,8 @@
   {
    "i": 515,
    "canon": 575,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g1,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g1,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4672,8 +4672,8 @@
   {
    "i": 516,
    "canon": 600,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g1,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g1,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4681,8 +4681,8 @@
   {
    "i": 517,
    "canon": 625,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g1,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g1,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4690,8 +4690,8 @@
   {
    "i": 518,
    "canon": 650,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g1,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g1,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4699,8 +4699,8 @@
   {
    "i": 519,
    "canon": 675,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g1,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g1,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4708,8 +4708,8 @@
   {
    "i": 520,
    "canon": 501,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g3,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g3,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4717,8 +4717,8 @@
   {
    "i": 521,
    "canon": 526,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g3,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g3,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4726,8 +4726,8 @@
   {
    "i": 522,
    "canon": 551,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g3,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g3,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4735,8 +4735,8 @@
   {
    "i": 523,
    "canon": 576,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g3,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g3,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4744,8 +4744,8 @@
   {
    "i": 524,
    "canon": 601,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g3,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g3,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4753,8 +4753,8 @@
   {
    "i": 525,
    "canon": 626,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g3,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g3,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4762,8 +4762,8 @@
   {
    "i": 526,
    "canon": 651,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g3,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g3,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4771,8 +4771,8 @@
   {
    "i": 527,
    "canon": 676,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g3,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g3,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4780,8 +4780,8 @@
   {
    "i": 528,
    "canon": 502,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g3,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g3,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4789,8 +4789,8 @@
   {
    "i": 529,
    "canon": 527,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g3,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g3,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4798,8 +4798,8 @@
   {
    "i": 530,
    "canon": 552,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g3,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g3,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4807,8 +4807,8 @@
   {
    "i": 531,
    "canon": 577,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g3,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g3,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4816,8 +4816,8 @@
   {
    "i": 532,
    "canon": 602,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g3,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g3,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4825,8 +4825,8 @@
   {
    "i": 533,
    "canon": 627,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g3,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g3,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4834,8 +4834,8 @@
   {
    "i": 534,
    "canon": 652,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g3,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g3,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4843,8 +4843,8 @@
   {
    "i": 535,
    "canon": 677,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g2,G2=g3,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g2,G2=g3,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4852,8 +4852,8 @@
   {
    "i": 536,
    "canon": 503,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g0,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g0,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4861,8 +4861,8 @@
   {
    "i": 537,
    "canon": 528,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g0,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g0,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4870,8 +4870,8 @@
   {
    "i": 538,
    "canon": 553,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g0,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g0,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4879,8 +4879,8 @@
   {
    "i": 539,
    "canon": 578,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g0,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g0,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4888,8 +4888,8 @@
   {
    "i": 540,
    "canon": 603,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g0,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g0,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4897,8 +4897,8 @@
   {
    "i": 541,
    "canon": 628,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g0,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g0,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4906,8 +4906,8 @@
   {
    "i": 542,
    "canon": 653,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g0,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g0,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4915,8 +4915,8 @@
   {
    "i": 543,
    "canon": 678,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g0,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g0,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4924,8 +4924,8 @@
   {
    "i": 544,
    "canon": 504,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g0,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g0,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4933,8 +4933,8 @@
   {
    "i": 545,
    "canon": 529,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g0,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g0,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4942,8 +4942,8 @@
   {
    "i": 546,
    "canon": 554,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g0,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g0,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4951,8 +4951,8 @@
   {
    "i": 547,
    "canon": 579,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g0,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g0,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4960,8 +4960,8 @@
   {
    "i": 548,
    "canon": 604,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g0,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g0,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4969,8 +4969,8 @@
   {
    "i": 549,
    "canon": 629,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g0,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g0,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4978,8 +4978,8 @@
   {
    "i": 550,
    "canon": 654,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g0,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g0,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4987,8 +4987,8 @@
   {
    "i": 551,
    "canon": 679,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g0,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g0,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -4996,8 +4996,8 @@
   {
    "i": 552,
    "canon": 505,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g1,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g1,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -5005,8 +5005,8 @@
   {
    "i": 553,
    "canon": 530,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g1,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g1,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -5014,8 +5014,8 @@
   {
    "i": 554,
    "canon": 555,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g1,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g1,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -5023,8 +5023,8 @@
   {
    "i": 555,
    "canon": 580,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g1,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g1,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -5032,8 +5032,8 @@
   {
    "i": 556,
    "canon": 605,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g1,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g1,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -5041,8 +5041,8 @@
   {
    "i": 557,
    "canon": 630,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g1,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g1,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -5050,8 +5050,8 @@
   {
    "i": 558,
    "canon": 655,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g1,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g1,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -5059,8 +5059,8 @@
   {
    "i": 559,
    "canon": 680,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g1,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g1,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -5068,8 +5068,8 @@
   {
    "i": 560,
    "canon": 506,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g1,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g1,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -5077,8 +5077,8 @@
   {
    "i": 561,
    "canon": 531,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g1,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g1,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -5086,8 +5086,8 @@
   {
    "i": 562,
    "canon": 556,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g1,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g1,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -5095,8 +5095,8 @@
   {
    "i": 563,
    "canon": 581,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g1,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g1,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -5104,8 +5104,8 @@
   {
    "i": 564,
    "canon": 606,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g1,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g1,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -5113,8 +5113,8 @@
   {
    "i": 565,
    "canon": 631,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g1,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g1,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -5122,8 +5122,8 @@
   {
    "i": 566,
    "canon": 656,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g1,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g1,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -5131,8 +5131,8 @@
   {
    "i": 567,
    "canon": 681,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g1,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g1,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -5140,8 +5140,8 @@
   {
    "i": 568,
    "canon": 507,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g2,K=asked,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g2,K=asked,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -5149,8 +5149,8 @@
   {
    "i": 569,
    "canon": 532,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g2,K=asked,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g2,K=asked,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -5158,8 +5158,8 @@
   {
    "i": 570,
    "canon": 557,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g2,K=asked,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g2,K=asked,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -5167,8 +5167,8 @@
   {
    "i": 571,
    "canon": 582,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g2,K=asked,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g2,K=asked,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -5176,8 +5176,8 @@
   {
    "i": 572,
    "canon": 607,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g2,K=asked,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g2,K=asked,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -5185,8 +5185,8 @@
   {
    "i": 573,
    "canon": 632,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g2,K=asked,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g2,K=asked,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -5194,8 +5194,8 @@
   {
    "i": 574,
    "canon": 657,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g2,K=asked,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g2,K=asked,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -5203,8 +5203,8 @@
   {
    "i": 575,
    "canon": 682,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g2,K=asked,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g2,K=asked,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -5212,8 +5212,8 @@
   {
    "i": 576,
    "canon": 508,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g2,K=woken,T=t0]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g2,K=woken,T=t0]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -5221,8 +5221,8 @@
   {
    "i": 577,
    "canon": 533,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g2,K=woken,T=t1]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g2,K=woken,T=t1]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -5230,8 +5230,8 @@
   {
    "i": 578,
    "canon": 558,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g2,K=woken,T=t2]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g2,K=woken,T=t2]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -5239,8 +5239,8 @@
   {
    "i": 579,
    "canon": 583,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g2,K=woken,T=t3]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g2,K=woken,T=t3]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -5248,8 +5248,8 @@
   {
    "i": 580,
    "canon": 608,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g2,K=woken,T=t4]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g2,K=woken,T=t4]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -5257,8 +5257,8 @@
   {
    "i": 581,
    "canon": 633,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g2,K=woken,T=t5]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g2,K=woken,T=t5]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -5266,8 +5266,8 @@
   {
    "i": 582,
    "canon": 658,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g2,K=woken,T=t6]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g2,K=woken,T=t6]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -5275,8 +5275,8 @@
   {
    "i": 583,
    "canon": 683,
-   "name": "release_withdraw[D=cook_b,R=pot,G=g3,G2=g2,K=woken,T=t7]",
-   "rule": "release_withdraw",
+   "name": "unwant[D=cook_b,R=pot,G=g3,G2=g2,K=woken,T=t7]",
+   "rule": "unwant",
    "kind": "clause",
    "stage": "act",
    "line": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}."
@@ -7976,7 +7976,7 @@
      "target": null
     },
     {
-     "name": "release_withdraw",
+     "name": "unwant",
      "stage": "act",
      "doc": "{D} is done with a grant that is over, and waits with a ticket: it no longer asks for {R}.",
      "premises": [
