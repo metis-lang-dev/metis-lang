@@ -497,10 +497,10 @@ echo "STOP $n_st/70 seeds (one revoke, the waiter passed over, no grant mid-stop
 
 echo "== 22b. the stale release (spec/15 amendment 10, release-race s-c88bf623): each scene's one rule, over 10 seeds"
 # corpus/release: a release of a grant that is over is consumed and changes nothing (the holder keeps R, whoever holds it),
-# one of the grant held frees R, one from a member waiting with a ticket withdraws the ticket, a waiting release or sleep ends when its holder has changed, a woken holder's ticket is passed over
+# one of the grant held frees R, one from a member waiting with a ticket withdraws the ticket, one crossing a grant the member asked for ends that grant, not one by the routing, a waiting release or sleep ends when its holder has changed, a woken holder's ticket is passed over
 n_rl=0
 for sc in same_member:release_old on_free:release_on_free real:release_on_report late_gone:late_release_other \
-          withdraw:release_withdraw ticket:ticket_held late_other:late_other late_free:late_free late_real:release_late; do
+          withdraw:release_withdraw crossed:release_crossed ticket:ticket_held late_other:late_other late_free:late_free late_real:release_late; do
   name=${sc%%:*}; rule=${sc#*:}
   ( cd "$ROOT/corpus/release" && "$ROOT/src/metisc" --run "release_$name.llp" ) > "$WORK/rel_$name.txt" 2>&1 \
       || { echo "release_$name: metisc --run failed"; cat "$WORK/rel_$name.txt"; exit 1; }
@@ -517,7 +517,7 @@ done
 ( cd "$ROOT/corpus/release" && "$ROOT/src/metisc" --run release_old.llp ) > "$WORK/rel_old.txt" 2>&1
 [ "$(grep '^T ' "$WORK/rel_old.txt" | grep -cE ' (release_old|release_other)\[')" = 10 ] \
     || { echo "release_old: not consumed on every seed"; exit 1; }
-echo "RELEASE $((n_rl + 20))/110 seeds (a stale release consumed, the new grant standing; a real one frees)"
+echo "RELEASE $((n_rl + 20))/120 seeds (a stale release consumed, the new grant standing; a real one frees)"
 
 echo "== 23. the grounding budget (metispy's METIS_GROUND_BUDGET, the sw-s2 OOM): unset as before; set, refused with the rule's words"
 # corpus/budget: take reads a pair of terms nothing else binds, 2 x 40 x 40 = 3200 events. Unset, and at 3200, it

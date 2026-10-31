@@ -48,7 +48,7 @@ priority(act, nav).
 #init inactive(nav) 1
 #init inactive(act) 1
 #init free(motion) 1
-#init gen(motion, g0) 1
+#init gen(motion, g0, woken) 1
 #init issue(motion,t0) 1
 #init serving(motion,t0) 1
 #init path(task) 1

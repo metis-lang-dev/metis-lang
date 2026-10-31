@@ -23,7 +23,7 @@ mature_status(a2).
 mature_status(a3).
 
 #init free(pot) 1
-#init gen(pot, g0) 1
+#init gen(pot, g0, woken) 1
 #init offpath(cook_a) 1
 #init offpath(cook_b) 1
 #init nowant(cook_a) 1
