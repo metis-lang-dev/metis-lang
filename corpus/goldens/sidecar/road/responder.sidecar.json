@@ -1,10 +1,11 @@
 {
  "format": "metis-sidecar/1",
  "catalog": "responder",
- "key": "67cb785f7ec0228c75d1a8c296969ec53376b40509bd4adce0c6a29e7f23fa04",
+ "key": "6df50e83969907d3a9740c612debc855425d3bb7bfa164a3816ef174e2a5fa34",
  "extensions": [],
  "init": {
-  "idle": 1
+  "idle": 1,
+  "tick__gen(responder,controls,g0)": 1
  },
  "steps": 6,
  "stages": [

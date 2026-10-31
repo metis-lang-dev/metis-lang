@@ -1,11 +1,12 @@
 {
  "format": "metis-sidecar/1",
  "catalog": "planner",
- "key": "2e9fa9481dc5017063101cc38a59cfadc91d5dd18f897d3db8d80fd08d327471",
+ "key": "facb82530b81409beca17d55bf713c42709d4fa7f0c34d6b5d9475471058bb2b",
  "extensions": [],
  "init": {
   "idle": 1,
-  "trip": 1
+  "trip": 1,
+  "tick__gen(planner,controls,g0)": 1
  },
  "steps": 6,
  "stages": [

@@ -2,7 +2,7 @@ link composition.yaml
 member director direct wire 8401ae58d7f196b7e4da33f28c88666a85f0fade01a3938aeaeb154f9c20b2b7 bundle b5802472e4e7 source 6c8a18d2e76e8a72905016c9bb77b638ade6b6f1bd698cc21508900ad99883ef
 member task specialist wire 4663844eb08d45372d5b773f718a6dfd065ce2c257b2f7bc6cabc4a04580c0a9 bundle e98906cd31ce source 6001eacdc940e21b84b0e4e2ef09480cd5ece961c89de9303554585dc2c40af9
 member nav specialist wire 6a79dd004372168c1c422e7700f094f37969ab8262c77501e3de20ed373cb69a bundle 0cb6a2994cca source 9a60d35598d9ab354d4866efe99055f5e8a4b474f6f2fc6ee21086b1bd474e8d
-member act specialist wire 394d6d007180b735ae90c39e7add15946f8c96ad1ecb26c887c3a7a75ad56d15 bundle ba8ab3e7c6e2 source 0f9ccb2a9faf6921bff77ccf5ba3f2d29ad541297141451ba7e5d93b98823eba
+member act specialist wire 191f53100d51dfcd026bd648d94503d2c94d9956a1ec9c0da39594dfa41c5d8e bundle 71fca87db519 source 0f9ccb2a9faf6921bff77ccf5ba3f2d29ad541297141451ba7e5d93b98823eba
 director director hand (transitional) planner task kinds cleared closed done fight goto guarded open opened reach reached refused stuck
   specialist(nav).
   specialist(act).
@@ -36,6 +36,6 @@ warning L21 nav's host mh_host.py:make: no file mh_host.py beside it (the runtim
 warning L21 act's host mh_host.py:make: no file mh_host.py beside it (the runtime that loads it must have it)
 warning L21 director's host director_host.py:make: no file director_host.py beside it (the runtime that loads it must have it)
 interface 0 error(s), 9 warning(s)
-image minihack_hier v-c5cf6cad8f84
+image minihack_hier v-333cf301eacd
 result 0 error(s), 15 warning(s)
 rc 0

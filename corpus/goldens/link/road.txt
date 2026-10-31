@@ -1,7 +1,7 @@
 link composition.yaml
 member road_director direct wire b278292c6b91d8f51e4a2c3111e4d5f89a01d55674f53e6ec9cd1744ce31d476 bundle 462694c4de33 source 023cf34e72a792cddd1c6c77d4497aa9c4347ffcdd76d2051eb5262d2abbee9f
-member responder specialist wire 67cb785f7ec0228c75d1a8c296969ec53376b40509bd4adce0c6a29e7f23fa04 bundle cdead0f249fb source 2cee7748b7b6b69101e3ae7f5be8bccabc713cb1e4b32ce1b8225f0376ce7cc0
-member planner specialist wire 2e9fa9481dc5017063101cc38a59cfadc91d5dd18f897d3db8d80fd08d327471 bundle 5631e88ae668 source 585bf4bef2b9fa650689b94bc72478534b65c4e1b1f80dc44502b8a08d1dfe52
+member responder specialist wire 6df50e83969907d3a9740c612debc855425d3bb7bfa164a3816ef174e2a5fa34 bundle eb5adabaaa28 source 2cee7748b7b6b69101e3ae7f5be8bccabc713cb1e4b32ce1b8225f0376ce7cc0
+member planner specialist wire facb82530b81409beca17d55bf713c42709d4fa7f0c34d6b5d9475471058bb2b bundle 21e508b924f6 source 585bf4bef2b9fa650689b94bc72478534b65c4e1b1f80dc44502b8a08d1dfe52
 director road_director hand (transitional) planner - kinds none
   specialist(responder).
   specialist(planner).
@@ -11,6 +11,6 @@ warning L21 responder's host road_host.py:make: no file road_host.py beside it (
 warning L21 planner's host road_host.py:make: no file road_host.py beside it (the runtime that loads it must have it)
 warning L21 road_director's host pass_host.py:make: no file pass_host.py beside it (the runtime that loads it must have it)
 interface 0 error(s), 6 warning(s)
-image road v-cde5f29f4997
+image road v-8a33dd60b2b6
 result 0 error(s), 10 warning(s)
 rc 0
