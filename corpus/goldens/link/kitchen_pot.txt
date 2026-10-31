@@ -1,5 +1,5 @@
 link composition.yaml
-member pot_director direct wire 609cd21f534d38a87bfc6939bbe29951299ff79458c6b94fb588ce09a9770f7f bundle 91027520d691 source 867cae10049bf46fcf970f0dfee97d59b4fffa50b5f4156980c6f2e5241c189a
+member pot_director direct wire 045385cbb4de361608002016065f97729a6da694ebc7bc8b56e81e583b837be3 bundle 44fd0f776876 source 9b843b6b44b5696b41a2cd0d7a6078cd39187d27134739814541d37e23c69a73
 member cook_a specialist wire 3582e0ad48c8e9e60c3a92c19c3a633bb911f2af4574c8f5784f1429cc85ca50 bundle 279e591d4a2b source 6f28deb343392eb6857a98c2840a6a2ce60e92d62506b1a9cb124e38fb0e0f23
 member cook_b specialist wire 585fb6cf3dca355b657bf083941e6106058b8cee77e7e7908a7cb410a445bc16 bundle 1e67ebe510d9 source ddf83afd44e483aa6d4c697bd021acb7dcb02bbe6b224b376948892f02804980
 director pot_director hand (transitional) planner - kinds none
@@ -11,6 +11,6 @@ warning L21 cook_a's host cook_host.py:make: no file cook_host.py beside it (the
 warning L21 cook_b's host cook_host.py:make: no file cook_host.py beside it (the runtime that loads it must have it)
 warning L21 pot_director's host pass_host.py:make: no file pass_host.py beside it (the runtime that loads it must have it)
 interface 0 error(s), 6 warning(s)
-image kitchen_pot v-7d49d9182b9e
+image kitchen_pot v-753f12841f1c
 result 0 error(s), 11 warning(s)
 rc 0

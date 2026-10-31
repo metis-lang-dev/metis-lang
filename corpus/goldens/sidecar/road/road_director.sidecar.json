@@ -1,7 +1,7 @@
 {
  "format": "metis-sidecar/1",
  "catalog": "road_director",
- "key": "f69c094d2d19680f2940eeff433ce71a48fc665362efacb8d29ee7563e16c5fb",
+ "key": "b278292c6b91d8f51e4a2c3111e4d5f89a01d55674f53e6ec9cd1744ce31d476",
  "extensions": [],
  "init": {
   "free(controls)": 1,
@@ -9962,7 +9962,7 @@
   },
   {
    "i": 1104,
-   "canon": 1276,
+   "canon": 1260,
    "name": "skip_ticket[R=controls,T=t0,T2=t1]",
    "rule": "skip_ticket",
    "kind": "clause",
@@ -9971,7 +9971,7 @@
   },
   {
    "i": 1105,
-   "canon": 1277,
+   "canon": 1261,
    "name": "skip_ticket[R=controls,T=t1,T2=t2]",
    "rule": "skip_ticket",
    "kind": "clause",
@@ -9980,7 +9980,7 @@
   },
   {
    "i": 1106,
-   "canon": 1278,
+   "canon": 1262,
    "name": "skip_ticket[R=controls,T=t2,T2=t3]",
    "rule": "skip_ticket",
    "kind": "clause",
@@ -9989,7 +9989,7 @@
   },
   {
    "i": 1107,
-   "canon": 1279,
+   "canon": 1263,
    "name": "skip_ticket[R=controls,T=t3,T2=t4]",
    "rule": "skip_ticket",
    "kind": "clause",
@@ -9998,7 +9998,7 @@
   },
   {
    "i": 1108,
-   "canon": 1280,
+   "canon": 1264,
    "name": "skip_ticket[R=controls,T=t4,T2=t5]",
    "rule": "skip_ticket",
    "kind": "clause",
@@ -10007,7 +10007,7 @@
   },
   {
    "i": 1109,
-   "canon": 1281,
+   "canon": 1265,
    "name": "skip_ticket[R=controls,T=t5,T2=t6]",
    "rule": "skip_ticket",
    "kind": "clause",
@@ -10016,7 +10016,7 @@
   },
   {
    "i": 1110,
-   "canon": 1282,
+   "canon": 1266,
    "name": "skip_ticket[R=controls,T=t6,T2=t7]",
    "rule": "skip_ticket",
    "kind": "clause",
@@ -10025,7 +10025,7 @@
   },
   {
    "i": 1111,
-   "canon": 1283,
+   "canon": 1267,
    "name": "skip_ticket[R=controls,T=t7,T2=t0]",
    "rule": "skip_ticket",
    "kind": "clause",
@@ -10178,7 +10178,7 @@
   },
   {
    "i": 1128,
-   "canon": 1321,
+   "canon": 1305,
    "name": "release_report_wait[D=responder,R=controls,G=g0,A=a0]",
    "rule": "release_report_wait",
    "kind": "clause",
@@ -10187,7 +10187,7 @@
   },
   {
    "i": 1129,
-   "canon": 1322,
+   "canon": 1306,
    "name": "release_report_wait[D=responder,R=controls,G=g0,A=a1]",
    "rule": "release_report_wait",
    "kind": "clause",
@@ -10196,7 +10196,7 @@
   },
   {
    "i": 1130,
-   "canon": 1327,
+   "canon": 1311,
    "name": "release_report_wait[D=responder,R=controls,G=g1,A=a0]",
    "rule": "release_report_wait",
    "kind": "clause",
@@ -10205,7 +10205,7 @@
   },
   {
    "i": 1131,
-   "canon": 1328,
+   "canon": 1312,
    "name": "release_report_wait[D=responder,R=controls,G=g1,A=a1]",
    "rule": "release_report_wait",
    "kind": "clause",
@@ -10214,7 +10214,7 @@
   },
   {
    "i": 1132,
-   "canon": 1333,
+   "canon": 1317,
    "name": "release_report_wait[D=responder,R=controls,G=g2,A=a0]",
    "rule": "release_report_wait",
    "kind": "clause",
@@ -10223,7 +10223,7 @@
   },
   {
    "i": 1133,
-   "canon": 1334,
+   "canon": 1318,
    "name": "release_report_wait[D=responder,R=controls,G=g2,A=a1]",
    "rule": "release_report_wait",
    "kind": "clause",
@@ -10232,7 +10232,7 @@
   },
   {
    "i": 1134,
-   "canon": 1339,
+   "canon": 1323,
    "name": "release_report_wait[D=responder,R=controls,G=g3,A=a0]",
    "rule": "release_report_wait",
    "kind": "clause",
@@ -10241,7 +10241,7 @@
   },
   {
    "i": 1135,
-   "canon": 1340,
+   "canon": 1324,
    "name": "release_report_wait[D=responder,R=controls,G=g3,A=a1]",
    "rule": "release_report_wait",
    "kind": "clause",
@@ -10250,7 +10250,7 @@
   },
   {
    "i": 1136,
-   "canon": 1297,
+   "canon": 1281,
    "name": "release_report_wait[D=planner,R=controls,G=g0,A=a0]",
    "rule": "release_report_wait",
    "kind": "clause",
@@ -10259,7 +10259,7 @@
   },
   {
    "i": 1137,
-   "canon": 1298,
+   "canon": 1282,
    "name": "release_report_wait[D=planner,R=controls,G=g0,A=a1]",
    "rule": "release_report_wait",
    "kind": "clause",
@@ -10268,7 +10268,7 @@
   },
   {
    "i": 1138,
-   "canon": 1303,
+   "canon": 1287,
    "name": "release_report_wait[D=planner,R=controls,G=g1,A=a0]",
    "rule": "release_report_wait",
    "kind": "clause",
@@ -10277,7 +10277,7 @@
   },
   {
    "i": 1139,
-   "canon": 1304,
+   "canon": 1288,
    "name": "release_report_wait[D=planner,R=controls,G=g1,A=a1]",
    "rule": "release_report_wait",
    "kind": "clause",
@@ -10286,7 +10286,7 @@
   },
   {
    "i": 1140,
-   "canon": 1309,
+   "canon": 1293,
    "name": "release_report_wait[D=planner,R=controls,G=g2,A=a0]",
    "rule": "release_report_wait",
    "kind": "clause",
@@ -10295,7 +10295,7 @@
   },
   {
    "i": 1141,
-   "canon": 1310,
+   "canon": 1294,
    "name": "release_report_wait[D=planner,R=controls,G=g2,A=a1]",
    "rule": "release_report_wait",
    "kind": "clause",
@@ -10304,7 +10304,7 @@
   },
   {
    "i": 1142,
-   "canon": 1315,
+   "canon": 1299,
    "name": "release_report_wait[D=planner,R=controls,G=g3,A=a0]",
    "rule": "release_report_wait",
    "kind": "clause",
@@ -10313,7 +10313,7 @@
   },
   {
    "i": 1143,
-   "canon": 1316,
+   "canon": 1300,
    "name": "release_report_wait[D=planner,R=controls,G=g3,A=a1]",
    "rule": "release_report_wait",
    "kind": "clause",
@@ -10322,7 +10322,7 @@
   },
   {
    "i": 1144,
-   "canon": 1318,
+   "canon": 1302,
    "name": "release_old[D=responder,R=controls,G=g0,G2=g1]",
    "rule": "release_old",
    "kind": "clause",
@@ -10331,7 +10331,7 @@
   },
   {
    "i": 1145,
-   "canon": 1319,
+   "canon": 1303,
    "name": "release_old[D=responder,R=controls,G=g0,G2=g2]",
    "rule": "release_old",
    "kind": "clause",
@@ -10340,7 +10340,7 @@
   },
   {
    "i": 1146,
-   "canon": 1320,
+   "canon": 1304,
    "name": "release_old[D=responder,R=controls,G=g0,G2=g3]",
    "rule": "release_old",
    "kind": "clause",
@@ -10349,7 +10349,7 @@
   },
   {
    "i": 1147,
-   "canon": 1324,
+   "canon": 1308,
    "name": "release_old[D=responder,R=controls,G=g1,G2=g0]",
    "rule": "release_old",
    "kind": "clause",
@@ -10358,7 +10358,7 @@
   },
   {
    "i": 1148,
-   "canon": 1325,
+   "canon": 1309,
    "name": "release_old[D=responder,R=controls,G=g1,G2=g2]",
    "rule": "release_old",
    "kind": "clause",
@@ -10367,7 +10367,7 @@
   },
   {
    "i": 1149,
-   "canon": 1326,
+   "canon": 1310,
    "name": "release_old[D=responder,R=controls,G=g1,G2=g3]",
    "rule": "release_old",
    "kind": "clause",
@@ -10376,7 +10376,7 @@
   },
   {
    "i": 1150,
-   "canon": 1330,
+   "canon": 1314,
    "name": "release_old[D=responder,R=controls,G=g2,G2=g0]",
    "rule": "release_old",
    "kind": "clause",
@@ -10385,7 +10385,7 @@
   },
   {
    "i": 1151,
-   "canon": 1331,
+   "canon": 1315,
    "name": "release_old[D=responder,R=controls,G=g2,G2=g1]",
    "rule": "release_old",
    "kind": "clause",
@@ -10394,7 +10394,7 @@
   },
   {
    "i": 1152,
-   "canon": 1332,
+   "canon": 1316,
    "name": "release_old[D=responder,R=controls,G=g2,G2=g3]",
    "rule": "release_old",
    "kind": "clause",
@@ -10403,7 +10403,7 @@
   },
   {
    "i": 1153,
-   "canon": 1336,
+   "canon": 1320,
    "name": "release_old[D=responder,R=controls,G=g3,G2=g0]",
    "rule": "release_old",
    "kind": "clause",
@@ -10412,7 +10412,7 @@
   },
   {
    "i": 1154,
-   "canon": 1337,
+   "canon": 1321,
    "name": "release_old[D=responder,R=controls,G=g3,G2=g1]",
    "rule": "release_old",
    "kind": "clause",
@@ -10421,7 +10421,7 @@
   },
   {
    "i": 1155,
-   "canon": 1338,
+   "canon": 1322,
    "name": "release_old[D=responder,R=controls,G=g3,G2=g2]",
    "rule": "release_old",
    "kind": "clause",
@@ -10430,7 +10430,7 @@
   },
   {
    "i": 1156,
-   "canon": 1294,
+   "canon": 1278,
    "name": "release_old[D=planner,R=controls,G=g0,G2=g1]",
    "rule": "release_old",
    "kind": "clause",
@@ -10439,7 +10439,7 @@
   },
   {
    "i": 1157,
-   "canon": 1295,
+   "canon": 1279,
    "name": "release_old[D=planner,R=controls,G=g0,G2=g2]",
    "rule": "release_old",
    "kind": "clause",
@@ -10448,7 +10448,7 @@
   },
   {
    "i": 1158,
-   "canon": 1296,
+   "canon": 1280,
    "name": "release_old[D=planner,R=controls,G=g0,G2=g3]",
    "rule": "release_old",
    "kind": "clause",
@@ -10457,7 +10457,7 @@
   },
   {
    "i": 1159,
-   "canon": 1300,
+   "canon": 1284,
    "name": "release_old[D=planner,R=controls,G=g1,G2=g0]",
    "rule": "release_old",
    "kind": "clause",
@@ -10466,7 +10466,7 @@
   },
   {
    "i": 1160,
-   "canon": 1301,
+   "canon": 1285,
    "name": "release_old[D=planner,R=controls,G=g1,G2=g2]",
    "rule": "release_old",
    "kind": "clause",
@@ -10475,7 +10475,7 @@
   },
   {
    "i": 1161,
-   "canon": 1302,
+   "canon": 1286,
    "name": "release_old[D=planner,R=controls,G=g1,G2=g3]",
    "rule": "release_old",
    "kind": "clause",
@@ -10484,7 +10484,7 @@
   },
   {
    "i": 1162,
-   "canon": 1306,
+   "canon": 1290,
    "name": "release_old[D=planner,R=controls,G=g2,G2=g0]",
    "rule": "release_old",
    "kind": "clause",
@@ -10493,7 +10493,7 @@
   },
   {
    "i": 1163,
-   "canon": 1307,
+   "canon": 1291,
    "name": "release_old[D=planner,R=controls,G=g2,G2=g1]",
    "rule": "release_old",
    "kind": "clause",
@@ -10502,7 +10502,7 @@
   },
   {
    "i": 1164,
-   "canon": 1308,
+   "canon": 1292,
    "name": "release_old[D=planner,R=controls,G=g2,G2=g3]",
    "rule": "release_old",
    "kind": "clause",
@@ -10511,7 +10511,7 @@
   },
   {
    "i": 1165,
-   "canon": 1312,
+   "canon": 1296,
    "name": "release_old[D=planner,R=controls,G=g3,G2=g0]",
    "rule": "release_old",
    "kind": "clause",
@@ -10520,7 +10520,7 @@
   },
   {
    "i": 1166,
-   "canon": 1313,
+   "canon": 1297,
    "name": "release_old[D=planner,R=controls,G=g3,G2=g1]",
    "rule": "release_old",
    "kind": "clause",
@@ -10529,7 +10529,7 @@
   },
   {
    "i": 1167,
-   "canon": 1314,
+   "canon": 1298,
    "name": "release_old[D=planner,R=controls,G=g3,G2=g2]",
    "rule": "release_old",
    "kind": "clause",
@@ -10538,7 +10538,7 @@
   },
   {
    "i": 1168,
-   "canon": 1317,
+   "canon": 1301,
    "name": "release_on_free[D=responder,R=controls,G=g0]",
    "rule": "release_on_free",
    "kind": "clause",
@@ -10547,7 +10547,7 @@
   },
   {
    "i": 1169,
-   "canon": 1323,
+   "canon": 1307,
    "name": "release_on_free[D=responder,R=controls,G=g1]",
    "rule": "release_on_free",
    "kind": "clause",
@@ -10556,7 +10556,7 @@
   },
   {
    "i": 1170,
-   "canon": 1329,
+   "canon": 1313,
    "name": "release_on_free[D=responder,R=controls,G=g2]",
    "rule": "release_on_free",
    "kind": "clause",
@@ -10565,7 +10565,7 @@
   },
   {
    "i": 1171,
-   "canon": 1335,
+   "canon": 1319,
    "name": "release_on_free[D=responder,R=controls,G=g3]",
    "rule": "release_on_free",
    "kind": "clause",
@@ -10574,7 +10574,7 @@
   },
   {
    "i": 1172,
-   "canon": 1293,
+   "canon": 1277,
    "name": "release_on_free[D=planner,R=controls,G=g0]",
    "rule": "release_on_free",
    "kind": "clause",
@@ -10583,7 +10583,7 @@
   },
   {
    "i": 1173,
-   "canon": 1299,
+   "canon": 1283,
    "name": "release_on_free[D=planner,R=controls,G=g1]",
    "rule": "release_on_free",
    "kind": "clause",
@@ -10592,7 +10592,7 @@
   },
   {
    "i": 1174,
-   "canon": 1305,
+   "canon": 1289,
    "name": "release_on_free[D=planner,R=controls,G=g2]",
    "rule": "release_on_free",
    "kind": "clause",
@@ -10601,7 +10601,7 @@
   },
   {
    "i": 1175,
-   "canon": 1311,
+   "canon": 1295,
    "name": "release_on_free[D=planner,R=controls,G=g3]",
    "rule": "release_on_free",
    "kind": "clause",
@@ -10646,150 +10646,6 @@
   },
   {
    "i": 1180,
-   "canon": 1260,
-   "name": "ticket_held[D=responder,R=controls,T=t0]",
-   "rule": "ticket_held",
-   "kind": "clause",
-   "stage": "act",
-   "line": "{D} holds {R}: its ticket is passed over."
-  },
-  {
-   "i": 1181,
-   "canon": 1262,
-   "name": "ticket_held[D=responder,R=controls,T=t1]",
-   "rule": "ticket_held",
-   "kind": "clause",
-   "stage": "act",
-   "line": "{D} holds {R}: its ticket is passed over."
-  },
-  {
-   "i": 1182,
-   "canon": 1264,
-   "name": "ticket_held[D=responder,R=controls,T=t2]",
-   "rule": "ticket_held",
-   "kind": "clause",
-   "stage": "act",
-   "line": "{D} holds {R}: its ticket is passed over."
-  },
-  {
-   "i": 1183,
-   "canon": 1266,
-   "name": "ticket_held[D=responder,R=controls,T=t3]",
-   "rule": "ticket_held",
-   "kind": "clause",
-   "stage": "act",
-   "line": "{D} holds {R}: its ticket is passed over."
-  },
-  {
-   "i": 1184,
-   "canon": 1268,
-   "name": "ticket_held[D=responder,R=controls,T=t4]",
-   "rule": "ticket_held",
-   "kind": "clause",
-   "stage": "act",
-   "line": "{D} holds {R}: its ticket is passed over."
-  },
-  {
-   "i": 1185,
-   "canon": 1270,
-   "name": "ticket_held[D=responder,R=controls,T=t5]",
-   "rule": "ticket_held",
-   "kind": "clause",
-   "stage": "act",
-   "line": "{D} holds {R}: its ticket is passed over."
-  },
-  {
-   "i": 1186,
-   "canon": 1272,
-   "name": "ticket_held[D=responder,R=controls,T=t6]",
-   "rule": "ticket_held",
-   "kind": "clause",
-   "stage": "act",
-   "line": "{D} holds {R}: its ticket is passed over."
-  },
-  {
-   "i": 1187,
-   "canon": 1274,
-   "name": "ticket_held[D=responder,R=controls,T=t7]",
-   "rule": "ticket_held",
-   "kind": "clause",
-   "stage": "act",
-   "line": "{D} holds {R}: its ticket is passed over."
-  },
-  {
-   "i": 1188,
-   "canon": 1244,
-   "name": "ticket_held[D=planner,R=controls,T=t0]",
-   "rule": "ticket_held",
-   "kind": "clause",
-   "stage": "act",
-   "line": "{D} holds {R}: its ticket is passed over."
-  },
-  {
-   "i": 1189,
-   "canon": 1246,
-   "name": "ticket_held[D=planner,R=controls,T=t1]",
-   "rule": "ticket_held",
-   "kind": "clause",
-   "stage": "act",
-   "line": "{D} holds {R}: its ticket is passed over."
-  },
-  {
-   "i": 1190,
-   "canon": 1248,
-   "name": "ticket_held[D=planner,R=controls,T=t2]",
-   "rule": "ticket_held",
-   "kind": "clause",
-   "stage": "act",
-   "line": "{D} holds {R}: its ticket is passed over."
-  },
-  {
-   "i": 1191,
-   "canon": 1250,
-   "name": "ticket_held[D=planner,R=controls,T=t3]",
-   "rule": "ticket_held",
-   "kind": "clause",
-   "stage": "act",
-   "line": "{D} holds {R}: its ticket is passed over."
-  },
-  {
-   "i": 1192,
-   "canon": 1252,
-   "name": "ticket_held[D=planner,R=controls,T=t4]",
-   "rule": "ticket_held",
-   "kind": "clause",
-   "stage": "act",
-   "line": "{D} holds {R}: its ticket is passed over."
-  },
-  {
-   "i": 1193,
-   "canon": 1254,
-   "name": "ticket_held[D=planner,R=controls,T=t5]",
-   "rule": "ticket_held",
-   "kind": "clause",
-   "stage": "act",
-   "line": "{D} holds {R}: its ticket is passed over."
-  },
-  {
-   "i": 1194,
-   "canon": 1256,
-   "name": "ticket_held[D=planner,R=controls,T=t6]",
-   "rule": "ticket_held",
-   "kind": "clause",
-   "stage": "act",
-   "line": "{D} holds {R}: its ticket is passed over."
-  },
-  {
-   "i": 1195,
-   "canon": 1258,
-   "name": "ticket_held[D=planner,R=controls,T=t7]",
-   "rule": "ticket_held",
-   "kind": "clause",
-   "stage": "act",
-   "line": "{D} holds {R}: its ticket is passed over."
-  },
-  {
-   "i": 1196,
    "canon": 1189,
    "name": "release_report_late[D=responder,R=controls,A=a2]",
    "rule": "release_report_late",
@@ -10798,7 +10654,7 @@
    "line": "{D}'s grant is old enough: {R} is free."
   },
   {
-   "i": 1197,
+   "i": 1181,
    "canon": 1205,
    "name": "release_report_late[D=responder,R=controls,A=a3]",
    "rule": "release_report_late",
@@ -10807,7 +10663,7 @@
    "line": "{D}'s grant is old enough: {R} is free."
   },
   {
-   "i": 1198,
+   "i": 1182,
    "canon": 1136,
    "name": "release_report_late[D=planner,R=controls,A=a2]",
    "rule": "release_report_late",
@@ -10816,7 +10672,7 @@
    "line": "{D}'s grant is old enough: {R} is free."
   },
   {
-   "i": 1199,
+   "i": 1183,
    "canon": 1152,
    "name": "release_report_late[D=planner,R=controls,A=a3]",
    "rule": "release_report_late",
@@ -10825,7 +10681,7 @@
    "line": "{D}'s grant is old enough: {R} is free."
   },
   {
-   "i": 1200,
+   "i": 1184,
    "canon": 1168,
    "name": "release_stuck[D=responder,R=controls,A=a0]",
    "rule": "release_stuck",
@@ -10834,7 +10690,7 @@
    "line": "{D} is stuck: {R} is free."
   },
   {
-   "i": 1201,
+   "i": 1185,
    "canon": 1179,
    "name": "release_stuck[D=responder,R=controls,A=a1]",
    "rule": "release_stuck",
@@ -10843,7 +10699,7 @@
    "line": "{D} is stuck: {R} is free."
   },
   {
-   "i": 1202,
+   "i": 1186,
    "canon": 1195,
    "name": "release_stuck[D=responder,R=controls,A=a2]",
    "rule": "release_stuck",
@@ -10852,7 +10708,7 @@
    "line": "{D} is stuck: {R} is free."
   },
   {
-   "i": 1203,
+   "i": 1187,
    "canon": 1211,
    "name": "release_stuck[D=responder,R=controls,A=a3]",
    "rule": "release_stuck",
@@ -10861,7 +10717,7 @@
    "line": "{D} is stuck: {R} is free."
   },
   {
-   "i": 1204,
+   "i": 1188,
    "canon": 1115,
    "name": "release_stuck[D=planner,R=controls,A=a0]",
    "rule": "release_stuck",
@@ -10870,7 +10726,7 @@
    "line": "{D} is stuck: {R} is free."
   },
   {
-   "i": 1205,
+   "i": 1189,
    "canon": 1126,
    "name": "release_stuck[D=planner,R=controls,A=a1]",
    "rule": "release_stuck",
@@ -10879,7 +10735,7 @@
    "line": "{D} is stuck: {R} is free."
   },
   {
-   "i": 1206,
+   "i": 1190,
    "canon": 1142,
    "name": "release_stuck[D=planner,R=controls,A=a2]",
    "rule": "release_stuck",
@@ -10888,7 +10744,7 @@
    "line": "{D} is stuck: {R} is free."
   },
   {
-   "i": 1207,
+   "i": 1191,
    "canon": 1158,
    "name": "release_stuck[D=planner,R=controls,A=a3]",
    "rule": "release_stuck",
@@ -10897,7 +10753,7 @@
    "line": "{D} is stuck: {R} is free."
   },
   {
-   "i": 1208,
+   "i": 1192,
    "canon": 1243,
    "name": "stop_cancel[D=responder]",
    "rule": "stop_cancel",
@@ -10906,7 +10762,7 @@
    "line": "Stopped: {D}'s goal is cancelled."
   },
   {
-   "i": 1209,
+   "i": 1193,
    "canon": 1241,
    "name": "stop_cancel[D=planner]",
    "rule": "stop_cancel",
@@ -10915,7 +10771,7 @@
    "line": "Stopped: {D}'s goal is cancelled."
   },
   {
-   "i": 1210,
+   "i": 1194,
    "canon": 1159,
    "name": "stop_release[D=responder,R=controls,A=a0,T=t0]",
    "rule": "stop_release",
@@ -10924,7 +10780,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1211,
+   "i": 1195,
    "canon": 1160,
    "name": "stop_release[D=responder,R=controls,A=a0,T=t1]",
    "rule": "stop_release",
@@ -10933,7 +10789,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1212,
+   "i": 1196,
    "canon": 1161,
    "name": "stop_release[D=responder,R=controls,A=a0,T=t2]",
    "rule": "stop_release",
@@ -10942,7 +10798,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1213,
+   "i": 1197,
    "canon": 1162,
    "name": "stop_release[D=responder,R=controls,A=a0,T=t3]",
    "rule": "stop_release",
@@ -10951,7 +10807,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1214,
+   "i": 1198,
    "canon": 1163,
    "name": "stop_release[D=responder,R=controls,A=a0,T=t4]",
    "rule": "stop_release",
@@ -10960,7 +10816,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1215,
+   "i": 1199,
    "canon": 1164,
    "name": "stop_release[D=responder,R=controls,A=a0,T=t5]",
    "rule": "stop_release",
@@ -10969,7 +10825,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1216,
+   "i": 1200,
    "canon": 1165,
    "name": "stop_release[D=responder,R=controls,A=a0,T=t6]",
    "rule": "stop_release",
@@ -10978,7 +10834,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1217,
+   "i": 1201,
    "canon": 1166,
    "name": "stop_release[D=responder,R=controls,A=a0,T=t7]",
    "rule": "stop_release",
@@ -10987,7 +10843,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1218,
+   "i": 1202,
    "canon": 1170,
    "name": "stop_release[D=responder,R=controls,A=a1,T=t0]",
    "rule": "stop_release",
@@ -10996,7 +10852,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1219,
+   "i": 1203,
    "canon": 1171,
    "name": "stop_release[D=responder,R=controls,A=a1,T=t1]",
    "rule": "stop_release",
@@ -11005,7 +10861,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1220,
+   "i": 1204,
    "canon": 1172,
    "name": "stop_release[D=responder,R=controls,A=a1,T=t2]",
    "rule": "stop_release",
@@ -11014,7 +10870,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1221,
+   "i": 1205,
    "canon": 1173,
    "name": "stop_release[D=responder,R=controls,A=a1,T=t3]",
    "rule": "stop_release",
@@ -11023,7 +10879,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1222,
+   "i": 1206,
    "canon": 1174,
    "name": "stop_release[D=responder,R=controls,A=a1,T=t4]",
    "rule": "stop_release",
@@ -11032,7 +10888,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1223,
+   "i": 1207,
    "canon": 1175,
    "name": "stop_release[D=responder,R=controls,A=a1,T=t5]",
    "rule": "stop_release",
@@ -11041,7 +10897,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1224,
+   "i": 1208,
    "canon": 1176,
    "name": "stop_release[D=responder,R=controls,A=a1,T=t6]",
    "rule": "stop_release",
@@ -11050,7 +10906,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1225,
+   "i": 1209,
    "canon": 1177,
    "name": "stop_release[D=responder,R=controls,A=a1,T=t7]",
    "rule": "stop_release",
@@ -11059,7 +10915,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1226,
+   "i": 1210,
    "canon": 1181,
    "name": "stop_release[D=responder,R=controls,A=a2,T=t0]",
    "rule": "stop_release",
@@ -11068,7 +10924,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1227,
+   "i": 1211,
    "canon": 1182,
    "name": "stop_release[D=responder,R=controls,A=a2,T=t1]",
    "rule": "stop_release",
@@ -11077,7 +10933,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1228,
+   "i": 1212,
    "canon": 1183,
    "name": "stop_release[D=responder,R=controls,A=a2,T=t2]",
    "rule": "stop_release",
@@ -11086,7 +10942,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1229,
+   "i": 1213,
    "canon": 1184,
    "name": "stop_release[D=responder,R=controls,A=a2,T=t3]",
    "rule": "stop_release",
@@ -11095,7 +10951,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1230,
+   "i": 1214,
    "canon": 1185,
    "name": "stop_release[D=responder,R=controls,A=a2,T=t4]",
    "rule": "stop_release",
@@ -11104,7 +10960,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1231,
+   "i": 1215,
    "canon": 1186,
    "name": "stop_release[D=responder,R=controls,A=a2,T=t5]",
    "rule": "stop_release",
@@ -11113,7 +10969,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1232,
+   "i": 1216,
    "canon": 1187,
    "name": "stop_release[D=responder,R=controls,A=a2,T=t6]",
    "rule": "stop_release",
@@ -11122,7 +10978,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1233,
+   "i": 1217,
    "canon": 1188,
    "name": "stop_release[D=responder,R=controls,A=a2,T=t7]",
    "rule": "stop_release",
@@ -11131,7 +10987,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1234,
+   "i": 1218,
    "canon": 1197,
    "name": "stop_release[D=responder,R=controls,A=a3,T=t0]",
    "rule": "stop_release",
@@ -11140,7 +10996,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1235,
+   "i": 1219,
    "canon": 1198,
    "name": "stop_release[D=responder,R=controls,A=a3,T=t1]",
    "rule": "stop_release",
@@ -11149,7 +11005,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1236,
+   "i": 1220,
    "canon": 1199,
    "name": "stop_release[D=responder,R=controls,A=a3,T=t2]",
    "rule": "stop_release",
@@ -11158,7 +11014,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1237,
+   "i": 1221,
    "canon": 1200,
    "name": "stop_release[D=responder,R=controls,A=a3,T=t3]",
    "rule": "stop_release",
@@ -11167,7 +11023,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1238,
+   "i": 1222,
    "canon": 1201,
    "name": "stop_release[D=responder,R=controls,A=a3,T=t4]",
    "rule": "stop_release",
@@ -11176,7 +11032,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1239,
+   "i": 1223,
    "canon": 1202,
    "name": "stop_release[D=responder,R=controls,A=a3,T=t5]",
    "rule": "stop_release",
@@ -11185,7 +11041,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1240,
+   "i": 1224,
    "canon": 1203,
    "name": "stop_release[D=responder,R=controls,A=a3,T=t6]",
    "rule": "stop_release",
@@ -11194,7 +11050,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1241,
+   "i": 1225,
    "canon": 1204,
    "name": "stop_release[D=responder,R=controls,A=a3,T=t7]",
    "rule": "stop_release",
@@ -11203,7 +11059,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1242,
+   "i": 1226,
    "canon": 1106,
    "name": "stop_release[D=planner,R=controls,A=a0,T=t0]",
    "rule": "stop_release",
@@ -11212,7 +11068,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1243,
+   "i": 1227,
    "canon": 1107,
    "name": "stop_release[D=planner,R=controls,A=a0,T=t1]",
    "rule": "stop_release",
@@ -11221,7 +11077,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1244,
+   "i": 1228,
    "canon": 1108,
    "name": "stop_release[D=planner,R=controls,A=a0,T=t2]",
    "rule": "stop_release",
@@ -11230,7 +11086,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1245,
+   "i": 1229,
    "canon": 1109,
    "name": "stop_release[D=planner,R=controls,A=a0,T=t3]",
    "rule": "stop_release",
@@ -11239,7 +11095,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1246,
+   "i": 1230,
    "canon": 1110,
    "name": "stop_release[D=planner,R=controls,A=a0,T=t4]",
    "rule": "stop_release",
@@ -11248,7 +11104,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1247,
+   "i": 1231,
    "canon": 1111,
    "name": "stop_release[D=planner,R=controls,A=a0,T=t5]",
    "rule": "stop_release",
@@ -11257,7 +11113,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1248,
+   "i": 1232,
    "canon": 1112,
    "name": "stop_release[D=planner,R=controls,A=a0,T=t6]",
    "rule": "stop_release",
@@ -11266,7 +11122,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1249,
+   "i": 1233,
    "canon": 1113,
    "name": "stop_release[D=planner,R=controls,A=a0,T=t7]",
    "rule": "stop_release",
@@ -11275,7 +11131,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1250,
+   "i": 1234,
    "canon": 1117,
    "name": "stop_release[D=planner,R=controls,A=a1,T=t0]",
    "rule": "stop_release",
@@ -11284,7 +11140,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1251,
+   "i": 1235,
    "canon": 1118,
    "name": "stop_release[D=planner,R=controls,A=a1,T=t1]",
    "rule": "stop_release",
@@ -11293,7 +11149,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1252,
+   "i": 1236,
    "canon": 1119,
    "name": "stop_release[D=planner,R=controls,A=a1,T=t2]",
    "rule": "stop_release",
@@ -11302,7 +11158,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1253,
+   "i": 1237,
    "canon": 1120,
    "name": "stop_release[D=planner,R=controls,A=a1,T=t3]",
    "rule": "stop_release",
@@ -11311,7 +11167,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1254,
+   "i": 1238,
    "canon": 1121,
    "name": "stop_release[D=planner,R=controls,A=a1,T=t4]",
    "rule": "stop_release",
@@ -11320,7 +11176,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1255,
+   "i": 1239,
    "canon": 1122,
    "name": "stop_release[D=planner,R=controls,A=a1,T=t5]",
    "rule": "stop_release",
@@ -11329,7 +11185,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1256,
+   "i": 1240,
    "canon": 1123,
    "name": "stop_release[D=planner,R=controls,A=a1,T=t6]",
    "rule": "stop_release",
@@ -11338,7 +11194,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1257,
+   "i": 1241,
    "canon": 1124,
    "name": "stop_release[D=planner,R=controls,A=a1,T=t7]",
    "rule": "stop_release",
@@ -11347,7 +11203,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1258,
+   "i": 1242,
    "canon": 1128,
    "name": "stop_release[D=planner,R=controls,A=a2,T=t0]",
    "rule": "stop_release",
@@ -11356,7 +11212,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1259,
+   "i": 1243,
    "canon": 1129,
    "name": "stop_release[D=planner,R=controls,A=a2,T=t1]",
    "rule": "stop_release",
@@ -11365,7 +11221,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1260,
+   "i": 1244,
    "canon": 1130,
    "name": "stop_release[D=planner,R=controls,A=a2,T=t2]",
    "rule": "stop_release",
@@ -11374,7 +11230,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1261,
+   "i": 1245,
    "canon": 1131,
    "name": "stop_release[D=planner,R=controls,A=a2,T=t3]",
    "rule": "stop_release",
@@ -11383,7 +11239,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1262,
+   "i": 1246,
    "canon": 1132,
    "name": "stop_release[D=planner,R=controls,A=a2,T=t4]",
    "rule": "stop_release",
@@ -11392,7 +11248,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1263,
+   "i": 1247,
    "canon": 1133,
    "name": "stop_release[D=planner,R=controls,A=a2,T=t5]",
    "rule": "stop_release",
@@ -11401,7 +11257,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1264,
+   "i": 1248,
    "canon": 1134,
    "name": "stop_release[D=planner,R=controls,A=a2,T=t6]",
    "rule": "stop_release",
@@ -11410,7 +11266,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1265,
+   "i": 1249,
    "canon": 1135,
    "name": "stop_release[D=planner,R=controls,A=a2,T=t7]",
    "rule": "stop_release",
@@ -11419,7 +11275,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1266,
+   "i": 1250,
    "canon": 1144,
    "name": "stop_release[D=planner,R=controls,A=a3,T=t0]",
    "rule": "stop_release",
@@ -11428,7 +11284,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1267,
+   "i": 1251,
    "canon": 1145,
    "name": "stop_release[D=planner,R=controls,A=a3,T=t1]",
    "rule": "stop_release",
@@ -11437,7 +11293,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1268,
+   "i": 1252,
    "canon": 1146,
    "name": "stop_release[D=planner,R=controls,A=a3,T=t2]",
    "rule": "stop_release",
@@ -11446,7 +11302,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1269,
+   "i": 1253,
    "canon": 1147,
    "name": "stop_release[D=planner,R=controls,A=a3,T=t3]",
    "rule": "stop_release",
@@ -11455,7 +11311,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1270,
+   "i": 1254,
    "canon": 1148,
    "name": "stop_release[D=planner,R=controls,A=a3,T=t4]",
    "rule": "stop_release",
@@ -11464,7 +11320,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1271,
+   "i": 1255,
    "canon": 1149,
    "name": "stop_release[D=planner,R=controls,A=a3,T=t5]",
    "rule": "stop_release",
@@ -11473,7 +11329,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1272,
+   "i": 1256,
    "canon": 1150,
    "name": "stop_release[D=planner,R=controls,A=a3,T=t6]",
    "rule": "stop_release",
@@ -11482,7 +11338,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1273,
+   "i": 1257,
    "canon": 1151,
    "name": "stop_release[D=planner,R=controls,A=a3,T=t7]",
    "rule": "stop_release",
@@ -11491,8 +11347,8 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 1274,
-   "canon": 1261,
+   "i": 1258,
+   "canon": 1252,
    "name": "stop_dequeue[D=responder,R=controls,T=t0]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -11500,8 +11356,8 @@
    "line": "Stopped: {D}'s ticket for {R} is passed over."
   },
   {
-   "i": 1275,
-   "canon": 1263,
+   "i": 1259,
+   "canon": 1253,
    "name": "stop_dequeue[D=responder,R=controls,T=t1]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -11509,8 +11365,8 @@
    "line": "Stopped: {D}'s ticket for {R} is passed over."
   },
   {
-   "i": 1276,
-   "canon": 1265,
+   "i": 1260,
+   "canon": 1254,
    "name": "stop_dequeue[D=responder,R=controls,T=t2]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -11518,8 +11374,8 @@
    "line": "Stopped: {D}'s ticket for {R} is passed over."
   },
   {
-   "i": 1277,
-   "canon": 1267,
+   "i": 1261,
+   "canon": 1255,
    "name": "stop_dequeue[D=responder,R=controls,T=t3]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -11527,8 +11383,8 @@
    "line": "Stopped: {D}'s ticket for {R} is passed over."
   },
   {
-   "i": 1278,
-   "canon": 1269,
+   "i": 1262,
+   "canon": 1256,
    "name": "stop_dequeue[D=responder,R=controls,T=t4]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -11536,8 +11392,8 @@
    "line": "Stopped: {D}'s ticket for {R} is passed over."
   },
   {
-   "i": 1279,
-   "canon": 1271,
+   "i": 1263,
+   "canon": 1257,
    "name": "stop_dequeue[D=responder,R=controls,T=t5]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -11545,8 +11401,8 @@
    "line": "Stopped: {D}'s ticket for {R} is passed over."
   },
   {
-   "i": 1280,
-   "canon": 1273,
+   "i": 1264,
+   "canon": 1258,
    "name": "stop_dequeue[D=responder,R=controls,T=t6]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -11554,8 +11410,8 @@
    "line": "Stopped: {D}'s ticket for {R} is passed over."
   },
   {
-   "i": 1281,
-   "canon": 1275,
+   "i": 1265,
+   "canon": 1259,
    "name": "stop_dequeue[D=responder,R=controls,T=t7]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -11563,8 +11419,8 @@
    "line": "Stopped: {D}'s ticket for {R} is passed over."
   },
   {
-   "i": 1282,
-   "canon": 1245,
+   "i": 1266,
+   "canon": 1244,
    "name": "stop_dequeue[D=planner,R=controls,T=t0]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -11572,8 +11428,8 @@
    "line": "Stopped: {D}'s ticket for {R} is passed over."
   },
   {
-   "i": 1283,
-   "canon": 1247,
+   "i": 1267,
+   "canon": 1245,
    "name": "stop_dequeue[D=planner,R=controls,T=t1]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -11581,8 +11437,8 @@
    "line": "Stopped: {D}'s ticket for {R} is passed over."
   },
   {
-   "i": 1284,
-   "canon": 1249,
+   "i": 1268,
+   "canon": 1246,
    "name": "stop_dequeue[D=planner,R=controls,T=t2]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -11590,8 +11446,8 @@
    "line": "Stopped: {D}'s ticket for {R} is passed over."
   },
   {
-   "i": 1285,
-   "canon": 1251,
+   "i": 1269,
+   "canon": 1247,
    "name": "stop_dequeue[D=planner,R=controls,T=t3]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -11599,8 +11455,8 @@
    "line": "Stopped: {D}'s ticket for {R} is passed over."
   },
   {
-   "i": 1286,
-   "canon": 1253,
+   "i": 1270,
+   "canon": 1248,
    "name": "stop_dequeue[D=planner,R=controls,T=t4]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -11608,8 +11464,8 @@
    "line": "Stopped: {D}'s ticket for {R} is passed over."
   },
   {
-   "i": 1287,
-   "canon": 1255,
+   "i": 1271,
+   "canon": 1249,
    "name": "stop_dequeue[D=planner,R=controls,T=t5]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -11617,8 +11473,8 @@
    "line": "Stopped: {D}'s ticket for {R} is passed over."
   },
   {
-   "i": 1288,
-   "canon": 1257,
+   "i": 1272,
+   "canon": 1250,
    "name": "stop_dequeue[D=planner,R=controls,T=t6]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -11626,8 +11482,8 @@
    "line": "Stopped: {D}'s ticket for {R} is passed over."
   },
   {
-   "i": 1289,
-   "canon": 1259,
+   "i": 1273,
+   "canon": 1251,
    "name": "stop_dequeue[D=planner,R=controls,T=t7]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -11635,7 +11491,7 @@
    "line": "Stopped: {D}'s ticket for {R} is passed over."
   },
   {
-   "i": 1290,
+   "i": 1274,
    "canon": 1233,
    "name": "commit_on[D=responder,R=controls]",
    "rule": "commit_on",
@@ -11644,7 +11500,7 @@
    "line": "{D}'s action on {R} is atomic."
   },
   {
-   "i": 1291,
+   "i": 1275,
    "canon": 1232,
    "name": "commit_on[D=planner,R=controls]",
    "rule": "commit_on",
@@ -11653,8 +11509,8 @@
    "line": "{D}'s action on {R} is atomic."
   },
   {
-   "i": 1292,
-   "canon": 1290,
+   "i": 1276,
+   "canon": 1274,
    "name": "commit_more[D=responder,R=controls]",
    "rule": "commit_more",
    "kind": "clause",
@@ -11662,8 +11518,8 @@
    "line": "{D} says again that its action on {R} is atomic."
   },
   {
-   "i": 1293,
-   "canon": 1289,
+   "i": 1277,
+   "canon": 1273,
    "name": "commit_more[D=planner,R=controls]",
    "rule": "commit_more",
    "kind": "clause",
@@ -11671,7 +11527,7 @@
    "line": "{D} says again that its action on {R} is atomic."
   },
   {
-   "i": 1294,
+   "i": 1278,
    "canon": 17,
    "name": "commit_off[D=responder,R=controls]",
    "rule": "commit_off",
@@ -11680,7 +11536,7 @@
    "line": "{D}'s atomic action on {R} is over."
   },
   {
-   "i": 1295,
+   "i": 1279,
    "canon": 15,
    "name": "commit_off[D=planner,R=controls]",
    "rule": "commit_off",
@@ -11689,7 +11545,7 @@
    "line": "{D}'s atomic action on {R} is over."
   },
   {
-   "i": 1296,
+   "i": 1280,
    "canon": 16,
    "name": "stop_committed[D=responder,R=controls]",
    "rule": "stop_committed",
@@ -11698,7 +11554,7 @@
    "line": "Stopped: {D}'s action on {R} is atomic, its revoke waits."
   },
   {
-   "i": 1297,
+   "i": 1281,
    "canon": 14,
    "name": "stop_committed[D=planner,R=controls]",
    "rule": "stop_committed",
@@ -11707,7 +11563,7 @@
    "line": "Stopped: {D}'s action on {R} is atomic, its revoke waits."
   },
   {
-   "i": 1298,
+   "i": 1282,
    "canon": 1239,
    "name": "yield_owing[D=responder,R=controls]",
    "rule": "yield_owing",
@@ -11716,7 +11572,7 @@
    "line": "{D}'s atomic action on {R} is over, and a stop came: the revoke is owed."
   },
   {
-   "i": 1299,
+   "i": 1283,
    "canon": 1238,
    "name": "yield_owing[D=planner,R=controls]",
    "rule": "yield_owing",
@@ -11725,7 +11581,7 @@
    "line": "{D}'s atomic action on {R} is over, and a stop came: the revoke is owed."
   },
   {
-   "i": 1300,
+   "i": 1284,
    "canon": 1167,
    "name": "owed_release[D=responder,R=controls,A=a0]",
    "rule": "owed_release",
@@ -11734,7 +11590,7 @@
    "line": "The stop's revoke: {R} is free."
   },
   {
-   "i": 1301,
+   "i": 1285,
    "canon": 1178,
    "name": "owed_release[D=responder,R=controls,A=a1]",
    "rule": "owed_release",
@@ -11743,7 +11599,7 @@
    "line": "The stop's revoke: {R} is free."
   },
   {
-   "i": 1302,
+   "i": 1286,
    "canon": 1190,
    "name": "owed_release[D=responder,R=controls,A=a2]",
    "rule": "owed_release",
@@ -11752,7 +11608,7 @@
    "line": "The stop's revoke: {R} is free."
   },
   {
-   "i": 1303,
+   "i": 1287,
    "canon": 1206,
    "name": "owed_release[D=responder,R=controls,A=a3]",
    "rule": "owed_release",
@@ -11761,7 +11617,7 @@
    "line": "The stop's revoke: {R} is free."
   },
   {
-   "i": 1304,
+   "i": 1288,
    "canon": 1114,
    "name": "owed_release[D=planner,R=controls,A=a0]",
    "rule": "owed_release",
@@ -11770,7 +11626,7 @@
    "line": "The stop's revoke: {R} is free."
   },
   {
-   "i": 1305,
+   "i": 1289,
    "canon": 1125,
    "name": "owed_release[D=planner,R=controls,A=a1]",
    "rule": "owed_release",
@@ -11779,7 +11635,7 @@
    "line": "The stop's revoke: {R} is free."
   },
   {
-   "i": 1306,
+   "i": 1290,
    "canon": 1137,
    "name": "owed_release[D=planner,R=controls,A=a2]",
    "rule": "owed_release",
@@ -11788,7 +11644,7 @@
    "line": "The stop's revoke: {R} is free."
   },
   {
-   "i": 1307,
+   "i": 1291,
    "canon": 1153,
    "name": "owed_release[D=planner,R=controls,A=a3]",
    "rule": "owed_release",
@@ -11797,7 +11653,7 @@
    "line": "The stop's revoke: {R} is free."
   },
   {
-   "i": 1308,
+   "i": 1292,
    "canon": 1237,
    "name": "owed_drop[D=responder,R=controls]",
    "rule": "owed_drop",
@@ -11806,7 +11662,7 @@
    "line": "Stopped again: what was owed is this stop's."
   },
   {
-   "i": 1309,
+   "i": 1293,
    "canon": 1236,
    "name": "owed_drop[D=planner,R=controls]",
    "rule": "owed_drop",
@@ -11815,7 +11671,7 @@
    "line": "Stopped again: what was owed is this stop's."
   },
   {
-   "i": 1310,
+   "i": 1294,
    "canon": 1169,
    "name": "age_grant[D=responder,A=a0,B=a1]",
    "rule": "age_grant",
@@ -11824,7 +11680,7 @@
    "line": "A tick: {D}'s grant is older."
   },
   {
-   "i": 1311,
+   "i": 1295,
    "canon": 1180,
    "name": "age_grant[D=responder,A=a1,B=a2]",
    "rule": "age_grant",
@@ -11833,7 +11689,7 @@
    "line": "A tick: {D}'s grant is older."
   },
   {
-   "i": 1312,
+   "i": 1296,
    "canon": 1196,
    "name": "age_grant[D=responder,A=a2,B=a3]",
    "rule": "age_grant",
@@ -11842,7 +11698,7 @@
    "line": "A tick: {D}'s grant is older."
   },
   {
-   "i": 1313,
+   "i": 1297,
    "canon": 1116,
    "name": "age_grant[D=planner,A=a0,B=a1]",
    "rule": "age_grant",
@@ -11851,7 +11707,7 @@
    "line": "A tick: {D}'s grant is older."
   },
   {
-   "i": 1314,
+   "i": 1298,
    "canon": 1127,
    "name": "age_grant[D=planner,A=a1,B=a2]",
    "rule": "age_grant",
@@ -11860,7 +11716,7 @@
    "line": "A tick: {D}'s grant is older."
   },
   {
-   "i": 1315,
+   "i": 1299,
    "canon": 1143,
    "name": "age_grant[D=planner,A=a2,B=a3]",
    "rule": "age_grant",
@@ -11869,8 +11725,8 @@
    "line": "A tick: {D}'s grant is older."
   },
   {
-   "i": 1316,
-   "canon": 1286,
+   "i": 1300,
+   "canon": 1270,
    "name": "age_grant_top[D=responder,A=a3]",
    "rule": "age_grant_top",
    "kind": "clause",
@@ -11878,8 +11734,8 @@
    "line": "A tick: {D}'s grant is as old as it counts."
   },
   {
-   "i": 1317,
-   "canon": 1285,
+   "i": 1301,
+   "canon": 1269,
    "name": "age_grant_top[D=planner,A=a3]",
    "rule": "age_grant_top",
    "kind": "clause",
@@ -11887,8 +11743,8 @@
    "line": "A tick: {D}'s grant is as old as it counts."
   },
   {
-   "i": 1318,
-   "canon": 1284,
+   "i": 1302,
+   "canon": 1268,
    "name": "tick_free[R=controls]",
    "rule": "tick_free",
    "kind": "clause",
@@ -11896,7 +11752,7 @@
    "line": "A tick: {R} is free."
   },
   {
-   "i": 1319,
+   "i": 1303,
    "canon": 7,
    "name": "status_reset[D=responder,A=a0]",
    "rule": "status_reset",
@@ -11905,7 +11761,7 @@
    "line": "{D}'s status changed: its age starts again."
   },
   {
-   "i": 1320,
+   "i": 1304,
    "canon": 9,
    "name": "status_reset[D=responder,A=a1]",
    "rule": "status_reset",
@@ -11914,7 +11770,7 @@
    "line": "{D}'s status changed: its age starts again."
   },
   {
-   "i": 1321,
+   "i": 1305,
    "canon": 11,
    "name": "status_reset[D=responder,A=a2]",
    "rule": "status_reset",
@@ -11923,7 +11779,7 @@
    "line": "{D}'s status changed: its age starts again."
   },
   {
-   "i": 1322,
+   "i": 1306,
    "canon": 13,
    "name": "status_reset[D=responder,A=a3]",
    "rule": "status_reset",
@@ -11932,7 +11788,7 @@
    "line": "{D}'s status changed: its age starts again."
   },
   {
-   "i": 1323,
+   "i": 1307,
    "canon": 0,
    "name": "status_reset[D=planner,A=a0]",
    "rule": "status_reset",
@@ -11941,7 +11797,7 @@
    "line": "{D}'s status changed: its age starts again."
   },
   {
-   "i": 1324,
+   "i": 1308,
    "canon": 2,
    "name": "status_reset[D=planner,A=a1]",
    "rule": "status_reset",
@@ -11950,7 +11806,7 @@
    "line": "{D}'s status changed: its age starts again."
   },
   {
-   "i": 1325,
+   "i": 1309,
    "canon": 4,
    "name": "status_reset[D=planner,A=a2]",
    "rule": "status_reset",
@@ -11959,7 +11815,7 @@
    "line": "{D}'s status changed: its age starts again."
   },
   {
-   "i": 1326,
+   "i": 1310,
    "canon": 6,
    "name": "status_reset[D=planner,A=a3]",
    "rule": "status_reset",
@@ -11968,7 +11824,7 @@
    "line": "{D}'s status changed: its age starts again."
   },
   {
-   "i": 1327,
+   "i": 1311,
    "canon": 8,
    "name": "status_age[D=responder,A=a0,B=a1]",
    "rule": "status_age",
@@ -11977,7 +11833,7 @@
    "line": "A tick: {D}'s status is older."
   },
   {
-   "i": 1328,
+   "i": 1312,
    "canon": 10,
    "name": "status_age[D=responder,A=a1,B=a2]",
    "rule": "status_age",
@@ -11986,7 +11842,7 @@
    "line": "A tick: {D}'s status is older."
   },
   {
-   "i": 1329,
+   "i": 1313,
    "canon": 12,
    "name": "status_age[D=responder,A=a2,B=a3]",
    "rule": "status_age",
@@ -11995,7 +11851,7 @@
    "line": "A tick: {D}'s status is older."
   },
   {
-   "i": 1330,
+   "i": 1314,
    "canon": 1,
    "name": "status_age[D=planner,A=a0,B=a1]",
    "rule": "status_age",
@@ -12004,7 +11860,7 @@
    "line": "A tick: {D}'s status is older."
   },
   {
-   "i": 1331,
+   "i": 1315,
    "canon": 3,
    "name": "status_age[D=planner,A=a1,B=a2]",
    "rule": "status_age",
@@ -12013,7 +11869,7 @@
    "line": "A tick: {D}'s status is older."
   },
   {
-   "i": 1332,
+   "i": 1316,
    "canon": 5,
    "name": "status_age[D=planner,A=a2,B=a3]",
    "rule": "status_age",
@@ -12022,8 +11878,8 @@
    "line": "A tick: {D}'s status is older."
   },
   {
-   "i": 1333,
-   "canon": 1342,
+   "i": 1317,
+   "canon": 1326,
    "name": "status_top[D=responder,A=a3]",
    "rule": "status_top",
    "kind": "clause",
@@ -12031,8 +11887,8 @@
    "line": "A tick: {D}'s status is as old as it counts."
   },
   {
-   "i": 1334,
-   "canon": 1341,
+   "i": 1318,
+   "canon": 1325,
    "name": "status_top[D=planner,A=a3]",
    "rule": "status_top",
    "kind": "clause",
@@ -12040,7 +11896,7 @@
    "line": "A tick: {D}'s status is as old as it counts."
   },
   {
-   "i": 1335,
+   "i": 1319,
    "canon": 1235,
    "name": "path_push[D=responder]",
    "rule": "path_push",
@@ -12049,7 +11905,7 @@
    "line": "{D} is active: on the path."
   },
   {
-   "i": 1336,
+   "i": 1320,
    "canon": 1234,
    "name": "path_push[D=planner]",
    "rule": "path_push",
@@ -12058,8 +11914,8 @@
    "line": "{D} is active: on the path."
   },
   {
-   "i": 1337,
-   "canon": 1288,
+   "i": 1321,
+   "canon": 1272,
    "name": "active_more[D=responder]",
    "rule": "active_more",
    "kind": "clause",
@@ -12067,8 +11923,8 @@
    "line": "{D} is active, and on the path already."
   },
   {
-   "i": 1338,
-   "canon": 1287,
+   "i": 1322,
+   "canon": 1271,
    "name": "active_more[D=planner]",
    "rule": "active_more",
    "kind": "clause",
@@ -12076,7 +11932,7 @@
    "line": "{D} is active, and on the path already."
   },
   {
-   "i": 1339,
+   "i": 1323,
    "canon": 1242,
    "name": "path_pop[D=responder]",
    "rule": "path_pop",
@@ -12085,7 +11941,7 @@
    "line": "{D} is done: off the path."
   },
   {
-   "i": 1340,
+   "i": 1324,
    "canon": 1240,
    "name": "path_pop[D=planner]",
    "rule": "path_pop",
@@ -12094,8 +11950,8 @@
    "line": "{D} is done: off the path."
   },
   {
-   "i": 1341,
-   "canon": 1292,
+   "i": 1325,
+   "canon": 1276,
    "name": "done_off[D=responder]",
    "rule": "done_off",
    "kind": "clause",
@@ -12103,8 +11959,8 @@
    "line": "{D} is done, and off the path already."
   },
   {
-   "i": 1342,
-   "canon": 1291,
+   "i": 1326,
+   "canon": 1275,
    "name": "done_off[D=planner]",
    "rule": "done_off",
    "kind": "clause",
@@ -12525,31 +12381,6 @@
       }
      ],
      "effects": [],
-     "target": null
-    },
-    {
-     "name": "ticket_held",
-     "stage": "act",
-     "doc": "{D} holds {R}: its ticket is passed over.",
-     "premises": [
-      {
-       "atom": "queued(D,R,T)",
-       "n": 1,
-       "kept": false
-      },
-      {
-       "atom": "holder(D,R)",
-       "n": 1,
-       "kept": true
-      }
-     ],
-     "effects": [
-      {
-       "atom": "skipped(R,T)",
-       "n": 1,
-       "kept": false
-      }
-     ],
      "target": null
     },
     {

@@ -497,7 +497,7 @@ echo "STOP $n_st/70 seeds (one revoke, the waiter passed over, no grant mid-stop
 
 echo "== 22b. the stale release (spec/15 amendment 10, release-race s-c88bf623): each scene's one rule, over 10 seeds"
 # corpus/release: a release of a grant that is over is consumed and changes nothing (the holder keeps R, whoever holds it),
-# one of the grant held frees R, a waiting release or sleep ends when its holder has changed, a holder's ticket is passed over
+# one of the grant held frees R, a waiting release or sleep ends when its holder has changed, a woken holder's ticket is passed over
 n_rl=0
 for sc in old:release_old same_member:release_old on_free:release_on_free real:release_on_report late_gone:late_release_other \
           ticket:ticket_held late_other:late_other late_free:late_free late_real:release_late; do

@@ -1,7 +1,7 @@
 {
  "format": "metis-sidecar/1",
  "catalog": "pot_director",
- "key": "609cd21f534d38a87bfc6939bbe29951299ff79458c6b94fb588ce09a9770f7f",
+ "key": "045385cbb4de361608002016065f97729a6da694ebc7bc8b56e81e583b837be3",
  "extensions": [],
  "init": {
   "free(pot)": 1,
@@ -746,7 +746,7 @@
   },
   {
    "i": 80,
-   "canon": 252,
+   "canon": 236,
    "name": "skip_ticket[R=pot,T=t0,T2=t1]",
    "rule": "skip_ticket",
    "kind": "clause",
@@ -755,7 +755,7 @@
   },
   {
    "i": 81,
-   "canon": 253,
+   "canon": 237,
    "name": "skip_ticket[R=pot,T=t1,T2=t2]",
    "rule": "skip_ticket",
    "kind": "clause",
@@ -764,7 +764,7 @@
   },
   {
    "i": 82,
-   "canon": 254,
+   "canon": 238,
    "name": "skip_ticket[R=pot,T=t2,T2=t3]",
    "rule": "skip_ticket",
    "kind": "clause",
@@ -773,7 +773,7 @@
   },
   {
    "i": 83,
-   "canon": 255,
+   "canon": 239,
    "name": "skip_ticket[R=pot,T=t3,T2=t4]",
    "rule": "skip_ticket",
    "kind": "clause",
@@ -782,7 +782,7 @@
   },
   {
    "i": 84,
-   "canon": 256,
+   "canon": 240,
    "name": "skip_ticket[R=pot,T=t4,T2=t5]",
    "rule": "skip_ticket",
    "kind": "clause",
@@ -791,7 +791,7 @@
   },
   {
    "i": 85,
-   "canon": 257,
+   "canon": 241,
    "name": "skip_ticket[R=pot,T=t5,T2=t6]",
    "rule": "skip_ticket",
    "kind": "clause",
@@ -800,7 +800,7 @@
   },
   {
    "i": 86,
-   "canon": 258,
+   "canon": 242,
    "name": "skip_ticket[R=pot,T=t6,T2=t7]",
    "rule": "skip_ticket",
    "kind": "clause",
@@ -809,7 +809,7 @@
   },
   {
    "i": 87,
-   "canon": 259,
+   "canon": 243,
    "name": "skip_ticket[R=pot,T=t7,T2=t0]",
    "rule": "skip_ticket",
    "kind": "clause",
@@ -962,7 +962,7 @@
   },
   {
    "i": 104,
-   "canon": 273,
+   "canon": 257,
    "name": "release_report_wait[D=cook_a,R=pot,G=g0,A=a0]",
    "rule": "release_report_wait",
    "kind": "clause",
@@ -971,7 +971,7 @@
   },
   {
    "i": 105,
-   "canon": 274,
+   "canon": 258,
    "name": "release_report_wait[D=cook_a,R=pot,G=g0,A=a1]",
    "rule": "release_report_wait",
    "kind": "clause",
@@ -980,7 +980,7 @@
   },
   {
    "i": 106,
-   "canon": 279,
+   "canon": 263,
    "name": "release_report_wait[D=cook_a,R=pot,G=g1,A=a0]",
    "rule": "release_report_wait",
    "kind": "clause",
@@ -989,7 +989,7 @@
   },
   {
    "i": 107,
-   "canon": 280,
+   "canon": 264,
    "name": "release_report_wait[D=cook_a,R=pot,G=g1,A=a1]",
    "rule": "release_report_wait",
    "kind": "clause",
@@ -998,7 +998,7 @@
   },
   {
    "i": 108,
-   "canon": 285,
+   "canon": 269,
    "name": "release_report_wait[D=cook_a,R=pot,G=g2,A=a0]",
    "rule": "release_report_wait",
    "kind": "clause",
@@ -1007,7 +1007,7 @@
   },
   {
    "i": 109,
-   "canon": 286,
+   "canon": 270,
    "name": "release_report_wait[D=cook_a,R=pot,G=g2,A=a1]",
    "rule": "release_report_wait",
    "kind": "clause",
@@ -1016,7 +1016,7 @@
   },
   {
    "i": 110,
-   "canon": 291,
+   "canon": 275,
    "name": "release_report_wait[D=cook_a,R=pot,G=g3,A=a0]",
    "rule": "release_report_wait",
    "kind": "clause",
@@ -1025,7 +1025,7 @@
   },
   {
    "i": 111,
-   "canon": 292,
+   "canon": 276,
    "name": "release_report_wait[D=cook_a,R=pot,G=g3,A=a1]",
    "rule": "release_report_wait",
    "kind": "clause",
@@ -1034,7 +1034,7 @@
   },
   {
    "i": 112,
-   "canon": 297,
+   "canon": 281,
    "name": "release_report_wait[D=cook_b,R=pot,G=g0,A=a0]",
    "rule": "release_report_wait",
    "kind": "clause",
@@ -1043,7 +1043,7 @@
   },
   {
    "i": 113,
-   "canon": 298,
+   "canon": 282,
    "name": "release_report_wait[D=cook_b,R=pot,G=g0,A=a1]",
    "rule": "release_report_wait",
    "kind": "clause",
@@ -1052,7 +1052,7 @@
   },
   {
    "i": 114,
-   "canon": 303,
+   "canon": 287,
    "name": "release_report_wait[D=cook_b,R=pot,G=g1,A=a0]",
    "rule": "release_report_wait",
    "kind": "clause",
@@ -1061,7 +1061,7 @@
   },
   {
    "i": 115,
-   "canon": 304,
+   "canon": 288,
    "name": "release_report_wait[D=cook_b,R=pot,G=g1,A=a1]",
    "rule": "release_report_wait",
    "kind": "clause",
@@ -1070,7 +1070,7 @@
   },
   {
    "i": 116,
-   "canon": 309,
+   "canon": 293,
    "name": "release_report_wait[D=cook_b,R=pot,G=g2,A=a0]",
    "rule": "release_report_wait",
    "kind": "clause",
@@ -1079,7 +1079,7 @@
   },
   {
    "i": 117,
-   "canon": 310,
+   "canon": 294,
    "name": "release_report_wait[D=cook_b,R=pot,G=g2,A=a1]",
    "rule": "release_report_wait",
    "kind": "clause",
@@ -1088,7 +1088,7 @@
   },
   {
    "i": 118,
-   "canon": 315,
+   "canon": 299,
    "name": "release_report_wait[D=cook_b,R=pot,G=g3,A=a0]",
    "rule": "release_report_wait",
    "kind": "clause",
@@ -1097,7 +1097,7 @@
   },
   {
    "i": 119,
-   "canon": 316,
+   "canon": 300,
    "name": "release_report_wait[D=cook_b,R=pot,G=g3,A=a1]",
    "rule": "release_report_wait",
    "kind": "clause",
@@ -1106,7 +1106,7 @@
   },
   {
    "i": 120,
-   "canon": 270,
+   "canon": 254,
    "name": "release_old[D=cook_a,R=pot,G=g0,G2=g1]",
    "rule": "release_old",
    "kind": "clause",
@@ -1115,7 +1115,7 @@
   },
   {
    "i": 121,
-   "canon": 271,
+   "canon": 255,
    "name": "release_old[D=cook_a,R=pot,G=g0,G2=g2]",
    "rule": "release_old",
    "kind": "clause",
@@ -1124,7 +1124,7 @@
   },
   {
    "i": 122,
-   "canon": 272,
+   "canon": 256,
    "name": "release_old[D=cook_a,R=pot,G=g0,G2=g3]",
    "rule": "release_old",
    "kind": "clause",
@@ -1133,7 +1133,7 @@
   },
   {
    "i": 123,
-   "canon": 276,
+   "canon": 260,
    "name": "release_old[D=cook_a,R=pot,G=g1,G2=g0]",
    "rule": "release_old",
    "kind": "clause",
@@ -1142,7 +1142,7 @@
   },
   {
    "i": 124,
-   "canon": 277,
+   "canon": 261,
    "name": "release_old[D=cook_a,R=pot,G=g1,G2=g2]",
    "rule": "release_old",
    "kind": "clause",
@@ -1151,7 +1151,7 @@
   },
   {
    "i": 125,
-   "canon": 278,
+   "canon": 262,
    "name": "release_old[D=cook_a,R=pot,G=g1,G2=g3]",
    "rule": "release_old",
    "kind": "clause",
@@ -1160,7 +1160,7 @@
   },
   {
    "i": 126,
-   "canon": 282,
+   "canon": 266,
    "name": "release_old[D=cook_a,R=pot,G=g2,G2=g0]",
    "rule": "release_old",
    "kind": "clause",
@@ -1169,7 +1169,7 @@
   },
   {
    "i": 127,
-   "canon": 283,
+   "canon": 267,
    "name": "release_old[D=cook_a,R=pot,G=g2,G2=g1]",
    "rule": "release_old",
    "kind": "clause",
@@ -1178,7 +1178,7 @@
   },
   {
    "i": 128,
-   "canon": 284,
+   "canon": 268,
    "name": "release_old[D=cook_a,R=pot,G=g2,G2=g3]",
    "rule": "release_old",
    "kind": "clause",
@@ -1187,7 +1187,7 @@
   },
   {
    "i": 129,
-   "canon": 288,
+   "canon": 272,
    "name": "release_old[D=cook_a,R=pot,G=g3,G2=g0]",
    "rule": "release_old",
    "kind": "clause",
@@ -1196,7 +1196,7 @@
   },
   {
    "i": 130,
-   "canon": 289,
+   "canon": 273,
    "name": "release_old[D=cook_a,R=pot,G=g3,G2=g1]",
    "rule": "release_old",
    "kind": "clause",
@@ -1205,7 +1205,7 @@
   },
   {
    "i": 131,
-   "canon": 290,
+   "canon": 274,
    "name": "release_old[D=cook_a,R=pot,G=g3,G2=g2]",
    "rule": "release_old",
    "kind": "clause",
@@ -1214,7 +1214,7 @@
   },
   {
    "i": 132,
-   "canon": 294,
+   "canon": 278,
    "name": "release_old[D=cook_b,R=pot,G=g0,G2=g1]",
    "rule": "release_old",
    "kind": "clause",
@@ -1223,7 +1223,7 @@
   },
   {
    "i": 133,
-   "canon": 295,
+   "canon": 279,
    "name": "release_old[D=cook_b,R=pot,G=g0,G2=g2]",
    "rule": "release_old",
    "kind": "clause",
@@ -1232,7 +1232,7 @@
   },
   {
    "i": 134,
-   "canon": 296,
+   "canon": 280,
    "name": "release_old[D=cook_b,R=pot,G=g0,G2=g3]",
    "rule": "release_old",
    "kind": "clause",
@@ -1241,7 +1241,7 @@
   },
   {
    "i": 135,
-   "canon": 300,
+   "canon": 284,
    "name": "release_old[D=cook_b,R=pot,G=g1,G2=g0]",
    "rule": "release_old",
    "kind": "clause",
@@ -1250,7 +1250,7 @@
   },
   {
    "i": 136,
-   "canon": 301,
+   "canon": 285,
    "name": "release_old[D=cook_b,R=pot,G=g1,G2=g2]",
    "rule": "release_old",
    "kind": "clause",
@@ -1259,7 +1259,7 @@
   },
   {
    "i": 137,
-   "canon": 302,
+   "canon": 286,
    "name": "release_old[D=cook_b,R=pot,G=g1,G2=g3]",
    "rule": "release_old",
    "kind": "clause",
@@ -1268,7 +1268,7 @@
   },
   {
    "i": 138,
-   "canon": 306,
+   "canon": 290,
    "name": "release_old[D=cook_b,R=pot,G=g2,G2=g0]",
    "rule": "release_old",
    "kind": "clause",
@@ -1277,7 +1277,7 @@
   },
   {
    "i": 139,
-   "canon": 307,
+   "canon": 291,
    "name": "release_old[D=cook_b,R=pot,G=g2,G2=g1]",
    "rule": "release_old",
    "kind": "clause",
@@ -1286,7 +1286,7 @@
   },
   {
    "i": 140,
-   "canon": 308,
+   "canon": 292,
    "name": "release_old[D=cook_b,R=pot,G=g2,G2=g3]",
    "rule": "release_old",
    "kind": "clause",
@@ -1295,7 +1295,7 @@
   },
   {
    "i": 141,
-   "canon": 312,
+   "canon": 296,
    "name": "release_old[D=cook_b,R=pot,G=g3,G2=g0]",
    "rule": "release_old",
    "kind": "clause",
@@ -1304,7 +1304,7 @@
   },
   {
    "i": 142,
-   "canon": 313,
+   "canon": 297,
    "name": "release_old[D=cook_b,R=pot,G=g3,G2=g1]",
    "rule": "release_old",
    "kind": "clause",
@@ -1313,7 +1313,7 @@
   },
   {
    "i": 143,
-   "canon": 314,
+   "canon": 298,
    "name": "release_old[D=cook_b,R=pot,G=g3,G2=g2]",
    "rule": "release_old",
    "kind": "clause",
@@ -1322,7 +1322,7 @@
   },
   {
    "i": 144,
-   "canon": 269,
+   "canon": 253,
    "name": "release_on_free[D=cook_a,R=pot,G=g0]",
    "rule": "release_on_free",
    "kind": "clause",
@@ -1331,7 +1331,7 @@
   },
   {
    "i": 145,
-   "canon": 275,
+   "canon": 259,
    "name": "release_on_free[D=cook_a,R=pot,G=g1]",
    "rule": "release_on_free",
    "kind": "clause",
@@ -1340,7 +1340,7 @@
   },
   {
    "i": 146,
-   "canon": 281,
+   "canon": 265,
    "name": "release_on_free[D=cook_a,R=pot,G=g2]",
    "rule": "release_on_free",
    "kind": "clause",
@@ -1349,7 +1349,7 @@
   },
   {
    "i": 147,
-   "canon": 287,
+   "canon": 271,
    "name": "release_on_free[D=cook_a,R=pot,G=g3]",
    "rule": "release_on_free",
    "kind": "clause",
@@ -1358,7 +1358,7 @@
   },
   {
    "i": 148,
-   "canon": 293,
+   "canon": 277,
    "name": "release_on_free[D=cook_b,R=pot,G=g0]",
    "rule": "release_on_free",
    "kind": "clause",
@@ -1367,7 +1367,7 @@
   },
   {
    "i": 149,
-   "canon": 299,
+   "canon": 283,
    "name": "release_on_free[D=cook_b,R=pot,G=g1]",
    "rule": "release_on_free",
    "kind": "clause",
@@ -1376,7 +1376,7 @@
   },
   {
    "i": 150,
-   "canon": 305,
+   "canon": 289,
    "name": "release_on_free[D=cook_b,R=pot,G=g2]",
    "rule": "release_on_free",
    "kind": "clause",
@@ -1385,7 +1385,7 @@
   },
   {
    "i": 151,
-   "canon": 311,
+   "canon": 295,
    "name": "release_on_free[D=cook_b,R=pot,G=g3]",
    "rule": "release_on_free",
    "kind": "clause",
@@ -1430,150 +1430,6 @@
   },
   {
    "i": 156,
-   "canon": 220,
-   "name": "ticket_held[D=cook_a,R=pot,T=t0]",
-   "rule": "ticket_held",
-   "kind": "clause",
-   "stage": "act",
-   "line": "{D} holds {R}: its ticket is passed over."
-  },
-  {
-   "i": 157,
-   "canon": 222,
-   "name": "ticket_held[D=cook_a,R=pot,T=t1]",
-   "rule": "ticket_held",
-   "kind": "clause",
-   "stage": "act",
-   "line": "{D} holds {R}: its ticket is passed over."
-  },
-  {
-   "i": 158,
-   "canon": 224,
-   "name": "ticket_held[D=cook_a,R=pot,T=t2]",
-   "rule": "ticket_held",
-   "kind": "clause",
-   "stage": "act",
-   "line": "{D} holds {R}: its ticket is passed over."
-  },
-  {
-   "i": 159,
-   "canon": 226,
-   "name": "ticket_held[D=cook_a,R=pot,T=t3]",
-   "rule": "ticket_held",
-   "kind": "clause",
-   "stage": "act",
-   "line": "{D} holds {R}: its ticket is passed over."
-  },
-  {
-   "i": 160,
-   "canon": 228,
-   "name": "ticket_held[D=cook_a,R=pot,T=t4]",
-   "rule": "ticket_held",
-   "kind": "clause",
-   "stage": "act",
-   "line": "{D} holds {R}: its ticket is passed over."
-  },
-  {
-   "i": 161,
-   "canon": 230,
-   "name": "ticket_held[D=cook_a,R=pot,T=t5]",
-   "rule": "ticket_held",
-   "kind": "clause",
-   "stage": "act",
-   "line": "{D} holds {R}: its ticket is passed over."
-  },
-  {
-   "i": 162,
-   "canon": 232,
-   "name": "ticket_held[D=cook_a,R=pot,T=t6]",
-   "rule": "ticket_held",
-   "kind": "clause",
-   "stage": "act",
-   "line": "{D} holds {R}: its ticket is passed over."
-  },
-  {
-   "i": 163,
-   "canon": 234,
-   "name": "ticket_held[D=cook_a,R=pot,T=t7]",
-   "rule": "ticket_held",
-   "kind": "clause",
-   "stage": "act",
-   "line": "{D} holds {R}: its ticket is passed over."
-  },
-  {
-   "i": 164,
-   "canon": 236,
-   "name": "ticket_held[D=cook_b,R=pot,T=t0]",
-   "rule": "ticket_held",
-   "kind": "clause",
-   "stage": "act",
-   "line": "{D} holds {R}: its ticket is passed over."
-  },
-  {
-   "i": 165,
-   "canon": 238,
-   "name": "ticket_held[D=cook_b,R=pot,T=t1]",
-   "rule": "ticket_held",
-   "kind": "clause",
-   "stage": "act",
-   "line": "{D} holds {R}: its ticket is passed over."
-  },
-  {
-   "i": 166,
-   "canon": 240,
-   "name": "ticket_held[D=cook_b,R=pot,T=t2]",
-   "rule": "ticket_held",
-   "kind": "clause",
-   "stage": "act",
-   "line": "{D} holds {R}: its ticket is passed over."
-  },
-  {
-   "i": 167,
-   "canon": 242,
-   "name": "ticket_held[D=cook_b,R=pot,T=t3]",
-   "rule": "ticket_held",
-   "kind": "clause",
-   "stage": "act",
-   "line": "{D} holds {R}: its ticket is passed over."
-  },
-  {
-   "i": 168,
-   "canon": 244,
-   "name": "ticket_held[D=cook_b,R=pot,T=t4]",
-   "rule": "ticket_held",
-   "kind": "clause",
-   "stage": "act",
-   "line": "{D} holds {R}: its ticket is passed over."
-  },
-  {
-   "i": 169,
-   "canon": 246,
-   "name": "ticket_held[D=cook_b,R=pot,T=t5]",
-   "rule": "ticket_held",
-   "kind": "clause",
-   "stage": "act",
-   "line": "{D} holds {R}: its ticket is passed over."
-  },
-  {
-   "i": 170,
-   "canon": 248,
-   "name": "ticket_held[D=cook_b,R=pot,T=t6]",
-   "rule": "ticket_held",
-   "kind": "clause",
-   "stage": "act",
-   "line": "{D} holds {R}: its ticket is passed over."
-  },
-  {
-   "i": 171,
-   "canon": 250,
-   "name": "ticket_held[D=cook_b,R=pot,T=t7]",
-   "rule": "ticket_held",
-   "kind": "clause",
-   "stage": "act",
-   "line": "{D} holds {R}: its ticket is passed over."
-  },
-  {
-   "i": 172,
    "canon": 112,
    "name": "release_report_late[D=cook_a,R=pot,A=a2]",
    "rule": "release_report_late",
@@ -1582,7 +1438,7 @@
    "line": "{D}'s grant is old enough: {R} is free."
   },
   {
-   "i": 173,
+   "i": 157,
    "canon": 128,
    "name": "release_report_late[D=cook_a,R=pot,A=a3]",
    "rule": "release_report_late",
@@ -1591,7 +1447,7 @@
    "line": "{D}'s grant is old enough: {R} is free."
   },
   {
-   "i": 174,
+   "i": 158,
    "canon": 165,
    "name": "release_report_late[D=cook_b,R=pot,A=a2]",
    "rule": "release_report_late",
@@ -1600,7 +1456,7 @@
    "line": "{D}'s grant is old enough: {R} is free."
   },
   {
-   "i": 175,
+   "i": 159,
    "canon": 181,
    "name": "release_report_late[D=cook_b,R=pot,A=a3]",
    "rule": "release_report_late",
@@ -1609,7 +1465,7 @@
    "line": "{D}'s grant is old enough: {R} is free."
   },
   {
-   "i": 176,
+   "i": 160,
    "canon": 91,
    "name": "release_stuck[D=cook_a,R=pot,A=a0]",
    "rule": "release_stuck",
@@ -1618,7 +1474,7 @@
    "line": "{D} is stuck: {R} is free."
   },
   {
-   "i": 177,
+   "i": 161,
    "canon": 102,
    "name": "release_stuck[D=cook_a,R=pot,A=a1]",
    "rule": "release_stuck",
@@ -1627,7 +1483,7 @@
    "line": "{D} is stuck: {R} is free."
   },
   {
-   "i": 178,
+   "i": 162,
    "canon": 118,
    "name": "release_stuck[D=cook_a,R=pot,A=a2]",
    "rule": "release_stuck",
@@ -1636,7 +1492,7 @@
    "line": "{D} is stuck: {R} is free."
   },
   {
-   "i": 179,
+   "i": 163,
    "canon": 134,
    "name": "release_stuck[D=cook_a,R=pot,A=a3]",
    "rule": "release_stuck",
@@ -1645,7 +1501,7 @@
    "line": "{D} is stuck: {R} is free."
   },
   {
-   "i": 180,
+   "i": 164,
    "canon": 144,
    "name": "release_stuck[D=cook_b,R=pot,A=a0]",
    "rule": "release_stuck",
@@ -1654,7 +1510,7 @@
    "line": "{D} is stuck: {R} is free."
   },
   {
-   "i": 181,
+   "i": 165,
    "canon": 155,
    "name": "release_stuck[D=cook_b,R=pot,A=a1]",
    "rule": "release_stuck",
@@ -1663,7 +1519,7 @@
    "line": "{D} is stuck: {R} is free."
   },
   {
-   "i": 182,
+   "i": 166,
    "canon": 171,
    "name": "release_stuck[D=cook_b,R=pot,A=a2]",
    "rule": "release_stuck",
@@ -1672,7 +1528,7 @@
    "line": "{D} is stuck: {R} is free."
   },
   {
-   "i": 183,
+   "i": 167,
    "canon": 187,
    "name": "release_stuck[D=cook_b,R=pot,A=a3]",
    "rule": "release_stuck",
@@ -1681,7 +1537,7 @@
    "line": "{D} is stuck: {R} is free."
   },
   {
-   "i": 184,
+   "i": 168,
    "canon": 217,
    "name": "stop_cancel[D=cook_a]",
    "rule": "stop_cancel",
@@ -1690,7 +1546,7 @@
    "line": "Stopped: {D}'s goal is cancelled."
   },
   {
-   "i": 185,
+   "i": 169,
    "canon": 219,
    "name": "stop_cancel[D=cook_b]",
    "rule": "stop_cancel",
@@ -1699,7 +1555,7 @@
    "line": "Stopped: {D}'s goal is cancelled."
   },
   {
-   "i": 186,
+   "i": 170,
    "canon": 82,
    "name": "stop_release[D=cook_a,R=pot,A=a0,T=t0]",
    "rule": "stop_release",
@@ -1708,7 +1564,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 187,
+   "i": 171,
    "canon": 83,
    "name": "stop_release[D=cook_a,R=pot,A=a0,T=t1]",
    "rule": "stop_release",
@@ -1717,7 +1573,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 188,
+   "i": 172,
    "canon": 84,
    "name": "stop_release[D=cook_a,R=pot,A=a0,T=t2]",
    "rule": "stop_release",
@@ -1726,7 +1582,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 189,
+   "i": 173,
    "canon": 85,
    "name": "stop_release[D=cook_a,R=pot,A=a0,T=t3]",
    "rule": "stop_release",
@@ -1735,7 +1591,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 190,
+   "i": 174,
    "canon": 86,
    "name": "stop_release[D=cook_a,R=pot,A=a0,T=t4]",
    "rule": "stop_release",
@@ -1744,7 +1600,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 191,
+   "i": 175,
    "canon": 87,
    "name": "stop_release[D=cook_a,R=pot,A=a0,T=t5]",
    "rule": "stop_release",
@@ -1753,7 +1609,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 192,
+   "i": 176,
    "canon": 88,
    "name": "stop_release[D=cook_a,R=pot,A=a0,T=t6]",
    "rule": "stop_release",
@@ -1762,7 +1618,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 193,
+   "i": 177,
    "canon": 89,
    "name": "stop_release[D=cook_a,R=pot,A=a0,T=t7]",
    "rule": "stop_release",
@@ -1771,7 +1627,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 194,
+   "i": 178,
    "canon": 93,
    "name": "stop_release[D=cook_a,R=pot,A=a1,T=t0]",
    "rule": "stop_release",
@@ -1780,7 +1636,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 195,
+   "i": 179,
    "canon": 94,
    "name": "stop_release[D=cook_a,R=pot,A=a1,T=t1]",
    "rule": "stop_release",
@@ -1789,7 +1645,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 196,
+   "i": 180,
    "canon": 95,
    "name": "stop_release[D=cook_a,R=pot,A=a1,T=t2]",
    "rule": "stop_release",
@@ -1798,7 +1654,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 197,
+   "i": 181,
    "canon": 96,
    "name": "stop_release[D=cook_a,R=pot,A=a1,T=t3]",
    "rule": "stop_release",
@@ -1807,7 +1663,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 198,
+   "i": 182,
    "canon": 97,
    "name": "stop_release[D=cook_a,R=pot,A=a1,T=t4]",
    "rule": "stop_release",
@@ -1816,7 +1672,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 199,
+   "i": 183,
    "canon": 98,
    "name": "stop_release[D=cook_a,R=pot,A=a1,T=t5]",
    "rule": "stop_release",
@@ -1825,7 +1681,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 200,
+   "i": 184,
    "canon": 99,
    "name": "stop_release[D=cook_a,R=pot,A=a1,T=t6]",
    "rule": "stop_release",
@@ -1834,7 +1690,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 201,
+   "i": 185,
    "canon": 100,
    "name": "stop_release[D=cook_a,R=pot,A=a1,T=t7]",
    "rule": "stop_release",
@@ -1843,7 +1699,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 202,
+   "i": 186,
    "canon": 104,
    "name": "stop_release[D=cook_a,R=pot,A=a2,T=t0]",
    "rule": "stop_release",
@@ -1852,7 +1708,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 203,
+   "i": 187,
    "canon": 105,
    "name": "stop_release[D=cook_a,R=pot,A=a2,T=t1]",
    "rule": "stop_release",
@@ -1861,7 +1717,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 204,
+   "i": 188,
    "canon": 106,
    "name": "stop_release[D=cook_a,R=pot,A=a2,T=t2]",
    "rule": "stop_release",
@@ -1870,7 +1726,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 205,
+   "i": 189,
    "canon": 107,
    "name": "stop_release[D=cook_a,R=pot,A=a2,T=t3]",
    "rule": "stop_release",
@@ -1879,7 +1735,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 206,
+   "i": 190,
    "canon": 108,
    "name": "stop_release[D=cook_a,R=pot,A=a2,T=t4]",
    "rule": "stop_release",
@@ -1888,7 +1744,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 207,
+   "i": 191,
    "canon": 109,
    "name": "stop_release[D=cook_a,R=pot,A=a2,T=t5]",
    "rule": "stop_release",
@@ -1897,7 +1753,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 208,
+   "i": 192,
    "canon": 110,
    "name": "stop_release[D=cook_a,R=pot,A=a2,T=t6]",
    "rule": "stop_release",
@@ -1906,7 +1762,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 209,
+   "i": 193,
    "canon": 111,
    "name": "stop_release[D=cook_a,R=pot,A=a2,T=t7]",
    "rule": "stop_release",
@@ -1915,7 +1771,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 210,
+   "i": 194,
    "canon": 120,
    "name": "stop_release[D=cook_a,R=pot,A=a3,T=t0]",
    "rule": "stop_release",
@@ -1924,7 +1780,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 211,
+   "i": 195,
    "canon": 121,
    "name": "stop_release[D=cook_a,R=pot,A=a3,T=t1]",
    "rule": "stop_release",
@@ -1933,7 +1789,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 212,
+   "i": 196,
    "canon": 122,
    "name": "stop_release[D=cook_a,R=pot,A=a3,T=t2]",
    "rule": "stop_release",
@@ -1942,7 +1798,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 213,
+   "i": 197,
    "canon": 123,
    "name": "stop_release[D=cook_a,R=pot,A=a3,T=t3]",
    "rule": "stop_release",
@@ -1951,7 +1807,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 214,
+   "i": 198,
    "canon": 124,
    "name": "stop_release[D=cook_a,R=pot,A=a3,T=t4]",
    "rule": "stop_release",
@@ -1960,7 +1816,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 215,
+   "i": 199,
    "canon": 125,
    "name": "stop_release[D=cook_a,R=pot,A=a3,T=t5]",
    "rule": "stop_release",
@@ -1969,7 +1825,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 216,
+   "i": 200,
    "canon": 126,
    "name": "stop_release[D=cook_a,R=pot,A=a3,T=t6]",
    "rule": "stop_release",
@@ -1978,7 +1834,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 217,
+   "i": 201,
    "canon": 127,
    "name": "stop_release[D=cook_a,R=pot,A=a3,T=t7]",
    "rule": "stop_release",
@@ -1987,7 +1843,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 218,
+   "i": 202,
    "canon": 135,
    "name": "stop_release[D=cook_b,R=pot,A=a0,T=t0]",
    "rule": "stop_release",
@@ -1996,7 +1852,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 219,
+   "i": 203,
    "canon": 136,
    "name": "stop_release[D=cook_b,R=pot,A=a0,T=t1]",
    "rule": "stop_release",
@@ -2005,7 +1861,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 220,
+   "i": 204,
    "canon": 137,
    "name": "stop_release[D=cook_b,R=pot,A=a0,T=t2]",
    "rule": "stop_release",
@@ -2014,7 +1870,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 221,
+   "i": 205,
    "canon": 138,
    "name": "stop_release[D=cook_b,R=pot,A=a0,T=t3]",
    "rule": "stop_release",
@@ -2023,7 +1879,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 222,
+   "i": 206,
    "canon": 139,
    "name": "stop_release[D=cook_b,R=pot,A=a0,T=t4]",
    "rule": "stop_release",
@@ -2032,7 +1888,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 223,
+   "i": 207,
    "canon": 140,
    "name": "stop_release[D=cook_b,R=pot,A=a0,T=t5]",
    "rule": "stop_release",
@@ -2041,7 +1897,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 224,
+   "i": 208,
    "canon": 141,
    "name": "stop_release[D=cook_b,R=pot,A=a0,T=t6]",
    "rule": "stop_release",
@@ -2050,7 +1906,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 225,
+   "i": 209,
    "canon": 142,
    "name": "stop_release[D=cook_b,R=pot,A=a0,T=t7]",
    "rule": "stop_release",
@@ -2059,7 +1915,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 226,
+   "i": 210,
    "canon": 146,
    "name": "stop_release[D=cook_b,R=pot,A=a1,T=t0]",
    "rule": "stop_release",
@@ -2068,7 +1924,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 227,
+   "i": 211,
    "canon": 147,
    "name": "stop_release[D=cook_b,R=pot,A=a1,T=t1]",
    "rule": "stop_release",
@@ -2077,7 +1933,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 228,
+   "i": 212,
    "canon": 148,
    "name": "stop_release[D=cook_b,R=pot,A=a1,T=t2]",
    "rule": "stop_release",
@@ -2086,7 +1942,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 229,
+   "i": 213,
    "canon": 149,
    "name": "stop_release[D=cook_b,R=pot,A=a1,T=t3]",
    "rule": "stop_release",
@@ -2095,7 +1951,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 230,
+   "i": 214,
    "canon": 150,
    "name": "stop_release[D=cook_b,R=pot,A=a1,T=t4]",
    "rule": "stop_release",
@@ -2104,7 +1960,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 231,
+   "i": 215,
    "canon": 151,
    "name": "stop_release[D=cook_b,R=pot,A=a1,T=t5]",
    "rule": "stop_release",
@@ -2113,7 +1969,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 232,
+   "i": 216,
    "canon": 152,
    "name": "stop_release[D=cook_b,R=pot,A=a1,T=t6]",
    "rule": "stop_release",
@@ -2122,7 +1978,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 233,
+   "i": 217,
    "canon": 153,
    "name": "stop_release[D=cook_b,R=pot,A=a1,T=t7]",
    "rule": "stop_release",
@@ -2131,7 +1987,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 234,
+   "i": 218,
    "canon": 157,
    "name": "stop_release[D=cook_b,R=pot,A=a2,T=t0]",
    "rule": "stop_release",
@@ -2140,7 +1996,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 235,
+   "i": 219,
    "canon": 158,
    "name": "stop_release[D=cook_b,R=pot,A=a2,T=t1]",
    "rule": "stop_release",
@@ -2149,7 +2005,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 236,
+   "i": 220,
    "canon": 159,
    "name": "stop_release[D=cook_b,R=pot,A=a2,T=t2]",
    "rule": "stop_release",
@@ -2158,7 +2014,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 237,
+   "i": 221,
    "canon": 160,
    "name": "stop_release[D=cook_b,R=pot,A=a2,T=t3]",
    "rule": "stop_release",
@@ -2167,7 +2023,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 238,
+   "i": 222,
    "canon": 161,
    "name": "stop_release[D=cook_b,R=pot,A=a2,T=t4]",
    "rule": "stop_release",
@@ -2176,7 +2032,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 239,
+   "i": 223,
    "canon": 162,
    "name": "stop_release[D=cook_b,R=pot,A=a2,T=t5]",
    "rule": "stop_release",
@@ -2185,7 +2041,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 240,
+   "i": 224,
    "canon": 163,
    "name": "stop_release[D=cook_b,R=pot,A=a2,T=t6]",
    "rule": "stop_release",
@@ -2194,7 +2050,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 241,
+   "i": 225,
    "canon": 164,
    "name": "stop_release[D=cook_b,R=pot,A=a2,T=t7]",
    "rule": "stop_release",
@@ -2203,7 +2059,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 242,
+   "i": 226,
    "canon": 173,
    "name": "stop_release[D=cook_b,R=pot,A=a3,T=t0]",
    "rule": "stop_release",
@@ -2212,7 +2068,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 243,
+   "i": 227,
    "canon": 174,
    "name": "stop_release[D=cook_b,R=pot,A=a3,T=t1]",
    "rule": "stop_release",
@@ -2221,7 +2077,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 244,
+   "i": 228,
    "canon": 175,
    "name": "stop_release[D=cook_b,R=pot,A=a3,T=t2]",
    "rule": "stop_release",
@@ -2230,7 +2086,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 245,
+   "i": 229,
    "canon": 176,
    "name": "stop_release[D=cook_b,R=pot,A=a3,T=t3]",
    "rule": "stop_release",
@@ -2239,7 +2095,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 246,
+   "i": 230,
    "canon": 177,
    "name": "stop_release[D=cook_b,R=pot,A=a3,T=t4]",
    "rule": "stop_release",
@@ -2248,7 +2104,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 247,
+   "i": 231,
    "canon": 178,
    "name": "stop_release[D=cook_b,R=pot,A=a3,T=t5]",
    "rule": "stop_release",
@@ -2257,7 +2113,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 248,
+   "i": 232,
    "canon": 179,
    "name": "stop_release[D=cook_b,R=pot,A=a3,T=t6]",
    "rule": "stop_release",
@@ -2266,7 +2122,7 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 249,
+   "i": 233,
    "canon": 180,
    "name": "stop_release[D=cook_b,R=pot,A=a3,T=t7]",
    "rule": "stop_release",
@@ -2275,8 +2131,8 @@
    "line": "Stopped: no ticket for {R} is left, {R} is free."
   },
   {
-   "i": 250,
-   "canon": 221,
+   "i": 234,
+   "canon": 220,
    "name": "stop_dequeue[D=cook_a,R=pot,T=t0]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -2284,8 +2140,8 @@
    "line": "Stopped: {D}'s ticket for {R} is passed over."
   },
   {
-   "i": 251,
-   "canon": 223,
+   "i": 235,
+   "canon": 221,
    "name": "stop_dequeue[D=cook_a,R=pot,T=t1]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -2293,8 +2149,8 @@
    "line": "Stopped: {D}'s ticket for {R} is passed over."
   },
   {
-   "i": 252,
-   "canon": 225,
+   "i": 236,
+   "canon": 222,
    "name": "stop_dequeue[D=cook_a,R=pot,T=t2]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -2302,8 +2158,8 @@
    "line": "Stopped: {D}'s ticket for {R} is passed over."
   },
   {
-   "i": 253,
-   "canon": 227,
+   "i": 237,
+   "canon": 223,
    "name": "stop_dequeue[D=cook_a,R=pot,T=t3]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -2311,8 +2167,8 @@
    "line": "Stopped: {D}'s ticket for {R} is passed over."
   },
   {
-   "i": 254,
-   "canon": 229,
+   "i": 238,
+   "canon": 224,
    "name": "stop_dequeue[D=cook_a,R=pot,T=t4]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -2320,8 +2176,8 @@
    "line": "Stopped: {D}'s ticket for {R} is passed over."
   },
   {
-   "i": 255,
-   "canon": 231,
+   "i": 239,
+   "canon": 225,
    "name": "stop_dequeue[D=cook_a,R=pot,T=t5]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -2329,8 +2185,8 @@
    "line": "Stopped: {D}'s ticket for {R} is passed over."
   },
   {
-   "i": 256,
-   "canon": 233,
+   "i": 240,
+   "canon": 226,
    "name": "stop_dequeue[D=cook_a,R=pot,T=t6]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -2338,8 +2194,8 @@
    "line": "Stopped: {D}'s ticket for {R} is passed over."
   },
   {
-   "i": 257,
-   "canon": 235,
+   "i": 241,
+   "canon": 227,
    "name": "stop_dequeue[D=cook_a,R=pot,T=t7]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -2347,8 +2203,8 @@
    "line": "Stopped: {D}'s ticket for {R} is passed over."
   },
   {
-   "i": 258,
-   "canon": 237,
+   "i": 242,
+   "canon": 228,
    "name": "stop_dequeue[D=cook_b,R=pot,T=t0]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -2356,8 +2212,8 @@
    "line": "Stopped: {D}'s ticket for {R} is passed over."
   },
   {
-   "i": 259,
-   "canon": 239,
+   "i": 243,
+   "canon": 229,
    "name": "stop_dequeue[D=cook_b,R=pot,T=t1]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -2365,8 +2221,8 @@
    "line": "Stopped: {D}'s ticket for {R} is passed over."
   },
   {
-   "i": 260,
-   "canon": 241,
+   "i": 244,
+   "canon": 230,
    "name": "stop_dequeue[D=cook_b,R=pot,T=t2]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -2374,8 +2230,8 @@
    "line": "Stopped: {D}'s ticket for {R} is passed over."
   },
   {
-   "i": 261,
-   "canon": 243,
+   "i": 245,
+   "canon": 231,
    "name": "stop_dequeue[D=cook_b,R=pot,T=t3]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -2383,8 +2239,8 @@
    "line": "Stopped: {D}'s ticket for {R} is passed over."
   },
   {
-   "i": 262,
-   "canon": 245,
+   "i": 246,
+   "canon": 232,
    "name": "stop_dequeue[D=cook_b,R=pot,T=t4]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -2392,8 +2248,8 @@
    "line": "Stopped: {D}'s ticket for {R} is passed over."
   },
   {
-   "i": 263,
-   "canon": 247,
+   "i": 247,
+   "canon": 233,
    "name": "stop_dequeue[D=cook_b,R=pot,T=t5]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -2401,8 +2257,8 @@
    "line": "Stopped: {D}'s ticket for {R} is passed over."
   },
   {
-   "i": 264,
-   "canon": 249,
+   "i": 248,
+   "canon": 234,
    "name": "stop_dequeue[D=cook_b,R=pot,T=t6]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -2410,8 +2266,8 @@
    "line": "Stopped: {D}'s ticket for {R} is passed over."
   },
   {
-   "i": 265,
-   "canon": 251,
+   "i": 249,
+   "canon": 235,
    "name": "stop_dequeue[D=cook_b,R=pot,T=t7]",
    "rule": "stop_dequeue",
    "kind": "clause",
@@ -2419,7 +2275,7 @@
    "line": "Stopped: {D}'s ticket for {R} is passed over."
   },
   {
-   "i": 266,
+   "i": 250,
    "canon": 208,
    "name": "commit_on[D=cook_a,R=pot]",
    "rule": "commit_on",
@@ -2428,7 +2284,7 @@
    "line": "{D}'s action on {R} is atomic."
   },
   {
-   "i": 267,
+   "i": 251,
    "canon": 209,
    "name": "commit_on[D=cook_b,R=pot]",
    "rule": "commit_on",
@@ -2437,8 +2293,8 @@
    "line": "{D}'s action on {R} is atomic."
   },
   {
-   "i": 268,
-   "canon": 265,
+   "i": 252,
+   "canon": 249,
    "name": "commit_more[D=cook_a,R=pot]",
    "rule": "commit_more",
    "kind": "clause",
@@ -2446,8 +2302,8 @@
    "line": "{D} says again that its action on {R} is atomic."
   },
   {
-   "i": 269,
-   "canon": 266,
+   "i": 253,
+   "canon": 250,
    "name": "commit_more[D=cook_b,R=pot]",
    "rule": "commit_more",
    "kind": "clause",
@@ -2455,7 +2311,7 @@
    "line": "{D} says again that its action on {R} is atomic."
   },
   {
-   "i": 270,
+   "i": 254,
    "canon": 15,
    "name": "commit_off[D=cook_a,R=pot]",
    "rule": "commit_off",
@@ -2464,7 +2320,7 @@
    "line": "{D}'s atomic action on {R} is over."
   },
   {
-   "i": 271,
+   "i": 255,
    "canon": 17,
    "name": "commit_off[D=cook_b,R=pot]",
    "rule": "commit_off",
@@ -2473,7 +2329,7 @@
    "line": "{D}'s atomic action on {R} is over."
   },
   {
-   "i": 272,
+   "i": 256,
    "canon": 14,
    "name": "stop_committed[D=cook_a,R=pot]",
    "rule": "stop_committed",
@@ -2482,7 +2338,7 @@
    "line": "Stopped: {D}'s action on {R} is atomic, its revoke waits."
   },
   {
-   "i": 273,
+   "i": 257,
    "canon": 16,
    "name": "stop_committed[D=cook_b,R=pot]",
    "rule": "stop_committed",
@@ -2491,7 +2347,7 @@
    "line": "Stopped: {D}'s action on {R} is atomic, its revoke waits."
   },
   {
-   "i": 274,
+   "i": 258,
    "canon": 214,
    "name": "yield_owing[D=cook_a,R=pot]",
    "rule": "yield_owing",
@@ -2500,7 +2356,7 @@
    "line": "{D}'s atomic action on {R} is over, and a stop came: the revoke is owed."
   },
   {
-   "i": 275,
+   "i": 259,
    "canon": 215,
    "name": "yield_owing[D=cook_b,R=pot]",
    "rule": "yield_owing",
@@ -2509,7 +2365,7 @@
    "line": "{D}'s atomic action on {R} is over, and a stop came: the revoke is owed."
   },
   {
-   "i": 276,
+   "i": 260,
    "canon": 90,
    "name": "owed_release[D=cook_a,R=pot,A=a0]",
    "rule": "owed_release",
@@ -2518,7 +2374,7 @@
    "line": "The stop's revoke: {R} is free."
   },
   {
-   "i": 277,
+   "i": 261,
    "canon": 101,
    "name": "owed_release[D=cook_a,R=pot,A=a1]",
    "rule": "owed_release",
@@ -2527,7 +2383,7 @@
    "line": "The stop's revoke: {R} is free."
   },
   {
-   "i": 278,
+   "i": 262,
    "canon": 113,
    "name": "owed_release[D=cook_a,R=pot,A=a2]",
    "rule": "owed_release",
@@ -2536,7 +2392,7 @@
    "line": "The stop's revoke: {R} is free."
   },
   {
-   "i": 279,
+   "i": 263,
    "canon": 129,
    "name": "owed_release[D=cook_a,R=pot,A=a3]",
    "rule": "owed_release",
@@ -2545,7 +2401,7 @@
    "line": "The stop's revoke: {R} is free."
   },
   {
-   "i": 280,
+   "i": 264,
    "canon": 143,
    "name": "owed_release[D=cook_b,R=pot,A=a0]",
    "rule": "owed_release",
@@ -2554,7 +2410,7 @@
    "line": "The stop's revoke: {R} is free."
   },
   {
-   "i": 281,
+   "i": 265,
    "canon": 154,
    "name": "owed_release[D=cook_b,R=pot,A=a1]",
    "rule": "owed_release",
@@ -2563,7 +2419,7 @@
    "line": "The stop's revoke: {R} is free."
   },
   {
-   "i": 282,
+   "i": 266,
    "canon": 166,
    "name": "owed_release[D=cook_b,R=pot,A=a2]",
    "rule": "owed_release",
@@ -2572,7 +2428,7 @@
    "line": "The stop's revoke: {R} is free."
   },
   {
-   "i": 283,
+   "i": 267,
    "canon": 182,
    "name": "owed_release[D=cook_b,R=pot,A=a3]",
    "rule": "owed_release",
@@ -2581,7 +2437,7 @@
    "line": "The stop's revoke: {R} is free."
   },
   {
-   "i": 284,
+   "i": 268,
    "canon": 212,
    "name": "owed_drop[D=cook_a,R=pot]",
    "rule": "owed_drop",
@@ -2590,7 +2446,7 @@
    "line": "Stopped again: what was owed is this stop's."
   },
   {
-   "i": 285,
+   "i": 269,
    "canon": 213,
    "name": "owed_drop[D=cook_b,R=pot]",
    "rule": "owed_drop",
@@ -2599,7 +2455,7 @@
    "line": "Stopped again: what was owed is this stop's."
   },
   {
-   "i": 286,
+   "i": 270,
    "canon": 92,
    "name": "age_grant[D=cook_a,A=a0,B=a1]",
    "rule": "age_grant",
@@ -2608,7 +2464,7 @@
    "line": "A tick: {D}'s grant is older."
   },
   {
-   "i": 287,
+   "i": 271,
    "canon": 103,
    "name": "age_grant[D=cook_a,A=a1,B=a2]",
    "rule": "age_grant",
@@ -2617,7 +2473,7 @@
    "line": "A tick: {D}'s grant is older."
   },
   {
-   "i": 288,
+   "i": 272,
    "canon": 119,
    "name": "age_grant[D=cook_a,A=a2,B=a3]",
    "rule": "age_grant",
@@ -2626,7 +2482,7 @@
    "line": "A tick: {D}'s grant is older."
   },
   {
-   "i": 289,
+   "i": 273,
    "canon": 145,
    "name": "age_grant[D=cook_b,A=a0,B=a1]",
    "rule": "age_grant",
@@ -2635,7 +2491,7 @@
    "line": "A tick: {D}'s grant is older."
   },
   {
-   "i": 290,
+   "i": 274,
    "canon": 156,
    "name": "age_grant[D=cook_b,A=a1,B=a2]",
    "rule": "age_grant",
@@ -2644,7 +2500,7 @@
    "line": "A tick: {D}'s grant is older."
   },
   {
-   "i": 291,
+   "i": 275,
    "canon": 172,
    "name": "age_grant[D=cook_b,A=a2,B=a3]",
    "rule": "age_grant",
@@ -2653,8 +2509,8 @@
    "line": "A tick: {D}'s grant is older."
   },
   {
-   "i": 292,
-   "canon": 261,
+   "i": 276,
+   "canon": 245,
    "name": "age_grant_top[D=cook_a,A=a3]",
    "rule": "age_grant_top",
    "kind": "clause",
@@ -2662,8 +2518,8 @@
    "line": "A tick: {D}'s grant is as old as it counts."
   },
   {
-   "i": 293,
-   "canon": 262,
+   "i": 277,
+   "canon": 246,
    "name": "age_grant_top[D=cook_b,A=a3]",
    "rule": "age_grant_top",
    "kind": "clause",
@@ -2671,8 +2527,8 @@
    "line": "A tick: {D}'s grant is as old as it counts."
   },
   {
-   "i": 294,
-   "canon": 260,
+   "i": 278,
+   "canon": 244,
    "name": "tick_free[R=pot]",
    "rule": "tick_free",
    "kind": "clause",
@@ -2680,7 +2536,7 @@
    "line": "A tick: {R} is free."
   },
   {
-   "i": 295,
+   "i": 279,
    "canon": 0,
    "name": "status_reset[D=cook_a,A=a0]",
    "rule": "status_reset",
@@ -2689,7 +2545,7 @@
    "line": "{D}'s status changed: its age starts again."
   },
   {
-   "i": 296,
+   "i": 280,
    "canon": 2,
    "name": "status_reset[D=cook_a,A=a1]",
    "rule": "status_reset",
@@ -2698,7 +2554,7 @@
    "line": "{D}'s status changed: its age starts again."
   },
   {
-   "i": 297,
+   "i": 281,
    "canon": 4,
    "name": "status_reset[D=cook_a,A=a2]",
    "rule": "status_reset",
@@ -2707,7 +2563,7 @@
    "line": "{D}'s status changed: its age starts again."
   },
   {
-   "i": 298,
+   "i": 282,
    "canon": 6,
    "name": "status_reset[D=cook_a,A=a3]",
    "rule": "status_reset",
@@ -2716,7 +2572,7 @@
    "line": "{D}'s status changed: its age starts again."
   },
   {
-   "i": 299,
+   "i": 283,
    "canon": 7,
    "name": "status_reset[D=cook_b,A=a0]",
    "rule": "status_reset",
@@ -2725,7 +2581,7 @@
    "line": "{D}'s status changed: its age starts again."
   },
   {
-   "i": 300,
+   "i": 284,
    "canon": 9,
    "name": "status_reset[D=cook_b,A=a1]",
    "rule": "status_reset",
@@ -2734,7 +2590,7 @@
    "line": "{D}'s status changed: its age starts again."
   },
   {
-   "i": 301,
+   "i": 285,
    "canon": 11,
    "name": "status_reset[D=cook_b,A=a2]",
    "rule": "status_reset",
@@ -2743,7 +2599,7 @@
    "line": "{D}'s status changed: its age starts again."
   },
   {
-   "i": 302,
+   "i": 286,
    "canon": 13,
    "name": "status_reset[D=cook_b,A=a3]",
    "rule": "status_reset",
@@ -2752,7 +2608,7 @@
    "line": "{D}'s status changed: its age starts again."
   },
   {
-   "i": 303,
+   "i": 287,
    "canon": 1,
    "name": "status_age[D=cook_a,A=a0,B=a1]",
    "rule": "status_age",
@@ -2761,7 +2617,7 @@
    "line": "A tick: {D}'s status is older."
   },
   {
-   "i": 304,
+   "i": 288,
    "canon": 3,
    "name": "status_age[D=cook_a,A=a1,B=a2]",
    "rule": "status_age",
@@ -2770,7 +2626,7 @@
    "line": "A tick: {D}'s status is older."
   },
   {
-   "i": 305,
+   "i": 289,
    "canon": 5,
    "name": "status_age[D=cook_a,A=a2,B=a3]",
    "rule": "status_age",
@@ -2779,7 +2635,7 @@
    "line": "A tick: {D}'s status is older."
   },
   {
-   "i": 306,
+   "i": 290,
    "canon": 8,
    "name": "status_age[D=cook_b,A=a0,B=a1]",
    "rule": "status_age",
@@ -2788,7 +2644,7 @@
    "line": "A tick: {D}'s status is older."
   },
   {
-   "i": 307,
+   "i": 291,
    "canon": 10,
    "name": "status_age[D=cook_b,A=a1,B=a2]",
    "rule": "status_age",
@@ -2797,7 +2653,7 @@
    "line": "A tick: {D}'s status is older."
   },
   {
-   "i": 308,
+   "i": 292,
    "canon": 12,
    "name": "status_age[D=cook_b,A=a2,B=a3]",
    "rule": "status_age",
@@ -2806,8 +2662,8 @@
    "line": "A tick: {D}'s status is older."
   },
   {
-   "i": 309,
-   "canon": 317,
+   "i": 293,
+   "canon": 301,
    "name": "status_top[D=cook_a,A=a3]",
    "rule": "status_top",
    "kind": "clause",
@@ -2815,8 +2671,8 @@
    "line": "A tick: {D}'s status is as old as it counts."
   },
   {
-   "i": 310,
-   "canon": 318,
+   "i": 294,
+   "canon": 302,
    "name": "status_top[D=cook_b,A=a3]",
    "rule": "status_top",
    "kind": "clause",
@@ -2824,7 +2680,7 @@
    "line": "A tick: {D}'s status is as old as it counts."
   },
   {
-   "i": 311,
+   "i": 295,
    "canon": 210,
    "name": "path_push[D=cook_a]",
    "rule": "path_push",
@@ -2833,7 +2689,7 @@
    "line": "{D} is active: on the path."
   },
   {
-   "i": 312,
+   "i": 296,
    "canon": 211,
    "name": "path_push[D=cook_b]",
    "rule": "path_push",
@@ -2842,8 +2698,8 @@
    "line": "{D} is active: on the path."
   },
   {
-   "i": 313,
-   "canon": 263,
+   "i": 297,
+   "canon": 247,
    "name": "active_more[D=cook_a]",
    "rule": "active_more",
    "kind": "clause",
@@ -2851,8 +2707,8 @@
    "line": "{D} is active, and on the path already."
   },
   {
-   "i": 314,
-   "canon": 264,
+   "i": 298,
+   "canon": 248,
    "name": "active_more[D=cook_b]",
    "rule": "active_more",
    "kind": "clause",
@@ -2860,7 +2716,7 @@
    "line": "{D} is active, and on the path already."
   },
   {
-   "i": 315,
+   "i": 299,
    "canon": 216,
    "name": "path_pop[D=cook_a]",
    "rule": "path_pop",
@@ -2869,7 +2725,7 @@
    "line": "{D} is done: off the path."
   },
   {
-   "i": 316,
+   "i": 300,
    "canon": 218,
    "name": "path_pop[D=cook_b]",
    "rule": "path_pop",
@@ -2878,8 +2734,8 @@
    "line": "{D} is done: off the path."
   },
   {
-   "i": 317,
-   "canon": 267,
+   "i": 301,
+   "canon": 251,
    "name": "done_off[D=cook_a]",
    "rule": "done_off",
    "kind": "clause",
@@ -2887,8 +2743,8 @@
    "line": "{D} is done, and off the path already."
   },
   {
-   "i": 318,
-   "canon": 268,
+   "i": 302,
+   "canon": 252,
    "name": "done_off[D=cook_b]",
    "rule": "done_off",
    "kind": "clause",
@@ -3309,31 +3165,6 @@
       }
      ],
      "effects": [],
-     "target": null
-    },
-    {
-     "name": "ticket_held",
-     "stage": "act",
-     "doc": "{D} holds {R}: its ticket is passed over.",
-     "premises": [
-      {
-       "atom": "queued(D,R,T)",
-       "n": 1,
-       "kept": false
-      },
-      {
-       "atom": "holder(D,R)",
-       "n": 1,
-       "kept": true
-      }
-     ],
-     "effects": [
-      {
-       "atom": "skipped(R,T)",
-       "n": 1,
-       "kept": false
-      }
-     ],
      "target": null
     },
     {
