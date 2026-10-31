@@ -2,13 +2,13 @@ interface composition.yaml
 iface protocol_domain std:iface/protocol_domain.llp 8fa04425636d3f861b5955665cf25addc8c582e2c2bcfa0ec36a15b77e91b4ac
 iface minihack_iface iface/minihack.llp d48d34810d4632feab8187d31b65aad7f03017f9ba119f62359ec9ae0c651d69
 capacity capacity.llp 154af6234d85acb6901f7a8a7bbc108fd9132725007314b4aec9ccd90436c61c
-member director direct director/director.llp key 6c8a18d2e76e8a72905016c9bb77b638ade6b6f1bd698cc21508900ad99883ef ei 828f25465d95951ee9cd417c986ec0ac1a60488b57b450df4f4bd37be65ee074
+member director direct director/director.llp key e467deb3fcf9353d2bf6593b4b29fd9abc68c8b457af7c1318a8576c58493dc8 ei 828f25465d95951ee9cd417c986ec0ac1a60488b57b450df4f4bd37be65ee074
 member task specialist task/task.llp key 6001eacdc940e21b84b0e4e2ef09480cd5ece961c89de9303554585dc2c40af9 ei 062f588b9ab75a54fce73cf3b16f2c5ecaf1e4be9afcd31fc274421ccd5aa9ef
 member nav specialist nav/nav.llp key 9a60d35598d9ab354d4866efe99055f5e8a4b474f6f2fc6ee21086b1bd474e8d ei 6883983172d9049e4b274342078142d64f751706921ede6287806d3654a7ff08
 member act specialist act/act.llp key 0f9ccb2a9faf6921bff77ccf5ba3f2d29ad541297141451ba7e5d93b98823eba ei 3f07fbeb035cadeba96bb879134af0ed5ae4c4770fa8c9db9e6cb1c87bd32261
-package 6c5db565b4532082b697ef740b9a24cc72dbdfc691e196e966ff0a26533317d9
-include dir ../../director_domain.llp ../director_domain.llp key eae3a58005b47eba86ebcb7f5352bcbbf73e4a33bf26c2faba28eff453a6574e by director
-include std iface/director_tree_domain.llp std:iface/director_tree_domain.llp key fdf78eaf5830d8c670ec8d76f7f7e042b85d5220072441e609d8fb11c561fa31 by director
+package ca05f9aba68e9be656dea963ad908f997733ca65ba298dcd814de25ae41073e5
+include dir ../../director_domain.llp ../director_domain.llp key 3facf5a830016a3bf4b2d48506035ef31b201b2a104ff83327130e98f1e08a0a by director
+include std iface/director_tree_domain.llp std:iface/director_tree_domain.llp key 4cc75f626e3982b198b29a70f4ea15f247dc6e42f4e8668f6954228f7ff9957f by director
 include dir protocol_domain.llp std:iface/protocol_domain.llp key 7850460869529819420dd14f60972f611b5b9a6f59a48ffa08b7c28641dc68d1 by director task nav act
 include std iface/director_tree_wake.llp std:iface/director_tree_wake.llp key b9703b951083980e5b2b43b7eb1a0f0e995f7137a29f42ebf781635274b45a27 by director
 include dir ../task_domain.llp task_domain.llp key 4e0704ba3f9c2f5fe141b5685729d693eaf49551c9a68d9d083c599cc4f16187 by task
@@ -38,7 +38,7 @@ cut 27
   tick__gen reading: out [director(o)] in [act(r)]
   tick__goal state: out [director(co)] in []
   tick__grant reading: out [director(o)] in [nav(r) act(r)]
-  tick__released signal: out [act(o)] in [director(c)]
+  tick__released signal: out [act(o)] in [director(cr)]
   tick__revoke reading: out [director(o)] in []
   tick__status reading: out [host(transitional)] in [director]
   tick__stop reading: out [world] in [director(r)]

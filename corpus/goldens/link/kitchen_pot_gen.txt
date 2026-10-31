@@ -1,5 +1,5 @@
 link composition_gen.yaml
-member tree_director direct wire 045385cbb4de361608002016065f97729a6da694ebc7bc8b56e81e583b837be3 bundle 5d2b54f1763b source 7d151a0428ef38c7b8910794c795440ca006bed62a52f7507220fe1513d8262c
+member tree_director direct wire 4ae13e43c6196f57dee465b0e3bc4c96a67c7d5514c061749893c8fd4b124b22 bundle 21de2cb21c7b source 57d35820c029675780aee3b20a0d3323200f95f44ee94f187fe2af1f3f81983e
 member cook_a specialist wire 3582e0ad48c8e9e60c3a92c19c3a633bb911f2af4574c8f5784f1429cc85ca50 bundle 279e591d4a2b source 6f28deb343392eb6857a98c2840a6a2ce60e92d62506b1a9cb124e38fb0e0f23
 member cook_b specialist wire 585fb6cf3dca355b657bf083941e6106058b8cee77e7e7908a7cb410a445bc16 bundle 1e67ebe510d9 source ddf83afd44e483aa6d4c697bd021acb7dcb02bbe6b224b376948892f02804980
 director tree_director generated planner - kinds none
@@ -9,6 +9,6 @@ warning L18 no response: linked with rho = infinity
 warning L21 cook_a's host cook_host.py:make: no file cook_host.py beside it (the runtime that loads it must have it)
 warning L21 cook_b's host cook_host.py:make: no file cook_host.py beside it (the runtime that loads it must have it)
 interface 0 error(s), 6 warning(s)
-image kitchen_pot_gen v-cb916210f36c
+image kitchen_pot_gen v-9745d575469e
 result 0 error(s), 9 warning(s)
 rc 0
