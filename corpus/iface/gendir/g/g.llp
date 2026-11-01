@@ -1,0 +1,14 @@
+% g — a member under a generated director, for --interface and check (iface-gendir s-428aed81).
+catalog g 1.
+provenance text "the generated-director interface scene" "2026-11-01".
+layers (dyn).
+stages (act).
+include "../capacity.llp".
+include "iface/protocol_domain.llp".
+namespace g produce (dyn).
+%% It stopped.
+pred stopped : g.
+stage act {
+  %% It reads the stop.
+  stop [dyn] : tick__stop -o stopped.
+}

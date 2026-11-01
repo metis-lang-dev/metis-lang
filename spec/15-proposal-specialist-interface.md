@@ -528,6 +528,8 @@ What the check reports on today's sources, before anyone writes a manifest:
 ## 6. Toolchain
 
 - **`metisc --interface COMPOSITION.yaml`** is IMPLEMENTED (specialist-tree step 1c, 99f9e77; amendment 4).
+  - A composition whose director is generated has it staged as the link stages it, and the listing names it
+    `generated/<direct>/…` (iface-gendir s-428aed81); `metisc check` starts from the same listing.
   - It reads `composition.yaml` and each member's `domain.yaml` as a strict YAML subset: `key: value` per line,
     flow lists and maps; block YAML is refused with its line.
   - It computes G(Π) per member (which file declares each pred), checks I1–I12, the cut report (the class of

@@ -1,0 +1,39 @@
+interface composition.yaml
+iface protocol_domain std:iface/protocol_domain.llp 8fa04425636d3f861b5955665cf25addc8c582e2c2bcfa0ec36a15b77e91b4ac
+capacity capacity.llp 063a3253e190bf63d9d882deda30130cbd69ca271baf22f16f2ed9561a68d8f4
+member tree_director direct generated/tree_director/tree_director.llp key a63d65f3f8c34846783bdd117e4cf0e3480880a55e0702676a861585f8e290e6 ei 5997abdc5900be33d44690e106969e3654b65c893acabb928efb96affba68e02
+member g specialist g/g.llp key 643bb7fb7899488036e54abadca3c3ff2c67ba8160b6635072101a8a52d7e180 ei ffb464afcdbf213bc6540f69b01e10e93c369486fea4ab25f04d94e62a27dcb8
+package 76d55256ebb26cee2a7226250a06231fb862f54e804c9372ce6033e1f9e23329
+include std iface/director_tree_domain.llp std:iface/director_tree_domain.llp key d897bf0f6cb83e22f8a1334061532fab9b94d53a4c5fe223080f89ecb41507d5 by tree_director
+include dir protocol_domain.llp std:iface/protocol_domain.llp key 7850460869529819420dd14f60972f611b5b9a6f59a48ffa08b7c28641dc68d1 by tree_director g
+include dir capacity.llp generated/tree_director/capacity.llp key 063a3253e190bf63d9d882deda30130cbd69ca271baf22f16f2ed9561a68d8f4 by tree_director
+include dir ../capacity.llp capacity.llp key 063a3253e190bf63d9d882deda30130cbd69ca271baf22f16f2ed9561a68d8f4 by g
+cut 14
+  tick__active signal: out [] in [tree_director(c)]
+  tick__cancel reading: out [tree_director(o)] in []
+  tick__committed signal: out [] in [tree_director(c)]
+  tick__done signal: out [] in [tree_director(c)]
+  tick__gen reading: out [tree_director(o)] in []
+  tick__goal state: out [tree_director(co)] in []
+  tick__grant reading: out [tree_director(o)] in []
+  tick__released signal: out [] in [tree_director(cr)]
+  tick__revoke reading: out [tree_director(o)] in []
+  tick__status reading: out [host(transitional)] in [tree_director]
+  tick__stop signal: out [world] in [g(c) tree_director(r)]
+  tick__stuck signal: out [] in [tree_director(c)]
+  tick__want signal: out [] in [tree_director(cr)]
+  tick__yield signal: out [] in [tree_director(c)]
+private tree_director=23 g=1
+warning I2 tree_director: in tick__status is read by no rule (in-unread)
+warning I3 tree_director: in tick__want is a report nobody sends
+warning I3 tree_director: in tick__released is a report nobody sends
+warning I3 tree_director: in tick__active is a report nobody sends
+warning I3 tree_director: in tick__done is a report nobody sends
+warning I3 tree_director: in tick__stuck is a report nobody sends
+warning I3 tree_director: in tick__committed is a report nobody sends
+warning I3 tree_director: in tick__yield is a report nobody sends
+warning I4 tree_director: rule stop_cancel withdraws its own out tick__goal (a level the direct member may withdraw)
+warning I4 tree_director: rule path_pop withdraws its own out tick__goal (a level the direct member may withdraw)
+note I3 tree_director: in tick__status is produced only by the host's status assertion (amendment 1b) (transitional)
+result 0 error(s), 10 warning(s), 1 note(s)
+rc 0

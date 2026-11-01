@@ -1,0 +1,9 @@
+# composition — a member with no package (iface-gendir s-428aed81)
+name: gendir_missing
+capacity: capacity.llp
+protocol: iface/protocol_domain.llp
+specialists: [nobody]
+direct: tree_director
+world: {out: [tick__stop]}
+resources: {hand: 1}
+response: 3

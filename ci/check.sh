@@ -583,7 +583,7 @@ done
 rc=0; ( cd "$ROOT/corpus/iface" && "$ROOT/src/metisc" --link hiding/composition_a.yaml --check ) > "$WORK/hi_a.txt" 2>&1 || rc=$?
 [ "$rc" -ne 0 ] && grep -q '^error L16 link-world-in: push is produced by no member' "$WORK/hi_a.txt" \
     || { echo "hiding: a hidden rule still produces in the interface check"; cat "$WORK/hi_a.txt"; exit 1; }
-( cd "$ROOT/corpus/iface" && "$ROOT/src/metisc" --interface hiding/composition_p.yaml ) > "$WORK/hi_h.txt" 2>&1 || true   # its exit says warnings
+( cd "$ROOT/corpus/iface" && "$ROOT/src/metisc" --interface hiding/composition_h.yaml ) > "$WORK/hi_h.txt" 2>&1 || true   # its exit says warnings
 grep -q '^include dir \.\./base\.llp .* key [0-9a-f]* hiding (look) by h$' "$WORK/hi_h.txt" \
     || { echo "hiding: --interface does not print the set"; grep '^include' "$WORK/hi_h.txt"; exit 1; }
 ( cd "$ROOT/corpus/iface" && "$ROOT/src/metisc" --link hiding/composition_h.yaml -o "$WORK/hi_img" ) > /dev/null 2>&1
@@ -604,5 +604,29 @@ grep -q '"rule": *"send"' "$WORK"/hi_img/hiding_h.image.v-*/members/h/sidecar.js
     && grep -q '"rule": *"look"' "$WORK"/hi_img/hiding_k.image.v-*/members/k/sidecar.json \
     || { echo "hiding: the sidecar does not walk the splice"; exit 1; }
 echo "HIDING $n_hi/9 (the scenes == goldens and the hand copy's rows and key; the refusals; the interface, the prints, the lock)"
+
+echo "== 25. --interface and check on a generated director (iface-gendir s-428aed81): the director staged as the link stages it, a listing with no temporary's name; a missing package an error, not an uncaught exception"
+n_gd=0
+for c in gendir/composition.yaml kitchen_pot/composition_gen.yaml hiding/composition_h.yaml; do
+  ( cd "$ROOT/corpus/iface" && "$ROOT/src/metisc" --interface "$c" ) > "$WORK/gd_1.txt" 2>&1 \
+    || { echo "gendir: --interface $c failed"; cat "$WORK/gd_1.txt"; exit 1; }
+  ( cd "$ROOT/corpus/iface" && "$ROOT/src/metisc" --interface "$c" ) > "$WORK/gd_2.txt" 2>&1
+  cmp -s "$WORK/gd_1.txt" "$WORK/gd_2.txt" || { echo "gendir: --interface $c differs between two runs"; exit 1; }
+  grep -q '^member tree_director direct generated/tree_director/tree_director\.llp key ' "$WORK/gd_1.txt" \
+    || { echo "gendir: --interface $c does not list the generated director"; cat "$WORK/gd_1.txt"; exit 1; }
+  ! grep -q 'metisc-link-' "$WORK/gd_1.txt" || { echo "gendir: --interface $c names the stage"; exit 1; }
+  n_gd=$((n_gd+1))
+done
+( cd "$ROOT/corpus/iface" && "$ROOT/src/metisc" check gendir ) > "$WORK/gd_c.txt" 2>&1 \
+    && grep -q '^image gendir v-' "$WORK/gd_c.txt" \
+    || { echo "gendir: metisc check failed"; cat "$WORK/gd_c.txt"; exit 1; }
+n_gd=$((n_gd+1))
+for f in --interface --link; do
+  rc=0; ( cd "$ROOT/corpus/iface" && "$ROOT/src/metisc" "$f" gendir/composition_missing.yaml ) > "$WORK/gd_m.txt" 2>&1 || rc=$?
+  [ "$rc" -eq 1 ] && grep -q '^error: .*nobody/domain\.yaml' "$WORK/gd_m.txt" \
+    || { echo "gendir: $f on a missing package (rc $rc)"; cat "$WORK/gd_m.txt"; exit 1; }
+  n_gd=$((n_gd+1))
+done
+echo "GENDIR $n_gd/6 (three generated directors listed the same twice; check; a missing package refused by both commands)"
 
 echo "ALL GATES GREEN"

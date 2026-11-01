@@ -1,0 +1,5 @@
+% capacity — one member, one resource (iface-gendir s-428aed81).
+catalog gendir_capacity 1.
+provenance text "a member and one resource" "2026-11-01".
+type domain {g}.
+type resource {hand}.

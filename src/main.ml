@@ -491,13 +491,15 @@ let rec link_args ?serve ?(exts = []) comp (o : Link.opts) = function
     (* a package directory: its one-member image (spec/17 §2) *)
     (match Link.run_package ~bundle:package_bundle o ?serve ~extensions:(List.rev exts) comp with
      | (lines, errors) -> List.iter print_endline lines; exit (if errors > 0 then 1 else 0)
-     | exception Iface.Yaml_error m -> prerr_endline ("error: " ^ m); exit 1)
+     | exception Iface.Yaml_error m -> prerr_endline ("error: " ^ m); exit 1
+     | exception Sys_error m -> prerr_endline ("error: " ^ m); exit 1)
   | [] ->
     (match Link.run ~wire:member_wire o comp with
      | (lines, errors) ->
        List.iter print_endline lines;
        exit (if errors > 0 then 1 else 0)
-     | exception Iface.Yaml_error m -> prerr_endline ("error: " ^ m); exit 1)
+     | exception Iface.Yaml_error m -> prerr_endline ("error: " ^ m); exit 1
+     | exception Sys_error m -> prerr_endline ("error: " ^ m); exit 1)
   | "-o" :: d :: rest -> link_args ?serve ~exts comp { o with out = Some d } rest
   | "--check" :: rest -> link_args ?serve ~exts comp { o with check = true } rest
   | "--tar" :: rest -> link_args ?serve ~exts comp { o with tar = true } rest
@@ -558,12 +560,13 @@ let () =
     (* spec/17 §7: metisc check [DIR] = --interface, then --link --check *)
     let dir = match rest with d :: _ -> d | [] -> "." in
     let comp = Filename.concat dir "composition.yaml" in
-    (match Iface.run comp with
+    (match Link.interface comp with
      | (lines, errors) ->
        List.iter print_endline lines;
        if errors > 0 then exit 1;
        link_args comp { Link.out = None; check = true; tar = false; build = false; plans = [] } []
-     | exception Iface.Yaml_error m -> prerr_endline ("error: " ^ m); exit 1)
+     | exception Iface.Yaml_error m -> prerr_endline ("error: " ^ m); exit 1
+     | exception Sys_error m -> prerr_endline ("error: " ^ m); exit 1)
   | _ :: "--evaluate" :: llp :: rest -> evaluate_args llp false false rest
   | [_; "--selftest"] -> selftest ()
   | [_; "--keys"; manifest] -> drive manifest key_case
@@ -572,11 +575,13 @@ let () =
   | [_; "--run"; llp] -> run_file llp
   | [_; "--interface"; comp] ->
     (* spec/15 §6: the listing on stdout; exit 0 clean, 1 on errors *)
-    (match Iface.run comp with
+    (match Link.interface comp with
      | (lines, errors) ->
        List.iter print_endline lines;
        exit (if errors > 0 then 1 else 0)
      | exception Iface.Yaml_error m ->
+       prerr_endline ("error: " ^ m); exit 1
+     | exception Sys_error m ->
        prerr_endline ("error: " ^ m); exit 1)
   | [_; "--diag-registry"] ->
     (* code severity migrated|pending — diffed by metispy so the two

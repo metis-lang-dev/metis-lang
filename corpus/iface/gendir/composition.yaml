@@ -1,0 +1,9 @@
+# composition — one member, its director generated (iface-gendir s-428aed81)
+name: gendir
+capacity: capacity.llp
+protocol: iface/protocol_domain.llp
+specialists: [g]
+direct: tree_director
+world: {out: [tick__stop]}
+resources: {hand: 1}
+response: 3

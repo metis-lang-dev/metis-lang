@@ -207,7 +207,7 @@ let lock_hiding = function
 
 let manifest_s m k = match List.assoc_opt k m.m_extra with Some (S s) -> Some s | _ -> None
 
-let run ~wire o comp_path =
+let check_or_link ~interface_only ~wire o comp_path =
   let comp_dir = Filename.dirname (norm comp_path) in
   let comp = read_yaml comp_path in
   let direct = str (match List.assoc_opt "direct" comp with Some v -> v
@@ -244,6 +244,21 @@ let run ~wire o comp_path =
   Image.write_file (Filename.concat stage_dir "domain.yaml") gen_man;
   if types = None then Image.write_file (Filename.concat stage_dir "capacity.llp") cap_text;
   let a = if hand then analyse comp_path else analyse ~direct_dir:stage comp_path in
+  let unstage () =
+    List.iter (fun f -> let f = Filename.concat stage_dir f in if Sys.file_exists f then Sys.remove f)
+      [direct ^ ".llp"; "domain.yaml"; "capacity.llp"];
+    (try Sys.rmdir stage_dir; Sys.rmdir stage with Sys_error _ -> ()) in
+  if interface_only then begin
+    unstage ();
+    (* the stage's name is a temporary's: the listing says generated/ *)
+    let at = Filename.basename stage ^ "/" in
+    let generated w =
+      let n = String.length w and k = String.length at in
+      let rec find i = if i + k > n then None else if String.sub w i k = at then Some (i + k) else find (i + 1) in
+      match find 0 with Some i -> "generated/" ^ String.sub w i (n - i) | None -> w in
+    let line l = String.concat " " (List.map generated (String.split_on_char ' ' l)) in
+    (List.map line a.a_lines, a.a_errors)
+  end else
   let members = a.a_members in
   let specs = List.filter (fun m -> m.m_role = "specialist") members in
   let dm = List.find (fun m -> m.m_role = "direct") members in
@@ -717,12 +732,17 @@ let run ~wire o comp_path =
       end
     end
   end;
-  List.iter (fun f -> let f = Filename.concat stage_dir f in if Sys.file_exists f then Sys.remove f)
-    [direct ^ ".llp"; "domain.yaml"; "capacity.llp"];
-  (try Sys.rmdir stage_dir; Sys.rmdir stage with Sys_error _ -> ());
+  unstage ();
   line "result %d error(s), %d warning(s)" n_err
     (List.length (List.filter (fun f -> f.sev = "warning") (a.a_findings @ !fs)));
   (List.rev !lines, n_err)
+
+let run ~wire o comp_path = check_or_link ~interface_only:false ~wire o comp_path
+
+(* spec/15 §6 on any composition: a generated director is staged and checked as the link checks it *)
+let interface comp_path =
+  check_or_link ~interface_only:true ~wire:(fun ~manifest:_ _ -> ([], "", ""))
+    { out = None; check = true; tar = false; build = false; plans = [] } comp_path
 
 (* -- the one-member image (spec/17 §2: a package that runs alone is the one-member composition of itself) ---- *)
 

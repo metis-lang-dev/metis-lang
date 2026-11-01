@@ -1,9 +1,0 @@
-# composition — h, its director written out (spec/18 §3)
-name: hiding_p
-capacity: capacity_h.llp
-protocol: iface/protocol_domain.llp
-specialists: [h]
-direct: hand_director
-world: {out: [seen, tick__stop], in: [push]}
-resources: {hand: 1}
-response: 3
