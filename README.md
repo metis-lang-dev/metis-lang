@@ -75,6 +75,17 @@ src/metisc --wire corpus/catalog/plant/plant.llp \
                                  # bundle's ground.wire (B ports, w sections)
 ```
 
+## Extending a domain (spec/18)
+
+A domain is extended by derivation, never by rewriting a rule (spec/18, ruled 2026-11-01): prices through
+ports (`weight`/`guard`/`input`/`output`, `@w`); vocabulary through abstract types (`types (…)`, spec/12);
+units through `include "unit".` (spec 00 §4: the including file's directory, then the root, then
+`$METIS_HOME`), minus named rules through `include "unit" hiding (name …).` (spec 00 §4; `hiding-unknown`,
+`hiding-shadow`); a consumer's own rules as a pack over a base (`extends base.`, spec 00 §5); a family rule
+switched off by a token the consumer withholds. A duplicate rule name stays the parse error; there is no
+override. The worked example is the road family: metis-catalog `domains/road`, consumed by the road world
+(cars) and the wheelchair, each at a pin of the catalog, through `METIS_HOME`.
+
 ## Status
 
 Skeleton cut from the research tree; pre-release. Pending before
