@@ -146,6 +146,10 @@ the set, and hiding a rule keys the same as a copy of the unit without
 it. `--keys`, `--interface` and the image's lock (spec/17 §3.4,
 `hiding: [names]` per include) carry the set beside the include's
 place and key, and say nothing for an include that hides nothing.
+A tool that reads a program as text and not through the parser (the
+intents' splice in metispy and metis-agent) knows a hidden rule by a
+line that starts `name [layer] :`, a known limit: a rule written on
+its stage's opening line stays in that text.
 The includer keeps its own name/version/provenance. `layers` and
 `stages` are ADOPTED from an included file iff the includer omits
 them (domain file included by a generated instance file).
