@@ -15,6 +15,9 @@ type opts = {
 
 (* WIRE: a program's path -> its wire lines, its program key and its sidecar.json (metisc
    --wire's compile and the emitter, main.ml's). → the listing's lines, the error count. *)
+(* the interface check's listing and error count (spec/15 §6), a generated director staged for it *)
+val interface : string -> string list * int
+
 val run : wire:(manifest:string -> string -> string list * string * string) -> opts -> string -> string list * int
 
 (* spec/17 §2: a lone package's one-member image (`metisc --link PKGDIR [--serve FILE] [--extension E]...`). BUNDLE:
