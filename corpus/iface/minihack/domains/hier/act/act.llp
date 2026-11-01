@@ -9,3 +9,4 @@ include "../tick_types.llp".
 #init idle 1
 #init brakes(brake_min) 1
 #init brakes(brake_min_correct) 1
+#init tick__gen(act, motion, g0) 1

@@ -1,10 +1,11 @@
 {
  "format": "metis-sidecar/1",
  "catalog": "cook_a",
- "key": "52e1ff7ceb4edd32b4e3ad391cdc663bc0bbb907b28aa0799af4040b53247b0a",
+ "key": "3582e0ad48c8e9e60c3a92c19c3a633bb911f2af4574c8f5784f1429cc85ca50",
  "extensions": [],
  "init": {
-  "calm(cook_a)": 1
+  "calm(cook_a)": 1,
+  "tick__gen(cook_a,pot,g0)": 1
  },
  "steps": 0,
  "stages": [
@@ -58,6 +59,42 @@
   },
   {
    "i": 5,
+   "canon": 10,
+   "name": "released[S=cook_a,R=pot,G=g0]",
+   "rule": "released",
+   "kind": "clause",
+   "stage": "act",
+   "line": "I gave {R} back: I say which grant."
+  },
+  {
+   "i": 6,
+   "canon": 11,
+   "name": "released[S=cook_a,R=pot,G=g1]",
+   "rule": "released",
+   "kind": "clause",
+   "stage": "act",
+   "line": "I gave {R} back: I say which grant."
+  },
+  {
+   "i": 7,
+   "canon": 12,
+   "name": "released[S=cook_a,R=pot,G=g2]",
+   "rule": "released",
+   "kind": "clause",
+   "stage": "act",
+   "line": "I gave {R} back: I say which grant."
+  },
+  {
+   "i": 8,
+   "canon": 13,
+   "name": "released[S=cook_a,R=pot,G=g3]",
+   "rule": "released",
+   "kind": "clause",
+   "stage": "act",
+   "line": "I gave {R} back: I say which grant."
+  },
+  {
+   "i": 9,
    "canon": 7,
    "name": "load[S=cook_a]",
    "rule": "load",
@@ -66,7 +103,7 @@
    "line": "The pot is mine: I put my onion in."
   },
   {
-   "i": 6,
+   "i": 10,
    "canon": 9,
    "name": "start[S=cook_a]",
    "rule": "start",
@@ -75,7 +112,7 @@
    "line": "Three onions are in: I start the soup."
   },
   {
-   "i": 7,
+   "i": 11,
    "canon": 5,
    "name": "fetch_dish[S=cook_a]",
    "rule": "fetch_dish",
@@ -84,7 +121,7 @@
    "line": "My soup cooks: I take a dish."
   },
   {
-   "i": 8,
+   "i": 12,
    "canon": 0,
    "name": "plate[S=cook_a]",
    "rule": "plate",
@@ -93,7 +130,7 @@
    "line": "My soup is done: I plate it and give the pot back."
   },
   {
-   "i": 9,
+   "i": 13,
    "canon": 8,
    "name": "serve[S=cook_a]",
    "rule": "serve",
@@ -293,6 +330,36 @@
      "effects": [
       {
        "atom": "calm(S)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
+     "name": "released",
+     "stage": "act",
+     "doc": "I gave {R} back: I say which grant.",
+     "premises": [
+      {
+       "atom": "tick__release(S,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "self(S)",
+       "n": 1,
+       "kept": true
+      },
+      {
+       "atom": "tick__gen(S,R,G)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [
+      {
+       "atom": "tick__released(S,R,G)",
        "n": 1,
        "kept": false
       }
@@ -542,7 +609,7 @@
      "doc": ""
     },
     {
-     "name": "tick__release",
+     "name": "tick__released",
      "doc": ""
     },
     {
@@ -554,7 +621,15 @@
      "doc": ""
     },
     {
+     "name": "tick__release",
+     "doc": ""
+    },
+    {
      "name": "tick__grant",
+     "doc": ""
+    },
+    {
+     "name": "tick__gen",
      "doc": ""
     },
     {
@@ -626,10 +701,12 @@
      "tick__done",
      "tick__stuck",
      "tick__want",
-     "tick__release",
+     "tick__released",
      "tick__committed",
      "tick__yield",
+     "tick__release",
      "tick__grant",
+     "tick__gen",
      "tick__goal",
      "tick__revoke",
      "tick__stop",
