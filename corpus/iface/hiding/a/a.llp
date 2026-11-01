@@ -1,0 +1,5 @@
+% a — the unit hiding (send).
+catalog a 1.
+provenance text "the hiding interface scene" "2026-11-01".
+include "../capacity_a.llp".
+include "../base.llp" hiding (send).

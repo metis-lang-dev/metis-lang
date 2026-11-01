@@ -132,6 +132,8 @@ diag_runs() {
     "$ROOT/src/metisc" "$1" diag_kernel.llp
     "$ROOT/src/metisc" "$1" diag_pack.llp --base diag_pack_base.llp
     "$ROOT/src/metisc" "$1" diag_cycle_a.llp
+    "$ROOT/src/metisc" "$1" diag_hiding_unknown.llp
+    "$ROOT/src/metisc" "$1" diag_hiding_shadow.llp
     "$ROOT/src/metisc" "$1" diag_extends.llp
     "$ROOT/src/metisc" "$1" diag_abstract.llp )
 }
@@ -517,5 +519,64 @@ done
 grep '^error' "$WORK/budget.txt" | diff "$ROOT/corpus/budget/budget.refused" - \
     || { echo "budget: the refusal differs from budget.refused"; exit 1; }
 echo "BUDGET $n_gb/4 (unset and 3200 ground, 3199 and 1000 refused; the refusal == metispy's)"
+
+echo "== 24. hiding at inclusion (spec/18 §3, hiding-include s-bd3b639d): the scenes, the key, the prints, the lock, the refusals"
+# corpus/hiding: a unit, an includer hiding two rules (its fired rows == the golden, == the hand copy's), a name hidden twice
+# silent, a rule hidden through a nested include, a stage left empty and legal; the key == the hand copy's, the --keys print
+# carries the set. Refused: a name that is no rule, a qui link, one alternative head, what a nested include already hid
+# (hiding-unknown); the includer's, a sibling's or a nested include's rule named again (hiding-shadow: the override spec/18
+# rejects). corpus/iface/hiding: a hidden rule is neither reader nor producer in the interface check (L16 on a world command
+# whose only sender is hidden); --interface and the lock carry the set, and a lock with no hiding has no field.
+n_hi=0
+for sc in use empty nested; do
+  ( cd "$ROOT/corpus/hiding" && "$ROOT/src/metisc" --run "hiding_$sc.llp" ) > "$WORK/hi_$sc.txt" 2>&1 \
+      || { echo "hiding_$sc: metisc --run failed"; cat "$WORK/hi_$sc.txt"; exit 1; }
+  diff -u "$ROOT/corpus/goldens/hiding/hiding_$sc.txt" "$WORK/hi_$sc.txt"
+  n_hi=$((n_hi + 1))
+done
+( cd "$ROOT/corpus/hiding" && "$ROOT/src/metisc" --run hiding_copy.llp ) | sed 's/hiding_copy/hiding_use/' | diff -u "$WORK/hi_use.txt" -
+"$ROOT/src/metisc" --roundtrip "$ROOT/corpus/hiding/manifest.txt" > /dev/null
+( cd "$ROOT/corpus/hiding" && "$ROOT/src/metisc" --keys manifest.txt ) > "$WORK/hi_keys.txt"
+diff -u "$ROOT/corpus/goldens/hiding/keys.txt" "$WORK/hi_keys.txt"
+[ "$(awk '$2=="hiding_use"{print $3}' "$WORK/hi_keys.txt" | head -1)" = "$(awk '$2=="hiding_copy"{print $3}' "$WORK/hi_keys.txt" | head -1)" ] \
+    || { echo "hiding: the key is not the hand copy's"; exit 1; }
+grep -q '^I hiding_use dir hiding_unit.llp [0-9a-f]* hiding (drop turn)$' "$WORK/hi_keys.txt" \
+    || { echo "hiding: --keys does not print the set, sorted and once"; exit 1; }
+for sc in bad_link:hiding-unknown:on bad_head:hiding-unknown:turn-1 bad_inner:hiding-unknown:drop \
+          bad_own:hiding-shadow:drop bad_sibling:hiding-shadow:finish bad_nested:hiding-shadow:drop; do
+  name=${sc%%:*}; rest=${sc#*:}; code=${rest%%:*}; rule=${rest#*:}
+  ( cd "$ROOT/corpus/hiding" && "$ROOT/src/metisc" --diagnostics "hiding_$name.llp" ) > "$WORK/hi_$name.txt" 2>&1 || true
+  grep -q "^error $code " "$WORK/hi_$name.txt" && grep -q "$rule" "$WORK/hi_$name.txt" \
+      || { echo "hiding_$name: not $code on $rule"; cat "$WORK/hi_$name.txt"; exit 1; }
+  rc=0; ( cd "$ROOT/corpus/hiding" && "$ROOT/src/metisc" --run "hiding_$name.llp" ) > /dev/null 2>&1 < /dev/null || rc=$?
+  [ "$rc" -ne 0 ] || { echo "hiding_$name: --run does not refuse it"; exit 1; }
+  n_hi=$((n_hi + 1))
+done
+( cd "$ROOT/corpus/iface" && "$ROOT/src/metisc" --link hiding/composition_k.yaml --check ) > "$WORK/hi_k.txt" 2>&1 \
+    || { echo "hiding: the unit does not link kept whole"; cat "$WORK/hi_k.txt"; exit 1; }
+rc=0; ( cd "$ROOT/corpus/iface" && "$ROOT/src/metisc" --link hiding/composition_a.yaml --check ) > "$WORK/hi_a.txt" 2>&1 || rc=$?
+[ "$rc" -ne 0 ] && grep -q '^error L16 link-world-in: push is produced by no member' "$WORK/hi_a.txt" \
+    || { echo "hiding: a hidden rule still produces in the interface check"; cat "$WORK/hi_a.txt"; exit 1; }
+( cd "$ROOT/corpus/iface" && "$ROOT/src/metisc" --interface hiding/composition_p.yaml ) > "$WORK/hi_h.txt" 2>&1 || true   # its exit says warnings
+grep -q '^include dir \.\./base\.llp .* key [0-9a-f]* hiding (look) by h$' "$WORK/hi_h.txt" \
+    || { echo "hiding: --interface does not print the set"; grep '^include' "$WORK/hi_h.txt"; exit 1; }
+( cd "$ROOT/corpus/iface" && "$ROOT/src/metisc" --link hiding/composition_h.yaml -o "$WORK/hi_img" ) > /dev/null 2>&1
+( cd "$ROOT/corpus/iface" && "$ROOT/src/metisc" --link hiding/composition_k.yaml -o "$WORK/hi_img" ) > /dev/null 2>&1
+grep -q '"hiding": \["look"\]' "$WORK"/hi_img/hiding_h.image.v-*/image.lock \
+    || { echo "hiding: the lock does not record the set"; exit 1; }
+! grep -q '"hiding"' "$WORK"/hi_img/hiding_k.image.v-*/image.lock || { echo "hiding: a lock with no hiding has the field"; exit 1; }
+# a hidden rule is no reader: look alone reads tick__stop, so h's in goes unread and k's does not
+grep -q '^warning I2 h: in tick__stop is read by no rule (in-unread)$' "$WORK/hi_h.txt" \
+    || { echo "hiding: a hidden rule still reads in the interface check"; exit 1; }
+( cd "$ROOT/corpus/iface" && "$ROOT/src/metisc" --link hiding/composition_h.yaml --check ) > "$WORK/hi_hl.txt" 2>&1
+[ "$(sed -n 's/^result 0 error(s), \([0-9]*\) warning.*/\1/p' "$WORK/hi_hl.txt")" -eq \
+  "$(( $(sed -n 's/^result 0 error(s), \([0-9]*\) warning.*/\1/p' "$WORK/hi_k.txt") + 1 ))" ] \
+    || { echo "hiding: the kept unit should have one unread in fewer"; exit 1; }
+# the sidecar walks the splice
+grep -q '"rule": *"send"' "$WORK"/hi_img/hiding_h.image.v-*/members/h/sidecar.json \
+    && ! grep -q '"rule": *"look"' "$WORK"/hi_img/hiding_h.image.v-*/members/h/sidecar.json \
+    && grep -q '"rule": *"look"' "$WORK"/hi_img/hiding_k.image.v-*/members/k/sidecar.json \
+    || { echo "hiding: the sidecar does not walk the splice"; exit 1; }
+echo "HIDING $n_hi/9 (the scenes == goldens and the hand copy's rows and key; the refusals; the interface, the prints, the lock)"
 
 echo "ALL GATES GREEN"

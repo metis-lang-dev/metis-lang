@@ -370,3 +370,10 @@ consumed: bind <V> in an atom on the left; a fresh value needs a bwd
 table or a constant". A `<>` guard binds nothing. D2 row: diag_compile
 `u`. The loop's driver hears it through compiles() like any compile
 error, before grounding.
+
+## Amendment (2026-11-01, hiding-include s-bd3b639d; spec/18 §3): two compile errors at an include
+
+- `hiding-unknown` (error, compile): `hiding` names no rule of the unit as spliced: a name it does not have, one a nested include already hid, a `qui` link's, or one alternative head's. Located at the include; the text lists the unit's rules.
+- `hiding-shadow` (error, compile): a rule named like a hidden one stands in the includer, a sibling include or above a nested include: the override spec/18 §4 rejects. Located at the include that hides it.
+
+There is no `hiding-unused`: a name hidden is by definition used.

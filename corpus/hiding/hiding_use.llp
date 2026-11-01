@@ -1,0 +1,8 @@
+% hiding_use — the unit minus two rules (spec/18 §3): `drop` absent, so start always goes to keep; `turn` and both its
+% heads absent. The key equals hiding_copy.llp's, the hand copy without them.
+catalog hiding_scene 1.
+provenance text "a scene of hiding" "2026-11-01".
+include "hiding_unit.llp" hiding (turn drop drop).
+#init start 1
+#steps 8
+#seeds 5

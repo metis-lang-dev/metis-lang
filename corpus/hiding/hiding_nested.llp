@@ -1,0 +1,7 @@
+% hiding_nested — a rule of the unit as spliced is hideable through a nested include; what the nested one already hid is not.
+catalog hiding_nested 1.
+provenance text "a scene of hiding" "2026-11-01".
+include "hiding_mid.llp" hiding (turn).
+#init start 1
+#steps 8
+#seeds 5

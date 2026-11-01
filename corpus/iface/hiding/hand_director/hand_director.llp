@@ -1,0 +1,27 @@
+% hand_director — h's director written out, so --interface has a package to read (it reads none for a generated one; spec/18 §3).
+catalog hand_director 1.
+provenance text "generated at link from the composition's ports (spec/17 §3.3)" "2026-10-28".
+include "iface/director_tree_domain.llp".
+include "capacity.llp".
+
+type kind {none}.
+bwd specialist(domain).
+specialist(h).
+young_grant(a0).
+young_grant(a1).
+mature_grant(a2).
+mature_grant(a3).
+mature_status(a1).
+mature_status(a2).
+mature_status(a3).
+
+#init free(hand) 1
+#init offpath(h) 1
+#init nowant(h) 1
+#init nolate(h) 1
+#init nocommit(h) 1
+#init age_of(h, a0) 1
+#init issue(hand, t0) 1
+#init serving(hand, t0) 1
+#steps 6
+#seeds 1

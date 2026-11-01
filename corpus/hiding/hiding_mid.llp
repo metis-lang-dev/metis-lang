@@ -1,0 +1,4 @@
+% hiding_mid — a unit that includes the unit, hiding one rule itself.
+catalog hiding_mid 1.
+provenance text "a scene of hiding" "2026-11-01".
+include "hiding_unit.llp" hiding (drop).

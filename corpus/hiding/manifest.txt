@@ -1,0 +1,13 @@
+# the keys of the hiding scenes (spec/18 §3): hiding_use is hiding_copy, the hand copy without the rules
+case hiding_use
+llp hiding_use.llp
+registry hiding
+init start 1
+steps 8
+end
+case hiding_copy
+llp hiding_copy.llp
+registry hiding
+init start 1
+steps 8
+end

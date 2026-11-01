@@ -1,0 +1,7 @@
+% D2 fixture (spec 08), FATAL row hiding-shadow: the includer names a hidden rule again.
+catalog diag-hiding-shadow 1.
+include "../hiding/hiding_unit.llp" hiding (drop).
+stage act {
+  %% Mine.
+  drop [dyn] : start -o kept.
+}

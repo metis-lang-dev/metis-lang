@@ -1,0 +1,12 @@
+case hiding_empty steps=8 seeds=5
+I start 1
+T 1 keep on
+F 1 (done) kept:1
+T 2 keep on
+F 2 (done) kept:1
+T 3 keep on
+F 3 (done) kept:1
+T 4 keep on
+F 4 (done) kept:1
+T 5 keep on
+F 5 (done) kept:1

@@ -35,6 +35,8 @@ let registry = [
   ("reads-guard-not-bwd", ("error", "compile"));
   ("reads-var-unbound", ("error", "compile"));
   ("include-cycle", ("error", "compile"));
+  ("hiding-unknown", ("error", "compile"));
+  ("hiding-shadow", ("error", "compile"));
   ("extends-no-base", ("error", "compile"));
   ("decl-duplicate", ("error", "compile"));
   ("type-unknown", ("error", "compile"));
@@ -115,6 +117,10 @@ let hint code data =
     String.concat "" [ "bind "; g "var"; ": make it a formal of "; g "port"; ", or enumerate it with a guard" ]
   | "include-cycle" ->
     String.concat "" [ "break the include cycle at "; g "path" ]
+  | "hiding-unknown" ->
+    String.concat "" [ "hide a rule of "; g "unit"; " by its name, or take "; g "name"; " out of the list: a link or one alternative head is not a rule here" ]
+  | "hiding-shadow" ->
+    String.concat "" [ "give "; g "name"; " another name, or do not hide it from "; g "unit"; ": a rule is hidden or kept, never replaced" ]
   | "extends-no-base" ->
     String.concat "" [ "compile this pack against its base catalog "; g "base" ]
   | "decl-duplicate" ->

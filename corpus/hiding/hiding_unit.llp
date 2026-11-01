@@ -1,0 +1,27 @@
+% hiding_unit — a unit to hide rules from (spec/18 §3; hiding-include s-bd3b639d): a rule, a rule with alternative
+% heads, a rule alone in its stage, and a link between the stages.
+catalog hiding_unit 1.
+provenance text "a unit for the hiding scenes" "2026-11-01".
+layers (dyn).
+stages (act tail).
+namespace hiding produce (dyn).
+pred start : hiding.
+pred kept : hiding.
+pred gone : hiding.
+pred left : hiding.
+pred right : hiding.
+pred ended : hiding.
+stage act {
+  %% The rule that stays.
+  keep [dyn] : start -o kept.
+  %% A rule to hide.
+  drop [dyn] : start -o gone.
+  %% A rule with alternative heads.
+  turn [dyn] : $kept -o (left @w 0.5 | right @w 0.5).
+}
+%% On to the tail.
+qui on [dyn] : act * $kept -o tail.
+stage tail {
+  %% The tail's one rule.
+  finish [dyn] : $kept -o ended.
+}

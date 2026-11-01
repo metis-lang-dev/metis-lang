@@ -43,8 +43,8 @@ val std_dir : unit -> string option
 val include_place : string -> string -> string * string
 val include_path : string -> string -> string
 
-(* a source's includes, transitively, first-seen: (string, place, file) *)
-val include_list : Ast.catalog -> string -> (string * string * string) list
+(* a source's includes, transitively, first-seen: (string, place, file, the rules hidden) *)
+val include_list : Ast.catalog -> string -> (string * string * string * string list) list
 
 val compile : ?base:(Catalog.t * Ast.catalog) -> Ast.catalog
   -> Catalog.t * ports

@@ -1,0 +1,7 @@
+% hiding_other — brings its own `finish`, beside hiding_unit.llp's hidden one.
+catalog hiding_other 1.
+provenance text "a unit for the hiding scenes" "2026-11-01".
+stage tail {
+  %% Another finish.
+  finish [dyn] : $kept -o ended.
+}

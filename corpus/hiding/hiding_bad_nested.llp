@@ -1,0 +1,11 @@
+% hiding_bad_nested.llp — the includer names a rule a nested include hid: hiding-shadow
+catalog hiding_bad_nested 1.
+provenance text "a scene of hiding" "2026-11-01".
+include "hiding_mid.llp".
+stage tail {
+  %% Mine.
+  drop [dyn] : $kept -o gone.
+}
+#init start 1
+#steps 4
+#seeds 1

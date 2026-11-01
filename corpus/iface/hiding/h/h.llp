@@ -1,0 +1,5 @@
+% h — the unit hiding (look): it still sends, so the composition links; the include prints its hidden set.
+catalog h 1.
+provenance text "the hiding interface scene" "2026-11-01".
+include "../capacity_h.llp".
+include "../base.llp" hiding (look).

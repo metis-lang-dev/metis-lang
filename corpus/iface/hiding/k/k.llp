@@ -1,0 +1,5 @@
+% k — the unit.
+catalog k 1.
+provenance text "the hiding interface scene" "2026-11-01".
+include "../capacity_k.llp".
+include "../base.llp".

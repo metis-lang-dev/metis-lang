@@ -1,0 +1,7 @@
+% hiding_empty — every rule of the tail hidden: the stage stays, empty, and the run goes through it (an empty stage is legal).
+catalog hiding_empty 1.
+provenance text "a scene of hiding" "2026-11-01".
+include "hiding_unit.llp" hiding (finish drop turn).
+#init start 1
+#steps 8
+#seeds 5

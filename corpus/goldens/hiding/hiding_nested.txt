@@ -1,0 +1,12 @@
+case hiding_nested steps=8 seeds=5
+I start 1
+T 1 keep on finish finish finish finish finish finish
+F 1 tail ended:6 kept:1
+T 2 keep on finish finish finish finish finish finish
+F 2 tail ended:6 kept:1
+T 3 keep on finish finish finish finish finish finish
+F 3 tail ended:6 kept:1
+T 4 keep on finish finish finish finish finish finish
+F 4 tail ended:6 kept:1
+T 5 keep on finish finish finish finish finish finish
+F 5 tail ended:6 kept:1

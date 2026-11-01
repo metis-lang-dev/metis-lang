@@ -1,0 +1,7 @@
+% hiding_bad_inner.llp — what a nested include already hid is no rule of the unit as spliced: hiding-unknown
+catalog hiding_bad_inner 1.
+provenance text "a scene of hiding" "2026-11-01".
+include "hiding_mid.llp" hiding (drop).
+#init start 1
+#steps 4
+#seeds 1

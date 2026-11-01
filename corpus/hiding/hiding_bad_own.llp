@@ -1,0 +1,11 @@
+% hiding_bad_own.llp — the includer names a hidden rule again: hiding-shadow, the override spec/18 rejects
+catalog hiding_bad_own 1.
+provenance text "a scene of hiding" "2026-11-01".
+include "hiding_unit.llp" hiding (drop).
+stage act {
+  %% Mine.
+  drop [dyn] : start -o kept.
+}
+#init start 1
+#steps 4
+#seeds 1

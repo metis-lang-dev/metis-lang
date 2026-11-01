@@ -1,0 +1,8 @@
+% hiding_bad_sibling.llp — a sibling include brings a rule hidden from the other: hiding-shadow
+catalog hiding_bad_sibling 1.
+provenance text "a scene of hiding" "2026-11-01".
+include "hiding_unit.llp" hiding (finish).
+include "hiding_other.llp".
+#init start 1
+#steps 4
+#seeds 1

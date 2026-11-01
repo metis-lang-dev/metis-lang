@@ -80,9 +80,9 @@ let key_case dir c =
      what it resolved to — a key never rests on an unprinted environment *)
   List.iter (fun p ->
       let path = Filename.concat dir p in
-      List.iter (fun (spec, place, file) ->
-          Printf.printf "I %s %s %s %s\n" c.c_name place spec
-            (Sha256.hex (Ast.pretty (Ast.strip_locs (Parser.parse_file file)))))
+      List.iter (fun (spec, place, file, hiding) ->
+          Printf.printf "I %s %s %s %s%s\n" c.c_name place spec
+            (Sha256.hex (Ast.pretty (Ast.strip_locs (Parser.parse_file file)))) (Ast.hiding_str hiding))
         (Compile.include_list (Parser.parse_file path) (Filename.dirname path)))
     (c.c_llp :: (match c.c_pack with Some p -> [p] | None -> []))
 

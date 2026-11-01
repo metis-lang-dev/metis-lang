@@ -37,7 +37,7 @@ type member = {
   m_rules : rrule list; m_init : (string * int) list; m_facts : Ast.atom list;
   m_shared : (string * string) list; m_status : (string * string list) list;
   m_extra : (string * y) list; m_key : string; m_compile : string option;
-  m_inc : (string * string * string) list; m_inc_err : string list }
+  m_inc : (string * string * string * string list) list; m_inc_err : string list }
 type ipkg = { i_path : string; i_name : string; i_key : string;
               i_preds : string list; i_rules : bool;
               i_nature : (string * string) list option }

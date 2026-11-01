@@ -1,0 +1,3 @@
+% D2 fixture (spec 08), FATAL row hiding-unknown: a name that is no rule of the unit.
+catalog diag-hiding-unknown 1.
+include "../hiding/hiding_unit.llp" hiding (nosuch).

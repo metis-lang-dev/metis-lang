@@ -1,0 +1,25 @@
+% hiding_copy — hiding_unit.llp by hand without drop and turn: its key is hiding_use.llp's.
+catalog hiding_scene 1.
+provenance text "a scene of hiding" "2026-11-01".
+layers (dyn).
+stages (act tail).
+namespace hiding produce (dyn).
+pred start : hiding.
+pred kept : hiding.
+pred gone : hiding.
+pred left : hiding.
+pred right : hiding.
+pred ended : hiding.
+stage act {
+  %% The rule that stays.
+  keep [dyn] : start -o kept.
+}
+%% On to the tail.
+qui on [dyn] : act * $kept -o tail.
+stage tail {
+  %% The tail's one rule.
+  finish [dyn] : $kept -o ended.
+}
+#init start 1
+#steps 8
+#seeds 5

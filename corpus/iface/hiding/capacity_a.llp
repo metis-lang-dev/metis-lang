@@ -1,0 +1,6 @@
+% capacity — the member and resource (spec/18 §3).
+catalog hiding_capacity 1.
+provenance text "a member and one resource" "2026-11-01".
+type domain {a}.
+type resource {hand}.
+type thing {t1 t2}.

@@ -199,6 +199,11 @@ let sends_command m p =
 (* an included unit's key in the lock (spec/17 amendment 5: place + key per unit): its source's, as --keys prints it *)
 let unit_key f = Sha256.hex (Ast.pretty (Ast.strip_locs (Parser.parse_file f)))
 
+(* the rules an include hides, in the lock (spec/18 §3); none: no field, so a lock without hiding is as it was *)
+let lock_hiding = function
+  | [] -> []
+  | names -> [("hiding", Image.JL (List.map (fun n -> Image.JS n) names))]
+
 let manifest_s m k = match List.assoc_opt k m.m_extra with Some (S s) -> Some s | _ -> None
 
 let run ~wire o comp_path =
@@ -325,7 +330,7 @@ let run ~wire o comp_path =
   (* L20 places (spec/17 amendment 5): an include name resolves somewhere (root, std or METIS_HOME; METIS_HOME unset
      is no error by itself), and to one file across the members *)
   List.iter (fun m -> List.iter (fun e -> add "error" "L20" "link-places: %s: %s" m.m_name e) m.m_inc_err) members;
-  let incs = List.concat_map (fun m -> List.map (fun (s, _, f) -> (s, f)) m.m_inc) members in
+  let incs = List.concat_map (fun m -> List.map (fun (s, _, f, _) -> (s, f)) m.m_inc) members in
   List.iter (fun s ->
       let files = uniq (List.filter_map (fun (s', f) -> if s' = s then Some f else None) incs) in
       if List.length files > 1 then
@@ -683,9 +688,9 @@ let run ~wire o comp_path =
                                       then Image.JO [("place", Image.JS "image"); ("path", Image.JS ("members/" ^ m.m_name))]
                                       else Image.JO [("place", Image.JS "dir"); ("path", Image.JS (Filename.dirname m.m_program))]);
                                     ("program", Image.JS (snd (wire_of m.m_name)));
-                                    ("includes", Image.JL (List.map (fun (s, place, f) ->
-                                         Image.JO [("name", Image.JS s); ("place", Image.JS place); ("path", Image.JS (inside f));
-                                                   ("key", Image.JS (unit_key f))]) m.m_inc))]))
+                                    ("includes", Image.JL (List.map (fun (s, place, f, h) ->
+                                         Image.JO ([("name", Image.JS s); ("place", Image.JS place); ("path", Image.JS (inside f));
+                                                    ("key", Image.JS (unit_key f))] @ lock_hiding h)) m.m_inc))]))
                (dm :: specs)));
           ("iface", Image.JO (List.map (fun i -> (Filename.basename i.i_path, Image.JS i.i_key)) a.a_ipkgs));
           ("capacity", Image.JO [("file", Image.JS (Filename.basename capacity)); ("key", Image.JS a.a_cap_key)]);
@@ -793,8 +798,8 @@ let run_package ~(bundle : manifest:string -> string -> string list -> string li
                ("host", Image.JS origin);
                ("dir", Image.JO [("place", Image.JS "dir"); ("path", Image.JS pkg_dir)]);
                ("served", Image.JS served);
-               ("includes", Image.JL (List.map (fun (s, place, f) ->
-                    Image.JO [("name", Image.JS s); ("place", Image.JS place); ("path", Image.JS f); ("key", Image.JS (unit_key f))])
+               ("includes", Image.JL (List.map (fun (s, place, f, h) ->
+                    Image.JO ([("name", Image.JS s); ("place", Image.JS place); ("path", Image.JS f); ("key", Image.JS (unit_key f))] @ lock_hiding h))
                     (Compile.include_list (Parser.parse_file served) (Filename.dirname served))))])]);
           ("places", Image.JO [("root", Image.JS pkg_dir);
                                ("std", match Compile.std_dir () with Some d -> Image.JS d | None -> Image.JN);

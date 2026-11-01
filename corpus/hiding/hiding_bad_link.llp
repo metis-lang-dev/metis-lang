@@ -1,0 +1,7 @@
+% hiding_bad_link.llp — a qui link is not a rule here: hiding-unknown
+catalog hiding_bad_link 1.
+provenance text "a scene of hiding" "2026-11-01".
+include "hiding_unit.llp" hiding (on).
+#init start 1
+#steps 4
+#seeds 1

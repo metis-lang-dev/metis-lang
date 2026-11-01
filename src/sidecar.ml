@@ -95,7 +95,7 @@ let scan f =
     Some { s_name = c.cname; s_file = norm f;
            s_text = (match c.cprov with Some ("text", t, _) -> Some t | _ -> None);
            s_extends = c.cextends;
-           s_includes = List.filter_map (function DInclude i -> Some (norm (Filename.concat dir i)) | _ -> None) c.cdecls;
+           s_includes = List.filter_map (function DInclude (i, _) -> Some (norm (Filename.concat dir i)) | _ -> None) c.cdecls;
            s_types = List.filter_map (function DType (t, _) -> Some t | _ -> None) c.cdecls }
 
 (* a card's error: a diagnostic code (ruled), the compiler's when it has one *)

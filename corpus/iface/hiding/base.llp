@@ -1,0 +1,19 @@
+% base — a unit with the world's only sender of push; hiding `send` leaves the composition with none (spec/18 §3).
+catalog hiding_base 1.
+provenance text "a unit for the hiding interface scene" "2026-11-01".
+layers (dyn).
+stages (act).
+include "iface/protocol_domain.llp".
+namespace base produce (dyn).
+%% A thing the world shows.
+pred seen(thing) : base.
+%% The world is pushed.
+pred push(thing) : base.
+%% It looked.
+pred looked : base.
+stage act {
+  %% It looks, the only rule that reads tick__stop.
+  look [dyn] : tick__stop -o looked.
+  %% It pushes what it sees.
+  send [dyn] : $seen(T) -o push(T).
+}

@@ -48,6 +48,10 @@ is load-bearing. Implementations: python `hashlib` in
 `ocaml/sha256.ml` (FIPS 180-4, pure stdlib, pinned by the standard
 vectors via `metisc --selftest`) + `ocaml/nets.ml`.
 
+An include's `hiding` (spec/18 §3) is not in the canonical bytes: the key is
+of the program after the splice, so it moves only through the rules dropped,
+and a unit included with `hiding` keys equal to the same rules copied by hand.
+
 ## Invariants (inherited from the stage-3 discrimination suite)
 
 Invariant under presentation shuffles and clause/link renaming;

@@ -152,7 +152,7 @@ the composition's facts, written as a generated `.llp` and compiled like any mem
 ### 3.4 image.lock
 
 ```
-members:   {cook_a: {bundle: <h12>, source: <sha256 of the resolved AST>, includes: [{name, place: dir|root|home, path}]}, ...}
+members:   {cook_a: {bundle: <h12>, source: <sha256 of the resolved AST>, includes: [{name, place: dir|root|home, path, hiding?}]}, ...}
 iface:     {protocol_domain.llp: <h>, director_tree_domain.llp: <h>, director_tree_wake.llp: <h>, director_domain.llp: <h>}
 capacity:  {file: tick_types.llp, key: <h>}
 places:    {root: <path>, home: <path or null>}
@@ -161,6 +161,9 @@ toolchain: {metisc: <version>, git: <sha>}
 
 The lock is what `metis build` (§7) compares to decide what to recompile, and what two processes compare in
 their handshake (§5.4).
+
+`hiding` (spec/18 §3) is the include's sorted rule names, and absent when there are none, so a lock with no
+hiding is as it was.
 
 ## 4. The link step
 

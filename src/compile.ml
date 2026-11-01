@@ -118,11 +118,11 @@ let include_list (c : Ast.catalog) base_dir =
   let out = ref [] in
   let rec go (c : Ast.catalog) base seen =
     List.iter (function
-        | DInclude p ->
+        | DInclude (p, hiding) ->
           let (tag, path) = include_place p base in
           if not (List.mem path seen) then begin
-            if not (List.exists (fun (_, _, q) -> q = path) !out) then
-              out := (p, tag, path) :: !out;
+            if not (List.exists (fun (_, _, q, h) -> q = path && h = hiding) !out) then
+              out := (p, tag, path, hiding) :: !out;
             go (Parser.parse_file path) (Filename.dirname path) (path :: seen)
           end
         | _ -> ())
@@ -130,10 +130,47 @@ let include_list (c : Ast.catalog) base_dir =
   go c base_dir [];
   List.rev !out
 
+(* spec/18 §3: the splice minus the rules named. Links are not rules here (hiding one would hide the stage it leads
+   to), and a rule name takes all its alternative heads. *)
+let hide_rules p hiding l d (inc : Ast.catalog) =
+  let names = List.concat_map (function
+      | DStage s -> List.map (fun r -> rule_base r.rname) s.srules
+      | _ -> []) inc.cdecls in
+  List.iter (fun n ->
+      if not (List.mem n names) then begin
+        let known = List.sort_uniq compare names in
+        let text = Printf.sprintf "`hiding` names no rule of '%s': '%s'; the unit's rules are %s" p n
+            (String.concat " " known) in
+        Diag.emit (Diag.make "hiding-unknown" text
+                     { Diag.s_loc = { Diag.file = l.file; line = l.line; col = l.col; decl = "include/" ^ p };
+                       s_subject = [ decl_line d ]; s_context = []; s_layers = "" }
+                     [ ("unit", p); ("name", n) ]);
+        raise (Lang_error [ text ])
+      end) hiding;
+  List.map (function
+      | DStage s -> DStage { s with srules = List.filter (fun r -> not (List.mem (rule_base r.rname) hiding)) s.srules }
+      | d -> d) inc.cdecls
+
+(* a hidden rule named again beside its include is the override spec/18 §4 rejects *)
+let check_shadow decls (p, hidden, l, d) =
+  List.iter (function
+      | DStage s ->
+        List.iter (fun r ->
+            let n = rule_base r.rname in
+            if List.mem n hidden then begin
+              let text = Printf.sprintf "rule %s is hidden from '%s' and named again: a rule is not replaced" n p in
+              Diag.emit (Diag.make "hiding-shadow" text
+                           { Diag.s_loc = { Diag.file = l.file; line = l.line; col = l.col; decl = "include/" ^ p };
+                             s_subject = [ decl_line d ]; s_context = []; s_layers = "" }
+                           [ ("unit", p); ("name", n) ]);
+              raise (Lang_error [ text ])
+            end) s.srules
+      | _ -> ()) decls
+
 let rec resolve_in (c : Ast.catalog) base_dir seen =
-  let layers = ref c.clayers and stages = ref c.cstages in
+  let layers = ref c.clayers and stages = ref c.cstages and hid = ref [] in
   let pairs = List.concat_map (fun (d, l) -> match d with
-      | DInclude p ->
+      | DInclude (p, hiding) ->
         let path = include_path p base_dir in
         if List.mem path seen then begin
           let text = Printf.sprintf "include cycle at %s" p in
@@ -147,17 +184,21 @@ let rec resolve_in (c : Ast.catalog) base_dir seen =
           raise (Lang_error [ text ])
         end;
         let inc = Parser.parse_file path in
-        let inc = resolve_in inc (Filename.dirname path)
+        let (inc, inner) = resolve_in inc (Filename.dirname path)
             (path :: seen) in
         if !layers = [] then layers := inc.clayers;
         if !stages = [] then stages := inc.cstages;
-        List.combine inc.cdecls inc.cdecl_locs
+        hid := (p, hiding @ inner, l, d) :: !hid;
+        List.combine (hide_rules p hiding l d inc) inc.cdecl_locs
       | d -> [(d, l)])
       (List.combine c.cdecls c.cdecl_locs) in
-  { c with clayers = !layers; cstages = !stages;
-           cdecls = List.map fst pairs; cdecl_locs = List.map snd pairs }
+  let decls = List.map fst pairs in
+  List.iter (check_shadow decls) (List.rev !hid);
+  ({ c with clayers = !layers; cstages = !stages;
+            cdecls = decls; cdecl_locs = List.map snd pairs },
+   List.concat_map (fun (_, h, _, _) -> h) !hid)
 
-let resolve_includes c base_dir = resolve_in c base_dir []
+let resolve_includes c base_dir = fst (resolve_in c base_dir [])
 
 (* -- compilation ------------------------------------------------------ *)
 

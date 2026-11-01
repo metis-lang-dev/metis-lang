@@ -380,7 +380,7 @@ type member = {
   m_extra : (string * y) list;          (* the rest of domain.yaml *)
   m_key : string;                       (* the resolved AST's sha256 *)
   m_compile : string option;            (* None: compiles *)
-  m_inc : (string * string * string) list; (* include string, place, file *)
+  m_inc : (string * string * string * string list) list; (* include string, place, file, the rules hidden *)
   m_inc_err : string list }             (* includes that resolve nowhere *)
 
 let init_of path =
@@ -404,19 +404,19 @@ let load_member dir name role =
   let sigs = ref [] and bwd = ref [] and types = ref [] and abstract = ref [] in
   let rules = ref [] and facts = ref [] in
   let incs = ref [] and inc_err = ref [] in
-  let rec visit f =
+  let rec visit ?(hide = []) f =
     if not (List.mem f !files) then begin
       files := !files @ [f];
       let ast = Parser.parse_file f in
       List.iter (fun d ->
           match d with
-          | DInclude p ->
+          | DInclude (p, hiding) ->
             (match Compile.include_place p (Filename.dirname f) with
              | (place, g) ->
                let g = norm g in
-               if not (List.exists (fun (_, _, q) -> q = g) !incs) then
-                 incs := !incs @ [(p, place, g)];
-               edges := !edges @ [(f, g)]; visit g
+               if not (List.exists (fun (_, _, q, h) -> q = g && h = hiding) !incs) then
+                 incs := !incs @ [(p, place, g, hiding)];
+               edges := !edges @ [(f, g)]; visit ~hide:(hiding @ hide) g   (* a hidden rule reads and produces nothing *)
              | exception Compile.Lang_error ms -> inc_err := !inc_err @ ms)
           | DPred (n, a, _) ->
             if not (List.mem_assoc n !decl_file) then decl_file := !decl_file @ [(n, f)];
@@ -429,6 +429,7 @@ let load_member dir name role =
           | DFact a -> facts := !facts @ [a]
           | DStage s ->
             List.iter (fun (r : rule) ->
+                if not (List.mem (Ast.rule_base r.rname) hide) then
                 rules := !rules @ [{ r_name = r.rname; r_file = f;
                                      r_body = List.filter_map (function
                                          | BAtom a -> Some (a, if a.persist then 'r' else 'c')
@@ -968,16 +969,17 @@ let analyse ?direct_dir comp_path =
   (* one line per resolved FILE (two include strings may reach it), the
      first string and place that did, and every member that includes it *)
   let incs = List.fold_left (fun acc m ->
-      List.fold_left (fun acc (spec, place, f) ->
-          if List.exists (fun ((_, _, f'), _) -> f' = f) acc then
-            List.map (fun (((_, _, f') as k), users) ->
-                if f' = f && not (List.mem m.m_name users) then (k, users @ [m.m_name])
+      List.fold_left (fun acc (spec, place, f, h) ->
+          if List.exists (fun ((_, _, f', h'), _) -> f' = f && h' = h) acc then
+            List.map (fun (((_, _, f', h') as k), users) ->
+                if f' = f && h' = h && not (List.mem m.m_name users) then (k, users @ [m.m_name])
                 else (k, users)) acc
-          else acc @ [((place, spec, f), [m.m_name])])
+          else acc @ [((place, spec, f, h), [m.m_name])])
         acc m.m_inc) [] (dm :: specs) in
-  List.iter (fun ((place, spec, f), users) ->
-      line "include %s %s %s key %s by %s" place spec (show f)
+  List.iter (fun ((place, spec, f, h), users) ->
+      line "include %s %s %s key %s%s by %s" place spec (show f)
         (Sha256.hex (Ast.pretty (Ast.strip_locs (Parser.parse_file f))))
+        (Ast.hiding_str h)
         (String.concat " " users))
     incs;
   line "cut %d" (List.length cut);

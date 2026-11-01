@@ -36,7 +36,7 @@ type link_d = {
 type port_kind = Weight | Guard | Input | Output
 
 type decl =
-  | DInclude of string
+  | DInclude of string * string list
   | DType of string * string list
   | DTypes of string list      (* `types (a b).`: abstract type names (spec 12) *)
   | DNamespace of string * string list * string list option
@@ -71,3 +71,9 @@ val decl_line : decl -> string
 (* one top-level decl, canonical, no doc (not for stages) *)
 val doc_lines : string -> string
 val pretty : catalog -> string
+
+(* ` hiding (a b)`, or nothing for an empty set: the one form of the prints *)
+val hiding_str : string list -> string
+
+(* a rule's source name: alternative heads parse to <name>-<k> *)
+val rule_base : string -> string

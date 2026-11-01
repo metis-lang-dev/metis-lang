@@ -48,6 +48,15 @@ let punct p ch = match next p with
   | Punct c when c = ch -> ()
   | _ -> fail "%s: expected '%c'" (where p) ch
 
+(* `hiding (a b)`'s names, after the keyword: a set, sorted, each once (spec/18 §3) *)
+let hiding_names p =
+  punct p '(';
+  let rec go acc = match next p with
+    | Ident v -> go (v :: acc)
+    | Punct ')' -> List.sort_uniq compare acc
+    | _ -> fail "%s: expected a rule name or ')' in hiding" (where p) in
+  go []
+
 let expect_kw p kw =
   let v = expect_ident p in
   if v <> kw then fail "expected %s, got %s" kw v
@@ -318,7 +327,11 @@ let parse ?(file = "") text =
       let named () = ignore (next p); at := here p in
       (match v with
        | "include" -> named ();
-         let path = expect_str p in punct p '.'; add (DInclude path)
+         let path = expect_str p in
+         let hiding = match peek p with
+           | Some (Ident "hiding") -> ignore (next p); hiding_names p
+           | _ -> [] in
+         punct p '.'; add (DInclude (path, hiding))
        | "extends" -> ignore (next p);
          cextends := Some (expect_ident p); punct p '.'
        | "provenance" -> ignore (next p);

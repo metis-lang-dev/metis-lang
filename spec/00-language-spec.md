@@ -46,7 +46,7 @@ Doc lines attach to the NEXT rule or link; they are part of the AST
     decl        ::= include | extends | provenance | layers | stages
                   | typedecl | abstract | namespace | pred | bwd | port
                   | stagedef | link | hornfact | hornrule
-    include     ::= "include" string "."
+    include     ::= "include" string ["hiding" "(" ident* ")"] "."
     extends     ::= "extends" ident "."
     provenance  ::= "provenance" ident string string "."
     layers      ::= "layers" "(" ident* ")" "."
@@ -125,6 +125,27 @@ certifier reads no interpreter). `metisc --keys` and `--interface`
 print each include's place (dir | root | home), its path and the key
 of what it resolved to, so a key never rests on an unprinted
 environment.
+`include "unit" hiding (name …).` (spec/18 §3) splices the unit minus
+the rules named, by name and never by stage: the names are the rule
+names of the unit as spliced, after its own includes. Resolution is
+unchanged, and so is everything else of the unit (types, preds, ports,
+stages, layers adoption). A hidden rule is simply absent: a stage all
+of whose rules are hidden stays, empty, and it is legal; no event of
+the rule exists; tokens other rules read or produce are untouched, and
+the composition's interface check reports what that breaks, a hidden
+rule being neither reader nor producer there. `hiding` is a set: a name
+twice is silent, and the canonical form is sorted. A rule name takes
+all its alternative heads; a head's own name (`r-1`) is no rule here,
+nor is a `qui` link's, which would hide the stage it leads to: either
+is the error `hiding-unknown`, like a name the unit does not have, or
+one a nested include already hid. A rule named like a hidden one,
+in the includer, in a sibling include or above a nested include, is
+the error `hiding-shadow`: hiding and naming again is the override
+spec/18 §4 rejects. A member's key covers the splice, so it covers
+the set, and hiding a rule keys the same as a copy of the unit without
+it. `--keys`, `--interface` and the image's lock (spec/17 §3.4,
+`hiding: [names]` per include) carry the set beside the include's
+place and key, and say nothing for an include that hides nothing.
 The includer keeps its own name/version/provenance. `layers` and
 `stages` are ADOPTED from an included file iff the includer omits
 them (domain file included by a generated instance file).

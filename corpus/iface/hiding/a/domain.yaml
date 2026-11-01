@@ -1,0 +1,8 @@
+# a
+display: a
+line: "the hiding interface scene"
+voice: third
+program: a.llp
+clock: {beats: 1}
+shared: {seen: world-private, tick__stop: in}
+status: {success: [], failure: []}

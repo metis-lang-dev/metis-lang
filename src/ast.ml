@@ -33,7 +33,7 @@ type link_d = {
 type port_kind = Weight | Guard | Input | Output
 
 type decl =
-  | DInclude of string
+  | DInclude of string * string list   (* the unit, the rules hidden from it: sorted, each once (spec/18 §3) *)
   | DType of string * string list
   | DTypes of string list      (* `types (a b).`: abstract type names (spec 12) *)
   | DNamespace of string * string list * string list option
@@ -64,6 +64,14 @@ let strip_locs (c : catalog) =
     cdecls = List.map (function
         | DStage s -> DStage { s with srules = List.map strip_rule s.srules }
         | d -> d) c.cdecls }
+
+(* a rule's source name: alternative heads parse to <name>-<k> *)
+let rule_base n =
+  match String.rindex_opt n '-' with
+  | Some i when i > 0 && i < String.length n - 1
+                && String.for_all (fun c -> c >= '0' && c <= '9')
+                     (String.sub n (i + 1) (String.length n - i - 1)) -> String.sub n 0 i
+  | _ -> n
 
 let term_str = function TVar v -> v | TConst v -> v
 
@@ -117,8 +125,12 @@ let rule_line r =
 
 (* one top-level declaration on one canonical line, no doc (stages are
    multi-line: use rule_line per clause) *)
+let hiding_str = function
+  | [] -> ""
+  | names -> Printf.sprintf " hiding (%s)" (String.concat " " names)
+
 let decl_line = function
-  | DInclude p -> Printf.sprintf "include \"%s\"." p
+  | DInclude (p, h) -> Printf.sprintf "include \"%s\"%s." p (hiding_str h)
   | DType (n, cs) -> Printf.sprintf "type %s {%s}." n (String.concat " " cs)
   | DTypes ns -> Printf.sprintf "types (%s)." (String.concat " " ns)
   | DNamespace (n, prod, cons) ->

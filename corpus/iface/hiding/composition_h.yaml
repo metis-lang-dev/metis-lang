@@ -1,0 +1,9 @@
+# composition — h (spec/18 §3)
+name: hiding_h
+capacity: capacity_h.llp
+protocol: iface/protocol_domain.llp
+specialists: [h]
+direct: tree_director
+world: {out: [seen, tick__stop], in: [push]}
+resources: {hand: 1}
+response: 3
