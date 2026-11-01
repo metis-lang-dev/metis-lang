@@ -1,6 +1,6 @@
 # PROPOSAL 18 — derivation: extending a domain by inclusion, extension, parametrization and override
 
-**Status: DRAFT 2026-11-01 (the architect, at the user's request: "do refactoring spec … give me your take on domain extending by inclusion, lifting override, reparametrization, maybe more"). The worked example is the road family: the platform-neutral road semantics kept in the catalog, consumed by the road world (cars, SUMO/CARLA) and by the wheelchair, the loop refining the family on traces (spec 17 am.7, trace-replay s-c111ff41) with both consumers' goldens as the gate. Nothing here changes a running runtime; §3 and §4 are language changes for BOTH toolchains (metis-lang authoritative, metispy at byte parity) and are the subject road-family's step 1 once ruled.**
+**Status: DRAFT 2026-11-01, RULED on two points the same day (the user): NO override/reopening of rules in a derived domain (§4 is withdrawn: a family's rules are final, derivation is by ports, types, inclusion, packs, gating and hiding); hiding is by rule NAME or by UNIT, never by stage (§3, §7). (the architect, at the user's request: "do refactoring spec … give me your take on domain extending by inclusion, lifting override, reparametrization, maybe more"). The worked example is the road family: the platform-neutral road semantics kept in the catalog, consumed by the road world (cars, SUMO/CARLA) and by the wheelchair, the loop refining the family on traces (spec 17 am.7, trace-replay s-c111ff41) with both consumers' goldens as the gate. Nothing here changes a running runtime; §3 and §4 are language changes for BOTH toolchains (metis-lang authoritative, metispy at byte parity) and are the subject road-family's step 1 once ruled.**
 
 ## 0. In one table
 
@@ -12,10 +12,10 @@
 | **extension** (`extends base.`, a pack) | yes (spec 00 §5.6/§5.7: the base supplies signatures, bwd, layers, stages, types; the pack adds rules) | more rules over the base's vocabulary | yes (the pack compiles against its base) | a consumer's OWN rules beside a family's: the chair's members over the road vocabulary |
 | **gating by tokens** | yes (an idiom: a rule's premise consumes/reads a token the consumer issues or withholds; the generated cancel rules do this) | a base rule switched off or on per consumer | yes, nothing new | disabling a family rule without touching it |
 | **hiding at inclusion** (`include "unit" hiding (r1 r2).`) | NO: new, §3 | the union minus named rules | yes: the hidden set is in the lock | rules that must not even ground on a platform (cost, spec 14) |
-| **override of an open rule** (`open` on the base rule, `override` on the derived) | NO: new, §4; today a duplicate rule name in a stage is the error `duplicate rule name` (parser), not a warning | a base rule replaced by name | yes: the override is in the lock; the base's interface theory is rechecked on the derived composition | the few rules a family marks as extension points |
+| ~~override of an open rule~~ | NO, and stays no (the user, 2026-11-01: reopening rules in a derived domain is a JavaScript habit, not a practice to adopt); a duplicate rule name stays the parser error | — | — | never: a family's rules are final; what a platform must change is a port value, a type, a token, or a rule the family never included |
 | silent redefinition | an error today, stays an error | — | — | never |
 
-The ranking is the recommendation: a derived domain changes prices first, vocabulary second, adds its own rules by extension third, switches a family rule off by a token fourth, hides it fifth, and overrides it last and only where the family allowed it.
+The ranking is the recommendation: a derived domain changes prices first, vocabulary second, adds its own rules by extension third, switches a family rule off by a token fourth, and leaves a family unit or rule out fifth. It never rewrites a family rule: a family rule that a platform cannot live with is a family bug or a missing port, fixed in the family.
 
 ## 1. Motivation: one family, two platforms
 
@@ -33,22 +33,13 @@ The road domains (metis-worlds `road/domains`: responder, planner, the tree dire
 
 **2.5 Gating by tokens.** A family rule whose premise reads `$allow(change)` fires only where the consumer's instance asserts `allow(change)`; the chair never does, so the car's lane change is dead on the chair without an edit. The generated protocol stub's cancel rules are this idiom. Gating keeps the rule in the image (it grounds; it never fires); that is the cost of gating, and the reason §3 exists.
 
-## 3. New: hiding at inclusion
+## 3. New: hiding at inclusion, by name or by unit, never by stage
 
-`include "unit" hiding (name …).` splices the unit minus the named rules; a name that is not a rule of the unit is the error `hiding-unknown`. The hidden set is recorded in the lock beside the include (L20 gains it) and in `metisc --interface`'s print. Semantics: identical to a copy of the unit with those rules deleted, so the family's interface theory (spec 15) is rechecked on the derived composition by the link step as it is for any unit; a hidden rule that another rule of the unit depends on through a token is a finding of that check, not of hiding. Use: a rule that must not even ground on a platform (the car's lane change on the chair: its premise over `next` and the adjacent lanes multiplies the chair's grounding for nothing).
+`include "unit" hiding (name …).` splices the unit minus the named rules; a name that is not a rule of the unit is the error `hiding-unknown`. A BLOCK of rules a platform does not want (the car's lane change) is left out by not including its UNIT: the family keeps such blocks in units of their own (`change.llp`), which is the family's design duty. Hiding BY STAGE is rejected, for three reasons. (1) A stage is a unit's internal structure: its rules are designed together, the sampler's weights compete within it, and its produce feeds the next stage; removing a stage whole breaks the unit's own contract in a way the interface check sees late, if at all. (2) Stage names are shared across units (`act`, `settle` in every member), so `hiding stage act` of an included unit is ambiguous against the consumer's own `act`. (3) Name-hiding is CLOSED: a rule the family adds in a later version is not hidden unless the consumer names it, so the consumer's choice never reaches a rule it has not seen; stage-hiding is open-ended, and a later family version would be silently cut in every consumer that hid the stage. The lock lists the hidden names one by one, which is what a reviewer wants to read. The hidden set is recorded in the lock beside the include (L20 gains it) and in `metisc --interface`'s print. Semantics: identical to a copy of the unit with those rules deleted, so the family's interface theory (spec 15) is rechecked on the derived composition by the link step as it is for any unit; a hidden rule that another rule of the unit depends on through a token is a finding of that check, not of hiding. Use: a rule that must not even ground on a platform (the car's lane change on the chair: its premise over `next` and the adjacent lanes multiplies the chair's grounding for nothing).
 
-## 4. New: open rules and override
+## 4. Override: rejected
 
-**Today** a second rule of the same name in a stage is a parse error, including one that comes through an include. Redefinition is not a derivation mechanism and must not become one silently.
-
-**The proposal.** A family marks its extension points: `open` before a rule (`open yield_at_zone [dyn] : … -o … .`). A derived unit replaces an open rule with `override` before a rule of the same name in the same stage (`override yield_at_zone [dyn] : … -o … .`). Rules:
-- `override` of a rule that is not `open` is the error `override-final` naming the base rule and its unit; `override` of a name that no included or base unit defines is `override-unknown`; a plain redefinition stays `duplicate rule name`.
-- The overriding rule may change premise, head, weight and ports, not the rule's name or stage; its docs line should say what it replaces and why.
-- The lock records `(unit, rule) overridden by (unit, rule)`; `metisc --interface` prints it; the image hash covers it. The base's interface theory is rechecked on the derived composition (spec 15's cut and the L-rules), as for hiding.
-- The family's goldens do not bind the overriding consumer for that rule: the consumer's own cases do. The family's case harness still runs on the family's own composition unchanged.
-- A family rule not marked `open` is final: the responder's proper response, the restrictor's bounds, the protocol stub's rules, the director's. A family author marks `open` deliberately and rarely: a progress-stage choice (which lane, which pace), a narration, a default.
-
-**Why not override everywhere.** Certification: a consumer that may replace any rule carries the family's name and none of its guarantees. The `open` mark is the family's statement of what it guarantees and what it leaves to the platform; the image shows every override, so a reviewer sees in one listing what a platform changed.
+A second rule of the same name in a stage is a parse error, including one that comes through an include, and stays one. The user (2026-11-01): reopening rules in a derived domain is a habit of JavaScript and not good practice. The reasons agree with the certification argument: a consumer that may replace any rule carries the family's name and none of its guarantees; the proper response, the restrictor, the protocol and the director are the family's and final; and a platform difference is a price (a port), a vocabulary (a type), a permission (a token) or an absence (hiding), never a rewrite. What a platform cannot express that way is a family bug or a missing port, fixed in the family under its goldens.
 
 ## 5. What else, and what not
 
@@ -57,6 +48,7 @@ The road domains (metis-worlds `road/domains`: responder, planner, the tree dire
 - **Versioning.** A consumer pins the family's version (the chair pins metis-worlds today; it will pin the catalog's road family). The loop's refinement of the family (spec 17 am.7) produces a candidate version; it becomes the family's version when the family's goldens and EVERY consumer's goldens replay on their images (the two-consumer ecology, trace-replay s-c111ff41 step 3's gate); a consumer bumps its pin when it chooses. A learned rule enters the family under the loop's provenance; it is `open` only if the family's author marks it so.
 - **Weights and policy tuning** are port values (`@w`, weight ports): per consumer, per instance; tuning the family on cars does not retune the chair.
 - **Not a mechanism: copying rules into a consumer.** Copies-not-deps is the rule for UI code, never for domains: a copied rule leaves the family's goldens and gains none of the consumer's; it is the way knowledge stops moving.
+- **Not a mechanism: override** (§4, rejected by the user).
 - **Not a mechanism: the REPL's interactive redefinition.** The REPL may replace a rule in a session for exploration (the `#` directives); it is a session act, not a derivation, and leaves no trace in an image.
 
 ## 6. The road family: the refactoring plan (the subject road-family, after trace-replay step 2)
@@ -65,9 +57,10 @@ The road domains (metis-worlds `road/domains`: responder, planner, the tree dire
 2. **The projection:** semantic-world's situation layer emits `signal` and junction-priority roles for both adapters (it already reads a SUMO net's tls programs and link rows); the chair's mixed adapter emits the crossing's pedestrian signal as the same `signal` role.
 3. **The chair derives:** its composition includes the family's units at the catalog pin, `hiding` the car-only rules, with the chair's port values, `type mover {walker bicycle chair}`, its nav and wc members as packs; zero rule copies. Its goldens S1–S8 replay unchanged on the image (the acceptance of the refactor).
 4. **The loop on the family:** trace-replay's `--replay` on SUMO Town-net traces refines `metis-catalog/domains/road`; the gate runs the family's goldens, the road world's and the chair's (their pins moved to the candidate in a throwaway image), all on images, no simulator.
-5. **The language steps** (§3 hiding, §4 open/override) in both toolchains with goldens, spec 00/08 amendments, before step 3 needs them; if the chair can derive with ports, types, packs and gating alone, §3 and §4 wait, and the plan says so in its report.
+5. **The language step** (§3 hiding by name) in both toolchains with goldens, spec 00/08 amendments, before step 3 needs them; if the chair can derive with ports, types, packs, gating and unit choice alone, §3 waits, and the plan says so in its report.
 
-## 7. Open questions for the user
+## 7. The user's rulings (2026-11-01)
 
-- Should `open` be the default for rules the LOOP learned (they are the family's least certain rules), or never without the author's mark? My take: never without the mark; the loop's rules are judged by goldens, not by openness.
-- Hiding by stage (`hiding stage change`) as well as by rule name? My take: by rule name only; a stage is a unit's structure.
+- Override / reopening of rules in a derived domain: NO. §4 withdrawn.
+- Hiding by stage: NO; by rule name, or by leaving a unit out (§3). The family's duty is to keep leavable blocks in units of their own.
+- Rules the loop learned are never extension points (there are none); they are family rules under the family's goldens like any other.
