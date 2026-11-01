@@ -1183,7 +1183,7 @@
      "doc": ""
     },
     {
-     "name": "tick__release",
+     "name": "tick__released",
      "doc": ""
     },
     {
@@ -1195,7 +1195,15 @@
      "doc": ""
     },
     {
+     "name": "tick__release",
+     "doc": ""
+    },
+    {
      "name": "tick__grant",
+     "doc": ""
+    },
+    {
+     "name": "tick__gen",
      "doc": ""
     },
     {
@@ -1236,10 +1244,12 @@
      "tick__done",
      "tick__stuck",
      "tick__want",
-     "tick__release",
+     "tick__released",
      "tick__committed",
      "tick__yield",
+     "tick__release",
      "tick__grant",
+     "tick__gen",
      "tick__goal",
      "tick__revoke",
      "tick__stop",

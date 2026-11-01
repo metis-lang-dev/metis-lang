@@ -1,10 +1,11 @@
 {
  "format": "metis-sidecar/1",
  "catalog": "responder",
- "key": "a71f6f978891e4b34f1fec4fe3ece57c143d1d567dbb9864170c6ff988617af0",
+ "key": "6df50e83969907d3a9740c612debc855425d3bb7bfa164a3816ef174e2a5fa34",
  "extensions": [],
  "init": {
-  "idle": 1
+  "idle": 1,
+  "tick__gen(responder,controls,g0)": 1
  },
  "steps": 6,
  "stages": [
@@ -85,6 +86,42 @@
   },
   {
    "i": 8,
+   "canon": 15,
+   "name": "released[R=controls,G=g0]",
+   "rule": "released",
+   "kind": "clause",
+   "stage": "act",
+   "line": "I gave {R} back: I say which grant."
+  },
+  {
+   "i": 9,
+   "canon": 16,
+   "name": "released[R=controls,G=g1]",
+   "rule": "released",
+   "kind": "clause",
+   "stage": "act",
+   "line": "I gave {R} back: I say which grant."
+  },
+  {
+   "i": 10,
+   "canon": 17,
+   "name": "released[R=controls,G=g2]",
+   "rule": "released",
+   "kind": "clause",
+   "stage": "act",
+   "line": "I gave {R} back: I say which grant."
+  },
+  {
+   "i": 11,
+   "canon": 18,
+   "name": "released[R=controls,G=g3]",
+   "rule": "released",
+   "kind": "clause",
+   "stage": "act",
+   "line": "I gave {R} back: I say which grant."
+  },
+  {
+   "i": 12,
    "canon": 14,
    "name": "brake_lon[R=brake_min_correct]",
    "rule": "brake_lon",
@@ -93,7 +130,7 @@
    "line": "I brake: the proper response, {R}."
   },
   {
-   "i": 9,
+   "i": 13,
    "canon": 13,
    "name": "brake_lon[R=brake_min]",
    "rule": "brake_lon",
@@ -102,7 +139,7 @@
    "line": "I brake: the proper response, {R}."
   },
   {
-   "i": 10,
+   "i": 14,
    "canon": 10,
    "name": "stop_lat_left[R=brake_min_correct]",
    "rule": "stop_lat_left",
@@ -111,7 +148,7 @@
    "line": "I stop moving left: the lateral response."
   },
   {
-   "i": 11,
+   "i": 15,
    "canon": 9,
    "name": "stop_lat_left[R=brake_min]",
    "rule": "stop_lat_left",
@@ -120,7 +157,7 @@
    "line": "I stop moving left: the lateral response."
   },
   {
-   "i": 12,
+   "i": 16,
    "canon": 12,
    "name": "stop_lat_right[R=brake_min_correct]",
    "rule": "stop_lat_right",
@@ -129,7 +166,7 @@
    "line": "I stop moving right: the lateral response."
   },
   {
-   "i": 13,
+   "i": 17,
    "canon": 11,
    "name": "stop_lat_right[R=brake_min]",
    "rule": "stop_lat_right",
@@ -138,7 +175,7 @@
    "line": "I stop moving right: the lateral response."
   },
   {
-   "i": 14,
+   "i": 18,
    "canon": 0,
    "name": "stand_down",
    "rule": "stand_down",
@@ -345,6 +382,31 @@
      "target": null
     },
     {
+     "name": "released",
+     "stage": "act",
+     "doc": "I gave {R} back: I say which grant.",
+     "premises": [
+      {
+       "atom": "tick__release(responder,R)",
+       "n": 1,
+       "kept": false
+      },
+      {
+       "atom": "tick__gen(responder,R,G)",
+       "n": 1,
+       "kept": true
+      }
+     ],
+     "effects": [
+      {
+       "atom": "tick__released(responder,R,G)",
+       "n": 1,
+       "kept": false
+      }
+     ],
+     "target": null
+    },
+    {
      "name": "brake_lon",
      "stage": "act",
      "doc": "I brake: the proper response, {R}.",
@@ -524,7 +586,7 @@
      "doc": ""
     },
     {
-     "name": "tick__release",
+     "name": "tick__released",
      "doc": ""
     },
     {
@@ -536,7 +598,15 @@
      "doc": ""
     },
     {
+     "name": "tick__release",
+     "doc": ""
+    },
+    {
      "name": "tick__grant",
+     "doc": ""
+    },
+    {
+     "name": "tick__gen",
      "doc": ""
     },
     {
@@ -648,10 +718,12 @@
      "tick__done",
      "tick__stuck",
      "tick__want",
-     "tick__release",
+     "tick__released",
      "tick__committed",
      "tick__yield",
+     "tick__release",
      "tick__grant",
+     "tick__gen",
      "tick__goal",
      "tick__revoke",
      "tick__stop",

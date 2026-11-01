@@ -1,7 +1,7 @@
 link composition_split.yaml
-member pot_director direct wire efd87804a48160d42dbde0d094bbd06f1f0780e2eb4181f3759191f343c309cd bundle a280ca1f7b0a source a06b2f764b57dfd44441e9f44f3d2c7e82aa598025d18df8084ebf09c276d011
-member cook_a specialist wire 52e1ff7ceb4edd32b4e3ad391cdc663bc0bbb907b28aa0799af4040b53247b0a bundle ae5c3bbbaa02 source 754c51fa4b4dee55f890304c47989f48fd824b6bccc5237e33fa13f7d4f05d96
-member cook_b specialist wire 0c3d83b14a8c8fc520b8a0f99080af3712c75f022977e91fa9ce40394afe8618 bundle e901289c9073 source 8a7e16e6456b9a47d10bc39c9f158f5cca4a7da756b0c7814cdd8ff6c59d6279
+member pot_director direct wire f6b459f68d1b494247e3f1acf45dbea513f7f3898e8a5f4b70b95d4aacc87589 bundle 92cbc131d7cb source f2d21cc9d2db1016b30f2997869d31850e671079812295c0586b47a2e7056b68
+member cook_a specialist wire 3582e0ad48c8e9e60c3a92c19c3a633bb911f2af4574c8f5784f1429cc85ca50 bundle 279e591d4a2b source 6f28deb343392eb6857a98c2840a6a2ce60e92d62506b1a9cb124e38fb0e0f23
+member cook_b specialist wire 585fb6cf3dca355b657bf083941e6106058b8cee77e7e7908a7cb410a445bc16 bundle 1e67ebe510d9 source ddf83afd44e483aa6d4c697bd021acb7dcb02bbe6b224b376948892f02804980
 director pot_director hand (transitional) planner - kinds none
   specialist(cook_a).
   specialist(cook_b).
@@ -10,8 +10,8 @@ warning L21 cook_a's host cook_host.py:make: no file cook_host.py beside it (the
 warning L21 cook_b's host cook_host.py:make: no file cook_host.py beside it (the runtime that loads it must have it)
 warning L21 pot_director's host pass_host.py:make: no file pass_host.py beside it (the runtime that loads it must have it)
 interface 0 error(s), 6 warning(s)
-image kitchen_pot_split v-5b7c86ca81c0
-plan operator v-4c9a7aaca699 (image v-5b7c86ca81c0)
+image kitchen_pot_split v-4f6bd57ebcec
+plan operator v-44be5242d6ae (image v-4f6bd57ebcec)
   process runtime py [cook_a cook_b pot_director] world []
   process agent py [] world [order tick__stop]
   transport order state agent -> runtime latch beat
