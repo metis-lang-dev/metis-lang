@@ -1,0 +1,7 @@
+% dup_sibling_a: one half of dup_sibling.
+catalog dup_sibling_a 1.
+provenance text "the duplicate rule scenes (spec/18 §4)" "2026-11-02".
+stage act {
+  %% It takes q, under the unit's name.
+  aa [dyn] : q -o r.
+}

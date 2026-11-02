@@ -377,3 +377,10 @@ error, before grounding.
 - `hiding-shadow` (error, compile): a rule named like a hidden one stands in the includer, a sibling include or above a nested include: the override spec/18 §4 rejects. Located at the include that hides it.
 
 There is no `hiding-unused`: a name hidden is by definition used.
+
+## Amendment (2026-11-02, dup-rule-names s-dfb61f45; spec/18 §4): a rule named twice
+
+- `rule-duplicate` (error, compile): a stage's merged blocks and includes hold one rule name twice. The location is the second rule.
+- `pack-redeclares` gains `kind: rule`: a pack naming a rule of its base in the same stage.
+
+A name twice in one block stays the parser's error. `rule-name-collision` (a warning: a short name across stages) is unchanged.

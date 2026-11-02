@@ -234,6 +234,17 @@ let admit base pack =
           (Printf.sprintf "pack redeclares bwd predicate '%s'" p)
           (ps ("bwd/" ^ p)) [ ("kind", "bwd predicate"); ("name", p) ])
     pack.k_bwd;
+  let short n = match String.rindex_opt n '/' with
+    | Some i -> String.sub n (i + 1) (String.length n - i - 1) | None -> n in
+  let base_rule stage name = List.exists (fun b -> match b.e_payload with
+      | PSchema bc -> bc.cs_stage = stage && short b.e_name = name
+      | _ -> false) base.k_entries in
+  List.iter (fun e -> match e.e_payload with
+      | PSchema sc when base_rule sc.cs_stage (short e.e_name) ->
+        emit f "pack-redeclares"
+          (Printf.sprintf "pack redeclares rule '%s'" (short e.e_name)) e.e_src
+          [ ("kind", "rule"); ("name", short e.e_name) ]
+      | _ -> ()) pack.k_entries;
   List.iter (fun s ->
       if not (List.mem s base.k_stages) then
         emit f "pack-adds-stage"

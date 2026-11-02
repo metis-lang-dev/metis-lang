@@ -1,0 +1,16 @@
+% diag_rule_duplicate: one rule name in two blocks of a stage (dup-rule-names s-dfb61f45, spec/18 §4).
+catalog diag_rule_duplicate 1.
+provenance text "a duplicate rule" "2026-11-02".
+layers (dyn).
+stages (act).
+namespace d produce (dyn).
+pred p : d.
+pred q : d.
+stage act {
+  %% It takes p.
+  aa [dyn] : p -o q.
+}
+stage act {
+  %% It takes q, under the same name.
+  aa [dyn] : q -o p.
+}

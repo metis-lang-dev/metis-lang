@@ -232,6 +232,9 @@ error hiding-unknown @ diag_hiding_unknown.llp:3:9 (include/../hiding/hiding_uni
 error hiding-shadow @ diag_hiding_shadow.llp:3:9 (include/../hiding/hiding_unit.llp)
   include "../hiding/hiding_unit.llp" hiding (drop).
   -> give drop another name, or do not hide it from ../hiding/hiding_unit.llp: a rule is hidden or kept, never replaced
+error rule-duplicate @ diag_rule_duplicate.llp:15:3 (act/aa)
+  aa [dyn] : q -o p.
+  -> rename this aa: a stage's rule names are unique across its blocks and includes, and alternative heads reserve <name>-<k>
 error extends-no-base (catalog/diag-extends)
   extends nowhere-base.
   -> compile this pack against its base catalog nowhere-base

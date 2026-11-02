@@ -18,6 +18,7 @@ reads-var-unbound error compile
 include-cycle error compile
 hiding-unknown error compile
 hiding-shadow error compile
+rule-duplicate error compile
 extends-no-base error compile
 decl-duplicate error compile
 type-unknown error compile

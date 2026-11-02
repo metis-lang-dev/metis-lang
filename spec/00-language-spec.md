@@ -150,6 +150,11 @@ A tool that reads a program as text and not through the parser (the
 intents' splice in metispy and metis-agent) knows a hidden rule by a
 line that starts `name [layer] :`, a known limit: a rule written on
 its stage's opening line stays in that text.
+A stage's blocks merge, in order, and its rule names are unique over
+the merge: a name twice, across blocks or includes at any depth, is
+the error `rule-duplicate` (spec/18 §4). Literal inclusion means a unit
+taken twice brings its rules twice, so a diamond of a unit with rules
+is that error too, though it is no cycle.
 The includer keeps its own name/version/provenance. `layers` and
 `stages` are ADOPTED from an included file iff the includer omits
 them (domain file included by a generated instance file).

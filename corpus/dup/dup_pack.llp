@@ -1,0 +1,8 @@
+% dup_pack: a pack naming a rule of its base in the same stage: refused at admission.
+catalog dup_pack 1.
+extends dup_unit.
+provenance text "the duplicate rule scenes (spec/18 §4)" "2026-11-02".
+stage act {
+  %% It takes q, under the base's name.
+  aa [dyn] : q -o r.
+}

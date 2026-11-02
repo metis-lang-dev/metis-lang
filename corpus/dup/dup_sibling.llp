@@ -1,0 +1,7 @@
+% dup_sibling: two includes bring one name: refused.
+catalog dup_sibling 1.
+provenance text "the duplicate rule scenes (spec/18 §4)" "2026-11-02".
+include "dup_unit.llp".
+include "dup_sibling_a.llp".
+#init p 1
+#steps 2

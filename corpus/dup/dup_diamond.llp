@@ -1,0 +1,7 @@
+% dup_diamond: one unit taken twice brings its rules twice: refused (a diamond is not a cycle, but it is a duplicate).
+catalog dup_diamond 1.
+provenance text "the duplicate rule scenes (spec/18 §4)" "2026-11-02".
+include "dup_unit.llp".
+include "dup_mid.llp".
+#init p 1
+#steps 2

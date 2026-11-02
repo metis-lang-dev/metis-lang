@@ -134,6 +134,7 @@ diag_runs() {
     "$ROOT/src/metisc" "$1" diag_cycle_a.llp
     "$ROOT/src/metisc" "$1" diag_hiding_unknown.llp
     "$ROOT/src/metisc" "$1" diag_hiding_shadow.llp
+    "$ROOT/src/metisc" "$1" diag_rule_duplicate.llp
     "$ROOT/src/metisc" "$1" diag_extends.llp
     "$ROOT/src/metisc" "$1" diag_abstract.llp )
 }
@@ -628,5 +629,27 @@ for f in --interface --link; do
   n_gd=$((n_gd+1))
 done
 echo "GENDIR $n_gd/6 (three generated directors listed the same twice; check; a missing package refused by both commands)"
+
+echo "== 26. a rule named twice in a stage (dup-rule-names s-dfb61f45, spec/18 §4): across blocks and includes one error, with one set of words; a pack naming its base's rule refused at admission; two names, or one name in two stages, legal"
+n_dup=0
+for s in blocks:aa include:aa nested:aa sibling:aa diamond:aa head:turn-1; do
+  name=${s%%:*}; rule=${s##*:}
+  ( cd "$ROOT/corpus/dup" && "$ROOT/src/metisc" --diagnostics "dup_$name.llp" ) > "$WORK/dup_$name.txt" 2>&1 || true
+  [ "$(grep -c '^error ' "$WORK/dup_$name.txt")" -eq 1 ] && grep -q "^error rule-duplicate @ .* (act/$rule)$" "$WORK/dup_$name.txt" \
+    || { echo "dup_$name: not one rule-duplicate on $rule"; cat "$WORK/dup_$name.txt"; exit 1; }
+  rc=0; ( cd "$ROOT/corpus/dup" && "$ROOT/src/metisc" --run "dup_$name.llp" ) > "$WORK/dup_$name.run" 2>&1 < /dev/null || rc=$?
+  [ "$rc" -ne 0 ] && grep -q "^error: rule $rule is named twice in stage act: a rule is final, and a second one is not added$" "$WORK/dup_$name.run" \
+    || { echo "dup_$name: --run did not refuse in the words (rc $rc)"; cat "$WORK/dup_$name.run"; exit 1; }
+  n_dup=$((n_dup+1))
+done
+( cd "$ROOT/corpus/dup" && "$ROOT/src/metisc" --diagnostics dup_pack.llp --base dup_unit.llp ) > "$WORK/dup_pack.txt" 2>&1 || true
+[ "$(grep -c '^error ' "$WORK/dup_pack.txt")" -eq 1 ] && grep -q '^error pack-redeclares @ .* (act/aa)$' "$WORK/dup_pack.txt" \
+    || { echo "dup_pack: not one pack-redeclares"; cat "$WORK/dup_pack.txt"; exit 1; }
+n_dup=$((n_dup+1))
+( cd "$ROOT/corpus/dup" && "$ROOT/src/metisc" --run dup_ok.llp ) > "$WORK/dup_ok.txt" 2>&1 < /dev/null \
+    && grep -q '^T 1 aa bb$' "$WORK/dup_ok.txt" \
+    || { echo "dup_ok: two names, or a name in two stages, should run"; cat "$WORK/dup_ok.txt"; exit 1; }
+n_dup=$((n_dup+1))
+echo "DUP $n_dup/8 (two blocks, an include, a nested include, siblings, a diamond, a reserved head; a pack; the legal scene)"
 
 echo "ALL GATES GREEN"

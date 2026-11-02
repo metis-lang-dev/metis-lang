@@ -1,0 +1,23 @@
+% dup_ok: two blocks with two names, one name in two stages: legal. The second block's rules follow the first's.
+catalog dup_ok 1.
+provenance text "the duplicate rule scenes (spec/18 §4)" "2026-11-02".
+layers (dyn).
+stages (act settle).
+namespace d produce (dyn).
+pred p : d.
+pred q : d.
+pred r : d.
+stage act {
+  %% It takes p.
+  aa [dyn] : p -o q.
+}
+stage act {
+  %% It takes q.
+  bb [dyn] : q -o r.
+}
+stage settle {
+  %% It takes r, under act's first name: another stage.
+  aa [dyn] : r -o p.
+}
+#init p 1
+#steps 4

@@ -1,0 +1,4 @@
+% dup_mid: passes the unit on.
+catalog dup_mid 1.
+provenance text "the duplicate rule scenes (spec/18 §4)" "2026-11-02".
+include "dup_unit.llp".

@@ -1,0 +1,20 @@
+% dup_blocks: one name in two blocks of one stage: refused.
+catalog dup_blocks 1.
+provenance text "the duplicate rule scenes (spec/18 §4)" "2026-11-02".
+layers (dyn).
+stages (act).
+type thing {t1}.
+namespace d produce (dyn).
+pred p : d.
+pred q : d.
+pred r : d.
+stage act {
+  %% It takes p.
+  aa [dyn] : p -o q.
+}
+stage act {
+  %% It takes q, under the same name.
+  aa [dyn] : q -o r.
+}
+#init p 1
+#steps 2

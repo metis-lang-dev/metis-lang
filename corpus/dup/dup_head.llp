@@ -1,0 +1,20 @@
+% dup_head: an alternative head's reserved name taken by a rule in another block: refused.
+catalog dup_head 1.
+provenance text "the duplicate rule scenes (spec/18 §4)" "2026-11-02".
+layers (dyn).
+stages (act).
+type thing {t1}.
+namespace d produce (dyn).
+pred p : d.
+pred q : d.
+pred r : d.
+stage act {
+  %% It takes p one way or the other.
+  turn [dyn] : p -o (q @w 0.5 | r @w 0.5).
+}
+stage act {
+  %% It takes q, under a head's name.
+  turn-1 [dyn] : q -o r.
+}
+#init p 1
+#steps 2

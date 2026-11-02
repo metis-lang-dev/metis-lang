@@ -167,6 +167,24 @@ let check_shadow decls (p, hidden, l, d) =
             end) s.srules
       | _ -> ()) decls
 
+(* a stage's rule names are unique across its blocks and its includes (spec/18 §4): the parser sees one block *)
+let check_duplicate decls =
+  let seen = Hashtbl.create 16 in
+  List.iter (function
+      | DStage s ->
+        List.iter (fun r ->
+            if Hashtbl.mem seen (s.sname, r.rname) then begin
+              let text = Printf.sprintf "rule %s is named twice in stage %s: a rule is final, and a second one is not added" r.rname s.sname in
+              Diag.emit (Diag.make "rule-duplicate" text
+                           { Diag.s_loc = { Diag.file = r.rloc.file; line = r.rloc.line; col = r.rloc.col;
+                                            decl = s.sname ^ "/" ^ r.rname };
+                             s_subject = [ rule_line r ]; s_context = []; s_layers = "" }
+                           [ ("rule", r.rname); ("stage", s.sname) ]);
+              raise (Lang_error [ text ])
+            end;
+            Hashtbl.add seen (s.sname, r.rname) ()) s.srules
+      | _ -> ()) decls
+
 let rec resolve_in (c : Ast.catalog) base_dir seen =
   let layers = ref c.clayers and stages = ref c.cstages and hid = ref [] in
   let pairs = List.concat_map (fun (d, l) -> match d with
@@ -194,6 +212,7 @@ let rec resolve_in (c : Ast.catalog) base_dir seen =
       (List.combine c.cdecls c.cdecl_locs) in
   let decls = List.map fst pairs in
   List.iter (check_shadow decls) (List.rev !hid);
+  check_duplicate decls;
   ({ c with clayers = !layers; cstages = !stages;
             cdecls = decls; cdecl_locs = List.map snd pairs },
    List.concat_map (fun (_, h, _, _) -> h) !hid)
