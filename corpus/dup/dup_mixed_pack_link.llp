@@ -1,0 +1,6 @@
+% dup_mixed_pack_link: a pack's link under its base's rule name: refused at admission.
+catalog dup_mixed_pack_link 1.
+extends dup_link_unit.
+provenance text "a rule and a link, one space of names (spec/18 §4)" "2026-11-02".
+%% It goes back, under a rule's name.
+qui aa [dyn] : done -o act.

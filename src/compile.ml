@@ -167,12 +167,20 @@ let check_shadow decls (p, hidden, l, d) =
             end) s.srules
       | _ -> ()) decls
 
-(* a stage's rule names are unique across its blocks and its includes, and a link's among the links (spec/18 §4): the
-   parser sees one block *)
+(* a stage's rule names are unique across its blocks and its includes, a link's among the links, and a rule and a link
+   share no name (spec/18 §4): the parser sees one block *)
 let check_duplicate pairs =
-  let seen = Hashtbl.create 16 and links = Hashtbl.create 16 in
+  let seen = Hashtbl.create 16 and links = Hashtbl.create 16 and rules = Hashtbl.create 16 in
+  let mixed n file line col decl subject =
+    let text = Printf.sprintf "rule %s is named twice, as a rule and a stage link: a rule is final, and a second one is not added" n in
+    Diag.emit (Diag.make "rule-duplicate" text
+                 { Diag.s_loc = { Diag.file = file; line; col; decl };
+                   s_subject = [ subject ]; s_context = []; s_layers = "" }
+                 [ ("rule", n); ("stage", "links") ]);
+    raise (Lang_error [ text ]) in
   List.iter (function
       | (DLink l as d), (at : loc) ->
+        if Hashtbl.mem rules l.lname then mixed l.lname at.file at.line at.col ("qui/" ^ l.lname) (decl_line d);
         if Hashtbl.mem links l.lname then begin
           let text = Printf.sprintf "rule %s is named twice among the stage links: a rule is final, and a second one is not added" l.lname in
           Diag.emit (Diag.make "rule-duplicate" text
@@ -194,6 +202,12 @@ let check_duplicate pairs =
                            [ ("rule", r.rname); ("stage", s.sname) ]);
               raise (Lang_error [ text ])
             end;
+            if Hashtbl.mem links r.rname then
+              mixed r.rname r.rloc.file r.rloc.line r.rloc.col (s.sname ^ "/" ^ r.rname) (rule_line r);
+            if Hashtbl.mem links (rule_base r.rname) then
+              mixed (rule_base r.rname) r.rloc.file r.rloc.line r.rloc.col (s.sname ^ "/" ^ r.rname) (rule_line r);
+            Hashtbl.add rules r.rname ();
+            Hashtbl.add rules (rule_base r.rname) ();
             Hashtbl.add seen (s.sname, r.rname) ()) s.srules
       | _ -> ()) pairs
 

@@ -642,13 +642,20 @@ for s in blocks:aa include:aa nested:aa sibling:aa diamond:aa head:turn-1; do
     || { echo "dup_$name: --run did not refuse in the words (rc $rc)"; cat "$WORK/dup_$name.run"; exit 1; }
   n_dup=$((n_dup+1))
 done
+for s in mixed:qui/back mixed_rule:act/back mixed_include:act/back mixed_head:act/back-1; do
+  name=${s%%:*}; decl=${s##*:}
+  ( cd "$ROOT/corpus/dup" && "$ROOT/src/metisc" --diagnostics "dup_$name.llp" ) > "$WORK/dup_$name.txt" 2>&1 || true
+  [ "$(grep -c '^error ' "$WORK/dup_$name.txt")" -eq 1 ] && grep -q "^error rule-duplicate @ .* ($decl)\$" "$WORK/dup_$name.txt" \
+    || { echo "dup_$name: a rule and a link share a name: not one rule-duplicate at $decl"; cat "$WORK/dup_$name.txt"; exit 1; }
+  n_dup=$((n_dup+1))
+done
 for name in link link_include link_nested; do
   ( cd "$ROOT/corpus/dup" && "$ROOT/src/metisc" --diagnostics "dup_$name.llp" ) > "$WORK/dup_$name.txt" 2>&1 || true
   [ "$(grep -c '^error ' "$WORK/dup_$name.txt")" -eq 1 ] && grep -q '^error rule-duplicate @ .* (qui/back)$' "$WORK/dup_$name.txt" \
     || { echo "dup_$name: not one rule-duplicate on the link"; cat "$WORK/dup_$name.txt"; exit 1; }
   n_dup=$((n_dup+1))
 done
-for s in pack:dup_unit:act/aa link_pack:dup_link_unit:qui/back; do
+for s in pack:dup_unit:act/aa link_pack:dup_link_unit:qui/back mixed_pack:dup_link_unit:act/back mixed_pack_link:dup_link_unit:qui/aa; do
   name=${s%%:*}; rest=${s#*:}; base=${rest%%:*}; decl=${rest##*:}
   ( cd "$ROOT/corpus/dup" && "$ROOT/src/metisc" --diagnostics "dup_$name.llp" --base "$base.llp" ) > "$WORK/dup_$name.txt" 2>&1 || true
   [ "$(grep -c '^error ' "$WORK/dup_$name.txt")" -eq 1 ] && grep -q "^error pack-redeclares @ .* ($decl)\$" "$WORK/dup_$name.txt" \
@@ -663,6 +670,6 @@ n_dup=$((n_dup+1))
     && grep -q '^T 1 aa bb$' "$WORK/dup_ok.txt" \
     || { echo "dup_ok: two names, or a name in two stages, should run"; cat "$WORK/dup_ok.txt"; exit 1; }
 n_dup=$((n_dup+1))
-echo "DUP $n_dup/13 (two blocks, an include, a nested include, siblings, a diamond, a reserved head; three of a link; a pack of each; the link path's words; the legal scene)"
+echo "DUP $n_dup/19 (two blocks, an include, a nested include, siblings, a diamond, a reserved head; a rule and a link, four ways; three of a link; four of a pack; the link path's words; the legal scene)"
 
 echo "ALL GATES GREEN"

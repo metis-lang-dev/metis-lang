@@ -1,0 +1,19 @@
+% dup_mixed_rule: a link, then a rule of its name: refused at the rule.
+catalog dup_mixed_rule 1.
+provenance text "a rule and a link, one space of names (spec/18 §4)" "2026-11-02".
+layers (dyn).
+stages (act done).
+namespace d produce (dyn).
+pred p : d.
+stage done {
+  %% It takes p, there.
+  bb [dyn] : p -o ().
+}
+%% It goes on.
+qui back [dyn] : act -o done.
+stage act {
+  %% It takes p, under the link's name.
+  back [dyn] : p -o ().
+}
+#init p 3
+#steps 4

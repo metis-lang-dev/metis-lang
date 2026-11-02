@@ -1,0 +1,10 @@
+% dup_mixed_include: the unit's link, the includer's rule: refused.
+catalog dup_mixed_include 1.
+provenance text "a rule and a link, one space of names (spec/18 §4)" "2026-11-02".
+include "dup_link_unit.llp".
+stage act {
+  %% It takes p, under the link's name.
+  back [dyn] : p -o ().
+}
+#init p 3
+#steps 4
