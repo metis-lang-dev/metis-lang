@@ -897,12 +897,13 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
      a broken invariant sum (invariant-broken), then a family nobody
      reads. With a base, its families and invariants come first and the
      pack's rules are held to them (they carry no location). *)
+  let own_families = List.filter_map (fun (d, l) -> match d with
+      | DFamily (n, ms) -> Some (n, ms, l, d) | _ -> None) decl_locs in
   let families = (match base with
       | Some ((bcat : Catalog.t), _) ->
         List.map (fun (n, ms) -> (n, ms, Ast.no_loc, DFamily (n, ms))) bcat.k_families
       | None -> [])
-    @ List.filter_map (fun (d, l) -> match d with
-        | DFamily (n, ms) -> Some (n, ms, l, d) | _ -> None) decl_locs in
+    @ own_families in
   let invariants = (match base with
       | Some ((bcat : Catalog.t), _) ->
         List.map (fun (n, ms, t) -> (n, ms, t, Ast.no_loc, DInvariant (n, ms, t))) bcat.k_invariants
@@ -952,13 +953,15 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
               [ ("rule", name); ("invariant", iname); ("delta", Printf.sprintf "%+d" delta) ])
         invariants)
     !clauses;
+  (* family-unread: the unit's own families only; a pack is judged on its
+     own rules, and the base's readers are not here to count *)
   List.iter (fun (n, ms, l, d) ->
       if not (List.exists (Hashtbl.mem read_by) ms) then
         emitter (decl_source vocab lay l ("family/" ^ n) d)
           "family-unread"
           (Printf.sprintf "family %s: no rule reads a member" n)
           [ ("family", n) ])
-    families;
+    own_families;
 
   if !findings <> [] then fail_now (List.rev !findings);
 

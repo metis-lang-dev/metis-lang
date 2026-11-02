@@ -60,16 +60,45 @@ let init_preds text =
     (lines text)
 
 (* `#init ATOM [N]` lines as counts (metispy init_counts: the regex
-   `^\s*#init\s+(\S+)(?:\s+(\d+))?\s*$`; the last assignment wins) *)
+   `^\s*#init\s+(.+?)(?:\s+(\d+))?\s*$`, the lazy atom ending before a
+   trailing ` N`; an atom written with inner spaces (`at(e0, f0)`) is the
+   same atom the shell squashes, every space taken out; the last
+   assignment wins) *)
 let init_counts text =
+  let strip_trailing s =
+    let n = ref (String.length s) in
+    while !n > 0 && is_ws s.[!n - 1] do decr n done;
+    String.sub s 0 !n in
+  let strip_leading s =
+    let n = String.length s in
+    let i = ref 0 in
+    while !i < n && is_ws s.[!i] do incr i done;
+    String.sub s !i (n - !i) in
+  let squash a = String.concat "" (String.split_on_char ' ' a) in
   List.fold_left (fun acc l ->
       let put a n =
         if List.mem_assoc a acc then List.map (fun (x, m) -> (x, if x = a then n else m)) acc
         else acc @ [ (a, n) ] in
-      match words l with
-      | [ "#init"; a ] -> put a 1
-      | [ "#init"; a; n ] when all_digits n -> put a (int_of_string n)
-      | _ -> acc)
+      let t = strip_leading (strip_trailing l) in
+      let k = String.length "#init" in
+      if String.length t > k && String.sub t 0 k = "#init" && is_ws t.[k] then begin
+        let r = strip_leading (String.sub t k (String.length t - k)) in
+        if r = "" then acc
+        else begin
+          (* the one cut the regex allows: before the last whitespace run,
+             when all after it is digits and something stands before it *)
+          let n = String.length r in
+          let e = ref (n - 1) in
+          while !e >= 0 && r.[!e] >= '0' && r.[!e] <= '9' do decr e done;
+          let digits_from = !e + 1 in
+          let w = ref !e in
+          while !w >= 0 && is_ws r.[!w] do decr w done;
+          if digits_from < n && !w < !e && !w >= 0 then
+            put (squash (String.sub r 0 (!w + 1)))
+              (int_of_string (String.sub r digits_from (n - digits_from)))
+          else put (squash r) 1
+        end
+      end else acc)
     [] (lines text)
 
 (* (supplied, taken): preds a manifest says come from outside (in,
