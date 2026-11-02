@@ -642,14 +642,27 @@ for s in blocks:aa include:aa nested:aa sibling:aa diamond:aa head:turn-1; do
     || { echo "dup_$name: --run did not refuse in the words (rc $rc)"; cat "$WORK/dup_$name.run"; exit 1; }
   n_dup=$((n_dup+1))
 done
-( cd "$ROOT/corpus/dup" && "$ROOT/src/metisc" --diagnostics dup_pack.llp --base dup_unit.llp ) > "$WORK/dup_pack.txt" 2>&1 || true
-[ "$(grep -c '^error ' "$WORK/dup_pack.txt")" -eq 1 ] && grep -q '^error pack-redeclares @ .* (act/aa)$' "$WORK/dup_pack.txt" \
-    || { echo "dup_pack: not one pack-redeclares"; cat "$WORK/dup_pack.txt"; exit 1; }
+for name in link link_include link_nested; do
+  ( cd "$ROOT/corpus/dup" && "$ROOT/src/metisc" --diagnostics "dup_$name.llp" ) > "$WORK/dup_$name.txt" 2>&1 || true
+  [ "$(grep -c '^error ' "$WORK/dup_$name.txt")" -eq 1 ] && grep -q '^error rule-duplicate @ .* (qui/back)$' "$WORK/dup_$name.txt" \
+    || { echo "dup_$name: not one rule-duplicate on the link"; cat "$WORK/dup_$name.txt"; exit 1; }
+  n_dup=$((n_dup+1))
+done
+for s in pack:dup_unit:act/aa link_pack:dup_link_unit:qui/back; do
+  name=${s%%:*}; rest=${s#*:}; base=${rest%%:*}; decl=${rest##*:}
+  ( cd "$ROOT/corpus/dup" && "$ROOT/src/metisc" --diagnostics "dup_$name.llp" --base "$base.llp" ) > "$WORK/dup_$name.txt" 2>&1 || true
+  [ "$(grep -c '^error ' "$WORK/dup_$name.txt")" -eq 1 ] && grep -q "^error pack-redeclares @ .* ($decl)\$" "$WORK/dup_$name.txt" \
+    || { echo "dup_$name: not one pack-redeclares"; cat "$WORK/dup_$name.txt"; exit 1; }
+  n_dup=$((n_dup+1))
+done
+( cd "$ROOT/corpus/iface" && "$ROOT/src/metisc" --link gendir/composition_dup.yaml --check ) > "$WORK/dup_link.txt" 2>&1 || true
+grep -q '^error compile dup: does not compile: rule-duplicate: rule aa is named twice in stage act: a rule is final' "$WORK/dup_link.txt" \
+    || { echo "dup: the link path does not carry the words"; cat "$WORK/dup_link.txt"; exit 1; }
 n_dup=$((n_dup+1))
 ( cd "$ROOT/corpus/dup" && "$ROOT/src/metisc" --run dup_ok.llp ) > "$WORK/dup_ok.txt" 2>&1 < /dev/null \
     && grep -q '^T 1 aa bb$' "$WORK/dup_ok.txt" \
     || { echo "dup_ok: two names, or a name in two stages, should run"; cat "$WORK/dup_ok.txt"; exit 1; }
 n_dup=$((n_dup+1))
-echo "DUP $n_dup/8 (two blocks, an include, a nested include, siblings, a diamond, a reserved head; a pack; the legal scene)"
+echo "DUP $n_dup/13 (two blocks, an include, a nested include, siblings, a diamond, a reserved head; three of a link; a pack of each; the link path's words; the legal scene)"
 
 echo "ALL GATES GREEN"

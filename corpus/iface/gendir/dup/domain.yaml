@@ -1,0 +1,8 @@
+# dup
+display: dup
+line: "the generated-director interface scene"
+voice: third
+program: dup.llp
+clock: {beats: 1}
+shared: {tick__stop: in}
+status: {success: [], failure: []}

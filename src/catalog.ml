@@ -239,11 +239,16 @@ let admit base pack =
   let base_rule stage name = List.exists (fun b -> match b.e_payload with
       | PSchema bc -> bc.cs_stage = stage && short b.e_name = name
       | _ -> false) base.k_entries in
+  let base_link name = List.exists (fun b -> match b.e_payload with
+      | PLink _ -> short b.e_name = name
+      | _ -> false) base.k_entries in
+  let redeclared e =
+    emit f "pack-redeclares"
+      (Printf.sprintf "pack redeclares rule '%s'" (short e.e_name)) e.e_src
+      [ ("kind", "rule"); ("name", short e.e_name) ] in
   List.iter (fun e -> match e.e_payload with
-      | PSchema sc when base_rule sc.cs_stage (short e.e_name) ->
-        emit f "pack-redeclares"
-          (Printf.sprintf "pack redeclares rule '%s'" (short e.e_name)) e.e_src
-          [ ("kind", "rule"); ("name", short e.e_name) ]
+      | PSchema sc when base_rule sc.cs_stage (short e.e_name) -> redeclared e
+      | PLink _ when base_link (short e.e_name) -> redeclared e
       | _ -> ()) pack.k_entries;
   List.iter (fun s ->
       if not (List.mem s base.k_stages) then

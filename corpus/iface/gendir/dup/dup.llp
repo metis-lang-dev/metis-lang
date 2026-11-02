@@ -1,0 +1,18 @@
+% dup — a member with a rule named twice: the link path must print the refusal's own words (dup-rule-names step 2).
+catalog dup 1.
+provenance text "the link path's words" "2026-11-02".
+layers (dyn).
+stages (act).
+include "../capacity_dup.llp".
+include "iface/protocol_domain.llp".
+namespace g produce (dyn).
+%% It stopped.
+pred stopped : g.
+stage act {
+  %% It reads the stop.
+  aa [dyn] : tick__stop -o stopped.
+}
+stage act {
+  %% It reads the stop again.
+  aa [dyn] : stopped -o stopped.
+}

@@ -1,0 +1,5 @@
+% capacity_dup — the member that does not compile (iface-gendir s-428aed81).
+catalog gendir_capacity_dup 1.
+provenance text "a member and one resource" "2026-11-01".
+type domain {dup}.
+type resource {hand}.

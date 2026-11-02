@@ -394,6 +394,13 @@ let init_of path =
      done with End_of_file -> close_in ic);
   List.rev !out
 
+(* a refusal in the diagnostic's own words, its code first when it has one: what the check prints and the verb quotes *)
+let refusal msgs =
+  let coded m = match List.find_opt (fun (d : Diag.t) -> d.text = m) (Compile.diagnostics ()) with
+    | Some d -> d.code ^ ": " ^ m
+    | None -> m in
+  String.concat "; " (List.map coded msgs)
+
 let load_member dir name role =
   let pkg = Filename.concat dir name in
   let man = read_yaml (Filename.concat pkg "domain.yaml") in
@@ -454,6 +461,8 @@ let load_member dir name role =
   let manifest = Filename.concat pkg "domain.yaml" in
   let (key, compile) =
     match Compile.resolve_includes (Parser.parse_file program) (Filename.dirname program) with
+    | exception Compile.Lang_error ms -> ("-", Some (refusal ms))
+    | exception Parser.Parse_error m -> ("-", Some m)
     | exception e -> ("-", Some (Printexc.to_string e))
     | ast ->
       let (ast, gen_err) = match level_decls manifest ast with
@@ -465,14 +474,14 @@ let load_member dir name role =
               | DType (n, cs) -> types := !types @ [(n, cs)]
               | _ -> ()) gen;
           (with_levels ~manifest ast, None)
-        | exception Compile.Lang_error ms -> (ast, Some (String.concat "; " ms)) in
+        | exception Compile.Lang_error ms -> (ast, Some (refusal ms)) in
       let key = Sha256.hex (Ast.pretty (Ast.strip_locs ast)) in
       (key, match gen_err with
         | Some e -> Some e
         | None -> match Compile.compile ast with
           | _ -> None
-          | exception Compile.Lang_error ms -> Some (String.concat "; " ms)
-          | exception Catalog.Catalog_error ms -> Some (String.concat "; " ms)) in
+          | exception Compile.Lang_error ms -> Some (refusal ms)
+          | exception Catalog.Catalog_error ms -> Some (refusal ms)) in
   let field k f = match List.assoc_opt k man with Some v -> f v | None -> [] in
   { m_name = name; m_role = role; m_program = program; m_manifest = manifest;
     m_files = !files; m_includes = !edges; m_decl_file = !decl_file;

@@ -167,11 +167,23 @@ let check_shadow decls (p, hidden, l, d) =
             end) s.srules
       | _ -> ()) decls
 
-(* a stage's rule names are unique across its blocks and its includes (spec/18 §4): the parser sees one block *)
-let check_duplicate decls =
-  let seen = Hashtbl.create 16 in
+(* a stage's rule names are unique across its blocks and its includes, and a link's among the links (spec/18 §4): the
+   parser sees one block *)
+let check_duplicate pairs =
+  let seen = Hashtbl.create 16 and links = Hashtbl.create 16 in
   List.iter (function
-      | DStage s ->
+      | (DLink l as d), (at : loc) ->
+        if Hashtbl.mem links l.lname then begin
+          let text = Printf.sprintf "rule %s is named twice among the stage links: a rule is final, and a second one is not added" l.lname in
+          Diag.emit (Diag.make "rule-duplicate" text
+                       { Diag.s_loc = { Diag.file = at.file; line = at.line; col = at.col;
+                                        decl = "qui/" ^ l.lname };
+                         s_subject = [ decl_line d ]; s_context = []; s_layers = "" }
+                       [ ("rule", l.lname); ("stage", "links") ]);
+          raise (Lang_error [ text ])
+        end;
+        Hashtbl.add links l.lname ()
+      | DStage s, _ ->
         List.iter (fun r ->
             if Hashtbl.mem seen (s.sname, r.rname) then begin
               let text = Printf.sprintf "rule %s is named twice in stage %s: a rule is final, and a second one is not added" r.rname s.sname in
@@ -183,7 +195,7 @@ let check_duplicate decls =
               raise (Lang_error [ text ])
             end;
             Hashtbl.add seen (s.sname, r.rname) ()) s.srules
-      | _ -> ()) decls
+      | _ -> ()) pairs
 
 let rec resolve_in (c : Ast.catalog) base_dir seen =
   let layers = ref c.clayers and stages = ref c.cstages and hid = ref [] in
@@ -212,7 +224,7 @@ let rec resolve_in (c : Ast.catalog) base_dir seen =
       (List.combine c.cdecls c.cdecl_locs) in
   let decls = List.map fst pairs in
   List.iter (check_shadow decls) (List.rev !hid);
-  check_duplicate decls;
+  check_duplicate pairs;
   ({ c with clayers = !layers; cstages = !stages;
             cdecls = decls; cdecl_locs = List.map snd pairs },
    List.concat_map (fun (_, h, _, _) -> h) !hid)

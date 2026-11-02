@@ -1,0 +1,6 @@
+% dup_link_pack: a pack naming its base's link: refused at admission.
+catalog dup_link_pack 1.
+extends dup_link_unit.
+provenance text "the duplicate link scenes (spec/18 §4)" "2026-11-02".
+%% It goes back, under the same name.
+qui back [dyn] : done -o act.

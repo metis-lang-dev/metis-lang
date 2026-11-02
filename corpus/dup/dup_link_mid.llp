@@ -1,0 +1,4 @@
+% dup_link_mid: passes the unit on.
+catalog dup_link_mid 1.
+provenance text "the duplicate link scenes (spec/18 §4)" "2026-11-02".
+include "dup_link_unit.llp".

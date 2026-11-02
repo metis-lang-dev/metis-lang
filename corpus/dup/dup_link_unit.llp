@@ -1,0 +1,17 @@
+% dup_link_unit: two stages and one link; what the link scenes include (dup-rule-names step 2).
+catalog dup_link_unit 1.
+provenance text "the duplicate link scenes (spec/18 §4)" "2026-11-02".
+layers (dyn).
+stages (act done).
+namespace d produce (dyn).
+pred p : d.
+stage act {
+  %% It takes p.
+  aa [dyn] : p -o ().
+}
+stage done {
+  %% It takes p, there.
+  bb [dyn] : p -o ().
+}
+%% It goes on.
+qui back [dyn] : act -o done.

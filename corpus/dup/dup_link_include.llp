@@ -1,0 +1,8 @@
+% dup_link_include: the includer names the unit's link again: refused.
+catalog dup_link_include 1.
+provenance text "the duplicate link scenes (spec/18 §4)" "2026-11-02".
+include "dup_link_unit.llp".
+%% It goes back, under the same name.
+qui back [dyn] : done -o act.
+#init p 3
+#steps 4

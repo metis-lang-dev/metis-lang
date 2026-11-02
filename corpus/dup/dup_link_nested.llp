@@ -1,0 +1,8 @@
+% dup_link_nested: a link named again above a nested include: refused.
+catalog dup_link_nested 1.
+provenance text "the duplicate link scenes (spec/18 §4)" "2026-11-02".
+include "dup_link_mid.llp".
+%% It goes back, under the same name.
+qui back [dyn] : done -o act.
+#init p 3
+#steps 4

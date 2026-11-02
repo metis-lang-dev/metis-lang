@@ -1,0 +1,9 @@
+# composition — a member that does not compile (dup-rule-names step 2)
+name: gendir_dup
+capacity: capacity_dup.llp
+protocol: iface/protocol_domain.llp
+specialists: [dup]
+direct: tree_director
+world: {out: [tick__stop]}
+resources: {hand: 1}
+response: 3
