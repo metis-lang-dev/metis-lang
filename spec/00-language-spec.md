@@ -46,6 +46,7 @@ Doc lines attach to the NEXT rule or link; they are part of the AST
     decl        ::= include | extends | provenance | layers | stages
                   | typedecl | abstract | namespace | pred | bwd | port
                   | stagedef | link | hornfact | hornrule
+                  | family | invariant
     include     ::= "include" string ["hiding" "(" ident* ")"] "."
     extends     ::= "extends" ident "."
     provenance  ::= "provenance" ident string string "."
@@ -67,6 +68,12 @@ Doc lines attach to the NEXT rule or link; they are part of the AST
     pred        ::= "pred" ident [sigargs] ":" ident "."
     bwd         ::= "bwd" ident [sigargs] "."
     sigargs     ::= "(" ident ("," ident)* ")"
+    family      ::= "family" ident "(" ident+ ")" "."
+                     (only when followed by ident "(" — else
+                     `family` is an identifier; the closure
+                     declarations, §5a)
+    invariant   ::= "invariant" ident "(" ident+ ")" ":" num "."
+                     (likewise; num is a whole number of tokens)
     port        ::= ("weight"|"guard"|"input"|"output") ident
                      [sigargs] [readsblock] "."
                      (readsblock legal on "weight" only)
@@ -267,6 +274,55 @@ Order of processing is significant and specified.
 Packs (`extends`): base supplies sigs and bwd for inference;
 layers/stages inherited when omitted; typecheck DEFERRED to
 admission. (Out of the rewrite slice; contract only.)
+
+## 5a. The closure declarations (2026-11-02, patterns CHECKS.md §4)
+
+Two sets of propositions look alike and are not. A set the HOST
+publishes exactly-one-of (a target family `below_target | at_target |
+above_target`, a complementary pair) is an input: the rules cannot
+prove it, only read it. A set the member's OWN rules hold
+exactly-one-of (`idle | busy | away`) is the rules' state: provable
+from the rule text, structurally, with no run.
+
+`family NAME (p q r).` declares the first. Members are declared state
+predicates (`pred`), the host's; the compiler checks:
+
+- `family-member-unknown` (error): a member is not a declared state
+  predicate.
+- `family-produced` (error): a rule or link consumes or produces a
+  member. A family is the host's; a rule reads a member with `$`.
+- `family-unread` (warning): no rule reads any member.
+
+The exclusivity itself (exactly one member holds at every tick) is a
+property of the host, checked on a trace (metispy `python -m
+metis.trace families`), never by the compiler.
+
+`invariant NAME (p q r) : N.` declares the second: a linear
+P-invariant over the member's own atoms. The compiler checks every
+rule and link, in source order:
+
+- `invariant-member-unknown` (error): as above.
+- `invariant-broken` (error): the rule's token delta over the members
+  (produced minus consumed, persistent reads count 0, all ground atoms
+  of a member predicate count) is not 0. A pack's rules are checked
+  against the base's invariants too.
+
+A P-invariant holds in every reachable marking, so with
+`invariant-broken` clean, "the sum over the members is N at every
+reachable state" is a theorem of the net once the init holds N: the
+init half is `invariant-init` (error, runtime phase), checked by the
+REPL at `lint` and by `python -m metis.lint` against the file's
+`#init` lines (directives are compiler-invisible, §8). This is the
+interface check I5 (spec/15 §3, a resource's Δ(p) + Σ Δ(held) = 0)
+generalized from resources to any declared sum.
+
+Both declarations are static assertions, not semantics: they are not
+in the canonical key (spec/03), the pretty-printer prints them in
+place, and a program with and without them has the same measure.
+The order of emission (both toolchains): each family's unknown
+members, each invariant's unknown members, then per rule and link in
+source order `family-produced` then `invariant-broken`, then
+`family-unread` per family.
 
 ## 6. Kernel typecheck (containment)
 

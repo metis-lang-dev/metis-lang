@@ -136,7 +136,8 @@ diag_runs() {
     "$ROOT/src/metisc" "$1" diag_hiding_shadow.llp
     "$ROOT/src/metisc" "$1" diag_rule_duplicate.llp
     "$ROOT/src/metisc" "$1" diag_extends.llp
-    "$ROOT/src/metisc" "$1" diag_abstract.llp )
+    "$ROOT/src/metisc" "$1" diag_abstract.llp
+    "$ROOT/src/metisc" "$1" diag_closure.llp )
 }
 diag_runs --diagnostics > "$WORK/diag.txt"
 diff -u "$ROOT/corpus/goldens/diag_goldens.txt" "$WORK/diag.txt"

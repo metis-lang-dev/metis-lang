@@ -1,0 +1,31 @@
+% D2 fixture (spec 08), the closure declarations (patterns CHECKS.md §4;
+% spec/00 §2 family, invariant): one row per code. f2 names a pred
+% nobody declares (family-member-unknown); `writes` produces a member of
+% f1 (family-produced); f3's only member is read by no rule
+% (family-unread); inv2 names a pred nobody declares
+% (invariant-member-unknown); `breaks` moves inv1's sum by +1
+% (invariant-broken). The rest is clean: `reads` keeps inv1 (p for q).
+catalog diag-closure 1.
+layers (dyn).
+stages (act).
+namespace m produce (dyn).
+pred a : m.
+pred b : m.
+pred c : m.
+pred lonely : m.
+pred p : m.
+pred q : m.
+pred r : m.
+family f1 (a b).
+family f2 (c nope).
+family f3 (lonely).
+invariant inv1 (p q) : 1.
+invariant inv2 (r ghost) : 1.
+stage act {
+  %% a and c hold: p becomes q.
+  reads [dyn] : $a * $c * p -o q.
+  %% b holds: a is written, which a rule may not do.
+  writes [dyn] : $b * p -o a * p.
+  %% r holds: one p becomes two q, which breaks the sum.
+  breaks [dyn] : $r * p -o q * q.
+}

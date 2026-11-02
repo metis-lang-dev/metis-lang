@@ -390,3 +390,19 @@ A stage link is a rule here (dup-rule-names step 2): a link's name twice among a
 A rule and a link sharing a name are `rule-duplicate` too (dup-rule-names step 3), and over a pack's base `pack-redeclares`, kind rule.
 
 A rule name in two stages is `rule-duplicate` too (dup-rule-names step 4): "rule aa is named twice in stages act and settle". `rule-name-collision` stays for what the loop checks before a compile (metispy `metis/lang/formalize.py`).
+
+## Amendment (2026-11-02, the closure declarations and the lint phase; spec/00 §5a, patterns CHECKS.md)
+
+Five compile codes for `family` and `invariant`, D2 row diag_closure.llp: `family-member-unknown` (error), `family-produced` (error, located at the rule), `family-unread` (warning), `invariant-member-unknown` (error), `invariant-broken` (error, located at the rule; data `delta` as `+1`/`-1`).
+
+`invariant-init` (error, runtime): the init half, spoken by the REPL's `lint` and `python -m metis.lint`; data `invariant, members, total, held`.
+
+A new phase `lint`, NOT gated (no D2 row; the codes have unit tests in each toolchain): shape findings over a program that compiles, severity warning, printed by `metisc --lint FILE` and `python -m metis.lint FILE [--manifest]` and the REPL verb `lint`, never by a plain compile:
+
+- `state-dead-end`: a state pred the program's rules produce and none consumes (exempt: `__` protocol atoms, interface-package preds, family members, a manifest's out/resource/world-private and status atoms).
+- `state-unproduced`: a pred some rule reads or consumes that no rule produces, no `#init` holds, and no manifest supplies (in, world-private).
+- `rules-twin-body`: two rules of one stage with the same premises (variables renamed by first occurrence) and different heads.
+- `report-ungated`: a rule consuming an atom whose last argument type is `tick__gen` without reading `$tick__gen` with the same variable.
+- `stages-twice`: an includer and an included unit both state `stages` (or `layers`), differently.
+
+`--strict` makes the lint exit 1 for CI. A lint is advice for a person and the pi loop's commenter (the catalog's Loop lines name the code); it never refuses a program.
