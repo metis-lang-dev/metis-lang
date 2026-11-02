@@ -1,0 +1,33 @@
+% the lint phase's fixture (spec/08 amendment 2026-11-02, patterns
+% CHECKS.md §3): every lint code once, plus invariant-init from the
+% `#init` lines (the program of metispy tests/lang/test_closure.py LINT;
+% ci/check.sh diffs `metisc --lint` against corpus/goldens/lint_goldens.txt,
+% metispy's `python -m metis.lint` prints the same)
+catalog l 1.
+layers (dyn).
+stages (act).
+namespace m produce (dyn).
+pred idle : m.
+pred busy : m.
+pred go : m.
+pred stuck : m.
+pred orphan : m.
+pred rep(tick__gen) : m.
+pred tick__gen(tick__gen) : m.
+type tick__gen {g0 g1}.
+invariant mode (idle busy) : 1.
+stage act {
+  %% start
+  start [dyn] : $go * idle -o busy.
+  %% the same premises, another head
+  start2 [dyn] : $go * idle -o busy * stuck.
+  %% stop: stuck is left with no consumer
+  stop [dyn] : busy -o idle * stuck.
+  %% orphan: nothing makes it
+  back [dyn] : $orphan * busy -o idle.
+  %% echo: a report consumed without its generation
+  echo [dyn] : rep(G) -o ().
+}
+#init idle
+#init busy
+#init go

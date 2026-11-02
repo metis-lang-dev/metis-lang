@@ -42,6 +42,10 @@ type t = {
   k_bwd : string list;
   k_entries : entry list;
   k_abstract : string list;   (* abstract types left abstract (spec 12) *)
+  k_families : (string * string list) list;
+  k_invariants : (string * string list * int) list;
+    (* the closure declarations (spec/00 §5a), the base's first: not in the
+       canonical key, not on the wire; a pack's rules are checked against them *)
   k_srcs : (string * Diag.src) list }
   (* decl slices for catalog-level / admission diagnostics (spec 08),
      keyed "pred/x", "bwd/x", "namespace/y", "type/t", "types/t" *)

@@ -40,6 +40,11 @@ let registry = [
   ("rule-duplicate", ("error", "compile"));
   ("extends-no-base", ("error", "compile"));
   ("decl-duplicate", ("error", "compile"));
+  ("family-member-unknown", ("error", "compile"));
+  ("family-produced", ("error", "compile"));
+  ("family-unread", ("warning", "compile"));
+  ("invariant-member-unknown", ("error", "compile"));
+  ("invariant-broken", ("error", "compile"));
   ("type-unknown", ("error", "compile"));
   ("type-abstract", ("warning", "compile"));
   ("guard-cyclic", ("warning", "compile"));
@@ -65,6 +70,12 @@ let registry = [
   ("state-budget", ("note", "runtime"));
   ("horn-nonground", ("error", "runtime"));
   ("exact-unreachable", ("note", "runtime"));
+  ("invariant-init", ("error", "runtime"));
+  ("state-dead-end", ("warning", "lint"));
+  ("state-unproduced", ("warning", "lint"));
+  ("rules-twin-body", ("warning", "lint"));
+  ("report-ungated", ("warning", "lint"));
+  ("stages-twice", ("warning", "lint"));
   ("llm-endpoint", ("note", "runtime"));
   ("guard-not-bwd", ("error", "internal"));
   ("guard-var-undeclared", ("error", "internal"));
@@ -126,6 +137,28 @@ let hint code data =
     String.concat "" [ "rename this "; g "rule"; ": a stage's rule names are unique across its blocks and includes, and alternative heads reserve <name>-<k>" ]
   | "extends-no-base" ->
     String.concat "" [ "compile this pack against its base catalog "; g "base" ]
+  | "family-member-unknown" ->
+    String.concat "" [ "declare "; g "member"; " with `pred`, or take it out of family "; g "family"; ": a family's members are state predicates the host publishes" ]
+  | "family-produced" ->
+    String.concat "" [ "read "; g "members"; " with $ in "; g "rule"; ": family "; g "family"; " is the host's exclusive reading, no rule writes a member" ]
+  | "family-unread" ->
+    String.concat "" [ "read a member of family "; g "family"; " in some rule, or drop the declaration: a family exists for its readers" ]
+  | "invariant-member-unknown" ->
+    String.concat "" [ "declare "; g "member"; " with `pred`, or take it out of invariant "; g "invariant" ]
+  | "invariant-broken" ->
+    String.concat "" [ "make "; g "rule"; " keep the sum of invariant "; g "invariant"; ": what it consumes of the members it produces again ("; g "delta"; " now)" ]
+  | "invariant-init" ->
+    String.concat "" [ "make the init hold exactly "; g "total"; " token(s) over "; g "members"; " (it holds "; g "held"; "), or change the declared sum of "; g "invariant" ]
+  | "state-dead-end" ->
+    String.concat "" [ "give "; g "pred"; " a consumer (a release, a cancel, a done), list it as out or a status in the manifest, or drop the rule that produces it: a hold with no way on" ]
+  | "state-unproduced" ->
+    String.concat "" [ "produce "; g "pred"; " in some rule, hold it in #init, or list it as in or world-private in the manifest: nothing here makes it" ]
+  | "rules-twin-body" ->
+    String.concat "" [ "write "; g "rule"; " and "; g "twin"; " as one rule with alternative heads (`-o ( h1 @w a | h2 @w b )`): the sampler sums them as two weights with no declared ratio" ]
+  | "report-ungated" ->
+    String.concat "" [ "read $tick__gen(D, R, G) with the same G in "; g "rule"; ": a report carries the generation it answers, and a stale one must not act" ]
+  | "stages-twice" ->
+    String.concat "" [ "keep one `"; g "decl"; "` line in the spliced unit: the first met wins and the second ("; g "where"; ") is ignored" ]
   | "decl-duplicate" ->
     String.concat "" [ "a name is declared once per kind: remove this "; g "kind"; " declaration of "; g "name"; ", or rename it (first at "; g "first"; ")" ]
   | "type-unknown" ->

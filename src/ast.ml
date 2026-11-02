@@ -46,6 +46,10 @@ type decl =
   | DLink of link_d
   | DFact of atom
   | DHorn of atom * atom list
+  | DFamily of string * string list
+      (* `family NAME (p q r).`: a host-published exclusive family (spec/00 §5a) *)
+  | DInvariant of string * string list * int
+      (* `invariant NAME (p q r) : N.`: a linear P-invariant over the members (spec/00 §5a) *)
 
 type catalog = {
   cname : string; cversion : int;
@@ -163,6 +167,10 @@ let decl_line = function
   | DHorn (h, body) ->
     Printf.sprintf "%s :- %s." (atom_str h)
       (String.concat ", " (List.map atom_str body))
+  | DFamily (n, ms) ->
+    Printf.sprintf "family %s (%s)." n (String.concat " " ms)
+  | DInvariant (n, ms, total) ->
+    Printf.sprintf "invariant %s (%s) : %d." n (String.concat " " ms) total
   | DLink l ->
     let pre = if l.lpre_atoms = [] then l.lpre
       else l.lpre ^ " * " ^ atoms_str l.lpre_atoms in

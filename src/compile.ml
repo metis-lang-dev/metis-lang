@@ -673,6 +673,9 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
   (* sweep 2: entries (decl order); horn entries appended last *)
   let entries = ref [] and horn_entries = ref [] in
   let members = type_members (!types @ base_types) in
+  (* every rule and link in source order, for the closure pass below:
+     name, body atoms (bwd guards included, as metispy's), head, slice *)
+  let clauses = ref [] in
   let p_weight_refs = ref [] in
   let horn_layer =
     match cat.clayers with l :: _ -> l | [] -> "horn" in
@@ -736,6 +739,7 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
                 (rule_line r)
                 (List.filter (fun (a : atom) -> a.pred <> "one") atoms) in
             let emit = emitter rsrc in
+            clauses := !clauses @ [ (r.rname, body_atoms, r.rhead, rsrc) ];
             if String.trim r.rdoc = "" then
               emit "doc-missing"
                 (Printf.sprintf "%s: missing %%%% doc (mandatory)" r.rname)
@@ -845,6 +849,10 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
         let lsrc = src_of dloc ("qui/" ^ l.lname) l.ldoc (decl_line d)
             atoms in
         let emit = emitter lsrc in
+        clauses := !clauses @
+          [ (l.lname, l.lpre_atoms, l.lpost_atoms,
+             src_of dloc ("qui/" ^ l.lname) l.ldoc (decl_line d)
+               (List.filter (fun (a : atom) -> a.pred <> "one") atoms)) ];
         if String.trim l.ldoc = "" then
           emit "doc-missing"
             (Printf.sprintf "%s: missing %%%% doc (mandatory)" l.lname)
@@ -882,6 +890,76 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
       | _ -> ())
     cat.cdecls cat.cdecl_locs;
 
+  (* the closure declarations (spec/00 §5a, CHECKS.md §4): in one pass,
+     in this order (metispy compile_catalog mirrors it): a family's
+     unknown member, an invariant's unknown member, then per rule and
+     link in source order a family member written (family-produced) and
+     a broken invariant sum (invariant-broken), then a family nobody
+     reads. With a base, its families and invariants come first and the
+     pack's rules are held to them (they carry no location). *)
+  let families = (match base with
+      | Some ((bcat : Catalog.t), _) ->
+        List.map (fun (n, ms) -> (n, ms, Ast.no_loc, DFamily (n, ms))) bcat.k_families
+      | None -> [])
+    @ List.filter_map (fun (d, l) -> match d with
+        | DFamily (n, ms) -> Some (n, ms, l, d) | _ -> None) decl_locs in
+  let invariants = (match base with
+      | Some ((bcat : Catalog.t), _) ->
+        List.map (fun (n, ms, t) -> (n, ms, t, Ast.no_loc, DInvariant (n, ms, t))) bcat.k_invariants
+      | None -> [])
+    @ List.filter_map (fun (d, l) -> match d with
+        | DInvariant (n, ms, t) -> Some (n, ms, t, l, d) | _ -> None) decl_locs in
+  List.iter (fun (n, ms, l, d) ->
+      List.iter (fun m ->
+          if not (known_pred m) then
+            emitter (decl_source vocab lay l ("family/" ^ n) d)
+              "family-member-unknown"
+              (Printf.sprintf "family %s: '%s' is not a declared state predicate" n m)
+              [ ("family", n); ("member", m) ]) ms)
+    families;
+  List.iter (fun (n, ms, _, l, d) ->
+      List.iter (fun m ->
+          if not (known_pred m) then
+            emitter (decl_source vocab lay l ("invariant/" ^ n) d)
+              "invariant-member-unknown"
+              (Printf.sprintf "invariant %s: '%s' is not a declared state predicate" n m)
+              [ ("invariant", n); ("member", m) ]) ms)
+    invariants;
+  let read_by = Hashtbl.create 16 in
+  List.iter (fun (name, (body : atom list), (head : atom list), src) ->
+      let consumed = List.filter_map (fun (a : atom) ->
+          if a.persist then None else Some a.pred) body in
+      let produced = List.filter_map (fun (a : atom) ->
+          if a.pred = "one" then None else Some a.pred) head in
+      List.iter (fun (a : atom) -> Hashtbl.replace read_by a.pred ()) body;
+      let emit = emitter src in
+      List.iter (fun (fname, ms, _, _) ->
+          let hit = List.sort_uniq compare
+              (List.filter (fun p -> List.mem p ms) (consumed @ produced)) in
+          if hit <> [] then
+            emit "family-produced"
+              (Printf.sprintf "%s: writes %s of family %s: a family is the host's, \
+                               a rule only reads a member"
+                 name (String.concat ", " hit) fname)
+              [ ("rule", name); ("family", fname); ("members", String.concat " " hit) ])
+        families;
+      List.iter (fun (iname, ms, _, _, _) ->
+          let count l = List.length (List.filter (fun p -> List.mem p ms) l) in
+          let delta = count produced - count consumed in
+          if delta <> 0 then
+            emit "invariant-broken"
+              (Printf.sprintf "%s: moves the sum of invariant %s by %+d" name iname delta)
+              [ ("rule", name); ("invariant", iname); ("delta", Printf.sprintf "%+d" delta) ])
+        invariants)
+    !clauses;
+  List.iter (fun (n, ms, l, d) ->
+      if not (List.exists (Hashtbl.mem read_by) ms) then
+        emitter (decl_source vocab lay l ("family/" ^ n) d)
+          "family-unread"
+          (Printf.sprintf "family %s: no rule reads a member" n)
+          [ ("family", n) ])
+    families;
+
   if !findings <> [] then fail_now (List.rev !findings);
 
   let layers = if cat.clayers <> [] then cat.clayers
@@ -895,6 +973,8 @@ let compile ?base (cat : Ast.catalog) : Catalog.t * ports =
                k_preds = !preds; k_bwd = !bwd;
                k_entries = !entries @ List.rev !horn_entries;
                k_abstract = List.map fst !abstract;
+               k_families = List.map (fun (n, ms, _, _) -> (n, ms)) families;
+               k_invariants = List.map (fun (n, ms, t, _, _) -> (n, ms, t)) invariants;
                k_srcs = List.filter_map (fun (d, l) ->
                    let key = match d with
                      | DPred (n, _, _) -> Some ("pred/" ^ n)

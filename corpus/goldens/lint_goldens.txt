@@ -1,0 +1,42 @@
+== metisc --lint lint_all.llp
+warning state-dead-end @ lint_all.llp:13:6 (pred/stuck)
+  pred stuck : m.
+  -> give stuck a consumer (a release, a cancel, a done), list it as out or a status in the manifest, or drop the rule that produces it: a hold with no way on
+warning state-unproduced @ lint_all.llp:14:6 (pred/orphan)
+  pred orphan : m.
+  -> produce orphan in some rule, hold it in #init, or list it as in or world-private in the manifest: nothing here makes it
+warning state-unproduced @ lint_all.llp:15:6 (pred/rep)
+  pred rep(tick__gen) : m.
+  -> produce rep in some rule, hold it in #init, or list it as in or world-private in the manifest: nothing here makes it
+warning rules-twin-body @ lint_all.llp:23:3 (act/start2)
+  %% the same premises, another head
+  start2 [dyn] : $go * idle -o busy * stuck.
+  -> write start2 and start as one rule with alternative heads (`-o ( h1 @w a | h2 @w b )`): the sampler sums them as two weights with no declared ratio
+warning report-ungated @ lint_all.llp:29:3 (act/echo)
+  %% echo: a report consumed without its generation
+  echo [dyn] : rep(G) -o ().
+  -> read $tick__gen(D, R, G) with the same G in echo: a report carries the generation it answers, and a stale one must not act
+error invariant-init (invariant/mode)
+  invariant mode (idle busy) : 1.
+  -> make the init hold exactly 1 token(s) over idle busy (it holds 2), or change the declared sum of mode
+== metisc --lint lint_all.llp --manifest domain.yaml
+warning rules-twin-body @ lint_all.llp:23:3 (act/start2)
+  %% the same premises, another head
+  start2 [dyn] : $go * idle -o busy * stuck.
+  -> write start2 and start as one rule with alternative heads (`-o ( h1 @w a | h2 @w b )`): the sampler sums them as two weights with no declared ratio
+warning report-ungated @ lint_all.llp:29:3 (act/echo)
+  %% echo: a report consumed without its generation
+  echo [dyn] : rep(G) -o ().
+  -> read $tick__gen(D, R, G) with the same G in echo: a report carries the generation it answers, and a stale one must not act
+error invariant-init (invariant/mode)
+  invariant mode (idle busy) : 1.
+  -> make the init hold exactly 1 token(s) over idle busy (it holds 2), or change the declared sum of mode
+== metisc --lint lint_twice.llp
+warning stages-twice @ lint_twice.llp:5:9 (include/lint_twice_unit.llp)
+  include "lint_twice_unit.llp".
+  -> keep one `stages` line in the spliced unit: the first met wins and the second (lint_twice_unit.llp) is ignored
+warning stages-twice @ lint_twice.llp:5:9 (include/lint_twice_unit.llp)
+  include "lint_twice_unit.llp".
+  -> keep one `layers` line in the spliced unit: the first met wins and the second (lint_twice_unit.llp) is ignored
+== metisc --lint lint_twice_unit.llp
+lint_twice_unit.llp: no lint finding

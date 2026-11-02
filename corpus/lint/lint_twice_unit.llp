@@ -1,0 +1,12 @@
+catalog unit 1.
+layers (dyn more).
+stages (act extra).
+namespace m produce (dyn).
+pred a : m.
+pred b : m.
+stage act {
+  %% a becomes b
+  ab [dyn] : a -o b.
+  %% and back
+  ba [dyn] : b -o a.
+}

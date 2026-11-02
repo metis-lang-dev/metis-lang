@@ -38,6 +38,10 @@ type t = {
   k_bwd : string list;
   k_entries : entry list;
   k_abstract : string list;   (* abstract types left abstract (spec 12) *)
+  k_families : (string * string list) list;
+  k_invariants : (string * string list * int) list;
+    (* the closure declarations (spec/00 §5a), the base's first: not in the
+       canonical key, not on the wire; a pack's rules are checked against them *)
   k_srcs : (string * Diag.src) list }
   (* decl slices for catalog-level / admission diagnostics (spec 08),
      keyed "pred/x", "bwd/x", "namespace/y", "type/t", "types/t" *)
@@ -285,6 +289,8 @@ let admit base pack =
     k_abstract = List.filter (fun t -> not (completes t)) base.k_abstract
       @ List.filter (fun t -> not (List.mem_assoc t base.k_types))
         pack.k_abstract;
+    k_families = pack.k_families; k_invariants = pack.k_invariants;
+      (* the pack's compile listed the base's before its own (metispy CatalogDoc.families) *)
     k_srcs = pack.k_srcs @ base.k_srcs } in
   match typecheck merged with
   | [] -> merged

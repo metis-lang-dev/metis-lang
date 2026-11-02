@@ -21,6 +21,11 @@ hiding-shadow error compile
 rule-duplicate error compile
 extends-no-base error compile
 decl-duplicate error compile
+family-member-unknown error compile
+family-produced error compile
+family-unread warning compile
+invariant-member-unknown error compile
+invariant-broken error compile
 type-unknown error compile
 type-abstract warning compile
 guard-cyclic warning compile
@@ -46,6 +51,12 @@ reads-undeclared error runtime
 state-budget note runtime
 horn-nonground error runtime
 exact-unreachable note runtime
+invariant-init error runtime
+state-dead-end warning lint
+state-unproduced warning lint
+rules-twin-body warning lint
+report-ungated warning lint
+stages-twice warning lint
 llm-endpoint note runtime
 guard-not-bwd error internal
 guard-var-undeclared error internal

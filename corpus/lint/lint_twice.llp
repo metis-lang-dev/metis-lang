@@ -1,0 +1,6 @@
+% stages-twice: the included unit states stages and layers differently; the includer's win
+catalog twice 1.
+layers (dyn).
+stages (act).
+include "lint_twice_unit.llp".
+#init a

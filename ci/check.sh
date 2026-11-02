@@ -680,4 +680,29 @@ n_dup=$((n_dup+1))
 n_dup=$((n_dup+1))
 echo "DUP $n_dup/23 (two blocks, an include, a nested include, siblings, a diamond, a reserved head; a rule and a link, four ways; a name in two stages, three ways; three of a link; five of a pack; the link path's words; the legal scene)"
 
+echo "== 27. the lint phase (spec/08 amendment 2026-11-02, CHECKS.md §3): metisc --lint == goldens; --strict exits 1 on a finding"
+# corpus/lint: lint_all.llp fires every lint code once (metispy
+# tests/lang/test_closure.py's LINT program) and invariant-init from its
+# #init lines; with its domain.yaml the manifest's exemptions (in, out,
+# status) take two away; lint_twice.llp states stages and layers that its
+# include states differently (stages-twice); the unit alone is clean.
+# metispy's `python -m metis.lint` prints the same bytes (its
+# test_closure diffs metisc on the D2 fixture; the renderings are one).
+( cd "$ROOT/corpus/lint"
+  for args in "lint_all.llp" "lint_all.llp --manifest domain.yaml" \
+              "lint_twice.llp" "lint_twice_unit.llp"; do
+    echo "== metisc --lint $args"
+    "$ROOT/src/metisc" --lint $args
+  done ) > "$WORK/lint.txt" 2>&1
+diff -u "$ROOT/corpus/goldens/lint_goldens.txt" "$WORK/lint.txt"
+if ( cd "$ROOT/corpus/lint" && "$ROOT/src/metisc" --lint lint_all.llp --strict ) > /dev/null 2>&1; then
+  echo "--lint --strict exited 0 with findings"; exit 1
+fi
+( cd "$ROOT/corpus/lint" && "$ROOT/src/metisc" --lint lint_twice_unit.llp --strict ) > /dev/null
+# a program that does not compile is not linted: its diagnostics, exit 2
+if ( cd "$ROOT/corpus/diag" && "$ROOT/src/metisc" --lint diag_compile.llp ) > /dev/null 2>&1; then
+  echo "--lint linted a program that does not compile"; exit 1
+fi
+echo "LINT 4 runs + strict + the refusal"
+
 echo "ALL GATES GREEN"

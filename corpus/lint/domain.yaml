@@ -1,0 +1,4 @@
+# the manifest's exemptions: orphan and rep come from outside (in), stuck leaves (out) and is a status atom
+program: lint_all.llp
+shared: {orphan: in, rep: in, stuck: out}
+status: {success: [stuck], failure: []}

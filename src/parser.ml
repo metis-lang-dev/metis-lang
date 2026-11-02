@@ -376,6 +376,26 @@ let parse ?(file = "") text =
          let bname = expect_ident p in
          let args = sig_args p in
          punct p '.'; add (DBwd (bname, args))
+       | ("family" | "invariant")
+         when (match peek ~k:1 p with Some (Ident _) -> true | _ -> false)
+              && peek ~k:2 p = Some (Punct '(') ->
+         (* the closure declarations (spec/00 §5a, CHECKS.md §4): `family
+            NAME (p q r).` a host-published exclusive family; `invariant
+            NAME (p q r) : N.` a linear P-invariant over the member's own
+            atoms. Elsewhere `family` and `invariant` stay identifiers. *)
+         named ();
+         let cname = expect_ident p in
+         let members = name_list_paren p in
+         if members = [] then fail "%s %s: an empty member list" v cname;
+         if v = "family" then begin
+           punct p '.'; add (DFamily (cname, members))
+         end else begin
+           punct p ':';
+           let total = expect_num p in
+           if total = "" || not (String.for_all (fun c -> c >= '0' && c <= '9') total) then
+             fail "invariant %s: the sum is a whole number of tokens, got '%s'" cname total;
+           punct p '.'; add (DInvariant (cname, members, int_of_string total))
+         end
        | "weight" | "guard" | "input" | "output" -> named ();
          let pkind = match v with
            | "weight" -> Weight | "guard" -> Guard

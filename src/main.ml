@@ -296,6 +296,37 @@ let diagnostics_file ?base ?manifest ~json path =
       else print_string (Diag.render_text d))
     (Compile.diagnostics ())
 
+(* --lint FILE.llp [--manifest domain.yaml] [--strict]: the lint findings
+   (spec/08 lint phase) over a program that compiles — metispy's
+   `python -m metis.lint`, byte for byte: the findings on stdout, `FILE:
+   no lint finding` when none; a program that does not compile lists its
+   diagnostics on stderr, exit 2; --strict exits 1 on a finding *)
+let lint_file ?manifest ~strict path =
+  let ic = open_in_bin path in
+  let text = really_input_string ic (in_channel_length ic) in
+  close_in ic;
+  let ast = Compile.resolve_includes (Parser.parse_file path)
+      (Filename.dirname path) in
+  match Compile.compile ast with
+  | exception (Compile.Lang_error _ | Catalog.Catalog_error _ as e) ->
+    (* a LangError carries the compile's diagnostics, a CatalogError the
+       kernel typecheck's alone (metispy's e.diagnostics) *)
+    let kernel_only = (match e with Catalog.Catalog_error _ -> true | _ -> false) in
+    List.iter (fun d ->
+        if not kernel_only
+           || (match List.assoc_opt d.Diag.code Diag.registry with
+               | Some (_, "kernel") -> true | _ -> false)
+        then prerr_string (Diag.render_text d))
+      (Compile.diagnostics ());
+    Printf.eprintf "%s: does not compile; lint reads a compiled program\n" path;
+    exit 2
+  | (cat, _) ->
+    let found = Lint.lint ast cat ~text ?manifest ~path ()
+                @ Lint.invariant_init cat (Lint.init_counts text) in
+    List.iter (fun d -> print_string (Diag.render_text d)) found;
+    if found = [] then Printf.printf "%s: no lint finding\n" path;
+    exit (if found <> [] && strict then 1 else 0)
+
 (* metisc FILE.llp: compile only (includes resolved) — a lifted domain
    file passes with its type-abstract advisories (spec 12); a failing
    compile lists each error as `file:line: text`, as the metis shell's
@@ -588,6 +619,13 @@ let () =
        registries cannot drift *)
     List.iter (fun (c, (sev, phase)) ->
         Printf.printf "%s %s %s\n" c sev phase) Diag.registry
+  | _ :: "--lint" :: llp :: rest ->
+    let rec go ?manifest strict = function
+      | [] -> lint_file ?manifest ~strict llp
+      | "--manifest" :: m :: r -> go ~manifest:m strict r
+      | "--strict" :: r -> go ?manifest true r
+      | a :: _ -> failwith ("--lint: unknown argument " ^ a) in
+    go false rest
   | _ :: ("--diagnostics" | "--diagnostics-json" as f) :: llp :: rest ->
     let rec go ?base ?manifest = function
       | [] -> diagnostics_file ?base ?manifest ~json:(f = "--diagnostics-json") llp
@@ -604,7 +642,7 @@ let () =
        --roundtrip <manifest> | --sample <manifest> | \
        --run <file.llp> | --evaluate <file.llp|case.yaml> [--brute] [--cost] | --wire <program.llp> [--extension \
        <e.llp>]... | --diagnostics[-json] <file.llp> [--base \
-       <base.llp>] | --diag-registry | --selftest\n\
+       <base.llp>] | --lint <file.llp> [--manifest <domain.yaml>] [--strict] | --diag-registry | --selftest\n\
        (--diagnostics* LIST diagnostics and exit 0 even when errors are \
        listed — a listing, not a compile; use --run or a manifest for \
        pass/fail)";
