@@ -124,8 +124,10 @@ let over (sc : Catalog.clause_schema) types limit =
         (List.length (Option.value ~default:[] (List.assoc_opt t types))))
       sc.cs_vars) in
   Printf.sprintf "ground-budget: %s grounds more than %d events over its \
-                  variables (%s); bind them on the left with a fact the \
-                  state holds, or drop the atom that reads them alone"
+                  variables (%s); bind them on the left with a bwd guard (a \
+                  table the grounder reads) or narrow their types; a state \
+                  atom does not bind at grounding, its variables range over \
+                  the whole type whatever #init holds"
     sc.cs_name limit sizes
 
 let ground cat init_atoms =
