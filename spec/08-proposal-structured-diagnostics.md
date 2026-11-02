@@ -388,3 +388,5 @@ A name twice in one block stays the parser's error. `rule-name-collision` (a war
 A stage link is a rule here (dup-rule-names step 2): a link's name twice among a program's links is `rule-duplicate`, a pack's over its base `pack-redeclares`, kind rule. The interface check and the link print a member's refusal as `<code>: <message>` when it has a diagnostic.
 
 A rule and a link sharing a name are `rule-duplicate` too (dup-rule-names step 3), and over a pack's base `pack-redeclares`, kind rule.
+
+A rule name in two stages is `rule-duplicate` too (dup-rule-names step 4): "rule aa is named twice in stages act and settle". `rule-name-collision` stays for what the loop checks before a compile (metispy `metis/lang/formalize.py`).

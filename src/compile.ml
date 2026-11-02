@@ -167,10 +167,11 @@ let check_shadow decls (p, hidden, l, d) =
             end) s.srules
       | _ -> ()) decls
 
-(* a stage's rule names are unique across its blocks and its includes, a link's among the links, and a rule and a link
-   share no name (spec/18 §4): the parser sees one block *)
+(* one space of names in a program, rules and links, across stages, blocks and includes (spec/18 §4): the parser sees one
+   block. A rule with alternative heads holds its name and each <name>-<k>. *)
 let check_duplicate pairs =
-  let seen = Hashtbl.create 16 and links = Hashtbl.create 16 and rules = Hashtbl.create 16 in
+  let seen = Hashtbl.create 16 and heads = Hashtbl.create 16 and links = Hashtbl.create 16
+  and rules = Hashtbl.create 16 in
   let mixed n file line col decl subject =
     let text = Printf.sprintf "rule %s is named twice, as a rule and a stage link: a rule is final, and a second one is not added" n in
     Diag.emit (Diag.make "rule-duplicate" text
@@ -193,22 +194,31 @@ let check_duplicate pairs =
         Hashtbl.add links l.lname ()
       | DStage s, _ ->
         List.iter (fun r ->
-            if Hashtbl.mem seen (s.sname, r.rname) then begin
-              let text = Printf.sprintf "rule %s is named twice in stage %s: a rule is final, and a second one is not added" r.rname s.sname in
+            let base = rule_base r.rname in
+            let first = match Hashtbl.find_opt seen r.rname with
+              | Some st -> Some st
+              | None when base <> r.rname -> Hashtbl.find_opt seen base
+              | None -> if Hashtbl.mem heads r.rname then Some (Hashtbl.find heads r.rname) else None in
+            (match first with
+             | None -> ()
+             | Some st ->
+              let where = if st = s.sname then "in stage " ^ s.sname
+                else Printf.sprintf "in stages %s and %s" st s.sname in
+              let text = Printf.sprintf "rule %s is named twice %s: a rule is final, and a second one is not added" r.rname where in
               Diag.emit (Diag.make "rule-duplicate" text
                            { Diag.s_loc = { Diag.file = r.rloc.file; line = r.rloc.line; col = r.rloc.col;
                                             decl = s.sname ^ "/" ^ r.rname };
                              s_subject = [ rule_line r ]; s_context = []; s_layers = "" }
                            [ ("rule", r.rname); ("stage", s.sname) ]);
-              raise (Lang_error [ text ])
-            end;
+              raise (Lang_error [ text ]));
             if Hashtbl.mem links r.rname then
               mixed r.rname r.rloc.file r.rloc.line r.rloc.col (s.sname ^ "/" ^ r.rname) (rule_line r);
             if Hashtbl.mem links (rule_base r.rname) then
               mixed (rule_base r.rname) r.rloc.file r.rloc.line r.rloc.col (s.sname ^ "/" ^ r.rname) (rule_line r);
             Hashtbl.add rules r.rname ();
             Hashtbl.add rules (rule_base r.rname) ();
-            Hashtbl.add seen (s.sname, r.rname) ()) s.srules
+            if base <> r.rname then Hashtbl.replace heads base s.sname;
+            Hashtbl.replace seen r.rname s.sname) s.srules
       | _ -> ()) pairs
 
 let rec resolve_in (c : Ast.catalog) base_dir seen =

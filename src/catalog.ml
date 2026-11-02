@@ -236,8 +236,8 @@ let admit base pack =
     pack.k_bwd;
   let short n = match String.rindex_opt n '/' with
     | Some i -> String.sub n (i + 1) (String.length n - i - 1) | None -> n in
-  let base_rule stage name = List.exists (fun b -> match b.e_payload with
-      | PSchema bc -> bc.cs_stage = stage && short b.e_name = name
+  let base_rule name = List.exists (fun b -> match b.e_payload with
+      | PSchema _ -> short b.e_name = name
       | _ -> false) base.k_entries in
   let base_link name = List.exists (fun b -> match b.e_payload with
       | PLink _ -> short b.e_name = name
@@ -250,7 +250,7 @@ let admit base pack =
       (Printf.sprintf "pack redeclares rule '%s'" (short e.e_name)) e.e_src
       [ ("kind", "rule"); ("name", short e.e_name) ] in
   List.iter (fun e -> match e.e_payload with
-      | PSchema sc when base_rule sc.cs_stage (short e.e_name) -> redeclared e
+      | PSchema _ when base_any_rule (short e.e_name) || base_rule (Ast.rule_base (short e.e_name)) -> redeclared e
       | PSchema _ when base_link (short e.e_name) || base_link (Ast.rule_base (short e.e_name)) -> redeclared e
       | PLink _ when base_link (short e.e_name) || base_any_rule (short e.e_name) -> redeclared e
       | _ -> ()) pack.k_entries;

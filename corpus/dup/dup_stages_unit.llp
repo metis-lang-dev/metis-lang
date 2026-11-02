@@ -1,0 +1,12 @@
+% dup_stages_unit: a unit with act's rule.
+catalog dup_stages_unit 1.
+provenance text "one space of names, across stages (spec/18 §4)" "2026-11-02".
+layers (dyn).
+stages (act settle).
+namespace d produce (dyn).
+pred p : d.
+pred q : d.
+stage act {
+  %% It takes p.
+  aa [dyn] : p -o q.
+}

@@ -630,7 +630,7 @@ for f in --interface --link; do
 done
 echo "GENDIR $n_gd/6 (three generated directors listed the same twice; check; a missing package refused by both commands)"
 
-echo "== 26. a rule named twice in a stage (dup-rule-names s-dfb61f45, spec/18 §4): across blocks and includes one error, with one set of words; a pack naming its base's rule refused at admission; two names, or one name in two stages, legal"
+echo "== 26. a rule named twice in a stage (dup-rule-names s-dfb61f45, spec/18 §4): across blocks and includes one error, with one set of words; a pack naming its base's rule refused at admission; two names legal"
 n_dup=0
 for s in blocks:aa include:aa nested:aa sibling:aa diamond:aa head:turn-1; do
   name=${s%%:*}; rule=${s##*:}
@@ -649,13 +649,20 @@ for s in mixed:qui/back mixed_rule:act/back mixed_include:act/back mixed_head:ac
     || { echo "dup_$name: a rule and a link share a name: not one rule-duplicate at $decl"; cat "$WORK/dup_$name.txt"; exit 1; }
   n_dup=$((n_dup+1))
 done
+for s in stages:act,settle stages_include:act,settle stages_head:act,settle; do
+  name=${s%%:*}; st=${s##*:}; first=${st%%,*}; second=${st##*,}
+  rc=0; ( cd "$ROOT/corpus/dup" && "$ROOT/src/metisc" --run "dup_$name.llp" ) > "$WORK/dup_$name.txt" 2>&1 < /dev/null || rc=$?
+  [ "$rc" -ne 0 ] && grep -q "^error: rule [a-z-]*[0-9]* is named twice in stages $first and $second: a rule is final" "$WORK/dup_$name.txt" \
+    || { echo "dup_$name: a name in two stages should be refused (rc $rc)"; cat "$WORK/dup_$name.txt"; exit 1; }
+  n_dup=$((n_dup+1))
+done
 for name in link link_include link_nested; do
   ( cd "$ROOT/corpus/dup" && "$ROOT/src/metisc" --diagnostics "dup_$name.llp" ) > "$WORK/dup_$name.txt" 2>&1 || true
   [ "$(grep -c '^error ' "$WORK/dup_$name.txt")" -eq 1 ] && grep -q '^error rule-duplicate @ .* (qui/back)$' "$WORK/dup_$name.txt" \
     || { echo "dup_$name: not one rule-duplicate on the link"; cat "$WORK/dup_$name.txt"; exit 1; }
   n_dup=$((n_dup+1))
 done
-for s in pack:dup_unit:act/aa link_pack:dup_link_unit:qui/back mixed_pack:dup_link_unit:act/back mixed_pack_link:dup_link_unit:qui/aa; do
+for s in pack:dup_unit:act/aa link_pack:dup_link_unit:qui/back mixed_pack:dup_link_unit:act/back mixed_pack_link:dup_link_unit:qui/aa stages_pack:dup_link_unit:done/aa; do
   name=${s%%:*}; rest=${s#*:}; base=${rest%%:*}; decl=${rest##*:}
   ( cd "$ROOT/corpus/dup" && "$ROOT/src/metisc" --diagnostics "dup_$name.llp" --base "$base.llp" ) > "$WORK/dup_$name.txt" 2>&1 || true
   [ "$(grep -c '^error ' "$WORK/dup_$name.txt")" -eq 1 ] && grep -q "^error pack-redeclares @ .* ($decl)\$" "$WORK/dup_$name.txt" \
@@ -668,8 +675,8 @@ grep -q '^error compile dup: does not compile: rule-duplicate: rule aa is named 
 n_dup=$((n_dup+1))
 ( cd "$ROOT/corpus/dup" && "$ROOT/src/metisc" --run dup_ok.llp ) > "$WORK/dup_ok.txt" 2>&1 < /dev/null \
     && grep -q '^T 1 aa bb$' "$WORK/dup_ok.txt" \
-    || { echo "dup_ok: two names, or a name in two stages, should run"; cat "$WORK/dup_ok.txt"; exit 1; }
+    || { echo "dup_ok: two names should run"; cat "$WORK/dup_ok.txt"; exit 1; }
 n_dup=$((n_dup+1))
-echo "DUP $n_dup/19 (two blocks, an include, a nested include, siblings, a diamond, a reserved head; a rule and a link, four ways; three of a link; four of a pack; the link path's words; the legal scene)"
+echo "DUP $n_dup/23 (two blocks, an include, a nested include, siblings, a diamond, a reserved head; a rule and a link, four ways; a name in two stages, three ways; three of a link; five of a pack; the link path's words; the legal scene)"
 
 echo "ALL GATES GREEN"

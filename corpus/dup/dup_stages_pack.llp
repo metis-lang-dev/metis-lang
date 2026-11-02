@@ -1,0 +1,8 @@
+% dup_stages_pack: a pack's rule under a base rule's name in another stage: refused at admission.
+catalog dup_stages_pack 1.
+extends dup_link_unit.
+provenance text "one space of names, across stages (spec/18 §4)" "2026-11-02".
+stage done {
+  %% It takes p there, under the name act has.
+  aa [dyn] : p -o ().
+}

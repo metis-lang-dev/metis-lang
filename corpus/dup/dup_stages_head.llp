@@ -1,0 +1,18 @@
+% dup_stages_head: alternative heads hold their rule's name in another stage: refused.
+catalog dup_stages_head 1.
+provenance text "one space of names, across stages (spec/18 §4)" "2026-11-02".
+layers (dyn).
+stages (act settle).
+namespace d produce (dyn).
+pred p : d.
+pred q : d.
+stage act {
+  %% It takes p one way or the other.
+  turn [dyn] : p -o (q @w 0.5 | () @w 0.5).
+}
+stage settle {
+  %% It takes q, under the name.
+  turn [dyn] : q -o p.
+}
+#init p 1
+#steps 2

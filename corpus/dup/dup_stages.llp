@@ -1,0 +1,18 @@
+% dup_stages: one rule name in two stages: refused.
+catalog dup_stages 1.
+provenance text "one space of names, across stages (spec/18 §4)" "2026-11-02".
+layers (dyn).
+stages (act settle).
+namespace d produce (dyn).
+pred p : d.
+pred q : d.
+stage act {
+  %% It takes p.
+  aa [dyn] : p -o q.
+}
+stage settle {
+  %% It takes q, under act's name.
+  aa [dyn] : q -o p.
+}
+#init p 1
+#steps 2

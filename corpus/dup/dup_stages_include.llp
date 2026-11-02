@@ -1,0 +1,10 @@
+% dup_stages_include: the includer names the unit's rule in another stage: refused.
+catalog dup_stages_include 1.
+provenance text "one space of names, across stages (spec/18 §4)" "2026-11-02".
+include "dup_stages_unit.llp".
+stage settle {
+  %% It takes q, under act's name.
+  aa [dyn] : q -o p.
+}
+#init p 1
+#steps 2
