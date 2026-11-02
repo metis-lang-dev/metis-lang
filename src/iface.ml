@@ -383,13 +383,20 @@ type member = {
   m_inc : (string * string * string * string list) list; (* include string, place, file, the rules hidden *)
   m_inc_err : string list }             (* includes that resolve nowhere *)
 
+(* the program's `#init ATOM N` lines, the atom without its inner whitespace (`#init tick__gen(a, pot, g0) 1` is one
+   atom, as metispy directives.squash_atoms and Main.squash_atoms read it) *)
 let init_of path =
   let ic = open_in_bin path in
   let out = ref [] in
   (try while true do
        let l = String.trim (input_line ic) in
        match List.filter (( <> ) "") (String.split_on_char ' ' l) with
-       | ["#init"; a; n] -> out := (a, int_of_string n) :: !out
+       | "#init" :: (_ :: _ :: _ as rest) ->
+         let n = List.length rest in
+         let a = String.concat "" (List.filteri (fun i _ -> i < n - 1) rest) in
+         (match int_of_string_opt (List.nth rest (n - 1)) with
+          | Some k -> out := (a, k) :: !out
+          | None -> ())
        | _ -> ()
      done with End_of_file -> close_in ic);
   List.rev !out
@@ -735,6 +742,24 @@ let analyse ?direct_dir comp_path =
         if m.m_role = "specialist" && any_grant then
           add "error" "I5" "%s: gating host, but its rules read tick__grant (the agent gates it)" m.m_name
       | g -> add "error" "I5" "%s: gating is host or program, not %s" m.m_name g)
+    members;
+  (* I13 every programmed gate is seeded (spec/15 §3, amendment 10's generations): a member that gates itself over
+     generations (its rules read tick__gen) holds `#init tick__gen(member, R, _)` for each resource R it declares;
+     without the seed the first grant's generation guard never binds (`iface-gen-unseeded`) *)
+  List.iter (fun m ->
+      let gating = match List.assoc_opt "gating" m.m_extra with
+        | Some v -> str v | None -> "host" in
+      let reads_gen = List.exists (fun ru -> List.exists (fun ((a : atom), _) ->
+          a.pred = "tick__gen") ru.r_body) m.m_rules in
+      if gating = "program" && reads_gen then
+        List.iter (fun r ->
+            let seed = Printf.sprintf "tick__gen(%s,%s," m.m_name r in
+            let seeded = List.exists (fun (a, _) ->
+                String.length a > String.length seed && String.sub a 0 (String.length seed) = seed) m.m_init in
+            if not seeded then
+              add "error" "I13" "%s: gating program over generations, but no #init tick__gen(%s, %s, _) seeds its gate of %s"
+                m.m_name m.m_name r r)
+          (List.filter_map (fun (p, d) -> if d = "resource" then Some p else None) m.m_shared))
     members;
   (* I5 every resource owned once *)
   (match List.assoc_opt "resources" dm.m_extra with

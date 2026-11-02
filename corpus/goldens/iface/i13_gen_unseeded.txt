@@ -1,0 +1,24 @@
+interface composition.yaml
+iface proto proto.llp 611c5b1caf4cc63c477008410a74e6101fd64c12938b67545fbaa9e2bf97a205
+iface iface_mini ../_common/iface_mini.llp 2ebd5986fda183f3f746355b75a4572fa2561302fd669b544e471537c2d79b6f
+capacity ../_common/capacity.llp 07d8728f526cb5fe0952e3b98e4eeea3d7508bd75f9bd79d22e2ec8b583bdd85
+member d direct d/d.llp key c37939bf9b5a6e080b3cc11b1c5b3f43701e7276a0cdd53c6ff49e5545b8d731 ei ef7f80032b4bd55316df28e50f58694e025c2ecc6033fa7c564b422511cd1100
+member a specialist a/a.llp key 499e4eaec7d0343ea02e2882fe0db3b09a1df2641f1179bbf8e2e25556a3ae11 ei 206022f577ccc744e8bebfac2f8a9d1e3f0db64cc4f3292a73835022615a1be4
+member b specialist b/b.llp key 2c7d8e01b19e2729fe90e018c39e80f00197ba1a4eafe41b0de7b7f94e785fdd ei 0d414db8e8f026b329986893a070b4c49254dd8dd4e7988ff2ca9630fb546d9e
+package ddcd4d3584d7949530b64a3d1f8f9a307642d4605dfed56e25b1d8832930a9bf
+include dir ../../_common/capacity.llp ../_common/capacity.llp key 07d8728f526cb5fe0952e3b98e4eeea3d7508bd75f9bd79d22e2ec8b583bdd85 by d a b
+include dir ../proto.llp proto.llp key 96c13dcf2979502e578dcbb31ad557483465040db92bea646301e6b491b065c3 by d a b
+include dir ../../_common/iface_mini.llp ../_common/iface_mini.llp key c1dba3f1197074506efba29cb738dad914a90db4d6a1545a7e482c5f283284e1 by a b
+cut 7
+  answer signal: out [b(o)] in [a(c)]
+  ask signal: out [a(o)] in [b(c)]
+  cmd reading: out [b(o)] in [world]
+  hand resource: out [] in [] resource [a]
+  seen signal: out [world] in [a(c)]
+  tick__gen reading: out [d(o)] in [a(r)]
+  tick__grant reading: out [d(o)] in [a(r)]
+private d=3 a=0 b=0
+error I13 a: gating program over generations, but no #init tick__gen(a, hand, _) seeds its gate of hand
+note smell ask/answer between a and b: a call/return pair no world port or d reads
+result 1 error(s), 0 warning(s), 1 note(s)
+rc 1

@@ -34,7 +34,7 @@ pred tally(thing) : mini.
 IFACE_YAML = "nature: {seen: signal, ask: signal, answer: signal, cmd: signal, tally: signal}\n"
 COMP = """# composition — the spec/15 §6 fixture `{name}`
 capacity: {cap}
-protocol: ../_common/proto.llp
+protocol: {proto}
 interfaces: [{iface}]
 specialists: [a, b]
 direct: d
@@ -83,7 +83,8 @@ D_MAN = "# d\nprogram: d.llp\nshared: {tick__grant: out}\nresources: {hand: {cou
 
 BASE = dict(wout="seen", a_shared="seen: in, ask: out, answer: in, hand: resource", b_shared="ask: in, answer: out, cmd: out",
             a_extra="", a_rules=A_RULES, b_extra="", b_rules=B_RULES, d=D, iface_yaml=IFACE_YAML,
-            b_head=None, comp=None, extra_files={}, local_iface=False, cap="../_common/capacity.llp", a_man="")
+            b_head=None, comp=None, extra_files={}, local_iface=False, cap="../_common/capacity.llp", a_man="",
+            a_head=None, d_man=D_MAN, proto="../_common/proto.llp")
 
 
 def common():
@@ -111,13 +112,13 @@ def write(name, **kw):
     if c["local_iface"]:
         w("iface_mini.llp", IFACE)
         w("iface_mini.yaml", c["iface_yaml"])
-    w("composition.yaml", COMP.format(name=name, wout=c["wout"], cap=c["cap"],
+    w("composition.yaml", COMP.format(name=name, wout=c["wout"], cap=c["cap"], proto=c["proto"],
                                       iface="iface_mini.llp" if c["local_iface"] else "../_common/iface_mini.llp"))
     w("a/domain.yaml", A_MAN.format(shared=c["a_shared"], extra=c["a_man"]))
-    w("a/a.llp", HEAD.format(n="a", iface=iface_inc) + c["a_extra"] + c["a_rules"])
+    w("a/a.llp", (c["a_head"] or HEAD.format(n="a", iface=iface_inc)) + c["a_extra"] + c["a_rules"])
     w("b/domain.yaml", B_MAN.format(shared=c["b_shared"]))
     w("b/b.llp", (c["b_head"] or HEAD.format(n="b", iface=iface_inc)) + c["b_extra"] + c["b_rules"])
-    w("d/domain.yaml", D_MAN)
+    w("d/domain.yaml", c["d_man"])
     w("d/d.llp", c["d"])
     for p, t in c["extra_files"].items():
         w(p, t)
@@ -168,6 +169,20 @@ write("i11_nature", local_iface=True, iface_yaml=IFACE_YAML.replace("seen: signa
 # I12: b includes another copy of the interface package, with a different key
 write("i12_keys", b_head=HEAD.format(n="b", iface="iface_mini.llp"),
       extra_files={"b/iface_mini.llp": IFACE + "pred more(thing) : mini.\n"})
+# I13: a gates itself over generations (its take reads tick__gen) but no #init seeds tick__gen(a, hand, _); the case
+# carries its own protocol (with the generation pred) so _common's keys stay
+PROTO_GEN = PROTO.replace("types (domain resource).", "types (domain resource).\ntype tick__gen {g0 g1}.") \
+    + "pred tick__gen(domain, resource, tick__gen) : proto.\n"
+_local_proto = lambda t: t.replace('include "../../_common/proto.llp".', 'include "../proto.llp".')
+write("i13_gen_unseeded", proto="proto.llp", a_man="gating: program\n",
+      a_shared=BASE["a_shared"] + ", tick__grant: in, tick__gen: in",
+      a_head=_local_proto(HEAD.format(n="a", iface=IFACE_INC)),
+      a_rules=A_RULES.replace("take [dyn] : answer(T) -o ().",
+                              "take [dyn] : answer(T) * $tick__grant(a, hand) * $tick__gen(a, hand, G) -o ()."),
+      b_head=_local_proto(HEAD.format(n="b", iface=IFACE_INC)),
+      d=_local_proto(D).replace("-o holder(S, R) * tick__grant(S, R).", "-o holder(S, R) * tick__grant(S, R) * tick__gen(S, R, g0)."),
+      d_man=D_MAN.replace("shared: {tick__grant: out}", "shared: {tick__grant: out, tick__gen: out}"),
+      extra_files={"proto.llp": PROTO_GEN, "proto.yaml": PROTO_YAML.replace("}", ", tick__gen: signal}")})
 # the reader: block YAML is refused with its line
 write("yaml_block", comp="# composition — the reader's refusal\ncapacity: capacity.llp\nspecialists:\n  - a\n  - b\ndirect: d\n")
 print("ok")

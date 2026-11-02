@@ -1,0 +1,4 @@
+# b
+program: b.llp
+shared: {ask: in, answer: out, cmd: out}
+status: {success: [answer], failure: []}
