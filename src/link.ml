@@ -228,7 +228,10 @@ let check_or_link ~interface_only ~wire o comp_path =
                                      (List.concat_map (fun m -> List.map fst m.m_shared) specs0)) in
   let hand_m = if hand then Some (load_member comp_dir direct "direct") else None in
   let d = derive ~comp ~proto ~world_out ~specs:specs0 ~hand:hand_m in
-  let capacity = snd (Compile.include_place (str (List.assoc "capacity" comp)) comp_dir) in
+  (* normalized as the members' include closures are (Iface.norm): a capacity found under a RELATIVE $METIS_HOME
+     ("../../../metis-catalog/…", the road Makefile's default) is the same file as an absolute one (L14 compared
+     the spellings: "responder does not include the capacity …" with the include there) *)
+  let capacity = norm (snd (Compile.include_place (str (List.assoc "capacity" comp)) comp_dir)) in
   (* the generated director's package: staged under the build directory *)
   let build = match o.out with Some b -> b | None -> Filename.concat comp_dir "build" in
   let stage = let f = Filename.temp_file "metisc-link-" "" in Sys.remove f; f in

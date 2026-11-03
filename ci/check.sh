@@ -212,7 +212,8 @@ echo "== 13. interface check (spec 15 §6): metisc --interface == goldens, every
 # every path in it is relative; the iface/ units are the toolchain's
 # standard units (iface/ at the root, spec/17 amendment 5): no METIS_HOME
 n_if=0
-for comp in $(cd "$ROOT/corpus/iface" && find . -name composition.yaml | sed 's#^\./##' | sort); do
+# (road_home is the link's case of a capacity under a relative METIS_HOME, section 15: not an interface case)
+for comp in $(cd "$ROOT/corpus/iface" && find . -name composition.yaml -not -path './road_home/*' | sed 's#^\./##' | sort); do
   name=${comp%%/*}
   rc=0
   ( cd "$ROOT/corpus/iface" && \
@@ -286,11 +287,14 @@ echo "== 15. the link (spec 17 §4): metisc --link --check == goldens, the image
 n_ln=0
 for case in kitchen_pot:kitchen_pot/composition.yaml kitchen_pot_gen:kitchen_pot/composition_gen.yaml \
             road:road/composition.yaml alfworld:alfworld/domains/hier/composition.yaml \
-            alfworld_gen:alfworld/domains/hier/composition_gen.yaml minihack:minihack/domains/hier/composition.yaml; do
-  name=${case%%:*}; comp=${case#*:}
+            alfworld_gen:alfworld/domains/hier/composition_gen.yaml minihack:minihack/domains/hier/composition.yaml \
+            road_home:road_home/composition.yaml:road_home_lib; do
+  # name:composition[:METIS_HOME] — road_home's capacity is found under a RELATIVE METIS_HOME (the road Makefile's
+  # default): L14 compares the normalized paths, the members' include closures and the capacity alike
+  name=${case%%:*}; rest=${case#*:}; comp=${rest%%:*}; home=; [ "$rest" != "$comp" ] && home=${rest#*:}
   rc=0
   ( cd "$ROOT/corpus/iface" && \
-      "$ROOT/src/metisc" --link "$comp" --check ) > "$WORK/link_$name.txt" 2>&1 || rc=$?
+      env ${home:+METIS_HOME="$home"} "$ROOT/src/metisc" --link "$comp" --check ) > "$WORK/link_$name.txt" 2>&1 || rc=$?
   echo "rc $rc" >> "$WORK/link_$name.txt"
   diff -u "$ROOT/corpus/goldens/link/$name.txt" "$WORK/link_$name.txt"
   n_ln=$((n_ln + 1))
