@@ -1,0 +1,33 @@
+% the lint phase's fixture for L7, L8, L9 (checks-open s-17e557f0; patterns
+% CHECKS.md §3): the lights' first shape, which held a stop on the class it
+% entered on (can_stop moves as the car brakes, so the hold let go), a safety
+% rule reading a belief, and two acts no command begins (ci/check.sh diffs
+% `metisc --lint` with lint_checks.yaml against corpus/goldens/lint_goldens.txt)
+catalog c 1.
+layers (dyn).
+stages (act).
+namespace m produce (dyn).
+type light {red green}.
+type zone {nextzone}.
+pred signal(zone, light) : m.
+pred can_stop(zone) : m.
+pred late(zone) : m.
+pred intends(zone) : m.
+pred now : m.
+pred idle : m.
+pred busy : m.
+family reach (can_stop late).
+stage act {
+  %% a red I can stop for: I take the stop
+  guard [dyn] : $signal(nextzone, red) * $can_stop(nextzone) * idle -o busy.
+  %% I hold the stop while I can stop: the class the braking moves
+  yield_red [dyn] : $busy * $signal(nextzone, red) * $can_stop(nextzone) * $intends(nextzone) * now -o ().
+  %% an act no command begins
+  slow_down [dyn] : $busy * now -o ().
+  %% stop is no command, stop_lat is
+  stop_here [dyn] : $busy * now -o ().
+  %% the light lets me go
+  clear [dyn] : busy * $signal(nextzone, green) -o idle.
+}
+#init idle
+#init now

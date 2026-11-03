@@ -40,3 +40,31 @@ warning stages-twice @ lint_twice.llp:5:9 (include/lint_twice_unit.llp)
   -> keep one `layers` line in the spliced unit: the first met wins and the second (lint_twice_unit.llp) is ignored
 == metisc --lint lint_twice_unit.llp
 lint_twice_unit.llp: no lint finding
+== metisc --lint lint_checks.llp
+warning state-unproduced @ lint_checks.llp:12:6 (pred/signal)
+  pred signal(zone,light) : m.
+  -> produce signal in some rule, hold it in #init, or list it as in or world-private in the manifest: nothing here makes it
+warning state-unproduced @ lint_checks.llp:15:6 (pred/intends)
+  pred intends(zone) : m.
+  -> produce intends in some rule, hold it in #init, or list it as in or world-private in the manifest: nothing here makes it
+warning enter-equals-hold @ lint_checks.llp:24:3 (act/yield_red)
+  %% I hold the stop while I can stop: the class the braking moves
+  yield_red [dyn] : $busy * $signal(nextzone,red) * $can_stop(nextzone) * $intends(nextzone) * now -o ().
+  -> let yield_red hold busy on what the act does not move: drop can_stop from it, and enter on a harder member of its family
+== metisc --lint lint_checks.llp --manifest lint_checks.yaml
+warning belief-in-safety @ lint_checks.llp:24:3 (act/yield_red)
+  %% I hold the stop while I can stop: the class the braking moves
+  yield_red [dyn] : $busy * $signal(nextzone,red) * $can_stop(nextzone) * $intends(nextzone) * now -o ().
+  -> a safety rule reads what is seen: read an observed class here, and leave intends to a rule of another stage
+warning enter-equals-hold @ lint_checks.llp:24:3 (act/yield_red)
+  %% I hold the stop while I can stop: the class the braking moves
+  yield_red [dyn] : $busy * $signal(nextzone,red) * $can_stop(nextzone) * $intends(nextzone) * now -o ().
+  -> let yield_red hold busy on what the act does not move: drop can_stop from it, and enter on a harder member of its family
+warning name-not-a-command @ lint_checks.llp:26:3 (act/slow_down)
+  %% an act no command begins
+  slow_down [dyn] : $busy * now -o ().
+  -> rename slow_down to begin with a command of the manifest's `commands`, or give it a head
+warning name-not-a-command @ lint_checks.llp:28:3 (act/stop_here)
+  %% stop is no command, stop_lat is
+  stop_here [dyn] : $busy * now -o ().
+  -> rename stop_here to begin with a command of the manifest's `commands`, or give it a head

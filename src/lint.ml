@@ -19,6 +19,14 @@
      same variable.
    - stages-twice: an included unit states `stages` or `layers` that the
      includer also states, differently.
+   - belief-in-safety: with the manifest's `safety: [stages]`, a rule of
+     one of them reads or consumes a belief pred: the `belief:` list and
+     the keys of the spec/16 `beliefs:` and `levels:` maps.
+   - enter-equals-hold: a HOLD rule (it reads `$S`, its head is `one`: an
+     act) and the ENTRY rule of S (it makes S, does not read it) both read
+     a member of one declared `family`. Silent with no family.
+   - name-not-a-command: with the manifest's `commands: [...]`, an act
+     whose name is no entry and does not begin with an entry and `_`.
    - invariant-init (runtime phase, error): the file's `#init` holds a sum
      over an invariant's members other than the declared one. *)
 
@@ -120,6 +128,24 @@ let manifest_exempt = function
       | _ -> [] in
     (supplied, taken @ status)
 
+(* (safety stages, belief preds, commands or None) from a manifest
+   (metispy manifest_lists): belief = the `belief:` list, then the keys of
+   `beliefs:` and `levels:` not already in it *)
+let manifest_lists = function
+  | None -> ([], [], None)
+  | Some manifest ->
+    let m = Iface.read_yaml manifest in
+    let list k = match List.assoc_opt k m with
+      | Some v -> (try Iface.strs v with _ -> []) | None -> [] in
+    let keys k = match List.assoc_opt k m with
+      | Some (Iface.M ps) -> List.map fst ps | _ -> [] in
+    let belief = List.fold_left (fun acc p -> if List.mem p acc then acc else acc @ [ p ])
+        (list "belief") (keys "beliefs" @ keys "levels") in
+    let commands = match List.assoc_opt "commands" m with
+      | Some v -> Some (try Iface.strs v with _ -> []) | None -> None in
+    (list "safety", belief, commands)
+let uniq l = List.fold_left (fun acc x -> if List.mem x acc then acc else acc @ [ x ]) [] l
+let starts_with s p = String.length s >= String.length p && String.sub s 0 (String.length p) = p
 let iface_file f = List.mem "iface" (String.split_on_char '/' f)
 
 (* premises with variables renamed by first occurrence, as a sorted
@@ -299,6 +325,51 @@ let lint (cat : Ast.catalog) (k : Catalog.t) ~text ?manifest ?path () =
             | _ -> ()) gens
       end)
     clauses;
+  let (safety, belief, commands) = manifest_lists manifest in
+  (* belief-in-safety *)
+  List.iter (fun (stage, name, _, body, _, line, doc, l) ->
+      if List.mem stage safety then
+        List.iter (fun p ->
+            add (Diag.make "belief-in-safety"
+                   (Printf.sprintf "%s: a safety-stage rule reads the belief %s" name p)
+                   (src l (stage ^ "/" ^ name) ~doc line)
+                   [ ("rule", name); ("pred", p); ("stage", stage) ]))
+          (uniq (List.filter_map (fun (a : atom) ->
+               if List.mem a.pred belief then Some a.pred else None) body)))
+    clauses;
+  (* enter-equals-hold *)
+  let in_family p = List.exists (fun (_, ms) -> List.mem p ms) k.Catalog.k_families in
+  let acts = List.filter (fun (stage, _, _, _, head, _, _, _) ->
+      stage <> "qui" && List.for_all (fun (a : atom) -> a.pred = "one") head) clauses in
+  List.iter (fun (stage, name, _, body, _, line, doc, l) ->
+      let preds = uniq (List.map (fun (a : atom) -> a.pred) body) in
+      List.iter (fun s ->
+          List.iter (fun (_, ename, _, ebody, ehead, _, _, _) ->
+              let theirs = List.map (fun (a : atom) -> a.pred) ebody in
+              if List.exists (fun (a : atom) -> a.pred = s) ehead && not (List.mem s theirs) then
+                List.iter (fun c ->
+                    if c <> s && List.mem c theirs && in_family c then
+                      add (Diag.make "enter-equals-hold"
+                             (Printf.sprintf "%s holds %s on %s, which %s tests to enter %s: the act can move %s, so the hold lets go mid-act"
+                                name s c ename s c)
+                             (src l (stage ^ "/" ^ name) ~doc line)
+                             [ ("rule", name); ("entry", ename); ("state", s); ("cls", c) ]))
+                  preds)
+            clauses)
+        (uniq (List.filter_map (fun (a : atom) ->
+             if a.persist && not (List.mem a.pred bwd) then Some a.pred else None) body)))
+    acts;
+  (* name-not-a-command *)
+  (match commands with
+   | None -> ()
+   | Some cmds ->
+     List.iter (fun (stage, name, _, _, _, line, doc, l) ->
+         if not (List.exists (fun e -> name = e || starts_with name (e ^ "_")) cmds) then
+           add (Diag.make "name-not-a-command"
+                  (Printf.sprintf "%s: acts by its name, and no command the host takes begins it: the rule fires and nothing moves" name)
+                  (src l (stage ^ "/" ^ name) ~doc line)
+                  [ ("rule", name) ]))
+       acts);
   (* stages-twice, across the file's includes *)
   (match path with
    | Some p -> stages_twice p (ref []) out

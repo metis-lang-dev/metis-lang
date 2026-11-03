@@ -57,6 +57,9 @@ state-unproduced warning lint
 rules-twin-body warning lint
 report-ungated warning lint
 stages-twice warning lint
+belief-in-safety warning lint
+enter-equals-hold warning lint
+name-not-a-command warning lint
 llm-endpoint note runtime
 guard-not-bwd error internal
 guard-var-undeclared error internal

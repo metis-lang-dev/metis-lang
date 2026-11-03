@@ -1,0 +1,6 @@
+# L7, L8, L9's manifest lines: the safety stages, the beliefs, the commands the host takes
+program: lint_checks.llp
+shared: {signal: world-private, can_stop: world-private, late: world-private, intends: world-private, now: world-private}
+safety: [act]
+belief: [intends]
+commands: [yield, stop_lat]
