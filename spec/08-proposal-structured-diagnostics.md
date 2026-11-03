@@ -83,7 +83,7 @@ Initial registry, from the strings both compilers emit today:
 | state-budget | note | "exact filter retained N states..." |
 | horn-nonground | error | "non-ground Horn solution..." |
 | exact-unreachable | note | trace's "exact=(out of exact reach)" |
-| llm-endpoint | note | "ollama UNREACHABLE / model not pulled" |
+| llm-endpoint | note | "[llm] endpoint unset / unusable (anthropic[:MODEL] \| command:ARGV)" |
 
 Severity doctrine is unchanged: errors gate, warnings ride the
 report, notes are instruments speaking. No silent promotion.
@@ -291,8 +291,8 @@ step/steps/retained/budget/retry — the Σ-retained budget), exact-
 unreachable (trace; reason: event cap | state budget | out of memory),
 horn-nonground (`HornNonground(ValueError).diagnostic`),
 reads-undeclared (`ScopeViolation(FactorizeError).diagnostic`; severity
-corrected warning -> ERROR: it raises), llm-endpoint (unreachable /
-model not pulled). Exceptions keep their old types (callers' contract).
+corrected warning -> ERROR: it raises), llm-endpoint (no endpoint set, or
+not usable: anthropic[:MODEL] | command:ARGV; Ollama dropped 2026-11-03). Exceptions keep their old types (callers' contract).
 These surfaces are metispy-only (metisc has no loop, no exact
 instruments); their fixtures are tests/lang/test_diagnostics_runtime.py,
 one per code, with a coverage test tied to the registry.
