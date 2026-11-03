@@ -685,12 +685,15 @@ echo "== 27. the lint phase (spec/08 amendment 2026-11-02, CHECKS.md §3): metis
 # tests/lang/test_closure.py's LINT program) and invariant-init from its
 # #init lines; with its domain.yaml the manifest's exemptions (in, out,
 # status) take two away; lint_twice.llp states stages and layers that its
-# include states differently (stages-twice); the unit alone is clean.
+# include states differently (stages-twice); the unit alone is clean;
+# lint_checks.llp fires enter-equals-hold, and with lint_checks.yaml
+# belief-in-safety and name-not-a-command (checks-open s-17e557f0).
 # metispy's `python -m metis.lint` prints the same bytes (its
 # test_closure diffs metisc on the D2 fixture; the renderings are one).
 ( cd "$ROOT/corpus/lint"
   for args in "lint_all.llp" "lint_all.llp --manifest domain.yaml" \
-              "lint_twice.llp" "lint_twice_unit.llp"; do
+              "lint_twice.llp" "lint_twice_unit.llp" \
+              "lint_checks.llp" "lint_checks.llp --manifest lint_checks.yaml"; do
     echo "== metisc --lint $args"
     "$ROOT/src/metisc" --lint $args
   done ) > "$WORK/lint.txt" 2>&1
@@ -703,6 +706,6 @@ fi
 if ( cd "$ROOT/corpus/diag" && "$ROOT/src/metisc" --lint diag_compile.llp ) > /dev/null 2>&1; then
   echo "--lint linted a program that does not compile"; exit 1
 fi
-echo "LINT 4 runs + strict + the refusal"
+echo "LINT 6 runs + strict + the refusal"
 
 echo "ALL GATES GREEN"

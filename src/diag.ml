@@ -75,6 +75,9 @@ let registry = [
   ("rules-twin-body", ("warning", "lint"));
   ("report-ungated", ("warning", "lint"));
   ("stages-twice", ("warning", "lint"));
+  ("belief-in-safety", ("warning", "lint"));
+  ("enter-equals-hold", ("warning", "lint"));
+  ("name-not-a-command", ("warning", "lint"));
   ("llm-endpoint", ("note", "runtime"));
   ("guard-not-bwd", ("error", "internal"));
   ("guard-var-undeclared", ("error", "internal"));
@@ -158,6 +161,12 @@ let hint code data =
     String.concat "" [ "read $tick__gen(D, R, G) with the same G in "; g "rule"; ": a report carries the generation it answers, and a stale one must not act" ]
   | "stages-twice" ->
     String.concat "" [ "keep one `"; g "decl"; "` line in the spliced unit: the first met wins and the second ("; g "where"; ") is ignored" ]
+  | "belief-in-safety" ->
+    String.concat "" [ "a safety rule reads what is seen: read an observed class here, and leave "; g "pred"; " to a rule of another stage" ]
+  | "enter-equals-hold" ->
+    String.concat "" [ "let "; g "rule"; " hold "; g "state"; " on what the act does not move: drop "; g "cls"; " from it, and enter on a harder member of its family" ]
+  | "name-not-a-command" ->
+    String.concat "" [ "rename "; g "rule"; " to begin with a command of the manifest's `commands`, or give it a head" ]
   | "decl-duplicate" ->
     String.concat "" [ "a name is declared once per kind: remove this "; g "kind"; " declaration of "; g "name"; ", or rename it (first at "; g "first"; ")" ]
   | "type-unknown" ->
