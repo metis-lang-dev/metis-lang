@@ -77,7 +77,7 @@ Initial registry, from the strings both compilers emit today:
 | var-untypable | error | "var N untypable" |
 | fact-var-singleton | warning | (new, approved 2026-10-04) |
 | const-not-in-type | error | (new, approved 2026-10-04) |
-| rule-name-collision | warning | "rule name 'catch' appears 2x..." |
+| ~~rule-name-collision~~ | warning | retired 2026-11-03: `rule-duplicate` holds every compile path (below) |
 | provenance-shape | warning | "provenance is not `text ...`" |
 | reads-undeclared | warning | ports reads outside declared scope |
 | state-budget | note | "exact filter retained N states..." |
@@ -285,8 +285,8 @@ the same constructor; their slice is named by the INSTRUMENT
 (`note(code, text, decl, subject, data)`: decl = query | map |
 marginals | trace | scenario | llm | horn | factorize | provenance),
 subject = the invocation. Loop: provenance-shape (subject = the
-provenance line), rule-name-collision (the NEWCOMER entry's slice —
-the last rule with that short name). Runtime: state-budget (data:
+provenance line); rule-name-collision (the NEWCOMER entry's slice)
+was retired 2026-11-03 (below). Runtime: state-budget (data:
 step/steps/retained/budget/retry — the Σ-retained budget), exact-
 unreachable (trace; reason: event cap | state budget | out of memory),
 horn-nonground (`HornNonground(ValueError).diagnostic`),
@@ -390,6 +390,8 @@ A stage link is a rule here (dup-rule-names step 2): a link's name twice among a
 A rule and a link sharing a name are `rule-duplicate` too (dup-rule-names step 3), and over a pack's base `pack-redeclares`, kind rule.
 
 A rule name in two stages is `rule-duplicate` too (dup-rule-names step 4): "rule aa is named twice in stages act and settle". `rule-name-collision` stays for what the loop checks before a compile (metispy `metis/lang/formalize.py`).
+
+**Amendment 2026-11-03 (rule-name-collision retired).** metispy's `compile_catalog` runs the one-space-of-names check on what it is given, not only `resolve_includes` on a splice, so a catalog parsed and compiled without resolving its includes (`compile_catalog(parse(text))`, the generated catalogs, a gate's base) refuses a name twice as `load_llp` and metisc do. A pack over its base is `pack-redeclares` at admission. No compiled catalog, base or merged, can then hold a short name twice, and the loop's `rule-name-collision` warning had nothing left to see: it leaves the registry (both toolchains; `corpus/goldens/diag_registry.txt`).
 
 ## Amendment (2026-11-02, the closure declarations and the lint phase; spec/00 §5a, patterns CHECKS.md)
 

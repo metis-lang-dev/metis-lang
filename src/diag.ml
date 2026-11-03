@@ -64,7 +64,6 @@ let registry = [
   ("pack-claims-base-namespace", ("error", "admission"));
   ("pack-adds-stage", ("error", "admission"));
   ("type-incomplete", ("error", "ground"));
-  ("rule-name-collision", ("warning", "loop"));
   ("provenance-shape", ("warning", "loop"));
   ("reads-undeclared", ("error", "runtime"));
   ("state-budget", ("note", "runtime"));
@@ -195,8 +194,6 @@ let hint code data =
     String.concat "" [ "a pack may not add stage "; g "stage"; ": the stage set is the base's" ]
   | "type-incomplete" ->
     String.concat "" [ "ground the instance that includes this file, or complete "; g "type"; " here with `type "; g "type"; " "; "{"; "…"; "}"; ".`" ]
-  | "rule-name-collision" ->
-    String.concat "" [ "rename one of the "; g "count"; " rules named "; g "rule"; ": trace events and the debug sidecar read SHORT names" ]
   | "provenance-shape" ->
     String.concat "" [ "declare `provenance text \"<ref>\" \"<date>\".`: the formalization contract records its source" ]
   | "reads-undeclared" ->

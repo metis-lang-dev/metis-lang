@@ -45,7 +45,6 @@ pack-redeclares error admission
 pack-claims-base-namespace error admission
 pack-adds-stage error admission
 type-incomplete error ground
-rule-name-collision warning loop
 provenance-shape warning loop
 reads-undeclared error runtime
 state-budget note runtime
