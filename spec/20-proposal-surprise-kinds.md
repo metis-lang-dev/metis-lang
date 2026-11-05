@@ -1,6 +1,6 @@
 # PROPOSAL 20 — surprise kinds: the open world, the four kinds and their responses, what a weight means, what is certified
 
-**Status: DRAFT 2026-11-05 (the architect, at the user's ask: "An atom not existing in your domain does not necessarily mean the corresponding thing does not exist in the world. It means your current ontology cannot represent it. This is an open-world problem, and I think your surprise mechanism is a natural way to handle it … I would distinguish at least four types of surprise"; with three questions to answer in the design: how an unknown concept is told from a known one poorly observed; what a weight on a clause means when proofs combine; what the compiler certifies and what it does not). Nothing here changes a runtime or the grammar: the kind is a field of the surprise record, decided by a replay-time triage over the trace's three columns (§4), and it ROUTES the record (§5). The worked examples are the six records of road-scenarios s-e23be780 (§9), where this session answered every kind by hand before it had the names.**
+**Status: DRAFT 2026-11-05, amended the same day with the CONFUSION kind (the user: a person marks an event, hears the narration, agrees = pass, disagrees = a fragment with no surprise of its own but a misalignment: "either user or domain has confused the interpretation of state of affair") (the architect, at the user's ask: "An atom not existing in your domain does not necessarily mean the corresponding thing does not exist in the world. It means your current ontology cannot represent it. This is an open-world problem, and I think your surprise mechanism is a natural way to handle it … I would distinguish at least four types of surprise"; with three questions to answer in the design: how an unknown concept is told from a known one poorly observed; what a weight on a clause means when proofs combine; what the compiler certifies and what it does not). Nothing here changes a runtime or the grammar: the kind is a field of the surprise record, decided by a replay-time triage over the trace's three columns (§4), and it ROUTES the record (§5). The worked examples are the six records of road-scenarios s-e23be780 (§9), where this session answered every kind by hand before it had the names.**
 
 ## 0. In one table
 
@@ -12,6 +12,7 @@
 | **computational** | a budget was the stopping reason | the grounding form, a role count, a horizon, the budget itself (spec 14) | the architect |
 | *(world)* | the truth has no such thing either: the simulation cannot hold it | a world capability (a net rebuild, a body the director carries) | the world's owner, by hand |
 | *(evidential)* | the record's own evidence is misread: two agents read one trace two ways | a sharper record: no filler facts, the three columns side by side | the triage (§4), no proposal |
+| **confusion** | a person marked a fragment, heard the system's narration of it, and still disagrees; the columns hold no surprise of their own | the fragment kept with both readings; then §4 on the person's words: a misaligned person (the narration teaches) or a misaligned domain (one of the kinds above, found through the person's words) | the person marks and judges; the triage classifies; a law disagreement is the person's to rule |
 
 The paid loop runs on ONE row, the structural one, which is also the only row where a rule is the answer. Every other row today ends as "another rule" unless the kind is named first.
 
@@ -50,6 +51,13 @@ This session's six records are the evidence that the loop as built would have pr
 
 **Computational.** The run stopped on a budget: the grounding bound Π|τ| over the domain's budget (spec 14 §1), the case's `steps`, the instrument's state budget (spec 16 §6), a proposal's spend cap, the loop's beats. The response is a form change (roles for cells, a static table for a pred, spec 14), a horizon, or the budget; the compiler can report the first (spec 14 P11, the cyclic-guard listing) and the runtime the rest.
 
+**Confusion (the user, 2026-11-05).** The kinds above are read off the trace. This one is read off a PERSON. The road interface lets a person mark an event's beginning and end while the run plays (`world/mark` rows in the trace's `marks.jsonl`, with what the person said; `Workspace.marks` turns them into windows); the chat narrates a window (`narrate k0..k1`: the Tick table in prose) and explains it (`explain`: `trace_fired` and `trace_blame`, three lines). Two outcomes:
+
+- the person hears the narration and AGREES: a pass. The mark closes with the narration attached; nothing is recorded as a surprise (the system's account of its own behaviour was accepted; the fragment may still be kept as a teaching example);
+- the person still DISAGREES: the fragment is kept (`keep_window`, past the writer's ring) as a record of kind **confusion**: it holds no deterministic or probabilistic surprise of its own (no refused command, no flipped fact, no crossed bound), it holds a MISALIGNMENT between the person's reading of the state of affairs and the system's. Either the person or the domain has the interpretation wrong, and the record does not say which.
+
+The response is the triage of §4 run on the PERSON'S WORDS instead of the system's: the words name a thing no atom names → ontological (the person's concept is missing: "it should have let the bus in" where the vocabulary has no bus lane); the words name atoms that hold and a response the rules do not give → structural (a law disagreement: the rules did what they say and not what the person expects; that is the person's to rule, through the human gate, and a candidate pack only after the ruling); the words contest a fact ("that car was never dangerous") → probabilistic (a bound or a belief) or perception; the words are answered by the facts and the law as narrated → the person was misaligned, and the record closes with the narration as its answer and a note for the narrator (what was unclear). Confusion is therefore the ENTRY kind for alignment: it is the only kind that originates from a person, and its triage ends in one of the others or in a better narration. A fragment that produces the same confusion from several people is a narration or vocabulary defect even when the domain is right.
+
 **Outside the four.** A WORLD capability gap: the truth itself has no such thing, because the simulation cannot hold it (no sidewalks in the net, no occluders in a host). It is not a surprise of the domain and no proposal follows; the record names the world and stops. An EVIDENTIAL surprise: the record's readers disagree about what the trace shows; the response is a better record, and §4's columns are designed to make this one rare.
 
 ## 4. Classification: the three columns
@@ -62,6 +70,7 @@ This session's six records are the evidence that the loop as built would have pr
 
 **The procedure**, in this order, each step decided by a test on the columns, the first that fires names the kind:
 
+0. **confusion**: the record comes from a person's mark and the columns hold no surprise of their own (no refused command, no flipped fact, no crossed bound, no budget). Narrate the window first; on agreement the mark closes as a pass. On disagreement the record is kept as confusion and the steps below run on the PERSON'S WORDS (§3), ending in one of the kinds or in "narration" (the person was misaligned).
 1. **world**: the thing the words name is in NO column, truth included → a world capability gap. (The walkers.)
 2. **ontological / perception**: the thing is in the truth and in no fact at any tick of the window. Then two cases, told apart by the unit's SIGNATURE: if the unit has a predicate whose type could hold the thing (a `mover` role for a car, a `side` for a lane), the host failed to PROJECT it → the semantic map or the perception (the sensor's range, an occluder, a relevance rule): a host parameter or a host fix, by hand; if no predicate's type can hold it → **ontological**, a new or refined predicate. (The 60 m range was the first case: `a1` can hold a car; the lane kind was the second: no predicate could hold "bidirectional".)
 3. **probabilistic**: the thing is in the truth and in the facts, and the facts FLIP inside the window without a truth event between the flips, or a level is at its floor, or a second host's facts on the same truth differ, or a fold bound is crossed, or spec 19's S crosses. (Blame decided by one tick of safe history; the SUMO hold against the exerciser's collision.)
@@ -87,6 +96,7 @@ This session's six records are the evidence that the loop as built would have pr
 | probabilistic, hidden variable | spec 19 §4.2's ladder; its last step is an ontological record | as above | — |
 | computational | a form, a role count, a budget | spec 14's measured gains | 0 USD |
 | world | a world capability, recorded; no proposal | the world's owner | — |
+| confusion | the fragment kept with the person's words and the narration they rejected; then the row of the kind §4 finds on the words, or a narration fix (the narrator's words, the Tick table's vocabulary) | the person's agreement closes it; a law disagreement goes to the human gate before any pack | 0 USD (the narration is the loop's own words) |
 
 **Routing rule.** The paid loop takes a record only when its kind is structural. A record of another kind that reaches the loop is returned with its kind and the response form; the loop never writes law around a hole in the vocabulary. The obvious-fix rule (the user, 2026-11-05) is the structural row's cheap half.
 
@@ -133,15 +143,21 @@ Three layers of guarantee, distinct in kind:
 The surprise record (metispy `metis.catalog.workspace`: `member`, `trace`, `window`, `k`, `words`, `reading`, `atoms`, `status`, `who`) gains:
 
 ```
-kind: ontological | structural | probabilistic | computational | world | evidential
+kind: ontological | structural | probabilistic | computational | world | evidential | confusion
 evidence:
   truth:  [what the world held at the window: ids, classes, places]      # T10, when the host has a snapshot
   facts:  [the member's atoms about it, per tick, or "none"]
   law:    [rules fired (T8); rules one guard away: {rule, missing premise, ticks}]
   hosts:  [a second host's reading of the same card, when there is one]
   budget: {what was exhausted}                                           # computational only
+  mark:   {n, k0, k1, said}                                              # confusion: the person's mark and words
+  narration: [the lines the person heard]                                # confusion: narrate + explain, verbatim
+  verdict: agreed | disagreed                                            # confusion: the person's answer
+  then:   the kind §4 finds on the words, or "narration"                 # confusion: where the triage ended
 response: the row of §5 the kind selects, as a sentence
 ```
+
+A confusion record whose verdict is `agreed` is a closed mark, not an open surprise; it is kept only when the person asks (a teaching fragment). One whose verdict is `disagreed` is open until its `then` kind is answered or the person accepts a later narration.
 
 The triage that fills it is a replay-time instrument beside spec 19's (`metis.trace kind RECORD`): it runs §4's procedure over the columns and writes the kind and the evidence; the model may dispute the kind in the record's reading, never overwrite it. The `words` stay the person's; the `reading` stays the agent's.
 
@@ -166,6 +182,7 @@ The one row that was a pure pack (`brake_cross`) is also the only row the paid l
 4. **`metis.trace kind`**: §4's procedure over the columns, writing `kind` and `evidence` into the record; the judge refuses a pack whose record is not structural with the record's kind and §5's row (a refusal that teaches, like the link's, but in the right direction).
 5. **The link refusal re-read**: an unknown atom at the link on a record whose kind is ontological is the expected outcome; the message says "the vocabulary has no atom for X; propose the predicate and its host contract", not the nearest well-formed rule. The language RAG design keeps its two first retrievals for the structural kind.
 6. **The loop's hand-over conditions** (POLICY.md: budget, no progress, out of vocabulary, contradiction, the world says so) map onto the kinds: budget → computational; out of vocabulary → ontological (its probabilistic form is spec 19 §4.2); contradiction → structural (stage order, a law question); the world says so → world. The policy gains "kind not structural" as a hand-over before the first proposal.
+7. **The mark's two endings** (confusion): today `/mark K0..K1 WORDS` and the road page's mark drop a surprise at once. The chat gains the narrate-first flow: a closed mark is narrated (`narrate` then `explain` on its window) and the person answers `agree` or `disagree`; `agree` closes the mark with the narration attached (kept on request); `disagree` keeps the window and writes the record with kind confusion, the mark, the narration and the verdict (§8), then runs §4 on the words. The road page shows the same two buttons on a closed mark. The narrator's vocabulary (the Tick table's words) is the thing a repeated confusion improves.
 
 ## 11. Open
 
