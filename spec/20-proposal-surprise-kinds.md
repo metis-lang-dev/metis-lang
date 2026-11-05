@@ -143,7 +143,8 @@ Three layers of guarantee, distinct in kind:
 The surprise record (metispy `metis.catalog.workspace`: `member`, `trace`, `window`, `k`, `words`, `reading`, `atoms`, `status`, `who`) gains:
 
 ```
-kind: ontological | structural | probabilistic | computational | world | evidential | confusion
+kind: ontological | perception | structural | probabilistic | computational | world | evidential | confusion
+        # perception: §4 step 2, the thing in the truth, a predicate that could hold it, no fact: the host did not project it
 evidence:
   truth:  [what the world held at the window: ids, classes, places]      # T10, when the host has a snapshot
   facts:  [the member's atoms about it, per tick, or "none"]
@@ -157,7 +158,7 @@ evidence:
 response: the row of §5 the kind selects, as a sentence
 ```
 
-A confusion record whose verdict is `agreed` is a closed mark, not an open surprise; it is kept only when the person asks (a teaching fragment). One whose verdict is `disagreed` is open until its `then` kind is answered or the person accepts a later narration.
+A record keeps its window: the drop copies the window past the writer's ring (`keep_window`), so a rerun under the same run name cannot empty the record's evidence (two of the six road records lost theirs that way). A confusion record whose verdict is `agreed` is a closed mark, not an open surprise; it is kept only when the person asks (a teaching fragment). One whose verdict is `disagreed` is open until its `then` kind is answered or the person accepts a later narration.
 
 The triage that fills it is a replay-time instrument beside spec 19's (`metis.trace kind RECORD`): it runs §4's procedure over the columns and writes the kind and the evidence; the model may dispute the kind in the record's reading, never overwrite it. The `words` stay the person's; the `reading` stays the agent's.
 
