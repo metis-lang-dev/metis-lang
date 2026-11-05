@@ -214,7 +214,7 @@ let hint code data =
   | "exact-unreachable" ->
     String.concat "" [ "the sampled counts stand; for exact numbers lower #steps or shrink the scene ("; g "reason"; ")" ]
   | "llm-endpoint" ->
-    String.concat "" [ g "problem"; ": set [llm] endpoint in the config dot file, or pick one with `llm` (anthropic[:MODEL] | command:ARGV)" ]
+    String.concat "" [ g "problem"; ": set [llm] endpoint in the config dot file, or pick one with `llm` (llm ollama MODEL [URL] | llm openrouter MODEL | llm anthropic [MODEL] | llm command:ARGV)" ]
   | _ -> ""
 (* END GENERATED *)
 
