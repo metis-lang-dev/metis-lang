@@ -151,11 +151,21 @@ kind of uncertainty is about the world itself --- where the cup is,
 whether the beast is hostile --- and it is \emph{epistemic}: it belongs
 to the agent's map and changes with every observation. A program with
 fixed weights is a certified Markov decision process. With the map's
-belief entering through a port, it is a belief MDP --- over a
-\emph{finite} quantisation, because the belief enters as a finite atom
-(\S\ref{sec:belief}). Keeping the two kinds apart, and letting the
-second cross into the first only through a finite port, is what lets
-every certificate of this paper survive the arrival of belief.
+belief entering through a port, each tick is a receding-horizon
+evaluation at the belief as it stands: the filter that moves the belief
+stays in the map, and the instrument does not branch over future
+observations, so this is one step of a belief MDP's evaluation, not a
+belief-MDP solver (\S\ref{sec:belief}). The probability model does not
+need the belief to be finite: a continuous belief already enters through
+the presence draw, and its effect is bounded over whole cells of beliefs
+(Proposition~\ref{prop:cells}). Quantisation is the \emph{certification
+strategy} for the decisions: a rule is gated on a finite level atom, so
+the program with belief stays a finite program. Keeping the two kinds
+apart, and letting the second gate the first only through a finite port,
+is how the certificates of this paper are carried over to programs with
+belief; where that discipline is left --- a \textsc{choice} weight that
+reads a belief, a forecast by step --- the certificate says so
+(\S\ref{sec:beliefthm}, \S\ref{sec:bystep}).
 
 \paragraph{What the lollipop buys.} For the experienced reader it
 pays to separate, at the door, the two halves of the logic--probability
@@ -169,7 +179,12 @@ this paper lives in the other half: the linear implication
 $A \lolli B$ read as the conditional $P(B \mid A)$. This is not
 another Venn-style equivalence; it is a statement about
 \emph{direction and factorization}, which the event algebra cannot
-express at all. A BN node with its parents is one lollipop --- EFD's
+express at all. The implication alone carries no number: the
+probability comes from the weighted competition added to it, an event's
+weight normalised over \emph{all} the events enabled with it at its
+\textsc{choice} site (\S\ref{sec:choice}), so the conditional of a site
+is given the premises of every competitor, not of the chosen clause
+alone. A BN node with its parents is one lollipop --- EFD's
 box axiom: negative premises, one positive conclusion, a CPT, with
 $A \lolli B = A^\perp \parr B$ \cite{Gir87} the reason implication
 and box share a shape; the chain rule
@@ -179,10 +194,11 @@ are directed morphisms and composition is the chain rule
 \cite{CJ19,Fri20}); a DBN's transition kernel is one lollipop per
 slice. The reading is load-bearing three times over in what follows.
 The emission compiles every clause $c_r \lolli o_r$ into a CPT row
-whose parents are exactly the clause's premises, and the box-rule
+of its site's box, whose parents are the premises of the site's
+clauses (the union of the candidates' scopes), and the box-rule
 shape is machine-checked on every artifact
 (Proposition~\ref{prop:bpn}). The run measure factorizes per site
-into conditionals given exactly those premises
+into conditionals given exactly those scopes
 (Theorem~\ref{thm:trace}) --- and that factorization, not the flat
 measure, is what the cost certificates, junction trees and exports
 operate on. And the implication is \emph{consuming}: co-enabled
@@ -230,7 +246,10 @@ This paper contributes, on the theory side:
   \stproved{}, \stmech{}): the denotation is an equivalence between
   ground staged programs modulo structural congruence and finite
   stage-gated mass-action stochastic Petri nets --- the honest
-  ``isomorphism theorem''; logic $\leftrightarrow$ all-of-PGM is
+  ``isomorphism theorem'', and a \emph{representation} theorem: the
+  class is defined to carry the source's firing rule, so the statement
+  is that the denotation forgets exactly presentation, not that
+  probability reduces to logic; logic $\leftrightarrow$ all-of-PGM is
   obstructed and we say exactly why (\S\ref{sec:obstructions}).
 \item \textbf{Trace invariance on the factorizable class}
   (Theorem~\ref{thm:trace}, \stproved{}, descent skeleton \stmech{}):
@@ -778,6 +797,26 @@ Mazurkiewicz classes --- is \stmech{} in abstract form
 (\S\ref{sec:mech}); the site/scope instantiation for the concrete
 emission remains on paper.
 
+Two readings the statement depends on, made explicit. \emph{The scope
+is the site's.} The factor of a site is a ratio whose denominator sums
+over every candidate, so the scope valuation in the theorem is the
+union of the candidates' scopes, and the independence the lemma uses
+must leave that whole union untouched: an event that writes an atom
+read only by a \emph{competitor} of the chosen clause changes the
+normaliser as surely as one that writes the clause's own premise. The
+concrete obligation still on paper is therefore that the emission's
+independence relation protects the entire normaliser of each site,
+competitor scopes included. \emph{Which quotient statement.} A measure
+on trace classes exists for any program, as the pushforward of the run
+measure: the mass of a class is the \emph{sum} over its representative
+runs, multiplicity kept. The theorem gives two stronger facts on
+$\cclass$: all representatives of a class carry the same weight, and
+that weight does not depend on a scheduling convention. The mass of a
+net is then the common weight times the number of representatives the
+admitted schedule realises; that multiplicity is part of the concrete
+instantiation and is to be stated with it (open problem~1,
+\S\ref{sec:open}).
+
 
 \paragraph{The composite measure factorizes by the tick.} The same
 descent holds one level up, for a composition of packages
@@ -809,6 +848,15 @@ function of the prefix. The probability of the tick's joint step is
 therefore the product over beating members of their own one-tick
 measures, and the product over ticks follows by the chain rule.
 \end{proof}
+
+The product is of \emph{conditional} kernels: each factor is given
+$\mathit{state}_d(t)$, which carries what the other members sent at
+earlier boundaries. It does not say the members' histories are
+independent --- a member moves another through its messages one
+boundary later --- and it does not make a composition of separately
+certified packages safe: that needs assumptions on the interfaces and
+an argument at the level of the composition, for which the product is
+the starting point.
 
 What the product does \emph{not} give is the flat program's measure:
 interleavings within a tick are not represented --- (F2) forbids them
@@ -1026,6 +1074,24 @@ groups, and the instrument starts from the mixture
 \[
   \mu_0 \;=\; \sum_w P(w)\,\delta\big((s_0,\ m_0 \uplus w)\big).
 \]
+
+\begin{remark}[correlated beliefs share a group]
+The product over groups \emph{is} an independence assumption: two
+quantities declared in separate groups are independent in every world
+mixture, whatever the map believes. Where the map's quantities depend
+on one another --- a car's presence, its position and its intention ---
+multiplying their marginals gives an exact answer for the wrong model.
+The dependent quantities must then be declared as \emph{one}
+\texttt{one} group whose members are the combinations, bound to the
+joint distribution. Nothing else changes: $\sum_w P_f(w)\,\mu_w(Q)$ is
+linear in each group's distribution, the joint group's included, so
+Theorem~\ref{thm:mixture} holds as stated and the vertex bound of
+Proposition~\ref{prop:cells} holds over the joint group's polytope ---
+at the price of its vertices, which grow with the number of
+combinations. Which groups are joint is part of the contract between
+the map and the program and is carried by the belief declarations, so
+the independence a certificate assumes can be read from its key.
+\end{remark}
 Two disciplines keep this honest. A case's initial multiset may not list
 a belief atom (the draw puts it there). And belief preds are resource
 preds, never Horn guards: a guard is eliminated at grounding
@@ -1065,6 +1131,47 @@ program as a finite atom, so the program with belief is a program of the
 kind every theorem above already governs; the arithmetic that produced
 the atom lives in an instrument beside the program, where it can be
 exact.
+
+Four obligations come with a level, and none of them is a finer
+threshold.
+
+\emph{Adequacy.} A level stands for every belief of its cell, so the
+behaviour the program selects on a level must be admissible for each of
+them: writing $b$ for the map's belief, $q(b)$ for its levels and $z$
+for the program's other inputs, the selected behaviour must lie in
+$\bigcap_{b' :\, q(b') = q(b)} \mathit{admissible}(z, b')$. It need not
+be the best behaviour for each $b'$; a conservative common one is
+enough. An empty intersection says the levels miss a distinction the
+decision needs, and the repair is another level or another input, not
+more decimals. For a quantity the instrument computes, the cell
+interval of \S\ref{sec:beliefthm} is the tool that checks this: it
+bounds the query over the whole cell.
+
+\emph{Where the number was made.} A level of the instrument's own
+answer is covered by the cell sheet. A level of a number computed
+elsewhere --- a predictor's mixture over an agent's intentions,
+thresholded by the host --- is not: the predictor and the threshold
+table are then part of the sealed image (\S\ref{sec:packages}), trusted
+as the forecast of \S\ref{sec:bystep} is, and the adequacy of that
+level is established by test, not by the sheet. Where the hypotheses
+are few and constant over the horizon (an intent), the better form is a
+categorical belief (\S\ref{sec:catport}) with the hazards conditioned
+on it: the instrument then builds the mixture itself and
+Theorem~\ref{thm:mixture} governs it.
+
+\emph{Validity and urgency are inputs of their own.} A stale ``low'' is
+not a fresh ``low'', and two forecasts of equal total probability may
+differ in when the event falls within the horizon. When either changes
+the behaviour, it is a separate finite atom (the reading's freshness;
+an urgency class), asserted and retracted by the host like any level.
+
+\emph{Hysteresis widens the cells.} A host that holds a level until the
+value leaves a band around the cut point makes the asserted level a
+function of the value's history: inside the band the same value may
+carry either of two adjacent levels. The cells then overlap, and the
+sheet is sound only if each cell is certified over its widened
+interval, the band included. A stabilising rule of this kind must also
+never hold back a level that a newly urgent reading would raise.
 
 \subsection{The one-tick instrument}\label{sec:instrument}
 
@@ -1411,6 +1518,19 @@ compiled structure serves every tick of a receding-horizon loop (the
 bounded-slot-template deployment story), with per-tick evidence as
 point factors.
 
+A certificate names its object and its property, and the four in this
+paper are different achievements: that the number computed is the
+declared program's measure (the parity chain and the theorems), that
+the artifact is well typed (Proposition~\ref{prop:bpn}), that a query
+costs at most so many factor-ops (this section), and that the belief
+cells bound a query (\S\ref{sec:beliefthm}). None of them is a
+statement about physical safety: whether the catalog describes the
+world is an empirical question outside all four. The cost certificate
+is a bound in factor-ops. It becomes a wall-clock bound only with
+bounds on what the bindings' callbacks do and on the scheduling of the
+evaluator's thread; the per-machine constant is a measurement, useful
+as engineering evidence, and is not a worst-case execution-time proof.
+
 \subsection{Honesty: what the cliff is and is not}\label{sec:cliff}
 
 The exact filter dies where reachable support explodes --- synchronous
@@ -1528,6 +1648,19 @@ human-reviewable row sheet (\texttt{prior $\to$ posterior ($n$,
 $\alpha_0$)} per scope assignment); the vehicle never learns in flight.
 The batch interface to external estimators is (UAI net, traces) ---
 data, not an RL arena; the simulators are trace generators for it.
+
+\paragraph{Identification.} Counts from logged runs are observational.
+A site's table estimated from them is the site's mechanism only when
+everything that moved both the choice and its scope is in the scope: a
+hidden world quantity that does both confounds the count, and a rule
+whose premise names an atom that merely accompanied the outcome is the
+structural form of the same error. This is the one place where
+identification in Pearl's sense \cite{SP06} applies to this system:
+before a count or a drafted premise is read as a cause, either the
+logged quantity is identifiable from the record under the program's
+dependency structure, or it is settled by intervention, which the
+record's replay supplies (force or block the event, re-evaluate). The
+check is not built; it belongs to the loop.
 
 \paragraph{The loop.} The loop that proposes packs --- a language model
 drafting rules from surprise records, a gate admitting or refusing them
@@ -1676,13 +1809,47 @@ industry the component model but no measure; our framework keeps the
 component seams (registry, blackboard, ports) and adds semantics, and
 its interface packages are the contract half of that component model.
 
-\paragraph{The belief side.} A program with belief ports is a
-finite-horizon belief MDP \cite{KLC98} evaluated at one tick over a
-finite quantisation. What is particular here is that the quantisation is
-the program's \emph{input type} --- the level atom --- so the belief MDP
-is certified by a finite sheet over cells rather than by a bound over a
-continuous belief space, and the filter that moves the belief stays
-outside the certified object.
+\paragraph{The belief side.} In the terms of the belief MDP
+\cite{KLC98}, a program with belief ports is evaluated at one tick, at
+the belief as it stands, over a finite horizon and a finite
+quantisation: a receding-horizon evaluation, not a solver. A belief-MDP
+planner branches over future observations and updates the belief along
+each branch; here the filter that moves the belief stays outside the
+certified object and the inputs are frozen or forecast over the horizon
+(\S\ref{sec:instrument}, \S\ref{sec:bystep}). What is particular is
+that the quantisation is the program's \emph{input type} --- the level
+atom --- so the decisions are certified by a finite sheet over cells,
+each cell bounding the query over a continuum of beliefs
+(Proposition~\ref{prop:cells}).
+
+\paragraph{Causal languages and Pearl's hierarchy.} The closest prior
+language is CP-logic \cite{VDB09}: probabilistic causal laws whose
+semantics is a class of probability trees, tied to logic programming.
+What this paper adds to that line is the \emph{consumed} resource
+(co-enabled laws compete for tokens, Theorem~\ref{thm:preservation}),
+the staged competition, the occurrence-net structure of a run
+(Theorem~\ref{thm:trace}) and the certificates; we do not claim to be
+the first to combine probability trees with causal laws. Against
+Pearl's three levels \cite{Pea09} the measure of this paper answers two.
+\emph{Association}: the distribution of an outcome given evidence
+(filtering, smoothing, MAP). \emph{Intervention}: the program is a
+fully specified generative model, so forcing or blocking a declared
+event and evaluating the changed program is a legitimate $\mathit{do}$;
+no identification is needed for it. \emph{Counterfactuals} about a
+recorded run --- had this event not fired, given what did happen ---
+are not determined by the measure: they need a coupling of the random
+draws of the actual and the altered world, and transition probabilities
+do not fix one. With $U$ a fair bit independent of $X$, the mechanisms
+$Y = U$ and $Y = X \oplus U$ agree on every observational and
+interventional distribution and disagree on what $Y$ would have been
+had $X$ differed. A number obtained by blocking an event and
+re-randomising the future is therefore an interventional probability at
+a prefix, not a probability of necessity in the sense of
+\cite{TP00}; the counterfactual semantics is open problem~8
+(\S\ref{sec:open}). Identification \cite{SP06} --- whether an
+interventional quantity can be computed from observational data under
+stated causal assumptions --- concerns the instrument not at all and
+the learning of \S\ref{sec:learning} directly.
 
 \section{Open problems}\label{sec:open}
 
@@ -1690,7 +1857,10 @@ outside the certified object.
 \item The full trajectory-level statement of
   Theorem~\ref{thm:preservation} (the product induction with
   normalization over enabled sets) and the concrete site/scope
-  instantiation of Theorem~\ref{thm:trace} over a formalized emission.
+  instantiation of Theorem~\ref{thm:trace} over a formalized emission:
+  that independence protects each site's whole normaliser, competitor
+  scopes included, and the multiplicity of representatives per trace
+  class under the admitted schedule (\S\ref{sec:trace}).
 \item Branching-cell measure beyond $\cclass$: import \cite{AB06} to
   define trace-invariant weights for programs the emission rejects;
   does the general staged language admit a canonical net measure?
@@ -1711,6 +1881,17 @@ outside the certified object.
   And the engineering comparisons --- sampling-based planners on large
   benchmark instances, complementary-pair merging and lifted emission
   --- which this paper does not claim.
+\item A counterfactual semantics for a recorded run
+  (\S\ref{sec:related}). Two parts suggest themselves. Events outside
+  the forward cone of the altered event are independent of it, so by
+  Theorem~\ref{thm:trace} they may keep their recorded outcomes with no
+  further assumption. The \textsc{choice} sites inside the cone need a
+  \emph{declared} coupling of their draws across the two worlds --- the
+  Gumbel-max coupling of \cite{OS19} is one candidate --- and the
+  answer depends on the declaration. Neither part is worked out here,
+  and evidence of probability zero under the program cannot be
+  conditioned on at all: it is a surprise (\S\ref{sec:learning}), to be
+  given support by a pack first.
 \end{enumerate}
 
 \begin{thebibliography}{99}\small
@@ -1807,15 +1988,33 @@ mathematical library. CPP 2020.
 \bibitem[MU21]{MU21} L. de Moura, S. Ullrich. The Lean 4 theorem
 prover and programming language. CADE 2021.
 
+\bibitem[OS19]{OS19} M. Oberst, D. Sontag. Counterfactual off-policy
+evaluation with Gumbel-max structural causal models. ICML 2019.
+
 \bibitem[Paq21]{Paq21} H. Paquet. Bayesian strategies: probabilistic
 programs as generalised graphical models. ESOP 2021.
+
+\bibitem[Pea09]{Pea09} J. Pearl. Causality: Models, Reasoning, and
+Inference. 2nd ed., Cambridge University Press, 2009.
 
 \bibitem[RD06]{RD06} M. Richardson, P. Domingos. Markov logic
 networks. MLJ 2006.
 
+\bibitem[SP06]{SP06} I. Shpitser, J. Pearl. Identification of joint
+interventional distributions in recursive semi-Markovian causal models.
+AAAI 2006.
+
+\bibitem[TP00]{TP00} J. Tian, J. Pearl. Probabilities of causation:
+bounds and identification. Annals of Mathematics and Artificial
+Intelligence 28, 2000.
+
 \bibitem[TS06]{TS06} M. Toussaint, A. Storkey. Probabilistic inference
 for solving discrete and continuous state Markov decision processes.
 ICML 2006.
+
+\bibitem[VDB09]{VDB09} J. Vennekens, M. Denecker, M. Bruynooghe.
+CP-logic: a language of causal probabilistic events and its relation to
+logic programming. TPLP 9(3), 2009.
 
 \bibitem[Win13]{Win13} G. Winskel. Distributed probabilistic and
 quantum strategies. MFPS 2013.
