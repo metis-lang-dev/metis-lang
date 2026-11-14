@@ -25,3 +25,14 @@ cc_library(
     includes = ["include"],
     copts = ["-std=c++17"],
 )
+
+# libmetis_rt's C ABI (c/metis_rt.h) for the Bazel consumers: a C or C++ device host (perotheia-packages/road's
+# RoadDomain, road-domain s-707ac5dd) links this instead of the CMake shared library; the same translation unit.
+cc_library(
+    name = "metis_rt",
+    srcs = ["c/metis_rt.cpp"],
+    hdrs = ["c/metis_rt.h"],
+    includes = ["c"],
+    copts = ["-std=c++17"],
+    deps = [":metis_kernel"],
+)
